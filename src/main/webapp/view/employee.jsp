@@ -22,98 +22,98 @@
 		</tr>
 	</table>
 
-	<div id="human_list">
+	<div id="employee_list">
 	
 		<!-- 社員一覧の1行分（5枚ずつ） -->
-		<div id="human_line">
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+		<div id="employee_line">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">月光 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">月光 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
 
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">山田 太郎</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">山田 太郎</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">鈴木 花子</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
-			</div>
-
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
-				</a>
-				<p id="human_name">姓 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">鈴木 花子</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
 
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">姓 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">姓 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
+			</div>
+
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
+				</a>
+				<p id="employee_name">姓 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
 		</div>
 		
 		<!-- 社員一覧の1行分 -->
-		<div id="human_line">
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+		<div id="employee_line">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">姓 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">姓 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
 
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">姓 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">姓 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">姓 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
-			</div>
-
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
-				</a>
-				<p id="human_name">姓 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">姓 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
 
-			<div id="human">
-				<a href="社員紹介詳細画面へのリンク"> <img id="human_img"
-					src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">姓 名</p>
-				<p id="human_detail">第1事業部 第1グループ</p>
-				<p id="human_detail">2025年4月入社</p>
+				<p id="employee_name">姓 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
+			</div>
+
+			<div id="employee">
+				<a href="社員紹介詳細画面へのリンク"> <img id="employee_img"
+					src="../img/employee_img-2.jpg" alt="社員画像" style="width: 220px;">
+				</a>
+				<p id="employee_name">姓 名</p>
+				<p id="employee_detail">第1事業部 第1グループ</p>
+				<p id="employee_detail">2025年4月入社</p>
 			</div>
 		</div>
 		
