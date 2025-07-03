@@ -2,6 +2,8 @@
 
 body {
 	background-color: whitesmoke;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+				 sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
@@ -53,3 +55,125 @@ body {
 #human_img, #human_info {
 	display: inline-block;
 }
+
+nav {
+	position: fixed;
+	top: 24px;
+	width: 100%;
+	z-index: 10;
+	
+}
+
+#header-menu {
+	/*最初はナビゲーションボタンは非表示*/
+	list-style: none;
+	clip-path: inset(0 0 0 100%);
+	transition: clip-path 0.4s ease-in-out;
+}
+
+.cheese, .tomato, .lettuce, .ketchup, .egg, .patty {
+	padding: 8px;
+	margin: 30px 30px 0 0;
+	font-size: 24px;
+	color: #404040;
+	display: block;
+	text-align: right;
+	text-decoration: none;
+	cursor: pointer;
+	
+}
+
+
+li li {
+	margin-right: 40px;
+	list-style: none;
+	font-size: 18px;
+	color: black;
+	text-align: right;
+	
+	cursor: pointer;
+}
+
+
+
+.hamburger {
+	position: absolute;
+	top: 32px;
+	right: 32px;
+	cursor: pointer;
+	width: 32px;
+	height: 24px;
+	z-index: 10;
+}
+
+.hamburger span {
+	/*3本の線を作る*/
+	transition: all .3s;
+	position: absolute;
+	height: 2px;
+	background-color: #303030;
+	width: 100%;
+	z-index: 10;
+}
+
+.hamburger span:nth-of-type(1) {
+	/*上の線の位置*/
+	top: 4px;
+}
+
+.hamburger span:nth-of-type(2) {
+	/*真ん中の線の位置*/
+	top: 12px;
+}
+
+.hamburger span:nth-of-type(3) {
+	/*下の線の位置*/
+	top: 20px;
+}
+
+.hamburger.open span:nth-of-type(1) {
+	/*openのとき、上の線を右斜めにする*/
+	top: 10px;
+	transform: translateY(6px) rotate(-33deg);
+}
+
+.hamburger.open span:nth-of-type(2) {
+	/*真ん中の線を消す*/
+	opacity: 0;
+}
+
+.hamburger.open span:nth-of-type(3) {
+	/*下の線を左斜めにする*/
+	top: 22px;
+	transform: translateY(-6px) rotate(33deg);
+}
+
+#header-menu.open {
+	clip-path: inset(0 0 0 0);
+}
+
+ul ul {
+	display: none;
+}
+
+/*タイトルロゴ*/
+#page-title {
+	padding: 10px;
+}
+
+#page-title h6 {
+	line-height: 90%;
+	margin-bottom: 10px;
+	font-size: 18px;
+	font-weight: 100;
+	text-align: center;
+}
+
+#page-title h1 {
+	line-height: 20px;
+	margin-bottom: 10px;
+	font-size: 50px;
+	font-weight: 500;
+	text-align: center;
+}
+
