@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+body {
+	background-color: whitesmoke;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+/*↓社員紹介画面のcss*/
+/*社員1人分（div）*/
+#human {
+	display: inline-block;
+	height: 200px;
+	transition: 0.3s;
+}
+
+#human:hover {
+	transform: scale(1.1);
+}
+
+/*社員一覧の1行分（div）*/
+#human_line {
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
+/*社員名（p）*/
+#human_name {
+	color: black;
+	font-size: 30px;
+	font-weight: 500;
+	margin: 0;
+	position: relative;
+	top: -70px;
+	cursor: pointer;
+}
+
+/*社員情報（p）*/
+#human_detail {
+	color: black;
+	margin: 0;
+	position: relative;
+	top: -70px;
+	cursor: pointer;
+}
+
+#human_name, #human_detail {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+/*↓社員詳細画面のcss*/
+#human_img, #human_info {
+	display: inline-block;
+}
