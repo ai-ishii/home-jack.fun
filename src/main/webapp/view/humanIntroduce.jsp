@@ -29,7 +29,7 @@
 			<div id="human">
 				<a href="社員紹介詳細画面へのリンク"> <img src="../img/human_img-2.jpg" alt="社員画像" style="width: 220px;">
 				</a>
-				<p id="human_name">姓 名</p>
+				<p id="human_name">月光 名</p>
 				<p id="human_detail">第1事業部 第1グループ</p>
 				<p id="human_detail">2025年4月入社</p>
 			</div>
