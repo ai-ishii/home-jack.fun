@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class JackWorksDAO {
+public class AccountDAO {
 
 	//接続用の情報をフィールドに定数として定義
 		private static final String RDB_DRIVE="org.mariadb.jdbc.Driver";
@@ -19,8 +19,7 @@ public class JackWorksDAO {
 	 	 * データベース接続を行うメソッド
 	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
 	 	 * @return con
-	 	 */
-	 	private static Connection getConnection(){
+	 	 */private static Connection getConnection(){
 	 		try{
 	 			Class.forName(RDB_DRIVE);
 	 			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
