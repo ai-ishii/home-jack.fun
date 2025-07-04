@@ -1,11 +1,14 @@
 /**
  * 
  */
-
+	
+	var layer = function(){$('#navi').toggleClass("layer");}
  $(function(){
   $('#hamburger').on('click',function(){
     $('#hamburger').toggleClass("open");
-    $('#header-menu').toggleClass("open", "close");
+    $('#header-menu').toggleClass("open");
+    
+    setTimeout(layer, 80);
   });
 });
 
