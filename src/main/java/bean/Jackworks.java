@@ -14,17 +14,6 @@ public class Jackworks{
 	private String note;					//備考
 	private String imagae;					//画像
 	
-
-		public int getJavkworks_id() {
-			return jackworks_id;
-		}
-		
-
-		public void setJavkworks_id(int jackworks_id) {
-			this.jackworks_id = jackworks_id;
-		}
-
-
 		public int getJackworks_id() {
 			return jackworks_id;
 		}
