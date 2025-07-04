@@ -184,7 +184,7 @@ ul ul {
 	radial-gradient(at 0 0, #ffcc55, transparent 40%),
 	radial-gradient(at 0 40%, #dd6666, transparent 40%),
 	radial-gradient(at 40% 60%, #fffadd, transparent 80%),
-	radial-gradient(at 0 100%, #ccee88, transparent 50%);
+	radial-gradient(at 0 100%, #cc7788, transparent 50%);
 	background-attachment: fixed;
 }
 
@@ -205,10 +205,11 @@ ul ul {
 	font-size: 50px;
 	font-weight: 500;
 }
-
+/*-----------------------------------------------------------------------------------*/
 /*外部リンク*/
 #top-link {
 	position: relative;
+	margin-top: -60px;
 	z-index: 10;
 }
 #top-link ul {
@@ -226,7 +227,10 @@ ul ul {
 
 #top-link img {
 	width: 22px;
+	filter: brightness(0) invert(1);
 	text-align: center;
 	cursor: pointer;
 }
+/*-----------------------------------------------------------------------------------*/
+
 
