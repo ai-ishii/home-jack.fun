@@ -15,8 +15,11 @@ public class EmployeeDAO {
 	 	private static final String USER="root";
 	 	private static final String PASSWD="root123";
 	 
-	 	// データベース接続を行うメソッド
-	 	// データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 	/**
+	 	 * データベース接続を行うメソッド
+	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 	 * @return con
+	 	 */
 	 	private static Connection getConnection(){
 	 		try{
 	 			Class.forName(RDB_DRIVE);

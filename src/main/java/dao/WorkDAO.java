@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class JackWorksDAO {
+public class WorkDAO {
 
 	//接続用の情報をフィールドに定数として定義
 		private static final String RDB_DRIVE="org.mariadb.jdbc.Driver";
