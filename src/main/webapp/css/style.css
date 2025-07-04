@@ -1,12 +1,28 @@
 @charset "UTF-8";
 
+/*
+順番規則（他はフィーリング）
+display
+position
+padding
+margin
+top right bottom left
+width
+height
+border
+background
+text
+color
+font
+cursor
+*/
+
 body {
 	background-color: whitesmoke;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
 				 sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	margin-left: auto;
 	margin-right: auto;
-	text-align: center;
 }
 
 /*↓社員紹介画面のcss*/
@@ -56,23 +72,30 @@ body {
 	display: inline-block;
 }
 
-nav {
+#navi {
 	position: fixed;
-	top: 24px;
+	top: 0px;
 	width: 100%;
-	z-index: 10;
-	
+}
+
+.layer {
+	z-index: 20;
 }
 
 #header-menu {
 	/*最初はナビゲーションボタンは非表示*/
 	list-style: none;
+	margin-left: auto;
+	padding: 30px;
+	width: 300px;
+	background-color:rgba(240, 248, 252, 0.7);
 	clip-path: inset(0 0 0 100%);
 	transition: clip-path 0.4s ease-in-out;
+
 }
 
 .cheese, .tomato, .lettuce, .ketchup, .egg, .patty {
-	padding: 8px;
+	padding: 10px 10px 10px 10px;
 	margin: 30px 30px 0 0;
 	font-size: 24px;
 	color: #404040;
@@ -90,11 +113,8 @@ li li {
 	font-size: 18px;
 	color: black;
 	text-align: right;
-	
 	cursor: pointer;
 }
-
-
 
 .hamburger {
 	position: absolute;
@@ -103,17 +123,17 @@ li li {
 	cursor: pointer;
 	width: 32px;
 	height: 24px;
-	z-index: 10;
+	z-index: 30;
 }
 
 .hamburger span {
 	/*3本の線を作る*/
-	transition: all .3s;
+	transition: all 0.3s;
 	position: absolute;
 	height: 2px;
 	background-color: #303030;
 	width: 100%;
-	z-index: 10;
+	z-index: 30;
 }
 
 .hamburger span:nth-of-type(1) {
@@ -158,7 +178,14 @@ ul ul {
 
 /*タイトルロゴ*/
 #page-title {
-	padding: 10px;
+	padding: 10px 0px 30px 0px;
+	background-color: #dd9933;
+	background-image:
+	radial-gradient(at 0 0, #ffcc55, transparent 40%),
+	radial-gradient(at 0 40%, #dd6666, transparent 40%),
+	radial-gradient(at 40% 60%, #fffadd, transparent 80%),
+	radial-gradient(at 0 100%, #ccee88, transparent 50%);
+	background-attachment: fixed;
 }
 
 #page-title h6 {
@@ -172,8 +199,34 @@ ul ul {
 #page-title h1 {
 	line-height: 20px;
 	margin-bottom: 10px;
+	text-align: center;
+	color: #fafafa;
+	text-shadow: 1px 2px 3px #101010;
 	font-size: 50px;
 	font-weight: 500;
+}
+
+/*外部リンク*/
+#top-link {
+	position: relative;
+	z-index: 10;
+}
+#top-link ul {
+	display: block;
+	margin-right: 48px;
+	text-align: right;
+}
+
+#top-link li{
+	list-style: none;
+	display: inline-block;
+	margin: 6px;
+	font-size: 8px;
+}
+
+#top-link img {
+	width: 22px;
 	text-align: center;
+	cursor: pointer;
 }
 
