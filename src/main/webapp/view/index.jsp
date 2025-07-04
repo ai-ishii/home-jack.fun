@@ -9,10 +9,18 @@
 	<style>
 /*-----------------------------------------------------------------------------------*/
 /*テーブル表示*/
-.list-table {
-	
+.announce {
+	display: block;
 }
 
+.announce ul {
+	display:inline-block;
+	width: 300px;
+}
+
+.announce li {
+	list-style: none;
+}
 
 /*-----------------------------------------------------------------------------------*/
 	</style>
@@ -22,33 +30,24 @@
 			<%@ include file="../common/header.jsp" %>
 
 			<div id="main" class="container">
-  				<table class="list-table">
-  					<thead>
-  						<tr>最新のお知らせ</tr>
-  					</thead>
-  					<tbody class="article">
-  						<tr>
-  						<th>今日のわんこ</th>
-  						</tr>
-  						<tr>
-  						<td>きょうのわんこ、しゃけ。1歳。ガルク。カムラの里で、だれかさんと暮らしています。</td>
-  						</tr>
-  						<tr>
-  						<td>2025/06/28</td>
-  						</tr>
-  					</tbody class="article">
-  					<tbody>
-  						<tr>
-  						<th>今日のわんこ</th>
-  						</tr>
-  						<tr>
-  						<td>きょうのわんこ、しゃけ。1歳。ガルク。カムラの里で、だれかさんと暮らしています。</td>
-  						</tr>
-  						<tr>
-  						<td>2025/06/28</td>
-  						</tr>
-  					</tbody>
-  				</table>
+				<div class="announce">
+					<h2>最新のお知らせ</h2>
+					<ul>
+						<li class="title">今日のわんこ</li>
+						<li class="article">きょうのわんこ、しゃけ。1歳。ガルク。カムラの里で、だれかさんと暮らしています。</li>
+						<li class="date">2025/06/28</li>
+					</ul>
+					<ul>
+						<li class="title">今日のわんこ</li>
+						<li class="article">きょうのわんこ、ぼたもち。2歳。ガルク。カムラの里で、どちらさんと暮らしています。</li>
+						<li class="date">2025/06/29</li>
+					</ul>
+					<ul>
+						<li class="title">今日のわんこ</li>
+						<li class="article">きょうのわんこ、エクレア。3歳。ガルク。カムラの里で、そなたさんと暮らしています。</li>
+						<li class="date">2025/06/30</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</body>
