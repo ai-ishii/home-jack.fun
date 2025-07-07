@@ -2,7 +2,7 @@ package bean;
 
 import java.security.Timestamp;
 
-public class Annnounce {
+public class Announce {
 
 	private int announce_id; //お知らせID
 	private int user_id; //ユーザー情報ID
