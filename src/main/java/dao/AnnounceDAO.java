@@ -32,6 +32,10 @@ public class AnnounceDAO {
 		}
 	}
 
+	/**
+	 * DBにあるお知らせ情報を全件取得するメソッド
+	 * @return ArrayList<Announce> list
+	 */
 	public ArrayList<Announce> selectAnnounceAll() {
 
 		// 変数宣言
@@ -42,7 +46,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "";
+		String sql = "SELECT * FROM announce_info";
 
 		try {
 			// DBに接続
