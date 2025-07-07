@@ -29,7 +29,6 @@ public class UserListServlet extends HttpServlet {
 		// 遷移先のパス
 		String path = "/view/userList.jsp";
 		
-		
 		try {
 			//UserDAOをインスタンス化し、メソッドを呼び出す。
 			UserDAO userDAO = new UserDAO();
