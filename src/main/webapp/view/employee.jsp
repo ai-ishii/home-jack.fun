@@ -9,6 +9,8 @@
 </head>
 <body id="employee">
 
+	<%@include file = "../common/header.jsp" %>
+
 	<!-- タイトル部分 -->
 	<table style="width: 100%;">
 		<tr>

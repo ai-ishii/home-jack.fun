@@ -9,6 +9,8 @@
 </head>
 <body id="detailEmployee">
 
+	<%@include file = "../common/header.jsp" %>
+
 	<div id="detail">
 
 		<!-- 社員画像 -->
