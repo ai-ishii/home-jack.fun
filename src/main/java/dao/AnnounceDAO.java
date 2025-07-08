@@ -67,7 +67,7 @@ public class AnnounceDAO {
 				announce.getText();
 				announce.getImage();
 				announce.getComment();
-				announce.getIine_flag();
+				announce.getLikeFlag();
 				announce.getAnnounceFlag();
 				announce.getFavoriteFlag();
 				announce.getCategory();
