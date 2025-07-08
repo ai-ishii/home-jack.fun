@@ -52,30 +52,30 @@ public class JackWorksDAO {
 
 			while (rs.next()) {
 				Jackworks jack = new Jackworks();
-				jack.setJackworks_id(rs.getInt("jackworks_id"));
-				jack.setUser_id(rs.getInt("user_id"));
-				jack.setEmployee_number(rs.getInt("employee_number"));
+				jack.setJackworksId(rs.getInt("jackworks_id"));
+				jack.setUserId(rs.getInt("user_id"));
+				jack.setEmployeeNumber(rs.getInt("employee_number"));
 				jack.setName(rs.getString("name"));
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
 				jack.setPoint(rs.getInt("point"));
-				jack.setPoints_get_date(rs.getTimestamp("points_get_date"));
+				jack.setPointsGetDate(rs.getTimestamp("points_get_date"));
 				jack.setNote(rs.getString("note"));
 				jack.setProject(rs.getString("project"));
-				jack.setWork_season(rs.getString("work_season"));
+				jack.setWorkSeason(rs.getString("work_season"));
 				jack.setPrice(rs.getInt("price"));
 				jack.setPay(rs.getInt("pay"));
-				jack.setWork_place(rs.getString("work_place"));
-				jack.setWork_content(rs.getString("work_content"));
+				jack.setWorkPlace(rs.getString("work_place"));
+				jack.setWorkContent(rs.getString("work_content"));
 				jack.setPhase(rs.getString("phase"));
 				jack.setLanguage(rs.getString("language"));
 				jack.setSkill(rs.getString("skill"));
-				jack.setNeed_people(rs.getInt("need_people"));
+				jack.setNeedPeople(rs.getInt("need_people"));
 				jack.setSeller(rs.getString("seller"));
 				jack.setContact(rs.getString("contact"));
 				jack.setOther(rs.getString("other"));
-				jack.setManager_flag(rs.getInt("manager_flag"));
-				jack.setAdmin_flag(rs.getInt("admin_flag"));
+				jack.setManagerFlag(rs.getInt("manager_flag"));
+				jack.setAdminFlag(rs.getInt("admin_flag"));
 				jackList.add(jack);
 			}
 
@@ -119,30 +119,30 @@ public class JackWorksDAO {
 //			ResultSet rs = smt.executeQuery(sql);
 //
 //			while (rs.next()) {
-//				jack.setJackworks_id(rs.getInt("jackworks_id"));
-//				jack.setUser_id(rs.getInt("user_id"));
-//				jack.setEmployee_number(rs.getInt("employee_number"));
+//				jack.setJackworksId(rs.getInt("jackworks_id"));
+//				jack.setUserId(rs.getInt("user_id"));
+//				jack.setEmployeeNumber(rs.getInt("employee_number"));
 //				jack.setName(rs.getString("name"));
 //				jack.setCategory(rs.getString("category"));
 //				jack.setAssessment(rs.getString("assessment"));
 //				jack.setPoint(rs.getInt("point"));
-//				jack.setPoints_get_date(rs.getTimestamp("points_get_date"));
+//				jack.setPointsGetDate(rs.getTimestamp("points_get_date"));
 //				jack.setNote(rs.getString("note"));
 //				jack.setProject(rs.getString("project"));
-//				jack.setWork_season(rs.getString("work_season"));
+//				jack.setWorkSeason(rs.getString("work_season"));
 //				jack.setPrice(rs.getInt("price"));
 //				jack.setPay(rs.getInt("pay"));
-//				jack.setWork_place(rs.getString("work_place"));
-//				jack.setWork_content(rs.getString("work_content"));
+//				jack.setWorkPlace(rs.getString("work_place"));
+//				jack.setWorkContent(rs.getString("work_content"));
 //				jack.setPhase(rs.getString("phase"));
 //				jack.setLanguage(rs.getString("language"));
 //				jack.setSkill(rs.getString("skill"));
-//				jack.setNeed_people(rs.getInt("need_people"));
+//				jack.setNeedPeople(rs.getInt("need_people"));
 //				jack.setSeller(rs.getString("seller"));
 //				jack.setContact(rs.getString("contact"));
 //				jack.setOther(rs.getString("other"));
-//				jack.setManager_flag(rs.getInt("manager_flag"));
-//				jack.setAdmin_flag(rs.getInt("admin_flag"));
+//				jack.setManagerFlag(rs.getInt("manager_flag"));
+//				jack.setAdminFlag(rs.getInt("admin_flag"));
 //			}
 //
 //		} catch (Exception e) {

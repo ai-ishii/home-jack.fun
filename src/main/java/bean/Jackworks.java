@@ -5,48 +5,48 @@ import java.sql.Timestamp;
 public class Jackworks{
 
 	
-	private int jackworks_id;				//JackWorksID
-	private int user_id;					//ユーザー情報ID
-	private int employee_number;			//社員番号
+	private int jackworksId;				//JackWorksID
+	private int userId;					//ユーザー情報ID
+	private int employeeNumber;			//社員番号
 	private String name;					//氏名
 	private String category;				//カテゴリ
 	private String assessment;				//評価項目
 	private int point;						//付与ポイント
-	private Timestamp points_get_date;		//ポイント取得年月日
+	private Timestamp pointsGetDate;		//ポイント取得年月日
 	private String note;					//備考
 	private String project;					//案件名
-	private String work_season;				//作業説明
+	private String workSeason;				//作業説明
 	private int price;						//単価
 	private int pay;						//清算
-	private String work_place;				//作業場所
-	private String work_content;			//作業内容
+	private String workPlace;				//作業場所
+	private String workContent;			//作業内容
 	private String phase;					//フェーズ
 	private String language;				//開発言語
 	private String skill;					//必要スキル
-	private int need_people;				//必要人数
+	private int needPeople;				//必要人数
 	private String seller;					//営業担当者
 	private String contact;					//連絡先
 	private String other;					//その他
-	private int manager_flag;				//マネージャー承認フラグ
-	private int admin_flag;					//管理者承認フラグ
+	private int managerFlag;				//マネージャー承認フラグ
+	private int adminFlag;					//管理者承認フラグ
 	
-		public int getJackworks_id() {
-			return jackworks_id;
+		public int getJackworksId() {
+			return jackworksId;
 		}
 
 
-		public void setJackworks_id(int jackworks_id) {
-			this.jackworks_id = jackworks_id;
+		public void setJackworksId(int jackworksId) {
+			this.jackworksId = jackworksId;
 		}
 
 
-		public int getUser_id() {
-			return user_id;
+		public int getUserId() {
+			return userId;
 		}
 
 
-		public void setUser_id(int user_id) {
-			this.user_id = user_id;
+		public void setUserId(int userId) {
+			this.userId = userId;
 		}
 
 
@@ -80,13 +80,13 @@ public class Jackworks{
 		}
 
 
-		public Timestamp getPoints_get_date() {
-			return points_get_date;
+		public Timestamp getPointsGetDate() {
+			return pointsGetDate;
 		}
 
 
-		public void setPoints_get_date(Timestamp points_get_date) {
-			this.points_get_date = points_get_date;
+		public void setPointsGetDate(Timestamp pointsGetDate) {
+			this.pointsGetDate = pointsGetDate;
 		}
 
 
@@ -110,13 +110,13 @@ public class Jackworks{
 		}
 
 
-		public String getWork_season() {
-			return work_season;
+		public String getWorkSeason() {
+			return workSeason;
 		}
 
 
-		public void setWork_season(String work_season) {
-			this.work_season = work_season;
+		public void setWorkSeason(String workSeason) {
+			this.workSeason = workSeason;
 		}
 
 
@@ -140,23 +140,23 @@ public class Jackworks{
 		}
 
 
-		public String getWork_place() {
-			return work_place;
+		public String getWorkPlace() {
+			return workPlace;
 		}
 
 
-		public void setWork_place(String work_place) {
-			this.work_place = work_place;
+		public void setWorkPlace(String workPlace) {
+			this.workPlace = workPlace;
 		}
 
 
-		public String getWork_content() {
-			return work_content;
+		public String getWorkContent() {
+			return workContent;
 		}
 
 
-		public void setWork_content(String work_content) {
-			this.work_content = work_content;
+		public void setWorkContent(String workContent) {
+			this.workContent = workContent;
 		}
 
 
@@ -190,13 +190,13 @@ public class Jackworks{
 		}
 
 
-		public int getNeed_people() {
-			return need_people;
+		public int getNeedPeople() {
+			return needPeople;
 		}
 
 
-		public void setNeed_people(int need_people) {
-			this.need_people = need_people;
+		public void setNeedPeople(int needPeople) {
+			this.needPeople = needPeople;
 		}
 
 
@@ -230,33 +230,33 @@ public class Jackworks{
 		}
 
 
-		public int getManager_flag() {
-			return manager_flag;
+		public int getManagerFlag() {
+			return managerFlag;
 		}
 
 
-		public void setManager_flag(int manager_flag) {
-			this.manager_flag = manager_flag;
+		public void setManagerFlag(int managerFlag) {
+			this.managerFlag = managerFlag;
 		}
 
 
-		public int getAdmin_flag() {
-			return admin_flag;
+		public int getAdminFlag() {
+			return adminFlag;
 		}
 
 
-		public void setAdmin_flag(int admin_flag) {
-			this.admin_flag = admin_flag;
+		public void setAdminFlag(int adminFlag) {
+			this.adminFlag = adminFlag;
 		}
 
 
-		public int getEmployee_number() {
-			return employee_number;
+		public int getEmployeeNumber() {
+			return employeeNumber;
 		}
 
 
-		public void setEmployee_number(int employee_number) {
-			this.employee_number = employee_number;
+		public void setEmployeeNumber(int employeeNumber) {
+			this.employeeNumber = employeeNumber;
 		}
 
 
