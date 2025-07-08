@@ -1,6 +1,6 @@
 package bean;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class Gourmet {
 
