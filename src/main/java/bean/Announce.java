@@ -92,6 +92,14 @@ public class Announce {
 		this.likeFlag = likeFlag;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int getAnnounceFlag() {
 		return announceFlag;
 	}
