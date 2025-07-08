@@ -17,11 +17,11 @@ public class JackWorksDAO {
 	private static final String USER = "root";
 	private static final String PASSWD = "root123";
 
-	 	/**
-	 	 * データベース接続を行うメソッド
-	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
-	 	 * @return con
-	 	 */
+	/**
+	 * データベース接続を行うメソッド
+	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 * @return con
+	 */
 	private static Connection getConnection() {
 		try {
 			Class.forName(RDB_DRIVE);
@@ -32,7 +32,11 @@ public class JackWorksDAO {
 		}
 	}
 
-	//DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
+	/**
+	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
+	 * 戻り値としてJackWorks全情報を返す
+	 * @return jackList
+	 */
 	public ArrayList<Jackworks> selectAll() {
 		Connection con = null;
 		Statement smt = null;
@@ -43,19 +47,35 @@ public class JackWorksDAO {
 			con = getConnection();
 			smt = con.createStatement();
 
-			String sql = "SELECT * FROM jackworks_info";
+			String sql = "SELECT * FROM jackworks_info ORDER BY points_get_date DESC";
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
 				Jackworks jack = new Jackworks();
-				jack.getJavkworks_id();
-				jack.getUser_id();
-				jack.getCategory();
-				jack.getAssessment();
-				jack.getPoint();
-				jack.getPoints_get_date();
-				jack.getNote();
-				jack.getImagae();
+				jack.setJackworksId(rs.getInt("jackworks_id"));
+				jack.setUserId(rs.getInt("user_id"));
+				jack.setEmployeeNumber(rs.getInt("employee_number"));
+				jack.setName(rs.getString("name"));
+				jack.setCategory(rs.getString("category"));
+				jack.setAssessment(rs.getString("assessment"));
+				jack.setPoint(rs.getInt("point"));
+				jack.setPointsGetDate(rs.getTimestamp("points_get_date"));
+				jack.setNote(rs.getString("note"));
+				jack.setProject(rs.getString("project"));
+				jack.setWorkSeason(rs.getString("work_season"));
+				jack.setPrice(rs.getInt("price"));
+				jack.setPay(rs.getInt("pay"));
+				jack.setWorkPlace(rs.getString("work_place"));
+				jack.setWorkContent(rs.getString("work_content"));
+				jack.setPhase(rs.getString("phase"));
+				jack.setLanguage(rs.getString("language"));
+				jack.setSkill(rs.getString("skill"));
+				jack.setNeedPeople(rs.getInt("need_people"));
+				jack.setSeller(rs.getString("seller"));
+				jack.setContact(rs.getString("contact"));
+				jack.setOther(rs.getString("other"));
+				jack.setManagerFlag(rs.getInt("manager_flag"));
+				jack.setAdminFlag(rs.getInt("admin_flag"));
 				jackList.add(jack);
 			}
 
@@ -77,4 +97,70 @@ public class JackWorksDAO {
 		}
 		return jackList;
 	}
+	
+	/**
+	 * 引数のjackworks_idからDBのJackWorks情報を検索するメソッド
+	 * 戻り値としてJackWorks全情報を返す
+	 * @return jackList
+	 */
+	
+//	public Jackworks selectByJackWorksId(int jackworks_id) {
+//		
+//		Connection con = null;
+//		Statement smt = null;
+//
+//		Jackworks jack=new Jackworks();
+//
+//		try {
+//			con = getConnection();
+//			smt = con.createStatement();
+//
+//			String sql = "SELECT * FROM jackworks_info WHERE jackworks_id="+jackworks_id;
+//			ResultSet rs = smt.executeQuery(sql);
+//
+//			while (rs.next()) {
+//				jack.setJackworksId(rs.getInt("jackworks_id"));
+//				jack.setUserId(rs.getInt("user_id"));
+//				jack.setEmployeeNumber(rs.getInt("employee_number"));
+//				jack.setName(rs.getString("name"));
+//				jack.setCategory(rs.getString("category"));
+//				jack.setAssessment(rs.getString("assessment"));
+//				jack.setPoint(rs.getInt("point"));
+//				jack.setPointsGetDate(rs.getTimestamp("points_get_date"));
+//				jack.setNote(rs.getString("note"));
+//				jack.setProject(rs.getString("project"));
+//				jack.setWorkSeason(rs.getString("work_season"));
+//				jack.setPrice(rs.getInt("price"));
+//				jack.setPay(rs.getInt("pay"));
+//				jack.setWorkPlace(rs.getString("work_place"));
+//				jack.setWorkContent(rs.getString("work_content"));
+//				jack.setPhase(rs.getString("phase"));
+//				jack.setLanguage(rs.getString("language"));
+//				jack.setSkill(rs.getString("skill"));
+//				jack.setNeedPeople(rs.getInt("need_people"));
+//				jack.setSeller(rs.getString("seller"));
+//				jack.setContact(rs.getString("contact"));
+//				jack.setOther(rs.getString("other"));
+//				jack.setManagerFlag(rs.getInt("manager_flag"));
+//				jack.setAdminFlag(rs.getInt("admin_flag"));
+//			}
+//
+//		} catch (Exception e) {
+//			throw new IllegalStateException(e);
+//		} finally {
+//			if (smt != null) {
+//				try {
+//					smt.close();
+//				} catch (SQLException ignore) {
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException ignore) {
+//				}
+//			}
+//		}
+//		return jack;
+//	}
 }
