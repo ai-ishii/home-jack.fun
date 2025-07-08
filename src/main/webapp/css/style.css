@@ -17,69 +17,203 @@ font
 cursor
 */
 
+.container {
+	width: 100%;
+	margin: 0 auto;
+}
+
+#main {
+	width: 100%;
+	margin: 20px;
+	display: flex;
+	flex-direction: row;
+}
+
 body {
 	background-color: whitesmoke;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-				 sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	margin-left: auto;
 	margin-right: auto;
 }
 
-/*↓社員紹介画面のcss*/
-/*社員1人分（div）*/
+h1, h2 {
+	padding: 10px 0;
+}
+
+/*↓社員紹介一覧画面のcss*/
 #employee {
+	text-align: center;
+}
+
+/*社員1人分（div）*/
+#employee #employee_card,
+#detailEmployee #employee_card {
 	display: inline-block;
 	height: 200px;
+	/*	大きさが変わるときのスピード*/
 	transition: 0.3s;
 }
 
-#employee:hover {
+#employee #employee_card:hover,
+#detailEmployee #employee_card:hover {
+	/*	どれくらい大きくなるか*/
 	transform: scale(1.1);
 }
 
 /*社員一覧の1行分（div）*/
-#employee_line {
+#employee #employee_line {
 	margin-top: 100px;
 	margin-bottom: 100px;
 }
 
+#employee a,
+#detailEmployee a {
+	text-decoration: none;
+}
+
 /*社員名（p）*/
-#employee_name {
+#employee #employee_name,
+#detailEmployee #employee_name {
 	color: black;
 	font-size: 30px;
 	font-weight: 500;
 	margin: 0;
+	/*	画像の上に文字を重ねるため*/
 	position: relative;
 	top: -70px;
 	cursor: pointer;
 }
 
 /*社員情報（p）*/
-#employee_detail {
+#employee #employee_detail,
+#detailEmployee #employee_detail {
 	color: black;
 	margin: 0;
+	/*	画像の上に文字を重ねるため*/
 	position: relative;
 	top: -70px;
 	cursor: pointer;
 }
 
-#employee_name, #employee_detail {
+#employee #employee_name,
+#employee_detail {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+#detailEmployee #employee_name,
+#employee_detail {
+	width: 220px;
 	background-color: rgba(255, 255, 255, 0.8);
 }
 
 /*↓社員詳細画面のcss*/
-/*社員の詳細情報（div）*/
-/*#employee_info {*/
-/*	width: 600px;*/
-/*}*/
-
-#employee_info {
-	border: solid 1px ;
+#detailEmployee {
+	text-align: center;
 }
 
-#employee_img, #employee_info {
+/*社員情報（div）*/
+#detailEmployee #employee_info {
+	width: 450px;
+	text-align: left;
+}
+
+/*社員画像（img）*/
+#detailEmployee #employee_img {
+	width: 350px;
+	height: 450px;
+	margin-right: 50px;
+	/*	縦横比を固定する*/
+	object-fit: none;
+}
+
+#detailEmployee #employee_info,
+#back_employeeList {
+	display: inline-block;
+	/*	要素を上揃え*/
+	vertical-align: top;
+}
+
+/*社員名（p）*/
+#detailEmployee #detailEmployee_name {
+	margin: 0;
+	margin-right: 20px;
+	font-size: 80px;
+}
+
+/*社員名と社員名フリガナを横並びにする*/
+#detailEmployee #detailEmployee_name,
+#detailEmployee_kana {
 	display: inline-block;
 }
+
+/*社員所属と社員入社年を横並びにする*/
+#detailEmployee #detailEmployee_belong,
+#detailEmployee_joinTiming {
+	display: inline-block;
+}
+
+#detailEmployee #detailEmployee_joinTiming + p {
+	border-top: solid 1px gray;
+	margin: 0;
+	padding-top: 10px;
+}
+
+/*社員候補エリア（div）*/
+#detailEmployee #imgSlider_area {
+	width: 80%;
+	margin-top: 30px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/*サブタイトル（div）*/
+#detailEmployee #belong_title, #detailEmployee #joinTiming_title {
+	margin-bottom: 30px;
+	font-size: 30px;
+	font-weight: 500;
+	text-align: left;
+}
+
+/*画像スライダー（div）*/
+#detailEmployee #img_slider {
+	height: 80%;
+	position: relative;
+}
+
+/*画像スライダーの中の画像（div）*/
+#detailEmployee #employee_card {
+	width: 20%;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+/*画像をスライダーさせるボタン（button）*/
+#detailEmployee #img_slider button {
+	width: 10%;
+	position: absolute;
+	top: 40%;
+}
+
+/*左ボタン（button）*/
+#detailEmployee #prev {
+	left: 30px;
+}
+
+/*右ボタン（button）*/
+#detailEmployee #next {
+	right: 15px;
+}
+
+#employee img,
+#detailEmployee img {
+	width: 220px;
+	height: 300px;
+	/*	縦横比を固定する*/
+	object-fit: none;
+}
+
+/*-----------------------------------*/
 
 #navi {
 	position: fixed;
@@ -97,13 +231,18 @@ body {
 	margin-left: auto;
 	padding: 30px;
 	width: 300px;
-	background-color:rgba(240, 248, 252, 0.7);
+	background-color: rgba(240, 248, 252, 0.7);
 	clip-path: inset(0 0 0 100%);
 	transition: clip-path 0.4s ease-in-out;
 
 }
 
-.cheese, .tomato, .lettuce, .ketchup, .egg, .patty {
+.cheese,
+.tomato,
+.lettuce,
+.ketchup,
+.egg,
+.patty {
 	padding: 10px 10px 10px 10px;
 	margin: 30px 30px 0 0;
 	font-size: 24px;
@@ -112,7 +251,7 @@ body {
 	text-align: right;
 	text-decoration: none;
 	cursor: pointer;
-	
+
 }
 
 
@@ -190,10 +329,10 @@ ul ul {
 	padding: 10px 0px 30px 0px;
 	background-color: #dd9933;
 	background-image:
-	radial-gradient(at 0 0, #ffcc55, transparent 40%),
-	radial-gradient(at 0 40%, #dd6666, transparent 40%),
-	radial-gradient(at 40% 60%, #fffadd, transparent 80%),
-	radial-gradient(at 0 100%, #ccee88, transparent 50%);
+		radial-gradient(at 0 0, #ffcc55, transparent 40%),
+		radial-gradient(at 0 40%, #dd6666, transparent 40%),
+		radial-gradient(at 40% 60%, #fffadd, transparent 80%),
+		radial-gradient(at 0 100%, #cc7788, transparent 50%);
 	background-attachment: fixed;
 }
 
@@ -210,7 +349,6 @@ ul ul {
 	margin-bottom: 10px;
 	text-align: center;
 	color: #fafafa;
-	text-shadow: 1px 2px 3px #101010;
 	font-size: 50px;
 	font-weight: 500;
 }
@@ -218,6 +356,7 @@ ul ul {
 /*外部リンク*/
 #top-link {
 	position: relative;
+	margin-top: -60px;
 	z-index: 10;
 }
 #top-link ul {
@@ -235,7 +374,7 @@ ul ul {
 
 #top-link img {
 	width: 22px;
+	filter: brightness(0) invert(1);
 	text-align: center;
 	cursor: pointer;
 }
-
