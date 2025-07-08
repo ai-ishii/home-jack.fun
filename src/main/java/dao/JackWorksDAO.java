@@ -17,8 +17,11 @@ public class JackWorksDAO {
 	private static final String USER = "root";
 	private static final String PASSWD = "root123";
 
-	// データベース接続を行うメソッド
-	// データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 	/**
+	 	 * データベース接続を行うメソッド
+	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 	 * @return con
+	 	 */
 	private static Connection getConnection() {
 		try {
 			Class.forName(RDB_DRIVE);
@@ -45,13 +48,14 @@ public class JackWorksDAO {
 
 			while (rs.next()) {
 				Jackworks jack = new Jackworks();
-				jack.getJackworksId();
-				jack.getUserId();
+				jack.getJavkworks_id();
+				jack.getUser_id();
 				jack.getCategory();
 				jack.getAssessment();
 				jack.getPoint();
-				jack.getPointsGetDate();
+				jack.getPoints_get_date();
 				jack.getNote();
+				jack.getImagae();
 				jackList.add(jack);
 			}
 
@@ -73,5 +77,4 @@ public class JackWorksDAO {
 		}
 		return jackList;
 	}
-
 }
