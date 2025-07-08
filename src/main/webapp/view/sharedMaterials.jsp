@@ -21,6 +21,12 @@
 	margin-top: 5%;
 }
 
+#contents{
+width:90%;
+margin-right: auto;
+margin-left : auto;
+}
+
 .link {
 	text-decoration: none;
 	font-weight: bold;
@@ -66,6 +72,10 @@
 		
 	</head>
 	<body>
+	
+	<%@include file = "../common/header.jsp" %>
+	
+	<div id="contents">
 
 	<!-- タイトル部分 -->
 	<div id="link-title">

@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/jackWorks")
-public class JackWorksSevlet extends HttpServlet {
+public class JackWorksServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
@@ -37,7 +37,7 @@ public class JackWorksSevlet extends HttpServlet {
 
 			//JackWorksの全情報を取得するメソッド
 			ArrayList<Jackworks> jackList = jackworksDAO.selectAll();
-
+			
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
 
@@ -48,7 +48,7 @@ public class JackWorksSevlet extends HttpServlet {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";
 		} finally {
-			if (error != "") {
+			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
 				request.setAttribute("error", error);
 				// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
