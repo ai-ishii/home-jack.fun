@@ -7,26 +7,160 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import bean.Jackworks;
+
 public class JackWorksDAO {
 
 	//接続用の情報をフィールドに定数として定義
-		private static final String RDB_DRIVE="org.mariadb.jdbc.Driver";
-	 	private static final String URL="jdbc:mariadb://localhost/jackdb";
-	 	private static final String USER="root";
-	 	private static final String PASSWD="root123";
-	 
-	 	/**
-	 	 * データベース接続を行うメソッド
-	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
-	 	 * @return con
-	 	 */
-	 	private static Connection getConnection(){
-	 		try{
-	 			Class.forName(RDB_DRIVE);
-	 			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
-	 			return con;
-	 		}catch(Exception e){
-	 			throw new IllegalStateException(e);
-	 		}
-	 	}
+	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
+	private static final String URL = "jdbc:mariadb://localhost/jackdb";
+	private static final String USER = "root";
+	private static final String PASSWD = "root123";
+
+	/**
+	 * データベース接続を行うメソッド
+	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 * @return con
+	 */
+	private static Connection getConnection() {
+		try {
+			Class.forName(RDB_DRIVE);
+			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
+			return con;
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
+	/**
+	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
+	 * 戻り値としてJackWorks全情報を返す
+	 * @return jackList
+	 */
+	public ArrayList<Jackworks> selectAll() {
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<Jackworks> jackList = new ArrayList<>();
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			String sql = "SELECT * FROM jackworks_info ORDER BY points_get_date DESC";
+			ResultSet rs = smt.executeQuery(sql);
+
+			while (rs.next()) {
+				Jackworks jack = new Jackworks();
+				jack.setJackworks_id(rs.getInt("jackworks_id"));
+				jack.setUser_id(rs.getInt("user_id"));
+				jack.setEmployee_number(rs.getInt("employee_number"));
+				jack.setName(rs.getString("name"));
+				jack.setCategory(rs.getString("category"));
+				jack.setAssessment(rs.getString("assessment"));
+				jack.setPoint(rs.getInt("point"));
+				jack.setPoints_get_date(rs.getTimestamp("points_get_date"));
+				jack.setNote(rs.getString("note"));
+				jack.setProject(rs.getString("project"));
+				jack.setWork_season(rs.getString("work_season"));
+				jack.setPrice(rs.getInt("price"));
+				jack.setPay(rs.getInt("pay"));
+				jack.setWork_place(rs.getString("work_place"));
+				jack.setWork_content(rs.getString("work_content"));
+				jack.setPhase(rs.getString("phase"));
+				jack.setLanguage(rs.getString("language"));
+				jack.setSkill(rs.getString("skill"));
+				jack.setNeed_people(rs.getInt("need_people"));
+				jack.setSeller(rs.getString("seller"));
+				jack.setContact(rs.getString("contact"));
+				jack.setOther(rs.getString("other"));
+				jack.setManager_flag(rs.getInt("manager_flag"));
+				jack.setAdmin_flag(rs.getInt("admin_flag"));
+				jackList.add(jack);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return jackList;
+	}
+	
+	/**
+	 * 引数のjackworks_idからDBのJackWorks情報を検索するメソッド
+	 * 戻り値としてJackWorks全情報を返す
+	 * @return jackList
+	 */
+	
+//	public Jackworks selectByJackWorksId(int jackworks_id) {
+//		
+//		Connection con = null;
+//		Statement smt = null;
+//
+//		Jackworks jack=new Jackworks();
+//
+//		try {
+//			con = getConnection();
+//			smt = con.createStatement();
+//
+//			String sql = "SELECT * FROM jackworks_info WHERE jackworks_id="+jackworks_id;
+//			ResultSet rs = smt.executeQuery(sql);
+//
+//			while (rs.next()) {
+//				jack.setJackworks_id(rs.getInt("jackworks_id"));
+//				jack.setUser_id(rs.getInt("user_id"));
+//				jack.setEmployee_number(rs.getInt("employee_number"));
+//				jack.setName(rs.getString("name"));
+//				jack.setCategory(rs.getString("category"));
+//				jack.setAssessment(rs.getString("assessment"));
+//				jack.setPoint(rs.getInt("point"));
+//				jack.setPoints_get_date(rs.getTimestamp("points_get_date"));
+//				jack.setNote(rs.getString("note"));
+//				jack.setProject(rs.getString("project"));
+//				jack.setWork_season(rs.getString("work_season"));
+//				jack.setPrice(rs.getInt("price"));
+//				jack.setPay(rs.getInt("pay"));
+//				jack.setWork_place(rs.getString("work_place"));
+//				jack.setWork_content(rs.getString("work_content"));
+//				jack.setPhase(rs.getString("phase"));
+//				jack.setLanguage(rs.getString("language"));
+//				jack.setSkill(rs.getString("skill"));
+//				jack.setNeed_people(rs.getInt("need_people"));
+//				jack.setSeller(rs.getString("seller"));
+//				jack.setContact(rs.getString("contact"));
+//				jack.setOther(rs.getString("other"));
+//				jack.setManager_flag(rs.getInt("manager_flag"));
+//				jack.setAdmin_flag(rs.getInt("admin_flag"));
+//			}
+//
+//		} catch (Exception e) {
+//			throw new IllegalStateException(e);
+//		} finally {
+//			if (smt != null) {
+//				try {
+//					smt.close();
+//				} catch (SQLException ignore) {
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException ignore) {
+//				}
+//			}
+//		}
+//		return jack;
+//	}
 }

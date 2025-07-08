@@ -1,12 +1,14 @@
 package bean;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class Jackworks{
 
 	
 	private int jackworks_id;				//JackWorksID
 	private int user_id;					//ユーザー情報ID
+	private int employee_number;			//社員番号
+	private String name;					//氏名
 	private String category;				//カテゴリ
 	private String assessment;				//評価項目
 	private int point;						//付与ポイント
@@ -245,6 +247,26 @@ public class Jackworks{
 
 		public void setAdmin_flag(int admin_flag) {
 			this.admin_flag = admin_flag;
+		}
+
+
+		public int getEmployee_number() {
+			return employee_number;
+		}
+
+
+		public void setEmployee_number(int employee_number) {
+			this.employee_number = employee_number;
+		}
+
+
+		public String getName() {
+			return name;
+		}
+
+
+		public void setName(String name) {
+			this.name = name;
 		}
 
 
