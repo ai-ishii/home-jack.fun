@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>お知らせ</title>
-<link rel = "stylesheet" href = "../css/style.css">
+<link rel = "stylesheet" href = "<%= request.getContextPath() %>/css/style.css">
 <style>
 .tab {
 	max-width: 90%;
@@ -169,6 +169,6 @@
 
 		</script>
 		
-		<script src="..js/script.js"></script>
+		<script src="<%= request.getContextPath() %>/js/script.js"></script>
 </body>
 </html>
