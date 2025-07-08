@@ -59,17 +59,17 @@ public class AnnounceDAO {
 			// 検索結果をArrayListに格納
 			while (rs.next()) {
 				Announce announce = new Announce();
-				announce.getAnnounce_id();
-				announce.getUser_id();
-				announce.getRegist_date();
-				announce.getUpdate_date();
+				announce.getAnnounceId();
+				announce.getUserId();
+				announce.getRegistDate();
+				announce.getUpdateDate();
 				announce.getTitle();
 				announce.getText();
 				announce.getImage();
 				announce.getComment();
 				announce.getIine_flag();
-				announce.getAnnounce_flag();
-				announce.getFavorite_flag();
+				announce.getAnnounceFlag();
+				announce.getFavoriteFlag();
 				announce.getCategory();
 				announce.getTag();
 				announce.getFile();
