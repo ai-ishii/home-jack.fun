@@ -32,6 +32,10 @@ public class AnnounceDAO {
 		}
 	}
 
+	/**
+	 * DBにあるお知らせ情報を全件取得するメソッド
+	 * @return ArrayList<Announce> list
+	 */
 	public ArrayList<Announce> selectAnnounceAll() {
 
 		// 変数宣言
@@ -42,7 +46,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "";
+		String sql = "SELECT * FROM announce_info";
 
 		try {
 			// DBに接続
@@ -55,17 +59,17 @@ public class AnnounceDAO {
 			// 検索結果をArrayListに格納
 			while (rs.next()) {
 				Announce announce = new Announce();
-				announce.getAnnounce_id();
-				announce.getUser_id();
-				announce.getRegist_date();
-				announce.getUpdate_date();
+				announce.getAnnounceId();
+				announce.getUserId();
+				announce.getRegistDate();
+				announce.getUpdateDate();
 				announce.getTitle();
 				announce.getText();
 				announce.getImage();
 				announce.getComment();
-				announce.getIine_flag();
-				announce.getAnnounce_flag();
-				announce.getFavorite_flag();
+				announce.getLikeFlag();
+				announce.getAnnounceFlag();
+				announce.getFavoriteFlag();
 				announce.getCategory();
 				announce.getTag();
 				announce.getFile();
