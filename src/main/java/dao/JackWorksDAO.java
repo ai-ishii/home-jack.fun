@@ -45,14 +45,13 @@ public class JackWorksDAO {
 
 			while (rs.next()) {
 				Jackworks jack = new Jackworks();
-				jack.getJavkworks_id();
-				jack.getUser_id();
+				jack.getJackworksId();
+				jack.getUserId();
 				jack.getCategory();
 				jack.getAssessment();
 				jack.getPoint();
-				jack.getPoints_get_date();
+				jack.getPointsGetDate();
 				jack.getNote();
-				jack.getImagae();
 				jackList.add(jack);
 			}
 
@@ -74,4 +73,5 @@ public class JackWorksDAO {
 		}
 		return jackList;
 	}
+
 }

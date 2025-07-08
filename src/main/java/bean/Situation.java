@@ -3,40 +3,32 @@ package bean;
 public class Situation {
 
 	
-	private int situation_id;			//社員状況管理ID
-	private int user_id;				//ユーザー情報ID
-	private int situation_flag;			//社員状況管理フラグ
+	private int situationId;			//社員状況管理ID
+	private int userId;					//ユーザー情報ID
+	private int situationFlag;			//社員状況管理フラグ
+	
+	
+	public int getSituationId() {
+		return situationId;
+	}
+	public void setSituationId(int situationId) {
+		this.situationId = situationId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getSituationFlag() {
+		return situationFlag;
+	}
+	public void setSituationFlag(int situationFlag) {
+		this.situationFlag = situationFlag;
+	}
 	
 
-		public int getSituation_id() {
-			return situation_id;
-		}
 		
-
-		public void setSituation_id(int situation_id) {
-			this.situation_id = situation_id;
-		}
-
-
-		public int getUser_id() {
-			return user_id;
-		}
-
-
-		public void setUser_id(int user_id) {
-			this.user_id = user_id;
-		}
-
-
-		public int getSituation_flag() {
-			return situation_flag;
-		}
-
-
-		public void setSituation_flag(int situation_flag) {
-			this.situation_flag = situation_flag;
-		}
-
 
 		
 }
