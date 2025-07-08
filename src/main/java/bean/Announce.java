@@ -12,7 +12,7 @@ public class Announce {
 	private String text; 				//本文
 	private String image; 				//画像
 	private String comment; 			//コメント
-	private int iineFlag; 				//いいねフラグ
+	private int likeFlag; 				//いいねフラグ
 	private int announceFlag; 			//お知らせ表示フラグ
 	private int favoriteFlag; 			//お気に入りフラグ
 	private int category; 				//カテゴリ
@@ -83,12 +83,12 @@ public class Announce {
 		this.comment = comment;
 	}
 
-	public int getIineFlag() {
-		return iineFlag;
+	public int getLikeFlag() {
+		return likeFlag;
 	}
 
-	public void setIineFlag(int iine_flag) {
-		this.iineFlag = iine_flag;
+	public void setLikeFlag(int likeFlag) {
+		this.likeFlag = likeFlag;
 	}
 
 	public int getAnnounceFlag() {
