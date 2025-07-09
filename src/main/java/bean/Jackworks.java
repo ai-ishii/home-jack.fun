@@ -6,8 +6,40 @@ public class Jackworks{
 
 	
 	private int jackworksId;				//JackWorksID
-	private int userId;					//ユーザー情報ID
-	private int employeeNumber;			//社員番号
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
+	private String name;					//氏名
+	private int jackworksId;				//JackWorksID
+	private int userId;						//ユーザー情報ID
+	private int employeeNumber;				//社員番号
 	private String name;					//氏名
 	private String category;				//カテゴリ
 	private String assessment;				//評価項目
@@ -19,11 +51,11 @@ public class Jackworks{
 	private int price;						//単価
 	private int pay;						//清算
 	private String workPlace;				//作業場所
-	private String workContent;			//作業内容
+	private String workContent;				//作業内容
 	private String phase;					//フェーズ
 	private String language;				//開発言語
 	private String skill;					//必要スキル
-	private int needPeople;				//必要人数
+	private int needPeople;					//必要人数
 	private String seller;					//営業担当者
 	private String contact;					//連絡先
 	private String other;					//その他

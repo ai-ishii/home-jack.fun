@@ -31,8 +31,6 @@ public class SearchJackWorksServlet extends HttpServlet {
 		try {
 
 			JackWorksDAO jackworksDAO = new JackWorksDAO();
-			
-			
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";

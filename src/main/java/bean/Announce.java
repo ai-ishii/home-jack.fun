@@ -1,54 +1,55 @@
 package bean;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class Announce {
 
-	private int announce_id; //お知らせID
-	private int user_id; //ユーザー情報ID
-	private Timestamp regist_date; //登録日時
-	private Timestamp update_date; //更新日時
-	private String title; //タイトル
-	private String text; //本文
-	private String image; //画像
-	private String comment; //コメント
-	private int iine_flag; //いいねフラグ
-	private int announce_flag; //お知らせ表示フラグ
-	private int favorite_flag; //お気に入りフラグ
-	private int category; //カテゴリ
-	private String tag; //タグ
-	private String file; //ファイル
+	private int announceId; 			//お知らせID
+	private int userId; 				//ユーザー情報ID
+	private String name;				//編集者名
+	private Timestamp registDate;		//登録日時
+	private Timestamp updateDate;		//更新日時
+	private String title; 				//タイトル
+	private String text; 				//本文
+	private String image; 				//画像
+	private String comment; 			//コメント
+	private int likeFlag; 				//いいねフラグ
+	private int announceFlag; 			//お知らせ表示フラグ
+	private int favoriteFlag; 			//お気に入りフラグ
+	private int category; 				//カテゴリ
+	private String tag; 				//タグ
+	private String file; 				//ファイル
 
-	public int getAnnounce_id() {
-		return announce_id;
+	public int getAnnounceId() {
+		return announceId;
 	}
 
-	public void setAnnounce_id(int announce_id) {
-		this.announce_id = announce_id;
+	public void setAnnounceId(int announceId) {
+		this.announceId = announceId;
 	}
 
-	public int getUser_id() {
-		return user_id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
-	public Timestamp getRegist_date() {
-		return regist_date;
+	public Timestamp getRegistDate() {
+		return registDate;
 	}
 
-	public void setRegist_date(Timestamp regist_date) {
-		this.regist_date = regist_date;
+	public void setRegistDate(Timestamp registDate) {
+		this.registDate = registDate;
 	}
 
-	public Timestamp getUpdate_date() {
-		return update_date;
+	public Timestamp getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdate_date(Timestamp update_date) {
-		this.update_date = update_date;
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public String getTitle() {
@@ -83,28 +84,36 @@ public class Announce {
 		this.comment = comment;
 	}
 
-	public int getIine_flag() {
-		return iine_flag;
+	public int getLikeFlag() {
+		return likeFlag;
 	}
 
-	public void setIine_flag(int iine_flag) {
-		this.iine_flag = iine_flag;
+	public void setLikeFlag(int likeFlag) {
+		this.likeFlag = likeFlag;
 	}
 
-	public int getAnnounce_flag() {
-		return announce_flag;
+	public String getName() {
+		return name;
 	}
 
-	public void setAnnounce_flag(int announce_flag) {
-		this.announce_flag = announce_flag;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getFavorite_flag() {
-		return favorite_flag;
+	public int getAnnounceFlag() {
+		return announceFlag;
 	}
 
-	public void setFavorite_flag(int favorite_flag) {
-		this.favorite_flag = favorite_flag;
+	public void setAnnounceFlag(int announceFlag) {
+		this.announceFlag = announceFlag;
+	}
+
+	public int getFavoriteFlag() {
+		return favoriteFlag;
+	}
+
+	public void setFavoriteFlag(int favoriteFlag) {
+		this.favoriteFlag = favoriteFlag;
 	}
 
 	public int getCategory() {
@@ -130,4 +139,5 @@ public class Announce {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	
 }
