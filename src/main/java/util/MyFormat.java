@@ -48,6 +48,24 @@ public class MyFormat {
 	}
 	
 	/**
+	 * 引数のTimestampをyyyyの形式に変換するメソッド
+	 * @param Timestamp
+	 * @return 変換された日付データ
+	 */
+	public String YearFormat(Timestamp timestamp) {
+		//TimestampをDate型に変換する
+		Date condate = new Date(timestamp.getTime());
+		
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+		
+		//フォーマット使用
+		String date = dateFormat.format(condate);
+		
+		return date;
+	}
+	
+	/**
 	 * 引数のTimeStampをyyyy年 MM月 dd日 HH時mm分ss秒の形式に変換するメソッド
 	 * @param Timestamp
 	 * @return 変換された日付データ
