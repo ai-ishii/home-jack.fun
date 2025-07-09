@@ -59,20 +59,21 @@ public class AnnounceDAO {
 			// 検索結果をArrayListに格納
 			while (rs.next()) {
 				Announce announce = new Announce();
-				announce.getAnnounceId();
-				announce.getUserId();
-				announce.getRegistDate();
-				announce.getUpdateDate();
-				announce.getTitle();
-				announce.getText();
-				announce.getImage();
-				announce.getComment();
-				announce.getLikeFlag();
-				announce.getAnnounceFlag();
-				announce.getFavoriteFlag();
-				announce.getCategory();
-				announce.getTag();
-				announce.getFile();
+				announce.setAnnounceId(rs.getInt("announce_id"));
+				announce.setUserId(rs.getInt("user_id"));
+				announce.setName(rs.getString("name"));
+				announce.setRegistDate(rs.getTimestamp("regist_date"));
+				announce.setUpdateDate(rs.getTimestamp("update_date"));
+				announce.setTitle(rs.getString("title"));
+				announce.setText(rs.getString("text"));
+				announce.setImage(rs.getString("image"));
+				announce.setComment(rs.getString("comment"));
+				announce.setLikeFlag(rs.getInt("iine_flag"));
+				announce.setAnnounceFlag(rs.getInt("announce_flag"));
+				announce.setFavoriteFlag(rs.getInt("favorite_flag"));
+				announce.setCategory(rs.getInt("category"));
+				announce.setTag(rs.getString("tag"));
+				announce.setFile(rs.getString("file"));
 				list.add(announce);
 			}
 		} catch (Exception e) {

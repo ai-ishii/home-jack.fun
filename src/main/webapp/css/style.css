@@ -110,6 +110,7 @@ h1, h2 {
 /*↓社員詳細画面のcss*/
 #detailEmployee {
 	text-align: center;
+	z-index: 10;
 }
 
 /*社員情報（div）*/
