@@ -57,8 +57,8 @@ public class LicenseListDAO {
 	 		//検索結果を格納
 	 			while(rs.next()) {
 	 			LicenseList licenselist = new LicenseList();
-	 			licenselist.setLicenseListid(rs.getInt("licenselistid"));
-	 			licenselist.setUserid(rs.getInt("userid"));
+	 			licenselist.setLicenseListId(rs.getInt("licenselistid"));
+	 			licenselist.setUserId(rs.getInt("userid"));
 	 			licenselist.setRegistDate(rs.getTimestamp("registDate"));
 	 			licenselist.setImage(rs.getString("image"));
 	 			
