@@ -6,13 +6,14 @@ public class Announce {
 
 	private int announceId; 			//お知らせID
 	private int userId; 				//ユーザー情報ID
+	private String name;				//編集者名
 	private Timestamp registDate;		//登録日時
 	private Timestamp updateDate;		//更新日時
 	private String title; 				//タイトル
 	private String text; 				//本文
 	private String image; 				//画像
 	private String comment; 			//コメント
-	private int iine_flag; 				//いいねフラグ
+	private int likeFlag; 				//いいねフラグ
 	private int announceFlag; 			//お知らせ表示フラグ
 	private int favoriteFlag; 			//お気に入りフラグ
 	private int category; 				//カテゴリ
@@ -83,12 +84,20 @@ public class Announce {
 		this.comment = comment;
 	}
 
-	public int getIine_flag() {
-		return iine_flag;
+	public int getLikeFlag() {
+		return likeFlag;
 	}
 
-	public void setIine_flag(int iine_flag) {
-		this.iine_flag = iine_flag;
+	public void setLikeFlag(int likeFlag) {
+		this.likeFlag = likeFlag;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getAnnounceFlag() {
@@ -130,6 +139,5 @@ public class Announce {
 	public void setFile(String file) {
 		this.file = file;
 	}
-
 	
 }
