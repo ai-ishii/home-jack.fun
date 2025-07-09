@@ -2,7 +2,12 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
+import bean.LicenseList;
 public class LicenseListDAO {
 
 	//接続用の情報をフィールドに定数として定義
@@ -25,4 +30,58 @@ public class LicenseListDAO {
 	 			throw new IllegalStateException(e);
 	 		}
 	 	}
+	 	 /**
+	 	  * 全データ検索メソッド
+	 	  * 
+	 	 * @return list
+	 	 */
+	 	public ArrayList<LicenseList> selectAll(){
+	 		 //変数宣言
+	 		 Connection con = null;
+	 		 Statement smt = null;
+	 		 
+	 		 //オブジェクト生成
+	 		 ArrayList<LicenseList> list = new ArrayList<LicenseList>();
+	 		 
+	 		 //SQL文
+	 		 String sql =" SELECT * FROM licenselist_info";
+	 		 
+	 		 
+	 		 try {
+	 			 con = getConnection();
+	 			 smt = con.createStatement();
+	 			
+	 		//SQL文を発行
+	 			ResultSet rs =smt.executeQuery(sql);
+	 			
+	 		//検索結果を格納
+	 			while(rs.next()) {
+	 			LicenseList licenselist = new LicenseList();
+	 			licenselist.setLicenseListid(rs.getInt("licenselistid"));
+	 			licenselist.setUserid(rs.getInt("userid"));
+	 			licenselist.setRegistDate(rs.getTimestamp("registDate"));
+	 			licenselist.setImage(rs.getString("image"));
+	 			
+	 			//listに格納
+	 			list.add(licenselist);
+	 				
+	 			}
+	 		 }catch(Exception e){
+	 			 throw new IllegalStateException(e); 
+	 			 
+	 		 }finally {
+	 			 //リソース開放
+	 			 if(smt != null) {
+	 				 try {smt.close();}catch(SQLException ignore) {}
+	 				 
+	 			 }
+	 			 if(con != null) {
+	 				 try {con.close();}catch(SQLException ignore) {}
+	 			 }
+	 		 }
+	 		 return list;
+	 			 
+	 		 }
+	 		 
+	 		 
 }
