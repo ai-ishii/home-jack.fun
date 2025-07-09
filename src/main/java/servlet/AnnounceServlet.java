@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import bean.Announce;
 import dao.AnnounceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,13 +18,28 @@ public class AnnounceServlet extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
-		AnnounceDAO announceDAO = new AnnounceDAO();
+		String error = "";
+		String cmd = "";
 
-		ArrayList announceList = announceDAO.selectAnnounceAll();
+		ArrayList<Announce> announceList = new ArrayList<Announce>();
 
-		// request.setAttribute("announceList", announceList);
-		request.getRequestDispatcher("/view/announce.jsp").
-		forward(request, response);
+		try {
+			AnnounceDAO announceDAO = new AnnounceDAO();
+
+			announceList = announceDAO.selectAnnounceAll();
+		} catch (Exception e) {
+			cmd = "";
+			error = "予期せぬエラーが発生しました。" + e;
+		} finally {
+			if (error != "") {
+				request.setAttribute("cmd", cmd);
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("#").forward(request, response);
+			} else {
+				request.setAttribute("announceList", announceList);
+				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
+			}
+		}
 	}
 
 }
