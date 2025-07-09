@@ -6,6 +6,7 @@ public class Announce {
 
 	private int announceId; 			//お知らせID
 	private int userId; 				//ユーザー情報ID
+	private String name;				//編集者名
 	private Timestamp registDate;		//登録日時
 	private Timestamp updateDate;		//更新日時
 	private String title; 				//タイトル
@@ -91,6 +92,14 @@ public class Announce {
 		this.likeFlag = likeFlag;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int getAnnounceFlag() {
 		return announceFlag;
 	}
@@ -130,6 +139,5 @@ public class Announce {
 	public void setFile(String file) {
 		this.file = file;
 	}
-
 	
 }
