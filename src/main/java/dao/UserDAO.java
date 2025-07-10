@@ -1,3 +1,9 @@
+/*
+ * プログラム名：Home-Jack.ver.2.0
+ * 作成者：占部虎司郎
+ * 作成日：2025/7/10
+ */
+
 package dao;
 
 import java.sql.Connection;
@@ -43,7 +49,7 @@ public class UserDAO {
 		ArrayList<User> userList = new ArrayList<User>();
 
 		//SQL文の作成
-		String sql = "SELECT * FROM user_info";
+		String sql = "SELECT * FROM user_info order by employee_number asc";
 
 		try {
 			// データベース接続
@@ -55,7 +61,7 @@ public class UserDAO {
 			while (rs.next()) {
 				User user = new User();
 				user.setUserId(rs.getInt("user_id"));
-				user.setAcountId(rs.getInt("account_id"));
+				user.setAccountId(rs.getInt("account_id"));
 				user.setName(rs.getString("name"));
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
@@ -97,4 +103,139 @@ public class UserDAO {
 		return userList;
 	}
 
+	/**
+	 * 登録を行うメソッド
+	 * 
+	 * @param 登録したい情報
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	public void insert(User user) {
+		Connection con = null;
+		Statement smt = null;
+		
+		//SQL文の作成
+		String sql = "INSERT INTO `user_info` (`user_id`, `account_id`, `name`, "
+				+ "`name_kana`, `birthday`, `address`, `post`, `phone`, "
+				+ "`nearest_station`, `transportation`, `sex`, `employee_number`, "
+				+ "`department`, `team`, `joining_date`, `work_history`, "
+				+ "`marriage_flag`, `children`, `qualification`, `display_flag`, "
+				+ "`rest_flag`, `regist_date`, `update_date`) "
+				+ "VALUES (NULL, '"+user.getAccountId()+"', '"+user.getName()+"', '"+user.getNameKana()+"', "
+				+ "'"+user.getBirthday()+"', '"+user.getAddress()+"', '"+user.getPost()+"', '"+user.getPhone()+"',"
+				+ " '"+user.getNearestStation()+"', '"+user.getTransportation()+"', '"+user.getSex()+"', '"+user.getEmployeeNumber()
+				+"', '"+user.getDepartment()+"', '"+user.getTeam()+"', '"+user.getJoiningDate()+"',"
+				+ " '"+user.getWorkHistory()+"', '"+user.getMarriageFlag()+"', '"+user.getChildren()+"', "
+				+ "'"+user.getQualification()+"', '"+user.getDisplayFlag()+"', '"+user.getRestFlag()+"',"
+				+ " '"+user.getRegistDate()+"', 'NULL')";
+		
+		try {
+			//DB接続
+			con = getConnection();
+			smt = con.createStatement();
+			
+			//登録の処理
+			smt.executeUpdate(sql);
+			
+			
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * 疑似削除を行うメソッド
+	 * 
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	
+	
+	/**
+	 * 更新処理を行うメソッド
+	 * 
+	 * @param 更新したい情報
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	public void update(User user) {
+		Connection con = null;
+		Statement smt = null;
+		
+		//SQL文の作成
+		String sql = "INSERT INTO `user_info` (`user_id`, `account_id`, `name`, "
+				+ "`name_kana`, `birthday`, `address`, `post`, `phone`, "
+				+ "`nearest_station`, `transportation`, `sex`, `employee_number`, "
+				+ "`department`, `team`, `joining_date`, `work_history`, "
+				+ "`marriage_flag`, `children`, `qualification`, `display_flag`, "
+				+ "`rest_flag`, `regist_date`, `update_date`) "
+				+ "VALUES (NULL, '"+user.getAccountId()+"', '"+user.getName()+"', '"+user.getNameKana()+"', "
+				+ "'"+user.getBirthday()+"', '"+user.getAddress()+"', '"+user.getPost()+"', '"+user.getPhone()+"',"
+				+ " '"+user.getNearestStation()+"', '"+user.getTransportation()+"', '"+user.getSex()+"', '"+user.getEmployeeNumber()
+				+"', '"+user.getDepartment()+"', '"+user.getTeam()+"', '"+user.getJoiningDate()+"',"
+				+ " '"+user.getWorkHistory()+"', '"+user.getMarriageFlag()+"', '"+user.getChildren()+"', "
+				+ "'"+user.getQualification()+"', '"+user.getDisplayFlag()+"', '"+user.getRestFlag()+"',"
+				+ " '"+user.getRegistDate()+"', '"+user.getUpdateDate()+"')";
+		
+		try {
+			//DB接続
+			con = getConnection();
+			smt = con.createStatement();
+			
+			//更新の処理
+			smt.executeUpdate(sql);
+			
+			
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * 詳細表示を行うメソッド
+	 * 
+	 * @param 詳細表示したいユーザーID
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 * @return 詳細表示された情報
+	 */
+	public void detail(int userid) {
+		
+	}
+	
+	
+	/**
+	 * 検索を行うメソッド ※オプション
+	 * 
+	 * @param 検索したいユーザーid
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 * @return 検索された情報
+	 */
+	
+	
+	
 }

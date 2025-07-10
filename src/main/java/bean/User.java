@@ -7,7 +7,7 @@ public class User {
 
 	
 	private int userId;					//ユーザー情報ID
-	private int acountId;				//アカウントID
+	private int accountId;				//アカウントID
 	private String name;				//氏名
 	private String nameKana;			//氏名（カナ）
 	private Date birthday;				//生年月日
@@ -37,11 +37,11 @@ public class User {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public int getAcountId() {
-		return acountId;
+	public int getAccountId() {
+		return accountId;
 	}
-	public void setAcountId(int acountId) {
-		this.acountId = acountId;
+	public void setAccountId(int acountId) {
+		this.accountId = acountId;
 	}
 	public String getName() {
 		return name;
