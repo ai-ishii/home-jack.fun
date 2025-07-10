@@ -32,6 +32,10 @@ public class AnnounceDAO {
 		}
 	}
 
+	/**
+	 * DBにあるお知らせ情報を全件取得するメソッド
+	 * @return ArrayList<Announce> list
+	 */
 	public ArrayList<Announce> selectAnnounceAll() {
 
 		// 変数宣言
@@ -42,7 +46,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "";
+		String sql = "SELECT * FROM announce_info";
 
 		try {
 			// DBに接続
@@ -55,20 +59,21 @@ public class AnnounceDAO {
 			// 検索結果をArrayListに格納
 			while (rs.next()) {
 				Announce announce = new Announce();
-				announce.getAnnounce_id();
-				announce.getUser_id();
-				announce.getRegist_date();
-				announce.getUpdate_date();
-				announce.getTitle();
-				announce.getText();
-				announce.getImage();
-				announce.getComment();
-				announce.getIine_flag();
-				announce.getAnnounce_flag();
-				announce.getFavorite_flag();
-				announce.getCategory();
-				announce.getTag();
-				announce.getFile();
+				announce.setAnnounceId(rs.getInt("announce_id"));
+				announce.setUserId(rs.getInt("user_id"));
+				announce.setName(rs.getString("name"));
+				announce.setRegistDate(rs.getTimestamp("regist_date"));
+				announce.setUpdateDate(rs.getTimestamp("update_date"));
+				announce.setTitle(rs.getString("title"));
+				announce.setText(rs.getString("text"));
+				announce.setImage(rs.getString("image"));
+				announce.setComment(rs.getString("comment"));
+				announce.setLikeFlag(rs.getInt("like_flag"));
+				announce.setAnnounceFlag(rs.getInt("announce_flag"));
+				announce.setFavoriteFlag(rs.getInt("favorite_flag"));
+				announce.setCategory(rs.getInt("category"));
+				announce.setTag(rs.getString("tag"));
+				announce.setFile(rs.getString("file"));
 				list.add(announce);
 			}
 		} catch (Exception e) {
