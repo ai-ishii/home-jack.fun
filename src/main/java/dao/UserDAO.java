@@ -55,7 +55,7 @@ public class UserDAO {
 			while (rs.next()) {
 				User user = new User();
 				user.setUserId(rs.getInt("user_id"));
-				user.setAcountId(rs.getInt("account_id"));
+				user.setAccountId(rs.getInt("account_id"));
 				user.setName(rs.getString("name"));
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));

@@ -38,10 +38,10 @@ public class User {
 		this.userId = userId;
 	}
 	public int getAccountId() {
-		return acountId;
+		return accountId;
 	}
 	public void setAccountId(int acountId) {
-		this.acountId = acountId;
+		this.accountId = acountId;
 	}
 	public String getName() {
 		return name;
