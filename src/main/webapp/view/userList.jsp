@@ -61,7 +61,11 @@ ArrayList<User> list = (ArrayList<User>) request.getAttribute("user_List");
 </head>
 
 <body>
+<<<<<<< HEAD
 <%--　<%@include file="../common/header.jsp"%>  --%>
+=======
+<%@include file="../common/header.jsp"%>
+>>>>>>> branch 'master' of https://github.com/ai-ishii/home-jack.fun.git
 	
 <div id="contents, link-title">
 	<h1 id="link-line">個人情報一覧</h1>

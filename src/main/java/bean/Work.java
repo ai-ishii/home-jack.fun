@@ -1,116 +1,81 @@
 package bean;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 public class Work {
 
-	private int work_id;				//在宅勤務状況管理
-	private int user_id;				//ユーザーID
+	private int workId;					//在宅勤務状況管理
+	private int userId;					//ユーザーID
 	private String situation;			//勤務状況
-	private String job_location;		//勤務先
-	private String low_root;			//最安値ルート
+	private String jobLocation;			//勤務先
+	private String lowRoot;				//最安値ルート
 	private int price;					//料金
-	private String near_station;		//現場最寄り駅
-	private Timestamp regist_date;		//登録日時
-	private Timestamp update_date;		//更新日時
-	private String route_name;			//路線名
+	private String nearStation;			//現場最寄り駅
+	private Timestamp registDate;		//登録日時
+	private Timestamp updateDate;		//更新日時
+	private String routeName;			//路線名
 	
-	//work_idのゲッターメソッド
-	public int getWork_id() {
-		return work_id;
-	}
 	
-	//work_idのセッターメソッド
-	public void setWork_id(int work_id) {
-		this.work_id = work_id;
+	public int getWorkId() {
+		return workId;
 	}
-
-	//user_idのゲッターメソッド
-	public int getUser_id() {
-		return user_id;
+	public void setWorkId(int workId) {
+		this.workId = workId;
 	}
-
-	//user_idのセッターメソッド
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public int getUserId() {
+		return userId;
 	}
-
-	//situationのゲッターメソッド
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	public String getSituation() {
 		return situation;
 	}
-
-	//situationのセッターメソッド
 	public void setSituation(String situation) {
 		this.situation = situation;
 	}
-	
-	//job_locationのゲッターメソッド
-	public String getJob_location() {
-		return job_location;
+	public String getJobLocation() {
+		return jobLocation;
 	}
-
-	//job_locationのセッターメソッド
-	public void setJob_location(String job_location) {
-		this.job_location = job_location;
+	public void setJobLocation(String jobLocation) {
+		this.jobLocation = jobLocation;
 	}
-
-	//low_rootのゲッターメソッド
-	public String getLow_root() {
-		return low_root;
+	public String getLowRoot() {
+		return lowRoot;
 	}
-
-	//low_rootのセッターメソッド
-	public void setLow_root(String low_root) {
-		this.low_root = low_root;
+	public void setLowRoot(String lowRoot) {
+		this.lowRoot = lowRoot;
 	}
-
-	//priceのゲッターメソッド
 	public int getPrice() {
 		return price;
 	}
-
-	//priceのセッターメソッド
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
-	public String getNear_station() {
-		return near_station;
+	public String getNearStation() {
+		return nearStation;
 	}
-
-	//near_stationのゲッターメソッド
-	public void setNear_station(String near_station) {
-		this.near_station = near_station;
+	public void setNearStation(String nearStation) {
+		this.nearStation = nearStation;
 	}
-
-	//near_stationのセッターメソッド
-	public Timestamp getRegist_date() {
-		return regist_date;
+	public Timestamp getRegistDate() {
+		return registDate;
 	}
-
-	//regist_dateのゲッターメソッド
-	public void setRegist_date(Timestamp regist_date) {
-		this.regist_date = regist_date;
+	public void setRegistDate(Timestamp registDate) {
+		this.registDate = registDate;
 	}
-
-	//regist_dateのセッターメソッド
-	public Timestamp getUpdate_date() {
-		return update_date;
+	public Timestamp getUpdateDate() {
+		return updateDate;
 	}
-
-	//update_dateのセッターメソッド
-	public void setUpdate_date(Timestamp update_date) {
-		this.update_date = update_date;
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
 	}
-
-	//route_nameのゲッターメソッド
-	public String getRoute_name() {
-		return route_name;
+	public String getRouteName() {
+		return routeName;
 	}
-
-	//route_nameのセッターメソッド
-	public void setRoute_name(String route_name) {
-		this.route_name = route_name;
+	public void setRouteName(String routeName) {
+		this.routeName = routeName;
 	}
+	
+	
 }
