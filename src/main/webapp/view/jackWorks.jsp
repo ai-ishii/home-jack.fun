@@ -184,7 +184,7 @@ a.btn--yellow:hover {
 <body>
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
-		<%@ include file="../common/header.jsp"%>
+		<%--<%@ include file="../common/header.jsp"%>--%>
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">
@@ -275,5 +275,4 @@ a.btn--yellow:hover {
 </body>
 =======
 	</body>
->>>>>>> branch 'aoki' of https://github.com/ai-ishii/home-jack.fun.git
 </html>
