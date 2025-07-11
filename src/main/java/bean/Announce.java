@@ -11,14 +11,11 @@ public class Announce {
 	private Timestamp updateDate;		//更新日時
 	private String title; 				//タイトル
 	private String text; 				//本文
-	private String image; 				//画像
 	private String comment; 			//コメント
 	private int likeFlag; 				//いいねフラグ
 	private int announceFlag; 			//お知らせ表示フラグ
-	private int favoriteFlag; 			//お気に入りフラグ
 	private int category; 				//カテゴリ
 	private String tag; 				//タグ
-	private String file; 				//ファイル
 
 
 	public int getAnnounceId() {
@@ -69,13 +66,6 @@ public class Announce {
 		this.text = text;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
 
 	public String getComment() {
 		return comment;
@@ -109,14 +99,6 @@ public class Announce {
 		this.announceFlag = announceFlag;
 	}
 
-	public int getFavoriteFlag() {
-		return favoriteFlag;
-	}
-
-	public void setFavoriteFlag(int favoriteFlag) {
-		this.favoriteFlag = favoriteFlag;
-	}
-
 	public int getCategory() {
 		return category;
 	}
@@ -133,13 +115,5 @@ public class Announce {
 		this.tag = tag;
 	}
 
-	public String getFile() {
-		return file;
-	}
-
-	public void setFile(String file) {
-		this.file = file;
-	}
-	
 	
 }
