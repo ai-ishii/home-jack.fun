@@ -11,12 +11,23 @@ Announce announce = (Announce) request.getAttribute("announce");
 <title>お知らせ</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
+#announce_box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 80%;
+	margin: 0 auto;
+	
+}
 
 #title_box {
 	display: flex;
 	align-items: center;
-	width: 80%;
+	position: relative;
+	width: 100%;
 	height: 150px;
 	background-color: #ffffff;
 	margin: 70px auto 0 auto;
@@ -47,7 +58,7 @@ Announce announce = (Announce) request.getAttribute("announce");
 }
 
 .title {
-	width: 60%;
+	width: 70%;
 }
 
 .title p {
@@ -58,17 +69,24 @@ Announce announce = (Announce) request.getAttribute("announce");
 }
 
 .category {
-	width: 10%;
+	position: absolute;
+	top: -80px;
+	right: 20px;
+	min-width: 20px;
 	height: 20px;
+	color: #aaaaaa;
 }
 
-.category {
+.category p {
 	text-align: center;
 	font-size: 18px;
+	padding: 30px 0 0 0;
 }
 
 #content_box {
-	width: 80%;
+	display: flex;
+	justify-content: center;
+	width: 100%;
 	min-height: 500px;
 	background-color: #ffffff;
 	margin: 0 auto 70px auto;
@@ -76,31 +94,50 @@ Announce announce = (Announce) request.getAttribute("announce");
 	border-bottom-left-radius: 10px;
 }
 
+.text_box {
+	width: 90%;
+	min-height: 500px;
+	padding: 20px 0;
+}
+
+.text_box p {
+	white-space: pre-line;
+}
 </style>
 </head>
 <body>
-	
-	<%@include file="../common/header.jsp" %>
-	
-	<div id="title_box">
-		<div class="year">
-			<p>2025</p>
-		</div>
-		<div class="date">
-			<p>7/7</p>
-		</div>
-		<div class="title">
-			<p><%= announce.getTitle() %></p>
-		</div>
-		<div class="categoty">
-			<p>#お知らせ</p>
+	<div id="wrap">
+
+		<!-- ヘッダー部分 -->
+		<%@include file="../common/header.jsp"%>
+
+		<!-- メイン部分 -->
+		<div id="main" class="container">
+			<div id="announce_box">
+				<div id="title_box">
+					<div class="year">
+						<p>2025</p>
+					</div>
+					<div class="date">
+						<p>7/7</p>
+					</div>
+					<div class="title">
+						<p><%=announce.getTitle()%></p>
+					</div>
+					<div class="category">
+						<p>#お知らせ</p>
+					</div>
+				</div>
+				<div id="content_box">
+					<div class="text_box">
+					<p><%=announce.getText()%></p>
+					</div>
+				</div>
+
+				<a href="<%=request.getContextPath()%>/announce">一覧へ</a>
+			</div>
 		</div>
 	</div>
-	<div id="content_box">
-		<p><%= announce.getText() %></p>
-	</div>
-	
-	<a href="<%= request.getContextPath() %>/announce">一覧へ</a>
-	
+
 </body>
 </html>
