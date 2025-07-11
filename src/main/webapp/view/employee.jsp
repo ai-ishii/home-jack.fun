@@ -28,15 +28,17 @@ for (int i = 0; i < userList.size(); i++) {
 <style>
 /* ページ全体（div）*/
 #employee {
-	width: 100%;
-	overflow-x: hidden;
 	position: relative;
+	width: 100%;
 	text-align: center;
+	overflow-x: hidden;
 	z-index: 10;
 }
 
 /* タイトル部分*/
 table {
+	margin-right: auto;
+	margin-left: auto;
 	background-image: linear-gradient(90deg, #b2d5de 0 25%, #ddcfb3 25% 50%, #b3ddb4 50% 75%,
 		#ddbab3 75%);
 	background-repeat: no-repeat;
@@ -45,16 +47,14 @@ table {
 	color: #353535;
 	font-weight: bold;
 	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 /* 社員1人分（div）*/
 #employee_card {
 	display: inline-block;
+	margin: 3px;
 	width: 200px;
 	height: 270px;
-	margin: 3px;
 	/*	大きさが変わるときのスピード*/
 	transition: 0.3s;
 }
@@ -86,8 +86,8 @@ a:hover {
 
 /* 社員一覧全体（div）*/
 #employee_list {
-	margin-left: auto;
 	margin-right: auto;
+	margin-left: auto;
 }
 
 /* 社員一覧の1行分*/
@@ -100,25 +100,26 @@ a:hover {
 
 /* 社員名（p）*/
 #employee_name {
+	/*	画像の上に文字を重ねるため*/
+	position: relative;
+	top: -83px;
+	margin: 0;
 	width: 200px;
 	background-color: rgba(255, 255, 255, 0.8);
 	color: black;
 	font-size: 25px;
 	font-weight: 500;
-	margin: 0;
-	/*	画像の上に文字を重ねるため*/
-	position: relative;
-	top: -84px;
 	cursor: pointer;
 }
 
 /* 社員情報（p）*/
 #employee_detail {
-	color: black;
-	margin: 0;
 	/*	画像の上に文字を重ねるため*/
 	position: relative;
-	top: -84px;
+	top: -83px;
+	margin: 0;
+	background-color: rgba(255, 255, 255, 0.8);
+	color: black;
 	cursor: pointer;
 }
 
@@ -155,7 +156,7 @@ a:hover {
 						if (userList != null) {
 							for (int i = 0; i < userList.size(); i++) {
 						%>
-						<a href="detailEmployee.jsp">
+						<a href="<%= request.getContextPath() %>/detailEmployee?userId=<%= userList.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img src="<%=request.getContextPath()%>/img/<%=photos[i]%>" alt="社員画像">
 								<p id="employee_name"><%=userList.get(i).getName()%></p>
