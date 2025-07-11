@@ -9,38 +9,6 @@ public class Jackworks{
 	private int userId;						//ユーザー情報ID
 	private int employeeNumber;				//社員番号
 	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
-	private int jackworksId;				//JackWorksID
-	private int userId;						//ユーザー情報ID
-	private int employeeNumber;				//社員番号
-	private String name;					//氏名
 	private String category;				//カテゴリ
 	private String assessment;				//評価項目
 	private int point;						//付与ポイント

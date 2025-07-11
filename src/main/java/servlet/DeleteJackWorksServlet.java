@@ -1,3 +1,11 @@
+/**
+ * JackWorks削除機能
+ * 
+ * 作成者：青木美波
+ * 
+ * 作成日 2025/07/09
+ */
+
 package servlet;
 
 import java.io.IOException;
@@ -18,17 +26,17 @@ public class DeleteJackWorksServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = null;
 		// 遷移先のパス
-		String path = "/jackWorks";
+		String path = "/monthJackWorks";
 
 		//オブジェクト生成
 		JackWorksDAO jackworksDAO = new JackWorksDAO();
 
 		try {
-			//JackWorksの全情報を取得するメソッド
-			 monthJack = jackworksDAO.selectAll();
-
-			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
-			request.setAttribute("monthJack", monthJack);
+			//JackWorksのJackWorksIDを取得する
+			String jackworksId=request.getParameter("jackworksId");
+			
+			//JackWorksの情報を削除するメソッド
+			jackworksDAO.delete(Integer.parseInt(jackworksId));
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、JackWorksは削除できませんでした。";
@@ -49,6 +57,5 @@ public class DeleteJackWorksServlet extends HttpServlet {
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
-
 
 }
