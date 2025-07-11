@@ -268,8 +268,12 @@ a.btn--yellow:hover {
 			
 			</table>
 	</div>
+<<<<<<< HEAD
 		
 		</div>
 	</div>
 </body>
+=======
+	</body>
+>>>>>>> branch 'aoki' of https://github.com/ai-ishii/home-jack.fun.git
 </html>

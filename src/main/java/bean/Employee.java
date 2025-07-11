@@ -7,6 +7,7 @@ public class Employee {
 	
 	private int employeeId;				//社員紹介ID
 	private int userId;					//ユーザー情報ID
+	private String employeeNumber;		//社員番号
 	private int devloper;				//開発経験年数
 	private String langSkill;			//習得技術（言語）
 	private String middleSkill;			//習得技術（ミドルウェア）
@@ -30,6 +31,12 @@ public class Employee {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public String getEmployeeNumber() {
+		return employeeNumber;
+	}
+	public void setEmployeeNumber(String employeeNumber) {
+		this.employeeNumber = employeeNumber;
 	}
 	public int getDevloper() {
 		return devloper;

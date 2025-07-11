@@ -68,7 +68,7 @@ public class AnnounceDAO {
 				announce.setText(rs.getString("text"));
 				announce.setImage(rs.getString("image"));
 				announce.setComment(rs.getString("comment"));
-				announce.setLikeFlag(rs.getInt("iine_flag"));
+				announce.setLikeFlag(rs.getInt("like_flag"));
 				announce.setAnnounceFlag(rs.getInt("announce_flag"));
 				announce.setFavoriteFlag(rs.getInt("favorite_flag"));
 				announce.setCategory(rs.getInt("category"));

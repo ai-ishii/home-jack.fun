@@ -20,6 +20,7 @@ public class Announce {
 	private String tag; 				//タグ
 	private String file; 				//ファイル
 
+
 	public int getAnnounceId() {
 		return announceId;
 	}
@@ -139,5 +140,6 @@ public class Announce {
 	public void setFile(String file) {
 		this.file = file;
 	}
+	
 	
 }
