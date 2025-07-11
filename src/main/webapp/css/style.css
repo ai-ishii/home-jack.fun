@@ -25,10 +25,13 @@ cursor
 #main {
 	position: relative;
 	width: 100%;
-	display: flex;
 	flex-direction: row;
 	z-index: 10;
 	
+}
+
+.flex {
+	display: flex;
 }
 
 body {
