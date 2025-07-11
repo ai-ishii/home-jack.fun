@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import bean.Announce;
 import dao.AnnounceDAO;
@@ -21,14 +20,14 @@ public class AnnounceDetailServlet extends HttpServlet {
 		String error = "";
 		String cmd = "";
 		
-		ArrayList<Announce> announceList = new ArrayList<Announce>();
+		Announce announce = new Announce();
 		
-		// int aoounceId = Integer.parseInt(request.getParameter("announceId"));
+		int announceId = Integer.parseInt(request.getParameter("announceId"));
 		
 		try {
 			AnnounceDAO announceDAO = new AnnounceDAO();
 			
-			// announceDAO.selectByAnnounceId();
+			announce = announceDAO.selectByAnnounceId(announceId);
 		} catch (Exception e) {
 			
 		} finally {
@@ -37,7 +36,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("#").forward(request, response);
 			} else {
-				// request.setAttribute("announceList", announceList);
+				request.setAttribute("announce", announce);
 				request.getRequestDispatcher("/view/announceDetail.jsp").forward(request, response);
 			}
 		}
