@@ -262,10 +262,10 @@
 		indexRight += 1;
 		
 		//	インデックスがリストの範囲を超えた場合の処理
-		if (indexRight >= sameBelong_imgList.length) {
-			indexLeft = sameBelong_imgList.length - 3;
-			indexCenter = sameBelong_imgList.length - 2;
-			indexRight = sameBelong_imgList.length - 1;
+		if (indexRight >= sameJoinTiming_imgList.length) {
+			indexLeft = sameJoinTiming_imgList.length - 3;
+			indexCenter = sameJoinTiming_imgList.length - 2;
+			indexRight = sameJoinTiming_imgList.length - 1;
 		}
 		
 		//	現在のインデックスを指定でリストから取ってくる

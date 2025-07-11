@@ -23,10 +23,10 @@ cursor
 }
 
 #main {
+	position: relative;
 	width: 100%;
-	margin: 20px;
-	display: flex;
 	flex-direction: row;
+	z-index: 10;
 }
 
 body {
@@ -41,70 +41,9 @@ h1, h2 {
 	padding: 10px 0;
 }
 
-/*↓社員紹介一覧画面のcss*/
-#employee {
-	z-index: 10;
-	text-align: center;
-}
-
-/*社員1人分（div）*/
-#employee #employee_card,
-#detailEmployee #employee_card {
-	display: inline-block;
-	height: 200px;
-	/*	大きさが変わるときのスピード*/
-	transition: 0.3s;
-}
-
-#employee #employee_card:hover,
-#detailEmployee #employee_card:hover {
-	/*	どれくらい大きくなるか*/
-	transform: scale(1.1);
-}
-
-/*社員一覧の1行分（div）*/
-#employee #employee_line {
-	margin-top: 100px;
-	margin-bottom: 100px;
-}
-
-#employee a,
-#detailEmployee a {
-	text-decoration: none;
-}
-
-/*社員名（p）*/
-#employee #employee_name,
-#detailEmployee #employee_name {
-	color: black;
-	font-size: 30px;
-	font-weight: 500;
-	margin: 0;
-	/*	画像の上に文字を重ねるため*/
-	position: relative;
-	top: -70px;
-	cursor: pointer;
-}
-
-/*社員情報（p）*/
-#employee #employee_detail,
-#detailEmployee #employee_detail {
-	color: black;
-	margin: 0;
-	/*	画像の上に文字を重ねるため*/
-	position: relative;
-	top: -70px;
-	cursor: pointer;
-}
-
-#employee #employee_name,
-#employee_detail {
-	background-color: rgba(255, 255, 255, 0.8);
-}
-
 #detailEmployee #employee_name,
 #employee_detail {
-	width: 220px;
+	width: 200px;
 	background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -207,12 +146,9 @@ h1, h2 {
 	right: 15px;
 }
 
-#employee img,
+#employee #employee_card img,
 #detailEmployee img {
-	width: 220px;
-	height: 300px;
-	/*	縦横比を固定する*/
-	object-fit: none;
+	
 }
 
 /*-----------------------------------*/
