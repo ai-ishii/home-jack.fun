@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="bean.Announce"%>
+
+<%
+Announce announce = (Announce) request.getAttribute("announce");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +15,7 @@
 
 #title_box {
 	display: flex;
-	align-items: flex-end;
+	align-items: center;
 	width: 80%;
 	height: 150px;
 	background-color: #ffffff;
@@ -85,13 +90,14 @@
 			<p>7/7</p>
 		</div>
 		<div class="title">
-			<p>タイトル</p>
+			<p><%= announce.getTitle() %></p>
 		</div>
 		<div class="categoty">
 			<p>#お知らせ</p>
 		</div>
 	</div>
 	<div id="content_box">
+		<p><%= announce.getText() %></p>
 	</div>
 	
 	<a href="<%= request.getContextPath() %>/announce">一覧へ</a>

@@ -26,7 +26,7 @@ public class AnnounceServlet extends HttpServlet {
 		try {
 			AnnounceDAO announceDAO = new AnnounceDAO();
 
-			announceList = announceDAO.selectAnnounceAll();
+			announceList = announceDAO.selectAll();
 		} catch (Exception e) {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
