@@ -14,7 +14,7 @@ public class Announce {
 	private String comment; 			//コメント
 	private int likeFlag; 				//いいねフラグ
 	private int announceFlag; 			//お知らせ表示フラグ
-	private int category; 				//カテゴリ
+	private int announceCategoryId; 	//カテゴリ
 	private String tag; 				//タグ
 
 
@@ -99,12 +99,12 @@ public class Announce {
 		this.announceFlag = announceFlag;
 	}
 
-	public int getCategory() {
-		return category;
+	public int getAnnounceCategoryId() {
+		return announceCategoryId;
 	}
 
-	public void setCategory(int category) {
-		this.category = category;
+	public void setAnnounceCategoryId(int announceCategoryId) {
+		this.announceCategoryId = announceCategoryId;
 	}
 
 	public String getTag() {
