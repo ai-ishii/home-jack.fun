@@ -82,4 +82,21 @@ public class MyFormat {
 		return date;
 	}
 	
+	/**
+	 * 引数のTimeStampをyyyy年MM月の形式に変換するメソッド
+	 * @param Timestamp
+	 * @return 変換された日付データ
+	 */
+	public String YearMonthFormat(Timestamp timestamp) {
+		//TimestampをDate型に変換する
+		Date condate = new Date(timestamp.getTime());
+		
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyy年MM月");
+		
+		String date = yearMonthFormat.format(condate);
+		
+		return date;
+	}
+	
 }
