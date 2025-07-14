@@ -96,4 +96,7 @@ public class AnnounceDAO {
 		
 		return list;
 	}
+	
+	
+	
 }

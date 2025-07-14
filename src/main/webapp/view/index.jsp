@@ -1,5 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
+<%
+ArrayList<>
+%>
+
 <html>
 <head>
 <title></title>
@@ -139,6 +143,47 @@
 				</div>
 
 				<div id="announce" class="container">
+					<h2>重要なお知らせ</h2>
+					<div class="announce-list">
+						<ul>
+						
+						
+							<li class="item"><a href="#">
+									<p class="date">2025/06/30</p>
+									<p class="tag">
+										<span>お知らせ</span>
+									</p>
+									<div class="title">
+										<p class="article">今日のわんこ
+											しゃけ。1歳。ガルク。カムラの里で、だれかさんと暮らしています。ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
+										<p class="name">青木</p>
+									</div>
+							</a></li>
+							<li class="item"><a href="#">
+									<p class="date">2025/06/29</p>
+									<p class="tag">
+										<span>お知らせ</span>
+									</p>
+									<div class="title">
+										<p class="article">今日のわんこ
+											ぼたもち。2歳。ガルク。カムラの里で、どちらさんと暮らしています。</p>
+										<p class="name">占部</p>
+									</div>
+							</a></li>
+							<li class="item"><a href="#">
+									<p class="date">2025/06/28</p>
+									<p class="tag">
+										<span>お知らせ</span>
+									</p>
+									<div class="title">
+										<p class="article">今日のわんこ
+											えくれあ。3歳。ガルク。カムラの里で、そなたさんと暮らしています。</p>
+										<p class="name">月向</p>
+									</div>
+							</a></li>
+						</ul>
+					</div>
+					
 					<h2>最新のお知らせ</h2>
 					<div class="announce-list">
 						<ul>
