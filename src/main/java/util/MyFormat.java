@@ -1,8 +1,3 @@
-package util;
-
-public class MyFormat {
-
-}
 /*
  * 表示形式を変換するクラス
  * 作成者 : 占部虎司郎
@@ -16,6 +11,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyFormat {
+	/**
+	 * 引数のTimestampをyyyy年\r\nMM月dd日の形式に変換するメソッド
+	 * @param Timestamp
+	 * @return 変換された日付データ
+	 */
+	public String BreakDateFormat(Timestamp timestamp) {
+		//TimestampをDate型に変換する
+		Date condate = new Date(timestamp.getTime());
+		
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年\r\nMM月dd日");
+		
+		//フォーマット使用
+		String date = dateFormat.format(condate);
+		
+		return date;
+	}
+	
 	/**
 	 * 引数のTimestampをyyyy年 MM月 dd日の形式に変換するメソッド
 	 * @param Timestamp
@@ -33,6 +46,7 @@ public class MyFormat {
 		
 		return date;
 	}
+	
 	
 	/**
 	 * 引数のTimestampをMM/ddの形式に変換するメソッド
