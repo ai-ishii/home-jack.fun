@@ -1,3 +1,10 @@
+/*
+ * 資格状況一覧　サーブレット
+ * 7/14
+ * 川上
+ * 
+ */
+
 package servlet;
 
 import java.io.IOException;
@@ -5,6 +12,7 @@ import java.util.ArrayList;
 
 import bean.LicenseList;
 import dao.LicenseListDAO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,23 +29,23 @@ public class LicenseListServlet extends HttpServlet {
 		String cmd = "";
 
 		try {
-			//パラメータの取得
-			String id = request.getParameter("id");
-
+			//配列宣言
 			ArrayList<LicenseList> list = new ArrayList<LicenseList>();
-			//オブジェクト宣言
-			LicenseListDAO objDao = new LicenseListDAO();
-			//検索結果をlistに格納
-			list = objDao.selectAll();
 
+			//オブジェクト宣言
+			LicenseListDAO licenseDao = new LicenseListDAO();
+			//全データ呼び出し
+			list = licenseDao.selectAll();
+			
 			//リクエストスコープに登録
 			request.setAttribute("list", list);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は出来ませんでした";
-
+			cmd ="";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。<br>" + e;
+			cmd="";
 		} finally {
 			if (error != null) {
 				request.setAttribute("error", error);
@@ -45,8 +53,8 @@ public class LicenseListServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 
 			} else {
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/licenseList.jsp").forward(request, response);
+				RequestDispatcher dispatcher = 
+				request.getRequestDispatcher("/view/licenseList.jsp");dispatcher.forward(request, response);
 
 			}
 

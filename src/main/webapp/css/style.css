@@ -17,6 +17,7 @@ font
 cursor
 */
 
+
 .container {
 	width: 100%;
 	margin: 0 auto;
@@ -24,7 +25,7 @@ cursor
 
 #main {
 	width: 100%;
-	margin: 20px;
+	margin: 0px;
 	display: flex;
 	flex-direction: row;
 }
@@ -395,50 +396,162 @@ ul ul {
 
 
 body{
-    background-color: darkorange;
+    background-color: rgb(255, 255, 255);
 }
 
 
 
-.search-form-7 {
-    display: flex;
-    align-items: center;
-    gap: 0 10px;
+
+
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+body {
+  margin:0;
 }
 
-.search-form-7 label {
-    width: 250px;
+h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight:300;
+  letter-spacing: 2px;
+  font-size:48px;
+}
+p {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+  font-size:14px;
+  color: #333333;
 }
 
-.search-form-7 input {
-    width: 100%;
-    height: 34px;
-    padding: 1px 5px 1px 8px;
-    border: 1px solid #999999;
-    box-sizing: border-box;
-    color: #000;
-    outline: none;
+.header {
+  position:relative;
+  text-align:center;
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  color:white;
+  width:100%;
+ 
+}
+.logo {
+  width:50px;
+  fill:white;
+  padding-right:15px;
+  display:inline-block;
+  vertical-align: middle;
 }
 
-.search-form-7 button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    max-width: 140px;
-    height: 34px;
-    border: none;
-    background-color: #4070ff;
-    color: #fff;
-    cursor: pointer;
+.inner-header {
+  /*height:65vh;*/
+  width:100%;
+  margin: 0;
+  padding: 0;
 }
 
-.search-form-7 button::before {
-    width: 14px;
-    height: 14px;
-    margin-right: 5px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z' fill='%23fff'%3E%3C/path%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    content: '';
+.flex { /*Flexbox for containers*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
+.waves {
+  position:relative;
+  width: 100%;
+  height:15vh;
+  margin-bottom:-7px; /*Fix for safari gap*/
+  min-height:100px;
+  max-height:150px;
+}
+
+.content {
+  position:relative;
+  height:20vh;
+  text-align:center;
+  background-color: rgb(255, 255, 255);
+}
+
+/* Animation */
+
+.parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .waves {
+    height:40px;
+    
+  }
+  .content {
+    height:30vh;
+  }
+  h1 {
+    font-size:24px;
+  }
+}
+
+
+.item-list{
+  display: flex;
+  justify-content: center; /* 中央寄せ */
+}
+.item-list .item{
+  box-sizing: border-box;
+  padding: 40px 80px;  
+}
+
+/*フォーム全体を中央へ*/
+#form1{
+  display: flex;
+  justify-content: center; /*中央へ固定*/	
+  height:50px;/*高さ*/	
+}
+/*入力フォーム*/
+#sbox1{
+  width:250px;/*横幅*/
+  padding:0 15px;/*プレースホルダーの位置調整*/
+  border-radius:4px 0 0 4px;/*左側の角を少し丸める*/		
+  background:#eee;/*検背景カラー*/
+  border:none;/*枠線を消す*/ 
+  outline:0;/*クリック時の青い枠線消す*/	
+}
+/*検索ボタン*/
+#sbtn1{
+  width:70px;/*横幅*/ 
+  border-radius:0 4px 4px 0;/*右側の角を少し丸める*/ 
+  background:#7fbfff;/*背景カラー*/ 
+  border:none;/*枠線を消す*/ 
+  color:#fff;/*テキストカラー*/ 
+  font-size:16px;/*フォントサイズ指定*/ 
+  cursor: pointer;/*マウスを乗せると指差しポインターになる*/
+}
+/*検索ボタンマウスオーバー時*/
+#sbtn1:hover {
+  background: #92dbff;/*背景カラー変更*/
+  
+  
+  
+  
+  
+}

@@ -1,3 +1,11 @@
+/*
+ * 資格状況確認一覧DAO
+ * 7/14 
+ * 川上
+ * 
+ */
+
+
 package dao;
 
 import java.sql.Connection;
@@ -8,80 +16,199 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.LicenseList;
+
 public class LicenseListDAO {
 
 	//接続用の情報をフィールドに定数として定義
-		private static final String RDB_DRIVE="org.mariadb.jdbc.Driver";
-	 	private static final String URL="jdbc:mariadb://localhost/jackdb";
-	 	private static final String USER="root";
-	 	private static final String PASSWD="root123";
-	 
-	 	/**
-	 	 * データベース接続を行うメソッド
-	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
-	 	 * @return con
-	 	 */
-	 	private static Connection getConnection(){
-	 		try{
-	 			Class.forName(RDB_DRIVE);
-	 			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
-	 			return con;
-	 		}catch(Exception e){
-	 			throw new IllegalStateException(e);
-	 		}
-	 	}
-	 	 /**
-	 	  * 全データ検索メソッド
-	 	  * 
-	 	 * @return list
-	 	 */
-	 	public ArrayList<LicenseList> selectAll(){
-	 		 //変数宣言
-	 		 Connection con = null;
-	 		 Statement smt = null;
-	 		 
-	 		 //オブジェクト生成
-	 		 ArrayList<LicenseList> list = new ArrayList<LicenseList>();
-	 		 
-	 		 //SQL文
-	 		 String sql =" SELECT * FROM licenselist_info";
-	 		 
-	 		 
-	 		 try {
-	 			 con = getConnection();
-	 			 smt = con.createStatement();
-	 			
-	 		//SQL文を発行
-	 			ResultSet rs =smt.executeQuery(sql);
-	 			
-	 		//検索結果を格納
-	 			while(rs.next()) {
-	 			LicenseList licenselist = new LicenseList();
-	 			licenselist.setLicenseListId(rs.getInt("licenselistid"));
-	 			licenselist.setUserId(rs.getInt("userid"));
-	 			licenselist.setRegistDate(rs.getTimestamp("registDate"));
-	 			licenselist.setImage(rs.getString("image"));
-	 			
-	 			//listに格納
-	 			list.add(licenselist);
-	 				
-	 			}
-	 		 }catch(Exception e){
-	 			 throw new IllegalStateException(e); 
-	 			 
-	 		 }finally {
-	 			 //リソース開放
-	 			 if(smt != null) {
-	 				 try {smt.close();}catch(SQLException ignore) {}
-	 				 
-	 			 }
-	 			 if(con != null) {
-	 				 try {con.close();}catch(SQLException ignore) {}
-	 			 }
-	 		 }
-	 		 return list;
-	 			 
-	 		 }
-	 		 
-	 		 
+	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
+	private static final String URL = "jdbc:mariadb://localhost/jackdb";
+	private static final String USER = "root";
+	private static final String PASSWD = "root123";
+
+	/**
+	 * データベース接続を行うメソッド
+	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 * @return con
+	 */
+	private static Connection getConnection() {
+		try {
+			Class.forName(RDB_DRIVE);
+			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
+			return con;
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+	}
+
+	/**
+	 * 全データ検索メソッド
+	 * 
+	* @return list
+	*/
+	public ArrayList<LicenseList> selectAll() {
+		//変数宣言
+		Connection con = null;
+		Statement smt = null;
+
+		//オブジェクト生成
+		ArrayList<LicenseList> list = new ArrayList<LicenseList>();
+
+		//SQL文
+		String sql = " SELECT * FROM license_list_info";
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			//SQL文を発行
+			ResultSet rs = smt.executeQuery(sql);
+
+			//検索結果を格納
+			while (rs.next()) {
+				LicenseList licenselist = new LicenseList();
+				licenselist.setLicenseListId(rs.getInt("licenselistid"));
+				licenselist.setUserId(rs.getInt("userid"));
+				licenselist.setRegistDate(rs.getTimestamp("registDate"));
+				licenselist.setImage(rs.getString("image"));
+				//listに格納
+				list.add(licenselist);
+
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+
+		} finally {
+			//リソース開放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return list;//return end
+
+	}
+
+
+
+ 
+	public ArrayList<LicenseList> selectByLicenseListID(int licenseListId) {
+		//変数の宣言
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<LicenseList> list = new ArrayList<LicenseList>();
+
+		try {
+
+			//SQL文
+			String sql = "SELECT license_list_id FROM license_list_info "
+	 				+ "WHERE license_list_id = " + licenseListId + ";";
+
+			// データベース接続の準備
+			con = getConnection();
+			smt = con.createStatement();
+
+			// SQL文発行
+			ResultSet rs = smt.executeQuery(sql);
+			//繰り返し処理。一行ずつ格納
+			while (rs.next()) {
+				LicenseList licenselist = new LicenseList();
+				licenselist.setLicenseListId(rs.getInt("licenselistid"));
+				licenselist.setUserId(rs.getInt("userid"));
+				licenselist.setRegistDate(rs.getTimestamp("registDate"));
+				licenselist.setImage(rs.getString("image"));
+
+				//listに格納
+				list.add(licenselist);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			//リソース開放
+			if (smt != null) {
+
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+
+		}
+		return list;//return end
+	}
+
+	
+	public ArrayList<LicenseList> selectByUserID(int userId) {
+		//変数の宣言
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<LicenseList> list = new ArrayList<LicenseList>();
+
+		try {
+
+			//SQL文
+			String sql = "SELECT user_id FROM license_list_info "
+	 				+ "WHERE user_id = " + userId + ";";
+
+
+			// データベース接続の準備
+			con = getConnection();
+			smt = con.createStatement();
+
+			// SQL文発行
+			ResultSet rs = smt.executeQuery(sql);
+
+			while (rs.next()) {
+				LicenseList licenselist = new LicenseList();
+				licenselist.setLicenseListId(rs.getInt("licenselistid"));
+				licenselist.setUserId(rs.getInt("userid"));
+				licenselist.setRegistDate(rs.getTimestamp("registDate"));
+				licenselist.setImage(rs.getString("image"));
+
+				//listに格納
+				list.add(licenselist);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			//リソース開放
+			if (smt != null) {
+
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+
+		}
+		return list;//return end
+		
+	}
+
 }
