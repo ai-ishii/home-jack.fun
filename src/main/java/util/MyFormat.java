@@ -12,11 +12,29 @@ import java.util.Date;
 
 public class MyFormat {
 	/**
+	 * 引数のTimestampをyyyy年\r\nMM月dd日の形式に変換するメソッド
+	 * @param Timestamp
+	 * @return 変換された日付データ
+	 */
+	public String breakDateFormat(Timestamp timestamp) {
+		//TimestampをDate型に変換する
+		Date condate = new Date(timestamp.getTime());
+		
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年\r\nMM月dd日");
+		
+		//フォーマット使用
+		String date = dateFormat.format(condate);
+		
+		return date;
+	}
+	
+	/**
 	 * 引数のTimestampをyyyy年 MM月 dd日の形式に変換するメソッド
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String DateFormat(Timestamp timestamp) {
+	public String dateFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -49,7 +67,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String MonthDayFormat(Timestamp timestamp) {
+	public String monthDayFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -67,7 +85,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String YearFormat(Timestamp timestamp) {
+	public String yearFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -85,7 +103,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String DatetimeFormat(Timestamp timestamp) {
+	public String datetimeFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 				
@@ -102,7 +120,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String YearMonthFormat(Timestamp timestamp) {
+	public String yearMonthFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -119,7 +137,7 @@ public class MyFormat {
 	 * @param Date
 	 * @return 変換された日付データ
 	 */
-	public String birthdayFormat(Date birthday) {
+	public String breakDateFormat(Date birthday) {
 			
 		//SimpleDateFormatをオブジェクト化し、フォーマット指定
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年\r\nMM月dd日");
@@ -130,13 +148,12 @@ public class MyFormat {
 		return date;
 	}
 	
-	
 	/**
 	 * 引数のbirthdayをyyyy年 MM月 dd日の形式に変換するメソッド
 	 * @param Date
 	 * @return 変換された日付データ
 	 */
-	public String birthdayFormat(Date birthday) {
+	public String dateFormat(Date birthday) {
 			
 		//SimpleDateFormatをオブジェクト化し、フォーマット指定
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年 MM月 dd日");
@@ -147,4 +164,16 @@ public class MyFormat {
 		return date;
 	}
 	
+	/**
+	 * 引数の郵便番号を000-0000の形式に変換するメソッド
+	 * @param 郵便番号
+	 * @return 変換された郵便番号
+	 */
+	 public String addHyphen(String postalCode) {
+		if (postalCode.length() == 7) {
+			return postalCode.substring(0, 3) + '-' + postalCode.substring(3, 7);
+		} else {
+			return postalCode;
+		}
+	 }
 }

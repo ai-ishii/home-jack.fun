@@ -7,7 +7,7 @@
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList, bean.User util.MyFormat"%>
+<%@page import="java.util.ArrayList, bean.User, util.MyFormat"%>
 
 <%
 //個人情報を格納したuserを受け取る
@@ -67,6 +67,12 @@ User user = (User) request.getAttribute("user");
 				</div>
 				<br>
 				
+				<% 
+				MyFormat myFormat = new MyFormat();
+				Date birthday = user.getBirthday();
+				String birthday = myFormat.breakDateFormat(birthday);
+				%>
+				
 				<table>
 					<tr>
 						<td>社員番号</td>
@@ -86,7 +92,7 @@ User user = (User) request.getAttribute("user");
 					</tr>
 					<tr>
 						<td>生年月日</td>
-						<td><%=user.getBirthday() %></td>
+						<td><%= birthday %></td>
 					</tr>
 					<tr>
 						<td>性別</td>
@@ -110,7 +116,7 @@ User user = (User) request.getAttribute("user");
 					</tr>
 					<tr>
 						<td>勤務年数</td>
-						<td><%=user.getWorkHistory() %></td>
+						<td><%=user.getWorkHistory() %>年</td>
 					</tr>
 					<tr>
 						<td>最寄り駅</td>
