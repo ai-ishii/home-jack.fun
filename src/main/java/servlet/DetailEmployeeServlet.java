@@ -1,8 +1,8 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import bean.Employee;
 import bean.User;
 import dao.EmployeeDAO;
 import dao.UserDAO;
@@ -12,8 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/employee")
-public class EmployeeServlet extends HttpServlet {
+@WebServlet("/detailEmployee")
+public class DetailEmployeeServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
@@ -26,22 +26,22 @@ public class EmployeeServlet extends HttpServlet {
 		// オブジェクト生成
 		UserDAO userDAO = new UserDAO();
 		EmployeeDAO employeeDAO = new EmployeeDAO();
+		Employee employee = new Employee();
+		User user = new User();
+		
+		// JSPから情報を取得
+		int userId = Integer.parseInt(request.getParameter("userId"));
 		
 		// メソッドからSQL実行
-		ArrayList<User> userList = userDAO.selectAll();
+		employee = employeeDAO.selectByUserId(userId);
+		user = userDAO.selectByUserId(userId);
 		
-		// 社員写真を格納する配列宣言
-		String[] photos = new String[userList.size()];
-		for (int i = 0; i < userList.size(); i++) {
-			photos[i] = employeeDAO.selectPhotoByUserId(userList.get(i).getUserId());
-		}
-		
-		// 取得してきたユーザー情報をjspに送るためセットする
-		request.setAttribute("userList", userList);
-		request.setAttribute("photos", photos);
+		// 取得してきた社員情報をjspに送るためセットする
+		request.setAttribute("Employee", employee);
+		request.setAttribute("User", user);
 			
 		} catch(IllegalStateException e) {
-			error = "DB接続エラーのため、社員一覧は表示できませんでした。";
+			error = "DB接続エラーのため、社員詳細は表示できませんでした。";
 			cmd = "";
 		} catch (Exception e) {
 			cmd = "";
@@ -53,8 +53,8 @@ public class EmployeeServlet extends HttpServlet {
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			} else {	// エラーがなければ
-				// 社員一覧画面に遷移する
-				request.getRequestDispatcher("/view/employee.jsp").forward(request, response);
+				// 社員詳細画面に遷移する
+				request.getRequestDispatcher("/view/detailEmployee.jsp").forward(request, response);
 			}
 		}
 		
