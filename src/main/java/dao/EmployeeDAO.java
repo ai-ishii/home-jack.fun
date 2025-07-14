@@ -63,7 +63,6 @@ public class EmployeeDAO {
 	 			while (rs.next()) {
 	 				employee.setEmployeeId(rs.getInt("employee_id"));
 	 				employee.setUserId(rs.getInt("user_id"));
-	 				employee.setEmployeeNumber(rs.getString("employee_number"));
 	 				employee.setDevloper(rs.getInt("devloper"));
 	 				employee.setLangSkill(rs.getString("lang_skill"));
 	 				employee.setMiddleSkill(rs.getString("middle_skill"));
@@ -183,7 +182,6 @@ public class EmployeeDAO {
 	 			if (rs.next()) {	
 	 				employee.setEmployeeId(rs.getInt("employee_id"));
 	 				employee.setUserId(rs.getInt("user_id"));
-	 				employee.setEmployeeNumber(rs.getString("employee_number"));
 	 				employee.setDevloper(rs.getInt("devloper"));
 	 				employee.setLangSkill(rs.getString("lang_skill"));
 	 				employee.setMiddleSkill(rs.getString("middle_skill"));
