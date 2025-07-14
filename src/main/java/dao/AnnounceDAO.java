@@ -66,14 +66,11 @@ public class AnnounceDAO {
 				announce.setUpdateDate(rs.getTimestamp("update_date"));
 				announce.setTitle(rs.getString("title"));
 				announce.setText(rs.getString("text"));
-				announce.setImage(rs.getString("image"));
 				announce.setComment(rs.getString("comment"));
 				announce.setLikeFlag(rs.getInt("like_flag"));
 				announce.setAnnounceFlag(rs.getInt("announce_flag"));
-				announce.setFavoriteFlag(rs.getInt("favorite_flag"));
-				announce.setCategory(rs.getInt("category"));
+				announce.setAnnounceCategoryId(rs.getInt("category"));
 				announce.setTag(rs.getString("tag"));
-				announce.setFile(rs.getString("file"));
 				list.add(announce);
 			}
 		} catch (Exception e) {
@@ -131,14 +128,11 @@ public class AnnounceDAO {
 				announce.setUpdateDate(rs.getTimestamp("update_date"));
 				announce.setTitle(rs.getString("title"));
 				announce.setText(rs.getString("text"));
-				announce.setImage(rs.getString("image"));
 				announce.setComment(rs.getString("comment"));
 				announce.setLikeFlag(rs.getInt("like_flag"));
 				announce.setAnnounceFlag(rs.getInt("announce_flag"));
-				announce.setFavoriteFlag(rs.getInt("favorite_flag"));
-				announce.setCategory(rs.getInt("category"));
+				announce.setAnnounceCategoryId(rs.getInt("category"));
 				announce.setTag(rs.getString("tag"));
-				announce.setFile(rs.getString("file"));
 			}
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
