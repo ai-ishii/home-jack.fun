@@ -3,7 +3,9 @@ package servlet;
 import java.io.IOException;
 
 import bean.Employee;
+import bean.User;
 import dao.EmployeeDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,18 +24,21 @@ public class DetailEmployeeServlet extends HttpServlet {
 		
 		try {
 		// オブジェクト生成
-//		UserDAO userDAO = new UserDAO();
+		UserDAO userDAO = new UserDAO();
 		EmployeeDAO employeeDAO = new EmployeeDAO();
 		Employee employee = new Employee();
+		User user = new User();
 		
 		// JSPから情報を取得
 		int userId = Integer.parseInt(request.getParameter("userId"));
 		
 		// メソッドからSQL実行
 		employee = employeeDAO.selectByUserId(userId);
+		user = userDAO.selectByUserId(userId);
 		
 		// 取得してきた社員情報をjspに送るためセットする
 		request.setAttribute("Employee", employee);
+		request.setAttribute("User", user);
 			
 		} catch(IllegalStateException e) {
 			error = "DB接続エラーのため、社員詳細は表示できませんでした。";
