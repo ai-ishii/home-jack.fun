@@ -9,7 +9,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import bean.Jackworks;
 import bean.Monthjack;
 import dao.MonthJackDAO;
 import jakarta.servlet.ServletException;
@@ -31,14 +33,46 @@ public class MonthJackWorksServlet extends HttpServlet {
 
 		//オブジェクト生成
 		MonthJackDAO monthJackDAO = new MonthJackDAO();
+		Monthjack monthJack = new Monthjack();
 
 		try {
+			
+			//JackWorksの全情報が格納されたjack_listを受け取る
+			ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+
+			cmd = request.getParameter("cmd");
+			
+			if (cmd == null) {
+				cmd = "";
+			}
+
+			//更新情報を受け取る
+			if (cmd.equals("update")) {
+				String image = request.getParameter("image");
+				monthJack.setImage(image);
+				String theme = request.getParameter("theme");
+				monthJack.setTheme(theme);
+				String note = request.getParameter("note");
+				monthJack.setNote(note);
+
+				//JackWorksの全情報を更新するメソッド
+				monthJackDAO.update(monthJack);
+
+			}
 
 			//JackWorksの全情報を取得するメソッド
-			Monthjack monthJack = monthJackDAO.selectAll();
+			monthJack = monthJackDAO.selectAll();
 
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("monthJack", monthJack);
+			
+			// cmdをリクエストスコープに"cmd"という名前で格納する
+			request.setAttribute("cmd", cmd);
+			
+			if(jackList != null) {
+			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
+			request.setAttribute("jack_list", jackList);
+			}
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、今月のJackWorksは表示できませんでした。";

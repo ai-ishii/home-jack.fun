@@ -9,7 +9,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import bean.Jackworks;
 import dao.JackWorksDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,11 +28,25 @@ public class SearchJackWorksServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = null;
 		// 遷移先のパス
-		String path = "/view/jackWorks.jsp";
+		String path = "/monthJackWorks";
 
 		try {
 
 			JackWorksDAO jackworksDAO = new JackWorksDAO();
+
+			String name = request.getParameter("name");
+
+			//入力された情報を検索するメソッド
+			ArrayList<Jackworks> jackList = jackworksDAO.search(name);
+			
+			//検索表示させるためのcmd
+			cmd = "search";
+			
+			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
+			request.setAttribute("jack_list", jackList);
+			
+			// cmdをリクエストスコープに"cmd"という名前で格納する
+			request.setAttribute("cmd", cmd);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";

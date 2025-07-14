@@ -1,7 +1,7 @@
 <%--
-JackWorks登録画面
+今月のJackWorks登録画面
 作成者：青木美波
-作成日 2025/07/10
+作成日 2025/07/11
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -165,119 +165,32 @@ button.btn-border:active:before {
 
 		<!-- タイトル部分 -->
 		<div id="link-title">
-			<h1 id="link-line">JackWorks登録</h1>
+			<h1 id="link-line">今月のJackWorks内容登録</h1>
 		</div>
 
-		<form action="<%=request.getContextPath()%>/registerJackWorks">
+		<form action="<%=request.getContextPath()%>/monthJackWorks" enctype="multipart/form-data">
+		<input type="hidden" name="cmd" value="update">
 
 			<table id="box-mar">
 				<tr>
-					<td style="display: flex">社員No
+					<td style="display: flex">画像
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="employeeNumber" value="" size="35"></td>
+				<td><input type="file" name="image" size="35" required></td>
+				
 
 				<tr>
-					<td style="display: flex">氏名
+					<td style="display: flex">今月のテーマ
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="name" value="" size="35"></td>
+				<td><input type="text" name="theme" value="" size="35"></td>
 
 				<tr>
-					<td style="display: flex">カテゴリ
-						<div class="warning">*</div>
-					</td>
-				</tr>
-				<td><input type="text" name="category" value="" size="35"></td>
-
-				<tr>
-					<td style="display: flex">評価項目
-						<div class="warning">*</div>
-					</td>
-				</tr>
-				<td><textarea name="assessment" rows="" cols=""></textarea></td>
-
-				<tr>
-					<td style="display: flex">付与ポイント
-						<div class="warning">*</div>
-					</td>
-				</tr>
-				<td><input type="text" name="point" value="" size="35"></td>
-
-				<tr>
-					<td style="display: flex">備考
-						<div class="warning">*</div>
-					</td>
+					<td style="display: flex">備考</td>
 				</tr>
 				<td><textarea name="note" rows="" cols=""></textarea></td>
-
-				<tr>
-					<td>案件名</td>
-				</tr>
-				<td><input type="text" name="project" value="" size="35"></td>
-
-				<tr>
-					<td>作業時期</td>
-				</tr>
-				<td><input type="text" name="workSeason" value="" size="35"></td>
-
-				<tr>
-					<td>単価</td>
-				</tr>
-				<td><input type="text" name="price" value="" size="35"></td>
-
-				<tr>
-					<td>精算</td>
-				</tr>
-				<td><input type="text" name="pay" value="" size="35"></td>
-
-				<tr>
-					<td>作業場所</td>
-				</tr>
-				<td><input type="text" name="workPlace" value="" size="35"></td>
-
-				<tr>
-					<td>作業内容</td>
-				</tr>
-				<td><textarea name="workContent" rows="" cols=""></textarea></td>
-
-				<tr>
-					<td>フェーズ</td>
-				</tr>
-				<td><textarea name="phase" rows="" cols=""></textarea></td>
-
-				<tr>
-					<td>開発言語</td>
-				</tr>
-				<td><textarea name="language" rows="" cols=""></textarea></td>
-
-				<tr>
-					<td>必要スキル</td>
-				</tr>
-				<td><textarea name="skill" rows="" cols=""></textarea></td>
-
-				<tr>
-					<td>必要人数</td>
-				</tr>
-				<td><input type="text" name="needPeople" value="" size="35"></td>
-
-				<tr>
-					<td>営業担当者</td>
-				</tr>
-				<td><input type="text" name="seller" value="" size="35"></td>
-
-				<tr>
-					<td>連絡先</td>
-				</tr>
-				<td><textarea name="contact" rows="" cols=""></textarea></td>
-
-				<tr>
-					<td>その他</td>
-				</tr>
-				<td><textarea name="other" rows="" cols=""></textarea></td>
-
 			</table>
 
 			<br>

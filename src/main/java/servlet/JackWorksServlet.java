@@ -32,11 +32,20 @@ public class JackWorksServlet extends HttpServlet {
 
 		//オブジェクト生成
 		JackWorksDAO jackworksDAO = new JackWorksDAO();
+		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
+			cmd = request.getParameter("cmd");
+			
+			if(cmd.equals("search")) {
+				jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+				
+			}else {
 
-			//JackWorksの全情報を取得するメソッド
-			ArrayList<Jackworks> jackList = jackworksDAO.selectAll();
+			// JackWorksの全情報を取得するメソッド
+			jackList = jackworksDAO.selectAll();
+			
+			}
 			
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
