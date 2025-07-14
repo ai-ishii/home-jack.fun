@@ -114,4 +114,37 @@ public class MyFormat {
 		return date;
 	}
 	
+	/**
+	 * 引数のbirthdayをyyyy年\r\nMM月dd日の形式に変換するメソッド
+	 * @param Date
+	 * @return 変換された日付データ
+	 */
+	public String birthdayFormat(Date birthday) {
+			
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年\r\nMM月dd日");
+		
+		//フォーマット使用
+		String date = dateFormat.format(birthday);
+		
+		return date;
+	}
+	
+	
+	/**
+	 * 引数のbirthdayをyyyy年 MM月 dd日の形式に変換するメソッド
+	 * @param Date
+	 * @return 変換された日付データ
+	 */
+	public String birthdayFormat(Date birthday) {
+			
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年 MM月 dd日");
+		
+		//フォーマット使用
+		String date = dateFormat.format(birthday);
+		
+		return date;
+	}
+	
 }

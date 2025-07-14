@@ -1,4 +1,4 @@
-<%--　
+<%--
 個人情報一覧(管理者画面)
 
 作成者:占部虎司郎
@@ -6,8 +6,7 @@
 作成日:2025/7/4
  --%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList, bean.User"%>
 
 <%
@@ -15,13 +14,16 @@
 ArrayList<User> list = (ArrayList<User>) request.getAttribute("user_List");
 %>
 
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<!-- タイトル -->
 <title>個人情報一覧 | Home-Jack</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style type="text/css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<style>
+
 #info {
 	margin: auto;
 	text-aline: center;
@@ -52,7 +54,7 @@ table {
     border-collapse: collapse;
     margin: 0 auto;
     padding: 0;
-    width: 100%;
+    width: 70%;
 }
 
 table tr {
@@ -142,12 +144,12 @@ color:#f89174;/*文字色*/
 .btn,
 a.btn,
 button.btn {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.5;
   position: relative;
   display: inline-block;
-  padding: 0.4rem 1.3rem;
+  padding: 0.3rem 1.1rem;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -177,17 +179,21 @@ a.btn--yellow:hover {
 }
 
 </style>
-<link rel="stylesheet"
-	href="<%= request.getContextPath()%>/css/style.css">
-</head>
 
 <body>
-	
-<div id = "contents">
+	<div id="wrap">
+		<!-- ヘッダー部分 -->
+		<%@ include file="../common/header.jsp"%>
+
+		<!-- メイン部分 -->
+		<div id="main" class="container">
+		
+		<div id = "contents">
 <div id="link-title">
 	<h1 id="link-line">個人情報一覧</h1>
 </div>
 
+	<br>
 	<table id="info">
 		 <thead style="margin:0 auto">
 		<tr>
@@ -206,7 +212,7 @@ if (list != null) {
 
 		<tr>
 			<td class="box-user" data-label="社員番号">
-			<a class= "content" href="<%=request.getContextPath()%>/detailUser"><%=user.getEmployeeNumber() %></a>
+			<a class= "content" href="<%=request.getContextPath()%>/detailUser?userId=<%=user.getUserId() %>"><%=user.getEmployeeNumber() %></a>
 			</td>
 			<td class="box-user" data-label="名前">
 			<%=user.getName() %>
@@ -227,5 +233,8 @@ if (list != null) {
 %>
 	</table>
 </div>
+		
+		</div>
+	</div>
 </body>
 </html>
