@@ -36,7 +36,7 @@ public class AnnounceDAO {
 	 * DBにあるお知らせ情報を全件取得するメソッド
 	 * @return ArrayList<Announce> list
 	 */
-	public ArrayList<Announce> selectAnnounceAll() {
+	public ArrayList<Announce> selectAll() {
 
 		// 変数宣言
 		Connection con = null;
@@ -68,7 +68,7 @@ public class AnnounceDAO {
 				announce.setText(rs.getString("text"));
 				announce.setImage(rs.getString("image"));
 				announce.setComment(rs.getString("comment"));
-				announce.setLikeFlag(rs.getInt("iine_flag"));
+				announce.setLikeFlag(rs.getInt("like_flag"));
 				announce.setAnnounceFlag(rs.getInt("announce_flag"));
 				announce.setFavoriteFlag(rs.getInt("favorite_flag"));
 				announce.setCategory(rs.getInt("category"));
@@ -77,7 +77,71 @@ public class AnnounceDAO {
 				list.add(announce);
 			}
 		} catch (Exception e) {
-				throw new IllegalStateException(e);
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * 引数として受け取ったAnnounceIdをもとに
+	 * Announce_infoテーブル内で検索を行うメソッド
+	 * @param announceId
+	 * @return Announce
+	 */
+	public Announce selectByAnnounceId(int announceId) {
+
+		// 変数宣言
+		Connection con = null;
+		Statement smt = null;
+
+		// SQL文
+		String sql = "select * from announce_info where announce_id = " + announceId + ";";
+
+		Announce announce = new Announce();
+
+		try {
+			// DBに接続
+			con = AnnounceDAO.getConnection();
+			smt = con.createStatement();
+
+			// SQL文発行
+			ResultSet rs = smt.executeQuery(sql);
+
+			// 検索結果を変数に格納
+			while (rs.next()) {
+				announce.setAnnounceId(rs.getInt("announce_id"));
+				announce.setUserId(rs.getInt("user_id"));
+				announce.setName(rs.getString("name"));
+				announce.setRegistDate(rs.getTimestamp("regist_date"));
+				announce.setUpdateDate(rs.getTimestamp("update_date"));
+				announce.setTitle(rs.getString("title"));
+				announce.setText(rs.getString("text"));
+				announce.setImage(rs.getString("image"));
+				announce.setComment(rs.getString("comment"));
+				announce.setLikeFlag(rs.getInt("like_flag"));
+				announce.setAnnounceFlag(rs.getInt("announce_flag"));
+				announce.setFavoriteFlag(rs.getInt("favorite_flag"));
+				announce.setCategory(rs.getInt("category"));
+				announce.setTag(rs.getString("tag"));
+				announce.setFile(rs.getString("file"));
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
 		} finally {
 			// リソースの解放
 			if (smt != null) {
@@ -94,6 +158,9 @@ public class AnnounceDAO {
 			}
 		}
 		
-		return list;
+		return announce;
 	}
+	
+	
+	
 }

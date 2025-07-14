@@ -40,8 +40,8 @@ public class User {
 	public int getAccountId() {
 		return accountId;
 	}
-	public void setAccountId(int acountId) {
-		this.accountId = acountId;
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
 	public String getName() {
 		return name;

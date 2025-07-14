@@ -102,6 +102,73 @@ public class UserDAO {
 		}
 		return userList;
 	}
+	
+	/**
+	 * ユーザーIDをもとにユーザー情報を取得するメソッド
+	 * 
+	 * @return User
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	public User selectByUserId(int userId) {
+		Connection con = null;
+		Statement smt = null;
+		
+		//戻り値用のUserオブジェクトを作成
+		User user = new User();
+		
+		//SQL文の作成
+		String sql = "SELECT * FROM user_info "
+				+ "WHERE user_id = " + userId;
+		
+		try {
+			// データベース接続
+			con = getConnection();
+			smt = con.createStatement();
+			
+			ResultSet rs = smt.executeQuery(sql);
+			
+			if (rs.next()) {
+				user.setUserId(rs.getInt("user_id"));
+				user.setAccountId(rs.getInt("account_id"));
+				user.setName(rs.getString("name"));
+				user.setNameKana(rs.getString("name_kana"));
+				user.setBirthday(rs.getDate("birthday"));
+				user.setAddress(rs.getString("address"));
+				user.setPhone(rs.getString("phone"));
+				user.setNearestStation(rs.getString("nearest_station"));
+				user.setTransportation(rs.getString("transportation"));
+				user.setSex(rs.getString("sex"));
+				user.setEmployeeNumber(rs.getString("employee_number"));
+				user.setDepartment(rs.getString("department"));
+				user.setTeam(rs.getString("team"));
+				user.setJoiningDate(rs.getTimestamp("joining_date"));
+				user.setWorkHistory(rs.getInt("work_history"));
+				user.setMarriageFlag(rs.getInt("marriage_flag"));
+				user.setChildren(rs.getInt("children"));
+				user.setQualification(rs.getString("qualification"));
+				user.setDisplayFlag(rs.getInt("display_flag"));
+				user.setRestFlag(rs.getInt("rest_flag"));
+				user.setRegistDate(rs.getTimestamp("regist_date"));
+				user.setUpdateDate(rs.getTimestamp("update_date"));
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return user;
+	}
 
 	/**
 	 * 登録を行うメソッド
