@@ -1,5 +1,18 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
+<%@page import="util.MyFormat, bean.Employee, bean.User"%>
+
+<%
+//サーブレットから送られてきた情報を取得
+Employee employee = (Employee) request.getAttribute("Employee");
+User user = (User) request.getAttribute("User");
+//フォーマットを使用するためのオブジェクト生成
+MyFormat myFormat = new MyFormat();
+//タイムスタンプ型、Date型のデータを全てフォーマット化
+String joiningDate = myFormat.YearMonthFormat(user.getJoiningDate());
+String birthday = myFormat.birthDateFormat(user.getBirthday());
+%>
+
 <html>
 <head>
 <!-- タイトル -->
@@ -16,14 +29,32 @@
 	z-index: 10;
 }
 
-#mainDetail {
-	height: 100%;
+#buttonList {
+	margin-top: 30px;
+	margin-right: 30px;
+	text-align: right;
+}
+
+#mainEmployee {
+	margin-top: 50px;
+	margin-right: auto;
+	margin-bottom: 50px;
+	margin-left: auto;
+	width: 80%;
+}
+
+#employee_imgArea {
+	width: 40%;
+}
+
+#employee_infoArea {
+	width: 40%;
 }
 
 /* メインで出す社員画像（img）*/
 #employee_img {
 	margin-top: auto;
-	margin-right: 50px;
+	margin-right: 30px;
 	margin-bottom: auto;
 	width: 420px;
 	height: auto;
@@ -40,17 +71,9 @@
 
 /* 社員情報をまとめた領域（div）*/
 #employee_info {
-	width: 450px;
+	margin-left: 10px; width : 450px;
 	text-align: left;
-}
-
-#employee_info,
-#backEmployeeList_button,
-#update_button,
-#delete_button {
-	display: inline-block;
-	/*	要素を上揃え*/
-	vertical-align: top;
+	width: 450px;
 }
 
 /* メインで出す社員名（p）*/
@@ -68,6 +91,19 @@
 /*社員所属と社員入社年を横並びにする*/
 #detailEmployee_belong, #detailEmployee_joinTiming {
 	line-height: 0.8;
+}
+
+#intro_area {
+	padding: 10px 30px;
+	margin-right: auto;
+	margin-bottom: 120px;
+	margin-left: auto;
+	width: 70%;
+	border-radius: 30px;
+	background-color: white;
+	text-align: left;
+	letter-spacing: 1px;
+	line-height: 1.5;
 }
 
 /* 社員候補エリア（div）*/
@@ -177,43 +213,68 @@ a {
 		<!-- メイン部分 -->
 		<div id="main" class="container">
 			<div id="detailEmployee">
-				<!-- 社員画像 -->
-				<div id="mainEmployee">
-					<!-- 戻るボタン -->
-					<a href="employee.jsp"> <input id="backEmployeeList_button"
-						type="submit" value="一覧へ" style="width: 80px; height: 50px; font-size: large;">
-					</a> <img id="employee_img"
-						src="<%=request.getContextPath()%>/img/photo1.png" alt="社員画像">
-
-					<!-- 社員情報 -->
-					<div id="employee_info">
-						<p>社員番号 00000000000</p>
-						<p id="detailEmployee_name">姓 名</p>
-						<p id="detailEmployee_kana">カバネ アザナ</p>
-						<p id="detailEmployee_belong">第1事業部 第1グループ</p>
-						<p id="detailEmployee_joinTiming">2025年4月入社</p>
-						<p>習得言語 HTML, CSS, JavaScript, Java</p>
-						<p>習得技術 Apache, MySQL</p>
-						<p>開発年数 40年</p>
-						<p>生年月日 2002年8月11日</p>
-						<p>趣味 ゲーム</p>
-						<p>特技 ドラム</p>
-						<p>役職 社長</p>
-					</div>
-
-					<!-- 編集ボタン・削除ボタン -->
+				<!-- 一覧に戻るボタン・編集ボタン・削除ボタン -->
+				<div id="buttonList">
+					<a href="<%=request.getContextPath()%>/employee"> <input
+						id="backEmployeeList_button" type="submit" value="一覧へ"
+						style="width: 80px; height: 50px; font-size: large;">
+					</a>&nbsp;&nbsp;&nbsp;
 					<a href="updateEmployee.jsp"> <input id="update_button"
-						type="submit" value="編集" style="width: 80px; height: 50px; font-size: large;">
-					</a> <a> <input id="delete_button"
-						type="submit" value="削除" style="width: 80px; height: 50px; font-size: large;">
+						type="submit" value="編集"
+						style="width: 80px; height: 50px; font-size: large;">
+					</a> <a> <input id="delete_button" type="submit" value="削除"
+						style="width: 80px; height: 50px; font-size: large;">
 					</a>
-
 				</div>
 
+				<table id="mainEmployee">
+					<tr>
+						<td id="employee_imgArea">
+							<!-- 社員画像 --> <img id="employee_img"
+							src="<%=request.getContextPath()%>/img/<%=employee.getPhoto()%>"
+							alt="社員画像">
+						</td>
+						<td id="employee_infoArea">
+							<!-- 社員情報 -->
+							<div id="employee_info">
+								<p>社員番号 <%= user.getEmployeeNumber() %></p>
+								<p id="detailEmployee_name"><%= user.getName() %></p>
+								<p id="detailEmployee_kana"><%= user.getNameKana() %></p>
+								<p id="detailEmployee_belong">第<%= user.getDepartment() %>事業部 第<%= user.getTeam() %>グループ</p>
+								<p id="detailEmployee_joinTiming"><%= joiningDate %>入社</p>
+								<p>
+									習得言語
+									<%=employee.getLangSkill()%></p>
+								<p>
+									習得技術
+									<%=employee.getMiddleSkill()%></p>
+								<p>
+									開発年数
+									<%=employee.getDevloper()%>年
+								</p>
+								<p>生年月日 <%= birthday %></p>
+								<p>
+									趣味
+									<%=employee.getHobby()%></p>
+								<p>
+									特技
+									<%=employee.getTalent()%></p>
+								<p>
+									役職
+									<%=employee.getPosition()%></p>
+							</div>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- 自己紹介欄 -->
+				<div id="intro_area">
+					<p><%= employee.getIntro() %></p>
+				</div>
 
 				<!-- 社員候補リスト（同じ所属） -->
 				<div id="imgSlider_area">
-					<div id="belong_title">第1事業部 第1グループ</div>
+					<div id="belong_title">第<%= user.getDepartment() %>事業部 第<%= user.getTeam() %>グループ</div>
 					<div id="img_slider">
 						<button id="prev">◀</button>
 
@@ -249,7 +310,7 @@ a {
 
 				<!-- 社員候補リスト（同じ入社年月） -->
 				<div id="imgSlider_area">
-					<div id="joinTiming_title">2025年4月入社</div>
+					<div id="joinTiming_title"><%= joiningDate %>入社</div>
 					<div id="img_slider">
 						<button id="prev">◀</button>
 
@@ -293,22 +354,22 @@ a {
 
 	//画像リスト（同じ所属）
 	const sameBelong_imgList = [
-		"../img/photo2.png",
-		"../img/photo3.png",
-		"../img/photo4.png",
-		"../img/photo5.png",
-		"../img/photo6.png",
-		"../img/photo7.png"
+		"<%=request.getContextPath()%>/img/photo2.png",
+		"<%=request.getContextPath()%>/img/photo3.png",
+		"<%=request.getContextPath()%>/img/photo4.png",
+		"<%=request.getContextPath()%>/img/photo5.png",
+		"<%=request.getContextPath()%>/img/photo6.png",
+		"<%=request.getContextPath()%>/img/photo7.png"
 	]
 
 	//画像リスト（同じ入社年月）
 	const sameJoinTiming_imgList = [
-		"../img/photo2.png",
-		"../img/photo3.png",
-		"../img/photo4.png",
-		"../img/photo5.png",
-		"../img/photo6.png",
-		"../img/photo7.png"
+		"<%=request.getContextPath()%>/img/photo2.png",
+		"<%=request.getContextPath()%>/img/photo3.png",
+		"<%=request.getContextPath()%>/img/photo4.png",
+		"<%=request.getContextPath()%>/img/photo5.png",
+		"<%=request.getContextPath()%>/img/photo6.png",
+		"<%=request.getContextPath()%>/img/photo7.png"
 	]
 
 	//名前リスト（同じ所属）
