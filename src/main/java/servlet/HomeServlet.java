@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/index")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/home")
+public class HomeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -50,11 +50,11 @@ public class IndexServlet extends HttpServlet {
 				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			
-			} else {				// エラーがない場合 index.jspにフォワード
+			} else {				// エラーがない場合 home.jspにフォワード
 				request.setAttribute("important_list", importantList);
 				request.setAttribute("announce_list", announceList);
 				request.setAttribute("activity_list", activityList);
-				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/home.jsp").forward(request, response);
 			}
 		}
 	}
