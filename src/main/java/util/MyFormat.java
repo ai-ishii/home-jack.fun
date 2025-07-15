@@ -16,7 +16,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String DateFormat(Timestamp timestamp) {
+	public String dateFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -34,7 +34,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String MonthDayFormat(Timestamp timestamp) {
+	public String monthDayFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -52,7 +52,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String YearFormat(Timestamp timestamp) {
+	public String yearFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -70,7 +70,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String DatetimeFormat(Timestamp timestamp) {
+	public String datetimeFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 				
@@ -87,7 +87,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String YearMonthFormat(Timestamp timestamp) {
+	public String yearMonthFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
