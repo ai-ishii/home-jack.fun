@@ -13,7 +13,7 @@ public class Announce {
 	private String text; 				//本文
 	private String comment; 			//コメント
 	private int likeFlag; 				//いいねフラグ
-	private int announceFlag; 			//お知らせ表示フラグ
+	private int announceFlag; 			//お知らせ表示フラグ(0:表示, 1:非表示, 2:重要)
 	private int announceCategoryId; 	//カテゴリ
 	private String tag; 				//タグ
 
