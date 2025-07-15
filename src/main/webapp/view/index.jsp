@@ -1,14 +1,23 @@
+<%@page import="dao.AnnounceDAO"%>
+<%@page import="util.MyFormat"%>
+<%@page import="bean.Announce"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%
-ArrayList<>
+ArrayList<Announce> importantList = (ArrayList<Announce>)request.getAttribute("important_list");
+ArrayList<Announce> announceList = (ArrayList<Announce>)request.getAttribute("announce_list");
+ArrayList<Announce> activityList = (ArrayList<Announce>)request.getAttribute("activity_list");
+
+AnnounceDAO announceDAO = new AnnounceDAO();
+
+MyFormat myformat = new MyFormat();
 %>
 
 <html>
 <head>
 <title></title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
@@ -66,7 +75,7 @@ ArrayList<>
 
 .announce-list .item .date {
 	margin: 0;
-	min-width: 120px;
+	min-width: 150px;
 	color: #999999;
 }
 
@@ -135,10 +144,7 @@ ArrayList<>
 				<div id="sidebar" class="container">
 					<div class="calendar">
 						<p>カレンダー</p>
-						<iframe
-							src="https://calendar.google.com/calendar/embed?height=180&wkst=1&ctz=Asia%2FTokyo&showPrint=0&showTitle=0&showNav=0&showDate=0&showTabs=0&showCalendars=0&showTz=0&src=Y18wYWJkY2ViYzY4NGFjNzg2NDE3YmU3MmZkMjY5ZjVlNzI0MjFmODRjZjQ5ZDgzNWM4ZDIyMDk4M2RiYzA0MjVjQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23616161"
-							style="border-width: 0" width="300" height="180" frameborder="0"
-							scrolling="no"></iframe>
+						<iframe src="https://calendar.google.com/calendar/embed?height=300&wkst=1&ctz=Asia%2FTokyo&showPrint=0&src=dGVzdXRvdS5oYWppbWVAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043" style="border:solid 1px #777" width="300" height="300" frameborder="0" scrolling="no"></iframe>
 					</div>
 				</div>
 
@@ -146,118 +152,98 @@ ArrayList<>
 					<h2>重要なお知らせ</h2>
 					<div class="announce-list">
 						<ul>
+							<%
+							if (importantList == null || importantList.size() == 0) {
+							%>
+							<p>重要なお知らせはありません</p>
+							
+							<%
+							} else {
+								for (int i = 0; i < importantList.size(); i++){
+							%>
 						
-						
-							<li class="item"><a href="#">
-									<p class="date">2025/06/30</p>
+							<li class="item">
+								<a href="<%= request.getContextPath() %>/detailAnnounce&announceId=<%= importantList.get(i).getAnnounceId() %>">
+									<p class="date"><%= myformat.dateFormat(importantList.get(i).getRegistDate()) %></p>
 									<p class="tag">
-										<span>お知らせ</span>
+										<span><%= announceDAO.selectByCategory(importantList.get(i).getAnnounceCategoryId()) %></span>
 									</p>
 									<div class="title">
-										<p class="article">今日のわんこ
-											しゃけ。1歳。ガルク。カムラの里で、だれかさんと暮らしています。ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
-										<p class="name">青木</p>
+										<p class="article"><%= importantList.get(i).getTitle() %></p>
+										<p class="name"><%= importantList.get(i).getName() %></p>
 									</div>
-							</a></li>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/29</p>
-									<p class="tag">
-										<span>お知らせ</span>
-									</p>
-									<div class="title">
-										<p class="article">今日のわんこ
-											ぼたもち。2歳。ガルク。カムラの里で、どちらさんと暮らしています。</p>
-										<p class="name">占部</p>
-									</div>
-							</a></li>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/28</p>
-									<p class="tag">
-										<span>お知らせ</span>
-									</p>
-									<div class="title">
-										<p class="article">今日のわんこ
-											えくれあ。3歳。ガルク。カムラの里で、そなたさんと暮らしています。</p>
-										<p class="name">月向</p>
-									</div>
-							</a></li>
+								</a>
+							</li>
+							
+							<%
+								}
+							}
+							%>
 						</ul>
 					</div>
 					
 					<h2>最新のお知らせ</h2>
 					<div class="announce-list">
 						<ul>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/30</p>
+							<%
+							if (announceList == null || announceList.size() == 0) {
+							%>
+							<p>最新のお知らせはありません</p>
+							
+							<%
+							} else {
+								for (int i = 0; i < announceList.size(); i++){
+							%>
+						
+							<li class="item">
+								<a href="<%= request.getContextPath() %>/detailAnnounce&announceId=<%= announceList.get(i).getAnnounceId() %>">
+									<p class="date"><%= myformat.dateFormat(announceList.get(i).getRegistDate()) %></p>
 									<p class="tag">
-										<span>お知らせ</span>
+										<span><%= announceDAO.selectByCategory(announceList.get(i).getAnnounceCategoryId()) %></span>
 									</p>
 									<div class="title">
-										<p class="article">今日のわんこ
-											しゃけ。1歳。ガルク。カムラの里で、だれかさんと暮らしています。ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
-										<p class="name">青木</p>
+										<p class="article"><%= announceList.get(i).getTitle() %></p>
+										<p class="name"><%= announceList.get(i).getName() %></p>
 									</div>
-							</a></li>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/29</p>
-									<p class="tag">
-										<span>お知らせ</span>
-									</p>
-									<div class="title">
-										<p class="article">今日のわんこ
-											ぼたもち。2歳。ガルク。カムラの里で、どちらさんと暮らしています。</p>
-										<p class="name">占部</p>
-									</div>
-							</a></li>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/28</p>
-									<p class="tag">
-										<span>お知らせ</span>
-									</p>
-									<div class="title">
-										<p class="article">今日のわんこ
-											えくれあ。3歳。ガルク。カムラの里で、そなたさんと暮らしています。</p>
-										<p class="name">月向</p>
-									</div>
-							</a></li>
+								</a>
+							</li>
+							
+							<%
+								}
+							}
+							%>
 						</ul>
 					</div>
+					
 					<h2>最新のチーム活動</h2>
 					<div class="announce-list">
 						<ul>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/30</p>
+							<%
+							if (activityList == null || activityList.size() == 0) {
+							%>
+							<p>最新のお知らせはありません</p>
+							
+							<%
+							} else {
+								for (int i = 0; i < activityList.size(); i++){
+							%>
+						
+							<li class="item">
+								<a href="<%= request.getContextPath() %>/detailAnnounce&announceId=<%= activityList.get(i).getAnnounceId() %>">
+									<p class="date"><%= myformat.dateFormat(activityList.get(i).getRegistDate()) %></p>
 									<p class="tag">
-										<span>チーム活動</span>
+										<span><%= announceDAO.selectByCategory(activityList.get(i).getAnnounceCategoryId()) %></span>
 									</p>
 									<div class="title">
-										<p class="article">今日のわんこ
-											しゃけ。1歳。ガルク。カムラの里で、だれかさんと暮らしています。ああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ</p>
-										<p class="name">青木</p>
+										<p class="article"><%= activityList.get(i).getTitle() %></p>
+										<p class="name"><%= activityList.get(i).getName() %></p>
 									</div>
-							</a></li>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/29</p>
-									<p class="tag">
-										<span>チーム活動</span>
-									</p>
-									<div class="title">
-										<p class="article">今日のわんこ
-											ぼたもち。2歳。ガルク。カムラの里で、どちらさんと暮らしています。</p>
-										<p class="name">占部</p>
-									</div>
-							</a></li>
-							<li class="item"><a href="#">
-									<p class="date">2025/06/28</p>
-									<p class="tag">
-										<span>チーム活動</span>
-									</p>
-									<div class="title">
-										<p class="article">今日のわんこ
-											エクレア。3歳。ガルク。カムラの里で、そなたさんと暮らしています。</p>
-										<p class="name">月向</p>
-									</div>
-							</a></li>
+								</a>
+							</li>
+							<%
+								}
+							}
+							%>
 						</ul>
 					</div>
 				</div>
