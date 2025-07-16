@@ -34,7 +34,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String DateFormat(Timestamp timestamp) {
+	public String dateFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -49,11 +49,26 @@ public class MyFormat {
 	
 	
 	/**
+	 * 引数のDateをyyyy年 MM月 dd日の形式に変換するメソッド
+	 * @param Date
+	 * @return 変換された日付データ
+	 */
+	public String birthDateFormat(Date date) {
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年M月d日");
+		
+		//フォーマット使用
+		String birthDate = dateFormat.format(date);
+		
+		return birthDate;
+	}
+	
+	/**
 	 * 引数のTimestampをMM/ddの形式に変換するメソッド
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String MonthDayFormat(Timestamp timestamp) {
+	public String monthDayFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -71,7 +86,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String YearFormat(Timestamp timestamp) {
+	public String yearFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 		
@@ -89,7 +104,7 @@ public class MyFormat {
 	 * @param Timestamp
 	 * @return 変換された日付データ
 	 */
-	public String DatetimeFormat(Timestamp timestamp) {
+	public String datetimeFormat(Timestamp timestamp) {
 		//TimestampをDate型に変換する
 		Date condate = new Date(timestamp.getTime());
 				
@@ -97,6 +112,23 @@ public class MyFormat {
 		SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy年 MM月 dd日 HH時mm分ss秒");
 		
 		String date = datetimeFormat.format(condate);
+		
+		return date;
+	}
+	
+	/**
+	 * 引数のTimeStampをyyyy年MM月の形式に変換するメソッド
+	 * @param Timestamp
+	 * @return 変換された日付データ
+	 */
+	public String yearMonthFormat(Timestamp timestamp) {
+		//TimestampをDate型に変換する
+		Date condate = new Date(timestamp.getTime());
+		
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat yearMonthFormat = new SimpleDateFormat("yyyy年MM月");
+		
+		String date = yearMonthFormat.format(condate);
 		
 		return date;
 	}

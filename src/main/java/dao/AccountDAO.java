@@ -2,10 +2,9 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+
+import bean.LicenseList;
 
 public class AccountDAO {
 
@@ -28,4 +27,9 @@ public class AccountDAO {
 	 			throw new IllegalStateException(e);
 	 		}
 	 	}
+
+		public ArrayList<LicenseList> search(String id) {
+			// TODO 自動生成されたメソッド・スタブ
+			return null;
+		}
 }

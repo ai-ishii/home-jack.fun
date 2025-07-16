@@ -61,10 +61,8 @@ public class EmployeeDAO {
 	 			
 	 			// 検索結果をArrayListに格納
 	 			while (rs.next()) {
-	 				// 社員紹介のほう
 	 				employee.setEmployeeId(rs.getInt("employee_id"));
 	 				employee.setUserId(rs.getInt("user_id"));
-	 				employee.setEmployeeNumber(rs.getString("employee_number"));
 	 				employee.setDevloper(rs.getInt("devloper"));
 	 				employee.setLangSkill(rs.getString("lang_skill"));
 	 				employee.setMiddleSkill(rs.getString("middle_skill"));
@@ -97,6 +95,123 @@ public class EmployeeDAO {
 		}
 		
 		return employeeList;
+	 		
+	 	}
+	 	
+	 	/**
+	 	 * ユーザー情報IDをもとに社員写真を取得するメソッド（SELECT）
+	 	 * @return String
+	 	 */
+	 	public String selectPhotoByUserId(int userId) {
+	 		
+	 		// 変数宣言
+	 		Connection con = null;
+	 		Statement smt = null;
+	 		
+	 		// 戻り値を格納する変数宣言
+	 		String photo = "";
+	 		
+	 		// SQL文
+	 		String sql = "SELECT photo FROM employee_info "
+	 				+ "WHERE user_id = " + userId + ";";
+	 		
+	 		try {
+	 			// DBに接続
+	 			con = EmployeeDAO.getConnection();
+	 			smt = con.createStatement();
+	 			
+	 			// SQL文発行
+	 			ResultSet rs = smt.executeQuery(sql);
+	 			
+	 			//データを入れるためのオブジェクトを用意
+	 			Employee employee = new Employee();
+	 			
+	 			// 検索結果をArrayListに格納
+	 			while (rs.next()) {	
+	 				employee.setPhoto(rs.getString("photo"));
+	 				photo = employee.getPhoto();
+	 			}
+	 		} catch (Exception e) {
+	 			throw new IllegalStateException(e);
+	 		} finally {
+	 			// リソースの解放
+	 			if (smt != null) {
+	 				try {
+	 					smt.close();
+	 				} catch (SQLException ignore) {
+	 				}
+	 			}
+	 			if (con != null) {
+	 				try {
+	 					con.close();
+	 				} catch (SQLException ignore) {
+	 				}
+	 			}
+	 		}
+	 		
+	 		return photo;
+	 		
+	 	}
+	 	
+	 	/**
+	 	 * ユーザー情報IDをもとに社員情報を取得するメソッド（SELECT）
+	 	 * @return Employee
+	 	 */
+	 	public Employee selectByUserId(int userId) {
+	 		
+	 		// 変数宣言
+	 		Connection con = null;
+	 		Statement smt = null;
+	 		
+ 			//データを入れるためのオブジェクトを用意
+ 			Employee employee = new Employee();
+	 		
+	 		// SQL文
+	 		String sql = "SELECT * FROM employee_info "
+	 				+ "WHERE user_id = " + userId + ";";
+	 		
+	 		try {
+	 			// DBに接続
+	 			con = EmployeeDAO.getConnection();
+	 			smt = con.createStatement();
+	 			
+	 			// SQL文発行
+	 			ResultSet rs = smt.executeQuery(sql);
+	 			
+	 			// 検索結果を格納
+	 			if (rs.next()) {	
+	 				employee.setEmployeeId(rs.getInt("employee_id"));
+	 				employee.setUserId(rs.getInt("user_id"));
+	 				employee.setDevloper(rs.getInt("devloper"));
+	 				employee.setLangSkill(rs.getString("lang_skill"));
+	 				employee.setMiddleSkill(rs.getString("middle_skill"));
+	 				employee.setHobby(rs.getString("hobby"));
+	 				employee.setTalent(rs.getString("talent"));
+	 				employee.setIntro(rs.getString("intro"));
+	 				employee.setPosition(rs.getString("position"));
+	 				employee.setRegistDate(rs.getTimestamp("regist_date"));
+	 				employee.setUpdateDate(rs.getTimestamp("update_date"));
+	 				employee.setPhoto(rs.getString("photo"));
+	 			}
+	 		} catch (Exception e) {
+	 			throw new IllegalStateException(e);
+	 		} finally {
+	 			// リソースの解放
+	 			if (smt != null) {
+	 				try {
+	 					smt.close();
+	 				} catch (SQLException ignore) {
+	 				}
+	 			}
+	 			if (con != null) {
+	 				try {
+	 					con.close();
+	 				} catch (SQLException ignore) {
+	 				}
+	 			}
+	 		}
+	 		
+	 		return employee;
 	 		
 	 	}
 }
