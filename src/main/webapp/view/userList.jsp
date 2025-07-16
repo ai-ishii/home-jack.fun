@@ -218,7 +218,7 @@ if (list != null) {
 			<%=user.getName() %>
 			</td>
 			<td class="box-user" data-label="所属">
-			第<%=user.getDepartment() %>部&emsp;第<%=user.getTeam() %>グループ
+			第<%=user.getDepartment() %>部&nbsp;第<%=user.getTeam() %>グループ
 			</td>
 			<td>
 			<div style="text-align: center">

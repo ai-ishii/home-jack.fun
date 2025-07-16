@@ -49,7 +49,42 @@ User user = (User) request.getAttribute("user");
 	text-align: center;
 }
 
+<%-- 追加したよ --%>
+#detail-list{
+margin:0 auto;
+}
 
+table {
+    margin: 0 auto;
+    padding: 0;
+    width: 60%;
+    border-collapse: collapse;
+    
+}
+
+table tr {
+    background-color: #fff;
+    border-bottom: 2px solid #fff;
+    height:50px
+}
+
+table th, table td {
+    padding: .20em 1em;
+}
+
+.table-double{
+	border-right: 3px double #fcc800; /* 二重線を適用 */
+ 	padding: 8px;
+ 	width: 90px;
+}
+
+.table-single{
+	border-bottom: 0.5px solid #f4dda5;
+}
+
+#koji-name{
+text-align: center;
+}
 
 
 </style>
@@ -69,79 +104,82 @@ User user = (User) request.getAttribute("user");
 				
 				<% 
 				MyFormat myFormat = new MyFormat();
-				Date birthday = user.getBirthday();
-				String birthday = myFormat.breakDateFormat(birthday);
+				String birthday = myFormat.breakDateFormat(user.getBirthday());
+				
+				String post = myFormat.addHyphen(user.getPost());
 				%>
 				
-				<table>
-					<tr>
-						<td>社員番号</td>
+				<h3 id="koji-name">個人情報：<%=user.getName() %></h3>
+				
+				<table id="detail-list">
+					<tr class="table-single">
+						<td class="table-double">社員番号</td>
 						<td><%=user.getEmployeeNumber() %></td>
 					</tr>
-					<tr>
-						<td>所属</td>
-						<td>第<%=user.getDepartment() %>部&emsp;第<%=user.getTeam() %>グループ</td>
+					<tr class="table-single">
+						<td class="table-double">所属</td>
+						<td>第<%=user.getDepartment() %>部&nbsp;第<%=user.getTeam() %>グループ</td>
 					</tr>
-					<tr>
-						<td>氏名</td>
+					<tr class="table-single">
+						<td class="table-double">氏名</td>
 						<td><%=user.getName() %></td>
 					</tr>
-					<tr>
-						<td>ふりがな</td>
+					<tr class="table-single">
+						<td class="table-double">ふりがな</td>
 						<td><%=user.getNameKana() %></td>
 					</tr>
-					<tr>
-						<td>生年月日</td>
+					<tr class="table-single">
+						<td class="table-double">生年月日</td>
 						<td><%= birthday %></td>
 					</tr>
-					<tr>
-						<td>性別</td>
+					<tr class="table-single">
+						<td class="table-double">性別</td>
 						<td><%=user.getSex() %></td>
 					</tr>
-					<tr>
-						<td>電話番号</td>
+					<tr class="table-single">
+						<td class="table-double">電話番号</td>
 						<td><%=user.getPhone() %></td>
 					</tr>
-					<tr>
-						<td>郵便番号</td>
-						<td><%=user.getPost() %></td>
+					<tr class="table-single">
+						<td class="table-double">郵便番号</td>
+						<td><%= post %></td>
 					</tr>
-					<tr>
-						<td>住所</td>
+					<tr class="table-single">
+						<td class="table-double">住所</td>
 						<td><%=user.getAddress() %></td>
 					</tr>
-					<tr>
-						<td>子供</td>
+					<tr class="table-single">
+						<td class="table-double">子供</td>
 						<td><%=user.getChildren() %>人</td>
 					</tr>
-					<tr>
-						<td>勤務年数</td>
+					<tr class="table-single">
+						<td class="table-double">勤務年数</td>
 						<td><%=user.getWorkHistory() %>年</td>
 					</tr>
-					<tr>
-						<td>最寄り駅</td>
+					<tr class="table-single">
+						<td class="table-double">最寄り駅</td>
 						<td><%=user.getNearestStation() %></td>
 					</tr>
-					<tr>
-						<td>交通手段</td>
+					<tr class="table-single">
+						<td class="table-double">交通手段</td>
 						<td><%=user.getTransportation() %></td>
 					</tr>
-					<tr>
-						<td>資格</td>
+					<tr class="table-single">
+						<td class="table-double">資格</td>
 						<td><%=user.getQualification() %></td>
 					</tr>
 					<%
 					if(user.getUpdateDate() != null){
 					%>
-					<tr>
-						<td>更新日時</td>
+					<tr class="table-single">
+						<td class="table-double">更新日時</td>
 						<td><%=user.getUpdateDate() %></td>
 					</tr>
 					<%
 					}else{
 					%>
 					<tr>
-						<td>登録日時</td>
+						<td class="table-double">登録日時</td>
 						<td><%=user.getRegistDate() %></td>
 					</tr>
 					<%
