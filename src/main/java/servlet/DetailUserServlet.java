@@ -26,11 +26,11 @@ public class DetailUserServlet extends HttpServlet {
 		String cmd = "";
 		// 遷移先のパス
 		String path = "/view/detailUser.jsp";
-
-		// パラメータの取得
-		int userId = Integer.parseInt(request.getParameter("userId"));
-
+		
 		try {
+			// パラメータの取得
+			int userId = Integer.parseInt(request.getParameter("userId"));
+			
 			// DAOオブジェクトの宣言
 			UserDAO objUserDao = new UserDAO();
 

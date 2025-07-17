@@ -7,7 +7,7 @@
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList, bean.User util.MyFormat"%>
+<%@page import="java.util.ArrayList, bean.User, util.MyFormat"%>
 
 <%
 //個人情報を格納したuserを受け取る

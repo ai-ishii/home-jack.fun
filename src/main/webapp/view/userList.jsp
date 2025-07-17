@@ -141,42 +141,48 @@ transform: scale(1.05);
 color:#f89174;/*文字色*/
 }
 
-.btn,
-a.btn,
-button.btn {
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.5;
-  position: relative;
-  display: inline-block;
-  padding: 0.3rem 1.1rem;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  text-align: center;
-  vertical-align: middle;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  color: #212529;
-  border-radius: 0.5rem;
+/* 削除ボタンのCSS */
+
+html {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 62.5%;
 }
 
-a.btn--yellow {
-  color: #000;
-  background-color: #bbc8e6;
-  border-bottom: 5px solid #8491c3;
+.btn, a.btn, button.btn {
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1.5;
+	position: relative;
+	display: inline-block;
+	padding: 0.5rem 2rem;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+	letter-spacing: 0.1em;
+	border-radius: 8.5rem;
 }
 
-a.btn--yellow:hover {
-  margin-top: 3px;
-  color: #000;
-  background: #706caa;
-  border-bottom: 2px solid #4a488e;
+a.btn--delete {
+	color: #000;
+	background-color: #bbc8e6;
+	border-bottom: 5px solid #8491c3;
 }
+
+a.btn--delete:hover {
+	margin-top: 3px;
+	color: #000;
+	background: #706caa;
+	border-bottom: 2px solid #4a488e;
+}
+
 
 </style>
 
@@ -222,7 +228,8 @@ if (list != null) {
 			</td>
 			<td>
 			<div style="text-align: center">
-				<a href="<%=request.getContextPath() %>/deleteUser?userId=<%=user.getUserId() %>" class="btn btn--yellow btn--cubic">削除</a>
+			<a href="<%=request.getContextPath()%>detailUser?userId=<%=user.getUserId() %>&cmd=delete" 
+				onclick="return confirm('本当に削除しますか?')" class="btn btn--delete">削除</a>
 			</div>
 			</td>
 		</tr>
