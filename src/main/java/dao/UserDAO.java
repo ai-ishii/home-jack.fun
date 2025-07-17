@@ -61,7 +61,7 @@ public class UserDAO {
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
 				user.setAddress(rs.getString("address"));
-				user.setPhone(rs.getString("post"));
+				user.setPost(rs.getString("post"));
 				user.setPhone(rs.getString("phone"));
 				user.setNearestStation(rs.getString("nearest_station"));
 				user.setTransportation(rs.getString("transportation"));
@@ -130,7 +130,7 @@ public class UserDAO {
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
 				user.setAddress(rs.getString("address"));
-				user.setPhone(rs.getString("post"));
+				user.setPost(rs.getString("post"));
 				user.setPhone(rs.getString("phone"));
 				user.setNearestStation(rs.getString("nearest_station"));
 				user.setTransportation(rs.getString("transportation"));
@@ -200,7 +200,7 @@ public class UserDAO {
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
 				user.setAddress(rs.getString("address"));
-				user.setPhone(rs.getString("post"));
+				user.setPost(rs.getString("post"));
 				user.setPhone(rs.getString("phone"));
 				user.setNearestStation(rs.getString("nearest_station"));
 				user.setTransportation(rs.getString("transportation"));
@@ -270,7 +270,7 @@ public class UserDAO {
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
 				user.setAddress(rs.getString("address"));
-				user.setPhone(rs.getString("post"));
+				user.setPost(rs.getString("post"));
 				user.setPhone(rs.getString("phone"));
 				user.setNearestStation(rs.getString("nearest_station"));
 				user.setTransportation(rs.getString("transportation"));
