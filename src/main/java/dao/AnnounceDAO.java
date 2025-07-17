@@ -46,7 +46,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT * FROM announce_info";
+		String sql = "SELECT * FROM announce_info ORDER BY regist_date DESC";
 
 		try {
 			// DBに接続
@@ -444,7 +444,48 @@ public class AnnounceDAO {
 				+ " like_flag, announce_flag, announce_category_id, tag) "
 				+ "VALUES (null, null, '" + announce.getRegistDate() + "', null, '"
 				+ announce.getTitle() + "', '" + announce.getText() + "', null, 0, 0, "
-				+ "1, null)";
+				+ announce.getAnnounceCategoryId() + ", null)";
+
+		try {
+			// DBに接続
+			con = AnnounceDAO.getConnection();
+			smt = con.createStatement();
+
+			// SQL文発行
+			smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
+
+	/**
+	 * 投稿を編集してDBに登録するメソッド
+	 * @param announce
+	 */
+	public void update(Announce announce) {
+
+		// 変数宣言
+		Connection con = null;
+		Statement smt = null;
+
+		String sql = "UPDATE announce_info SET title = '" + announce.getTitle() + "', update_date = '"
+				+ announce.getUpdateDate() + "', text = '" + announce.getText() + "' WHERE announce_id = '"
+				+ announce.getAnnounceId() + "'";
 
 		try {
 			// DBに接続
