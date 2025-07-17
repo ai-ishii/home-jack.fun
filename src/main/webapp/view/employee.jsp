@@ -68,7 +68,7 @@ table {
 	width: 200px;
 	height: 270px;
 	/*	縦横比を固定する*/
-	object-fit: none;
+	object-fit: cover;
 }
 
 /* 社員詳細に飛ぶリンク*/

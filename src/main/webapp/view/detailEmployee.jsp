@@ -1,16 +1,44 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
-<%@page import="util.MyFormat, bean.Employee, bean.User"%>
+<%@page
+	import="java.util.Arrays, java.util.ArrayList, util.MyFormat, bean.Employee, bean.User, dao.EmployeeDAO"%>
 
 <%
+EmployeeDAO employeeDAO = new EmployeeDAO();
+
 //サーブレットから送られてきた情報を取得
 Employee employee = (Employee) request.getAttribute("Employee");
 User user = (User) request.getAttribute("User");
+ArrayList<User> userListBySameBelong = (ArrayList<User>) request.getAttribute("UserListBySameBelong");
+ArrayList<User> userListBySameJoiningDate = (ArrayList<User>) request.getAttribute("UserListBySameJoinDate");
+
 //フォーマットを使用するためのオブジェクト生成
 MyFormat myFormat = new MyFormat();
 //タイムスタンプ型、Date型のデータを全てフォーマット化
 String joiningDate = myFormat.YearMonthFormat(user.getJoiningDate());
 String birthday = myFormat.birthDateFormat(user.getBirthday());
+
+//--------入社年月の取得-----------
+//フォーマット化された入社年月を格納するための配列宣言
+String[] joiningDatesBySameBelong = new String[userListBySameBelong.size()];
+String[] joiningDatesBySameJoin = new String[userListBySameJoiningDate.size()];
+//タイムスタンプ型のデータを全てフォーマット化
+for (int i = 0; i < userListBySameBelong.size(); i++) {
+	joiningDatesBySameBelong[i] = myFormat.YearMonthFormat(userListBySameBelong.get(i).getJoiningDate());
+}
+for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+	joiningDatesBySameJoin[i] = myFormat.YearMonthFormat(userListBySameJoiningDate.get(i).getJoiningDate());
+}
+
+//--------画像の取得-----------
+String[] sameBelong_imgList = new String[userListBySameBelong.size()];
+String[] sameJoinTiming_imgList = new String[userListBySameJoiningDate.size()];
+for (int i = 0; i < userListBySameBelong.size(); i++) {
+	sameBelong_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameBelong.get(i).getUserId());
+}
+for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+	sameJoinTiming_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameJoiningDate.get(i).getUserId());
+}
 %>
 
 <html>
@@ -66,14 +94,14 @@ String birthday = myFormat.birthDateFormat(user.getBirthday());
 	width: 220px;
 	height: 300px;
 	/*	縦横比を固定する*/
-	object-fit: none;
+	object-fit: cover;
 }
 
 /* 社員情報をまとめた領域（div）*/
 #employee_info {
-	margin-left: 10px; width : 450px;
+	margin-left: 10px;
+	width: 500px;
 	text-align: left;
-	width: 450px;
 }
 
 /* メインで出す社員名（p）*/
@@ -218,15 +246,15 @@ a {
 					<a href="<%=request.getContextPath()%>/employee"> <input
 						id="backEmployeeList_button" type="submit" value="一覧へ"
 						style="width: 80px; height: 50px; font-size: large;">
-					</a>&nbsp;&nbsp;&nbsp;
-					<a href="updateEmployee.jsp"> <input id="update_button"
-						type="submit" value="編集"
+					</a>&nbsp;&nbsp;&nbsp; <a href="updateEmployee.jsp"> <input
+						id="update_button" type="submit" value="編集"
 						style="width: 80px; height: 50px; font-size: large;">
 					</a> <a> <input id="delete_button" type="submit" value="削除"
 						style="width: 80px; height: 50px; font-size: large;">
 					</a>
 				</div>
 
+				<!-- プロフ欄 -->
 				<table id="mainEmployee">
 					<tr>
 						<td id="employee_imgArea">
@@ -237,11 +265,16 @@ a {
 						<td id="employee_infoArea">
 							<!-- 社員情報 -->
 							<div id="employee_info">
-								<p>社員番号 <%= user.getEmployeeNumber() %></p>
-								<p id="detailEmployee_name"><%= user.getName() %></p>
-								<p id="detailEmployee_kana"><%= user.getNameKana() %></p>
-								<p id="detailEmployee_belong">第<%= user.getDepartment() %>事業部 第<%= user.getTeam() %>グループ</p>
-								<p id="detailEmployee_joinTiming"><%= joiningDate %>入社</p>
+								<p>
+									社員番号
+									<%=user.getEmployeeNumber()%></p>
+								<p id="detailEmployee_name"><%=user.getName()%></p>
+								<p id="detailEmployee_kana"><%=user.getNameKana()%></p>
+								<p id="detailEmployee_belong">
+									第<%=user.getDepartment()%>事業部 第<%=user.getTeam()%>グループ
+								</p>
+								<p id="detailEmployee_joinTiming"><%=joiningDate%>入社
+								</p>
 								<p>
 									習得言語
 									<%=employee.getLangSkill()%></p>
@@ -252,7 +285,9 @@ a {
 									開発年数
 									<%=employee.getDevloper()%>年
 								</p>
-								<p>生年月日 <%= birthday %></p>
+								<p>
+									生年月日
+									<%=birthday%></p>
 								<p>
 									趣味
 									<%=employee.getHobby()%></p>
@@ -266,43 +301,40 @@ a {
 						</td>
 					</tr>
 				</table>
-				
+
 				<!-- 自己紹介欄 -->
 				<div id="intro_area">
-					<p><%= employee.getIntro() %></p>
+					<p><%=employee.getIntro()%></p>
 				</div>
 
 				<!-- 社員候補リスト（同じ所属） -->
 				<div id="imgSlider_area">
-					<div id="belong_title">第<%= user.getDepartment() %>事業部 第<%= user.getTeam() %>グループ</div>
+					<div id="belong_title">
+						第<%=user.getDepartment()%>事業部 第<%=user.getTeam()%>グループ
+					</div>
 					<div id="img_slider">
 						<button id="prev">◀</button>
 
-						<a href="detailEmployee.jsp">
+						<%
+						if (userListBySameBelong != null) {
+							for (int i = 0; i < 3; i++) {
+						%>
+						<a id="belong_link" href="detailEmployee?userId=<%= userListBySameBelong.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="belong_img"
-									src="<%=request.getContextPath()%>/img/photo2.png" alt="社員画像">
-								<p id="employee_name" class="sameBelong_employeeName">山田 太郎</p>
-								<p id="employee_detail">第1事業部 第1グループ</p>
-								<p id="employee_detail" class="employee_joinTiming">2025年4月入社</p>
-							</div>
-						</a> <a href="detailEmployee.jsp">
-							<div id="employee_card">
-								<img id="belong_img"
-									src="<%=request.getContextPath()%>/img/photo3.png" alt="社員画像">
-								<p id="employee_name" class="sameBelong_employeeName">鈴木 花子</p>
-								<p id="employee_detail">第1事業部 第1グループ</p>
-								<p id="employee_detail" class="employee_joinTiming">2025年4月入社</p>
-							</div>
-						</a> <a href="detailEmployee.jsp">
-							<div id="employee_card">
-								<img id="belong_img"
-									src="<%=request.getContextPath()%>/img/photo4.png" alt="社員画像">
-								<p id="employee_name" class="sameBelong_employeeName">姓 名</p>
-								<p id="employee_detail">第1事業部 第1グループ</p>
-								<p id="employee_detail" class="employee_joinTiming">2025年4月入社</p>
+									src="<%=request.getContextPath()%>/img/<%=sameBelong_imgList[i]%>" alt="社員画像">
+								<p id="employee_name" class="sameBelong_employeeName"><%=userListBySameBelong.get(i).getName()%></p>
+								<p id="employee_detail">
+									第<%=userListBySameBelong.get(i).getDepartment()%>事業部 第<%=userListBySameBelong.get(i).getTeam()%>グループ
+								</p>
+								<p id="employee_detail" class="employee_joinTiming"><%=joiningDatesBySameBelong[i]%>入社
+								</p>
 							</div>
 						</a>
+						<%
+							}
+						}
+						%>
 
 						<button id="next">▶</button>
 					</div>
@@ -310,260 +342,356 @@ a {
 
 				<!-- 社員候補リスト（同じ入社年月） -->
 				<div id="imgSlider_area">
-					<div id="joinTiming_title"><%= joiningDate %>入社</div>
+					<div id="joinTiming_title"><%=joiningDate%>入社
+					</div>
 					<div id="img_slider">
 						<button id="prev">◀</button>
-
-						<a href="detailEmployee.jsp">
+						
+						<%
+						if (userListBySameJoiningDate != null) {
+							for (int i = 0; i < 3; i++) {
+						%>
+						<a id="joinTiming_link" href="detailEmployee?userId=<%= userListBySameJoiningDate.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="joinTiming_img"
-									src="<%=request.getContextPath()%>/img/photo2.png" alt="社員画像">
-								<p id="employee_name" class="sameJoinTiming_employeeName">山田
-									太郎</p>
-								<p id="employee_detail" class="employee_belong">第1事業部 第2グループ</p>
-								<p id="employee_detail">2025年4月入社</p>
-							</div>
-						</a> <a href="detailEmployee.jsp">
-							<div id="employee_card">
-								<img id="joinTiming_img"
-									src="<%=request.getContextPath()%>/img/photo3.png" alt="社員画像">
-								<p id="employee_name" class="sameJoinTiming_employeeName">鈴木
-									花子</p>
-								<p id="employee_detail" class="employee_belong">第1事業部 第3グループ</p>
-								<p id="employee_detail">2025年4月入社</p>
-							</div>
-						</a> <a href="detailEmployee.jsp">
-							<div id="employee_card">
-								<img id="joinTiming_img"
-									src="<%=request.getContextPath()%>/img/photo4.png" alt="社員画像">
-								<p id="employee_name" class="sameJoinTiming_employeeName">姓
-									名</p>
-								<p id="employee_detail" class="employee_belong">第2事業部 第1グループ</p>
-								<p id="employee_detail">2025年4月入社</p>
+									src="<%=request.getContextPath()%>/img/<%=sameJoinTiming_imgList[i]%>" alt="社員画像">
+								<p id="employee_name" class="sameJoinTiming_employeeName"><%=userListBySameJoiningDate.get(i).getName()%></p>
+								<p id="employee_detail" class="employee_belong">
+									第<%=userListBySameJoiningDate.get(i).getDepartment()%>事業部 第<%=userListBySameJoiningDate.get(i).getTeam()%>グループ
+								</p>
+								<p id="employee_detail"><%=joiningDatesBySameJoin[i]%>入社
+								</p>
 							</div>
 						</a>
-
+						<%
+							}
+						}
+						%>
+						
 						<button id="next">▶</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<%
+	// Javaの変数をJavaScriptに受け渡し
+	int userListBySameBelongSize = userListBySameBelong.size();
+	int userListBySameJoiningDateSize = userListBySameJoiningDate.size();
+	
+	// -------------ユーザーID（同じ所属）---------------
+	int idListByBelongElement;	// リストの要素を一つ一つ代入するための変数
+	int[] arrayIdListB = new int[userListBySameBelong.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelong.size(); i++) {
+		idListByBelongElement = userListBySameBelong.get(i).getUserId();	// 値を一つ一つ取ってきて代入していく
+		arrayIdListB[i] = idListByBelongElement;		// 代入された値を配列に入れていく
+	}
+	String idListByBelong = Arrays.toString(arrayIdListB);	// 配列を文字列に変換して受け渡す
+
+	// -------------ユーザーID（同じ入社年月）---------------
+	int idListByJoinElement;	// リストの要素を一つ一つ代入するための変数
+	int[] arrayIdListJ = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+		idListByJoinElement = userListBySameJoiningDate.get(i).getUserId();	// 値を一つ一つ取ってきて代入していく
+		arrayIdListJ[i] = idListByJoinElement;		// 代入された値を配列に入れていく
+	}
+	String idListByJoin = Arrays.toString(arrayIdListJ);	// 配列を文字列に変換して受け渡す
+	
+	// -------------名前（同じ所属）---------------
+	String nameListByBelongElement = "";	// リストの要素を一つ一つ代入するための変数
+	String[] arrayNameListB = new String[userListBySameBelong.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelong.size(); i++) {
+		nameListByBelongElement = userListBySameBelong.get(i).getName();	// 値を一つ一つ取ってきて代入していく
+		arrayNameListB[i] = nameListByBelongElement;		// 代入された値を配列に入れていく
+	}
+	String nameListByBelong = Arrays.toString(arrayNameListB);	// 配列を文字列に変換して受け渡す
+	
+	// -------------名前（同じ入社年月）---------------
+	String nameListByJoinElement = "";	// リストの要素を一つ一つ代入するための変数
+	String[] arrayNameListJ = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+		nameListByJoinElement = userListBySameJoiningDate.get(i).getName();	// 値を一つ一つ取ってきて代入していく
+		arrayNameListJ[i] = nameListByJoinElement;		// 代入された値を配列に入れていく
+	}
+	String nameListByJoin = Arrays.toString(arrayNameListJ);	// 配列を文字列に変換して受け渡す
+	
+	// -------------社員画像（同じ所属）---------------
+	String imgListByBelongElement = "";	// リストを一つ一つ代入するための変数
+	String[] arrayImgListB = new String[userListBySameBelong.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelong.size(); i++) {
+		imgListByBelongElement = sameBelong_imgList[i];	// 値を一つ一つ取ってきて代入していく
+		arrayImgListB[i] = imgListByBelongElement;		// 代入された値を配列に入れていく
+	}
+	String imgListByBelong = Arrays.toString(arrayImgListB);	// 配列を文字列に変換して受け渡す
+	
+	// -------------社員画像（同じ入社年月）---------------
+	String imgListByJoinElement = "";	// リストを一つ一つ代入するための変数
+	String[] arrayImgListJ = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+		imgListByJoinElement = sameJoinTiming_imgList[i];	// 値を一つ一つ取ってきて代入していく
+		arrayImgListJ[i] = imgListByJoinElement;		// 代入された値を配列に入れていく
+	}
+	String imgListByJoin = Arrays.toString(arrayImgListJ);	// 配列を文字列に変換して受け渡す
+	
+	// -------------入社年月---------------
+	String joiningDateListElement = "";	// リストを一つ一つ代入するための変数
+	String[] arrayJoiningDateList = new String[userListBySameBelong.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelong.size(); i++) {
+		joiningDateListElement = joiningDatesBySameBelong[i];	// 値を一つ一つ取ってきて代入していく
+		arrayJoiningDateList[i] = joiningDateListElement;		// 代入された値を配列に入れていく
+	}
+	String joiningDateList = Arrays.toString(arrayJoiningDateList);	// 配列を文字列に変換して受け渡す
+
+	// -------------部・グループ（部）---------------
+	String departmentListElement = "";	// リストを一つ一つ代入するための変数
+	String[] arrayDepartmentList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+		departmentListElement = userListBySameJoiningDate.get(i).getDepartment();	// 値を一つ一つ取ってきて代入していく
+		arrayDepartmentList[i] = departmentListElement;		// 代入された値を配列に入れていく
+	}
+	String departmentList = Arrays.toString(arrayDepartmentList);	// 配列を文字列に変換して受け渡す
+
+	// -------------部・グループ（グループ）---------------
+	String teamListElement = "";	// リストを一つ一つ代入するための変数
+	String[] arrayTeamList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+		teamListElement = userListBySameJoiningDate.get(i).getTeam();	// 値を一つ一つ取ってきて代入していく
+		arrayTeamList[i] = teamListElement;		// 代入された値を配列に入れていく
+	}
+	String teamList = Arrays.toString(arrayTeamList);	// 配列を文字列に変換して受け渡す
+	
+	%>
+
 	<script>
-	//↓ボタンを押して画像をスライダーさせ複数閲覧できるようにする
+	// 変数受け渡し
+	const userListBySameBelongSize = <%= userListBySameBelongSize %>;
+	const userListBySameJoiningDateSize = <%= userListBySameJoiningDateSize %>;
 
-	//画像リスト（同じ所属）
-	const sameBelong_imgList = [
-		"<%=request.getContextPath()%>/img/photo2.png",
-		"<%=request.getContextPath()%>/img/photo3.png",
-		"<%=request.getContextPath()%>/img/photo4.png",
-		"<%=request.getContextPath()%>/img/photo5.png",
-		"<%=request.getContextPath()%>/img/photo6.png",
-		"<%=request.getContextPath()%>/img/photo7.png"
-	]
+	// -------------ユーザーID（同じ所属）---------------
+	let stringIdListByBelong = "<%= idListByBelong %>";
+	stringIdListByBelong = stringIdListByBelong.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const sameBelong_idList = stringIdListByBelong.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
 
-	//画像リスト（同じ入社年月）
-	const sameJoinTiming_imgList = [
-		"<%=request.getContextPath()%>/img/photo2.png",
-		"<%=request.getContextPath()%>/img/photo3.png",
-		"<%=request.getContextPath()%>/img/photo4.png",
-		"<%=request.getContextPath()%>/img/photo5.png",
-		"<%=request.getContextPath()%>/img/photo6.png",
-		"<%=request.getContextPath()%>/img/photo7.png"
-	]
+	// -------------ユーザーID（同じ入社年月）---------------
+	let stringIdListByJoin = "<%= idListByJoin %>";
+	stringIdListByJoin = stringIdListByJoin.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const sameJoinTiming_idList = stringIdListByJoin.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
 
-	//名前リスト（同じ所属）
-	const sameBelong_nameList = [
-		"山田 太郎",
-		"鈴木 花子",
-		"姓 名",
-		"姓 名",
-		"姓 名",
-		"姓 名"
-	]
+	// -------------名前（同じ所属）---------------
+	let stringNameListByBelong = "<%= nameListByBelong %>";
+	stringNameListByBelong = stringNameListByBelong.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const sameBelong_nameList = stringNameListByBelong.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
 
-	//名前リスト（同じ入社年月）
-	const sameJoinTiming_nameList = [
-		"山田 太郎",
-		"鈴木 花子",
-		"姓 名",
-		"姓 名",
-		"姓 名",
-		"姓 名"
-	]
+	// -------------名前（同じ入社年月）---------------
+	let stringNameListByJoin = "<%= nameListByJoin %>";
+	stringNameListByJoin = stringNameListByJoin.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const sameJoinTiming_nameList = stringNameListByJoin.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
 
-	// 所属リスト
-	const belongList = [
-		"第1事業部 第2グループ",
-		"第1事業部 第3グループ",
-		"第1事業部 第4グループ",
-		"第2事業部 第1グループ",
-		"第2事業部 第2グループ",
-		"第2事業部 第3グループ"
-	]
+	// -------------社員画像（同じ所属）---------------
+	let stringImgListByBelong = "<%= imgListByBelong %>";
+	stringImgListByBelong = stringImgListByBelong.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const sameBelong_imgList = stringImgListByBelong.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
 
-	//入社年月リスト
-	const joinTimingList = [
-		"2015年4月入社",
-		"2016年4月入社",
-		"2017年4月入社",
-		"2018年4月入社",
-		"2019年4月入社",
-		"2020年4月入社"
-	]
+	// -------------社員画像（同じ入社年月）---------------
+	let stringImgListByJoin = "<%= imgListByJoin %>";
+	stringImgListByJoin = stringImgListByJoin.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const sameJoinTiming_imgList = stringImgListByJoin.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
+
+	// -------------入社年月---------------
+	let stringJoiningDateList = "<%= joiningDateList %>";
+	stringJoiningDateList = stringJoiningDateList.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const joinTimingList = stringJoiningDateList.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
+	
+	// -------------部・グループ（部）---------------
+	let stringDepartmentList = "<%= departmentList %>";
+	stringDepartmentList = stringDepartmentList.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const departmentList = stringDepartmentList.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
+	
+	// -------------部・グループ（グループ）---------------
+	let stringTeamList = "<%= teamList %>";
+	stringTeamList = stringTeamList.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
+	const teamList = stringTeamList.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
+
+	// 部の配列とグループの配列を合わせた文字列の作成
+	const belongList = [];
+	for (let i = 0; i < userListBySameBelongSize + userListBySameJoiningDateSize; i++) {
+		belongList[i] = "第" + departmentList[i] + "事業部 第" + teamList[i] + "グループ";
+	}
 
 	//必要な要素を取得
 	const prevButtons = document.querySelectorAll("#prev");
 	const nextButtons = document.querySelectorAll("#next");
+	const sameBelong_id = document.querySelectorAll("#belong_link");
 	const sameBelong_imgs = document.querySelectorAll("#belong_img");
 	const sameBelong_names = document.getElementsByClassName("sameBelong_employeeName");
 	const sameBelong_joinTimings = document.getElementsByClassName("employee_joinTiming");
+	const sameJoinTiming_id = document.querySelectorAll("#joinTiming_link");
 	const sameJoinTiming_imgs = document.querySelectorAll("#joinTiming_img");
 	const sameJoinTiming_names = document.getElementsByClassName("sameJoinTiming_employeeName");
 	const sameJoinTiming_belongs = document.getElementsByClassName("employee_belong");
 
 	//現在のインデックスを保持するための変数
-	let indexLeft = 0;
-	let indexCenter = 1;
-	let indexRight = 2;
+	let indexLeft_0 = 0;
+	let indexCenter_0 = 1;
+	let indexRight_0 = 2;
+	let indexLeft_1 = 0;
+	let indexCenter_1 = 1;
+	let indexRight_1 = 2;
 
 	// ページが読み込まれたときに最初の情報を表示
 	document.addEventListener('DOMContentLoaded', () => {
-		sameBelong_imgs[0].src = sameBelong_imgList[indexLeft];
-		sameBelong_imgs[1].src = sameBelong_imgList[indexCenter];
-		sameBelong_imgs[2].src = sameBelong_imgList[indexRight];
+		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexLeft_0];
+		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexCenter_0];
+		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexRight_0];
 		
-		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft];
-		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter];
-		sameBelong_names[2].textContent = sameBelong_nameList[indexRight];
+		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
+		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
+		sameBelong_names[2].textContent = sameBelong_nameList[indexRight_0];
 		
-		sameBelong_joinTimings[0].textContent = joinTimingList[indexLeft];
-		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter];
-		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight];
+		sameBelong_joinTimings[0].textContent = joinTimingList[indexLeft_0] + "入社";
+		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter_0] + "入社";
+		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight_0] + "入社";
 		
-		sameJoinTiming_imgs[0].src = sameJoinTiming_imgList[indexLeft];
-		sameJoinTiming_imgs[1].src = sameJoinTiming_imgList[indexCenter];
-		sameJoinTiming_imgs[2].src = sameJoinTiming_imgList[indexRight];
+		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexLeft_1];
+		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexCenter_1];
+		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexRight_1];
 		
-		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft];
-		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter];
-		sameJoinTiming_names[2].textContent = sameJoinTiming_nameList[indexRight];
+		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
+		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
+		sameJoinTiming_names[2].textContent = sameJoinTiming_nameList[indexRight_1];
 		
-		sameJoinTiming_belongs[0].textContent = belongList[indexLeft];
-		sameJoinTiming_belongs[1].textContent = belongList[indexCenter];
-		sameJoinTiming_belongs[2].textContent = belongList[indexRight];
+		sameJoinTiming_belongs[0].textContent = belongList[indexLeft_1];
+		sameJoinTiming_belongs[1].textContent = belongList[indexCenter_1];
+		sameJoinTiming_belongs[2].textContent = belongList[indexRight_1];
 	});
 
 	// ▶ボタン（同じ所属）が押されたら画像を1つ進める
 	nextButtons[0].addEventListener('click', () => {
 		//	インデックスを1つ進める
-		indexLeft += 1;
-		indexCenter += 1;
-		indexRight += 1;
+		indexLeft_0 += 1;
+		indexCenter_0 += 1;
+		indexRight_0 += 1;
 		
 		//	インデックスがリストの範囲を超えた場合の処理
-		if (indexRight >= sameBelong_imgList.length) {
-			indexLeft = sameBelong_imgList.length - 3;
-			indexCenter = sameBelong_imgList.length - 2;
-			indexRight = sameBelong_imgList.length - 1;
+		if (indexRight_0 >= sameBelong_nameList.length) {
+			indexLeft_0 = sameBelong_nameList.length - 3;
+			indexCenter_0 = sameBelong_nameList.length - 2;
+			indexRight_0 = sameBelong_nameList.length - 1;
 		}
-		
+
 		//	現在のインデックスを指定でリストから取ってくる
-		sameBelong_imgs[0].src = sameBelong_imgList[indexLeft];
-		sameBelong_imgs[1].src = sameBelong_imgList[indexCenter];
-		sameBelong_imgs[2].src = sameBelong_imgList[indexRight];
+		sameBelong_id[0].href = "detailEmployee?userId=" + sameBelong_idList[indexLeft_0];
+		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
+		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft];
-		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter];
-		sameBelong_names[2].textContent = sameBelong_nameList[indexRight];
+		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexLeft_0];
+		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexCenter_0];
+		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexRight_0];
 		
-		sameBelong_joinTimings[0].textContent = joinTimingList[indexLeft];
-		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter];
-		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight];
+		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
+		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
+		sameBelong_names[2].textContent = sameBelong_nameList[indexRight_0];
+		
+		sameBelong_joinTimings[0].textContent = joinTimingList[indexLeft_0] + "入社";
+		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter_0] + "入社";
+		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight_0] + "入社";
 	})
 
 	// ▶ボタン（同じ入社年月）が押されたら画像を1つ進める
 	nextButtons[1].addEventListener('click', () => {
 		//	インデックスを1つ進める
-		indexLeft += 1;
-		indexCenter += 1;
-		indexRight += 1;
+		indexLeft_1 += 1;
+		indexCenter_1 += 1;
+		indexRight_1 += 1;
 		
 		//	インデックスがリストの範囲を超えた場合の処理
-		if (indexRight >= sameJoinTiming_imgList.length) {
-			indexLeft = sameJoinTiming_imgList.length - 3;
-			indexCenter = sameJoinTiming_imgList.length - 2;
-			indexRight = sameJoinTiming_imgList.length - 1;
+		if (indexRight_1 >= sameJoinTiming_nameList.length) {
+			indexLeft_1 = sameJoinTiming_nameList.length - 3;
+			indexCenter_1 = sameJoinTiming_nameList.length - 2;
+			indexRight_1 = sameJoinTiming_nameList.length - 1;
 		}
 		
 		//	現在のインデックスを指定でリストから取ってくる
-		sameJoinTiming_imgs[0].src = sameJoinTiming_imgList[indexLeft];
-		sameJoinTiming_imgs[1].src = sameJoinTiming_imgList[indexCenter];
-		sameJoinTiming_imgs[2].src = sameJoinTiming_imgList[indexRight];
+		sameJoinTiming_id[0].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexLeft_1];
+		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
+		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft];
-		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter];
-		sameJoinTiming_names[2].textContent = sameJoinTiming_nameList[indexRight];
+		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexLeft_1];
+		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexCenter_1];
+		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexRight_1];
 		
-		sameJoinTiming_belongs[0].textContent = belongList[indexLeft];
-		sameJoinTiming_belongs[1].textContent = belongList[indexCenter];
-		sameJoinTiming_belongs[2].textContent = belongList[indexRight];
+		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
+		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
+		sameJoinTiming_names[2].textContent = sameJoinTiming_nameList[indexRight_1];
+		
+		sameJoinTiming_belongs[0].textContent = belongList[indexLeft_1];
+		sameJoinTiming_belongs[1].textContent = belongList[indexCenter_1];
+		sameJoinTiming_belongs[2].textContent = belongList[indexRight_1];
 	})
 
 	// ◀ボタン（同じ所属）が押されたら画像を1つ戻す
 	prevButtons[0].addEventListener('click', () => {
 		//	インデックスを1つ戻す
-		indexLeft -= 1;
-		indexCenter -= 1;
-		indexRight -= 1;
+		indexLeft_0 -= 1;
+		indexCenter_0 -= 1;
+		indexRight_0 -= 1;
 		
 		//	インデックスがリストの範囲を超えた場合の処理
-		if (indexLeft < 0) {
-			indexLeft = 0;
-			indexCenter = 1;
-			indexRight = 2;
+		if (indexLeft_0 < 0) {
+			indexLeft_0 = 0;
+			indexCenter_0 = 1;
+			indexRight_0 = 2;
 		}
 		
 		//	現在のインデックスを指定でリストから取ってくる
-		sameBelong_imgs[0].src = sameBelong_imgList[indexLeft];
-		sameBelong_imgs[1].src = sameBelong_imgList[indexCenter];
-		sameBelong_imgs[2].src = sameBelong_imgList[indexRight];
+		sameBelong_id[0].href = "detailEmployee?userId=" + sameBelong_idList[indexLeft_0];
+		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
+		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft];
-		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter];
-		sameBelong_names[2].textContent = sameBelong_nameList[indexRight];
+		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexLeft_0];
+		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexCenter_0];
+		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexRight_0];
 		
-		sameBelong_joinTimings[0].textContent = joinTimingList[indexLeft];
-		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter];
-		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight];
+		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
+		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
+		sameBelong_names[2].textContent = sameBelong_nameList[indexRight_0];
+		
+		sameBelong_joinTimings[0].textContent = joinTimingList[indexLeft_0] + "入社";
+		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter_0] + "入社";
+		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight_0] + "入社";
 	})
 
 	// ◀ボタン（同じ入社年月）が押されたら画像を1つ戻す
 	prevButtons[1].addEventListener('click', () => {
 		//	インデックスを1つ戻す
-		indexLeft -= 1;
-		indexCenter -= 1;
-		indexRight -= 1;
+		indexLeft_1 -= 1;
+		indexCenter_1 -= 1;
+		indexRight_1 -= 1;
 		
 		//	インデックスがリストの範囲を超えた場合の処理
-		if (indexLeft < 0) {
-			indexLeft = 0;
-			indexCenter = 1;
-			indexRight = 2;
+		if (indexLeft_1 < 0) {
+			indexLeft_1 = 0;
+			indexCenter_1 = 1;
+			indexRight_1 = 2;
 		}
 		
 		//	現在のインデックスを指定でリストから取ってくる
-		sameJoinTiming_imgs[0].src = sameJoinTiming_imgList[indexLeft];
-		sameJoinTiming_imgs[1].src = sameJoinTiming_imgList[indexCenter];
-		sameJoinTiming_imgs[2].src = sameJoinTiming_imgList[indexRight];
+		sameJoinTiming_id[0].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexLeft_1];
+		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
+		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft];
-		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter];
-		sameJoinTiming_names[2].textContent = sameJoinTiming_nameList[indexRight];
+		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexLeft_1];
+		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexCenter_1];
+		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexRight_1];
 		
-		sameJoinTiming_belongs[0].textContent = belongList[indexLeft];
-		sameJoinTiming_belongs[1].textContent = belongList[indexCenter];
-		sameJoinTiming_belongs[2].textContent = belongList[indexRight];
+		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
+		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
+		sameJoinTiming_names[2].textContent = sameJoinTiming_nameList[indexRight_1];
+		
+		sameJoinTiming_belongs[0].textContent = belongList[indexLeft_1];
+		sameJoinTiming_belongs[1].textContent = belongList[indexCenter_1];
+		sameJoinTiming_belongs[2].textContent = belongList[indexRight_1];
 
 	})
 	</script>
