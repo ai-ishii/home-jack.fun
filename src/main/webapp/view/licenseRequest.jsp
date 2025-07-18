@@ -1,13 +1,16 @@
+<%@page import="util.MyFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="bean.NameRequest"%>
+<%@ page import="bean.RequestLicenseRequestUser"%>
 <%
-NameRequest nameRequest = (NameRequest) request.getAttribute("nameRequest");
+RequestLicenseRequestUser requestLicenseRequestUser = (RequestLicenseRequestUser) request
+		.getAttribute("requestLicenseRequestUser");
+MyFormat myFormat = new MyFormat();
 %>
 
 <html>
 <head>
 <!-- タイトル -->
-<title>氏名変更詳細</title>
+<title></title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -21,7 +24,6 @@ NameRequest nameRequest = (NameRequest) request.getAttribute("nameRequest");
 	flex-direction: row;
 	z-index: 10;
 }
-
 h1 {
 	padding: 30px 0;
 	display: block;
@@ -34,85 +36,81 @@ h1 {
 	unicode-bidi: isolate;
 }
 
-.detail {
-	width: 80%;
+
+.license {
+	width: 70%;
+	height: 80%;
 	margin: 0 auto;
 }
 
-.detail td, .detail th {
-	padding: 8px 20px
+.license td {
+	border: solid 3px #000000;
 }
 
-.detail td {
-	width: 28%;
-}
-
-.detail .oldname {
-	width: 12%;
-	background-color: #cccc9d;
-}
-
-.detail .newname {
-	width: 12%;
-	background-color: #e6e6b1;
-}
-
-.detail .oldnamekanji {
-	background-color: #cccc9d;
-}
-
-.detail .newnamekanji {
-	background-color: #e6e6b1;
-}
-
-.beforeAfter {
-	width: 80%;
-	margin: 0 auto;
-	border-collapse: separate;
-}
-
-.before {
-	width: 40%;
+.item {
 	text-align: center;
-	background-color: #b0e0e6;
-	padding: 8px 20px;
+	background-color: #afd5e6;
 }
 
-.after {
-	width: 40%;
+.request {
 	text-align: center;
-	background-color: #b0e0e6;
-	padding: 8px 20px;
+	background-color: #afd5e6;
 }
 
-.space {
-	width: 20%;
-	padding: 8px 20px;
-	font-size: 50px;
+.licensename {
+	background-color: #e6ffcc;
 }
 
-.kana {
-	height: 150px;
+.name {
+	background-color: #fff7cc;
 }
 
-.oldkana {
-	background-color: #cccc9d;
+.licenseexamdate {
+	background-color: #e6ffcc;
 }
 
-.newkana {
-	background-color: #e6e6b1;
+.examdate {
+	background-color: #fff7cc;
 }
 
-.oldnamekana {
-	background-color: #cccc9d;
+.username {
+	background-color: #e6ffcc;
 }
 
-.newnamekana {
-	background-color: #e6e6b1;
+.user {
+	background-color: #fff7cc;
 }
 
-.post {
-	height: 150px;
+.affiliationdepartment {
+	background-color: #e6ffcc;
+}
+
+.department {
+	background-color: #fff7cc;
+}
+
+.affiliationteam {
+	background-color: #e6ffcc;
+}
+
+.team {
+	background-color: #fff7cc;
+}
+
+.licenseexamdate {
+	background-color: #e6ffcc;
+}
+
+.examdate {
+	background-color: #fff7cc;
+}
+
+.licenseexamtime {
+	background-color: #e6ffcc;
+}
+
+.examtime {
+	background-color: #fff7cc;
 }
 
 .button {
@@ -186,7 +184,6 @@ a.btn--notApproved:hover {
 	transition: all 0.3s;
 }
 </style>
-
 <body>
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
@@ -195,31 +192,35 @@ a.btn--notApproved:hover {
 		<!-- メイン部分 -->
 		<div id="main2" class="container">
 
-			<h1 style="text-align: center">-氏名申請詳細-</h1>
+			<h1 style="text-align: center">-資格申請詳細-</h1>
 
-			<table class="beforeAfter">
+			<table class="license">
 				<tr>
-					<th class="before">変更前</th>
-					<th class="space"></th>
-					<th class="after">変更後</th>
+					<td class="item">項目</td>
+					<td class="request">申請内容</td>
 				</tr>
-			</table>
-
-			<table class="detail">
-				<tr class="name">
-					<th class="oldname">旧氏名</th>
-					<td class="oldnamekanji"><%=nameRequest.getOldName()%></td>
-					<th class="space">⇒</th>
-					<th class="newname">新氏名</th>
-					<td class="newnamekanji"><%=nameRequest.getNewName()%></td>
+				<tr>
+					<td class="licensename">資格名</td>
+					<td class="name"><%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%></td>
 				</tr>
-
-				<tr class="kana">
-					<th class="oldkana">旧氏名(かな)</th>
-					<td class="oldnamekana"><%=nameRequest.getOldNameKana()%></td>
-					<th class="space">⇒</th>
-					<th class="newkana">新氏名(かな)</th>
-					<td class="newnamekana"><%=nameRequest.getNewNameKana()%></td>
+				<tr>
+					<td class="username">氏名</td>
+					<td class="user"><%=requestLicenseRequestUser.getRequest().getName()%></td>
+				</tr>
+				<td class="affiliationdepartment">部</td>
+				<td class="department"><%=requestLicenseRequestUser.getUser().getDepartment()%>部</td>
+				</tr>
+				<tr>
+					<td class="affiliationteam">グループ</td>
+					<td class="team"><%=requestLicenseRequestUser.getUser().getTeam()%>グループ</td>
+				</tr>
+				<tr>
+					<td class="licenseexamdate">受験日</td>
+					<td class="examdate"><%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%></td>
+				</tr>
+				<tr>
+					<td class="licenseexamtime">受験回数</td>
+					<td class="examtime"><%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>回</td>
 				</tr>
 			</table>
 			<table class="button">
@@ -238,7 +239,9 @@ a.btn--notApproved:hover {
 						class="returnlist">申請一覧に戻る</a></td>
 				</tr>
 			</table>
-			<br> <br> <br> <br>
+			<br>
+			<br>
+			<br><br><br>
 		</div>
 	</div>
 </body>
