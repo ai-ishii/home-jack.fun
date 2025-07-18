@@ -7,12 +7,19 @@ NameRequest nameRequest = (NameRequest) request.getAttribute("nameRequest");
 <html>
 <head>
 <!-- タイトル -->
-<title>氏名申請詳細</title>
+<title>氏名変更詳細</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
+#main2 {
+	position: relative;
+	width: 100%;
+	margin: 0px;
+	flex-direction: row;
+	z-index: 10;
+}
 .detail {
 	width: 80%;
 	margin: 0 auto;
@@ -121,12 +128,10 @@ NameRequest nameRequest = (NameRequest) request.getAttribute("nameRequest");
 .button .returnlist {
 	width: 150px;
 	height: 40px;
-	background-color: #e6e6e6;
 	border-radius: 4px 4px 4px 4px;
 }
 
 .button .returnlist:hover {
-	background-color: #cccccc;
 	transition: all 0.3s;
 }
 </style>
@@ -138,7 +143,7 @@ NameRequest nameRequest = (NameRequest) request.getAttribute("nameRequest");
 		<%@ include file="../common/header.jsp"%>
 
 		<!-- メイン部分 -->
-		<div id="main" class="container">
+		<div id="main2" class="container">
 
 			<h2 style="text-align: center">-氏名申請詳細-</h2>
 
@@ -175,7 +180,7 @@ NameRequest nameRequest = (NameRequest) request.getAttribute("nameRequest");
 					<th class="space"></th>
 				</tr>
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/requestList" class="returnlist">一覧に戻る</a></td>
+					<td><a href="<%=request.getContextPath()%>/requestList" class="returnlist">申請一覧に戻る</a></td>
 					
 				</tr>
 				</div>
