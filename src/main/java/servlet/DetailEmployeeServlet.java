@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import bean.Employee;
 import bean.User;
@@ -28,6 +30,8 @@ public class DetailEmployeeServlet extends HttpServlet {
 		EmployeeDAO employeeDAO = new EmployeeDAO();
 		Employee employee = new Employee();
 		User user = new User();
+		ArrayList<User> userListBySameBelong = new ArrayList<User>();
+		ArrayList<User> userListBySameJoinDate = new ArrayList<User>();
 		
 		// JSPから情報を取得
 		int userId = Integer.parseInt(request.getParameter("userId"));
@@ -36,13 +40,24 @@ public class DetailEmployeeServlet extends HttpServlet {
 		employee = employeeDAO.selectByUserId(userId);
 		user = userDAO.selectByUserId(userId);
 		
+		// 選択された社員の部・グループを取得し、メソッド実行
+		String department = user.getDepartment();
+		String team = user.getTeam();
+		userListBySameBelong = userDAO.selectByDepartmentTeam(department, team);
+		
+		// 選択された社員の入社年月を取得し、メソッド実行
+		Timestamp joiningDate = user.getJoiningDate();
+		userListBySameJoinDate = userDAO.selectByJoiningDate(joiningDate);
+		
 		// 取得してきた社員情報をjspに送るためセットする
 		request.setAttribute("Employee", employee);
 		request.setAttribute("User", user);
+		request.setAttribute("UserListBySameBelong", userListBySameBelong);
+		request.setAttribute("UserListBySameJoinDate", userListBySameJoinDate);
 			
 		} catch(IllegalStateException e) {
-			error = "DB接続エラーのため、社員詳細は表示できませんでした。";
 			cmd = "";
+			error = "DB接続エラーのため、社員詳細は表示できませんでした。";
 		} catch (Exception e) {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;

@@ -41,8 +41,8 @@ public class EmployeeServlet extends HttpServlet {
 		request.setAttribute("photos", photos);
 			
 		} catch(IllegalStateException e) {
-			error = "DB接続エラーのため、社員一覧は表示できませんでした。";
 			cmd = "";
+			error = "DB接続エラーのため、社員一覧は表示できませんでした。";
 		} catch (Exception e) {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
