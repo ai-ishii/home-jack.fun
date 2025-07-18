@@ -164,9 +164,49 @@ public class UserDAO {
 	/**
 	 * 疑似削除を行うメソッド
 	 * 
+	 * @param 疑似削除したいユーザーのid
 	 * @throws IllegalStateException メソッド内部で例外が発生した場合
 	 */
-	
+	public void delete(int userId) {
+		Connection con = null;
+		Statement smt = null;
+		
+		LocalDateTime nowDate = LocalDateTime.now();
+		
+		//SQL文の作成
+		String sql = "update userinfo set birthday = NULL, address = NULL, "
+				+ "post = NULL, phone = NULL, nearest_station = NULL, transportation = NULL, sex = NULL, "
+				+ "employee_number = 'NULL, department = NULL, team = NULL, joiningdate = NULL, "
+				+ "children = NULL, qualification = NULL, work_history = NULL, regist_date = NULL, "
+				+ "update_date = '"+ nowDate +"' WHERE user_id = '"+userId+"'";
+		
+		try {
+			//DB接続
+			con = getConnection();
+			smt = con.createStatement();
+			
+			//更新の処理
+			smt.executeUpdate(sql);
+			
+			
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		
+	}
 	
 	/**
 	 * 更新処理を行うメソッド
