@@ -14,6 +14,13 @@ Request Allrequest = new Request();
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
+#main2 {
+	position: relative;
+	width: 100%;
+	margin: 0px;
+	flex-direction: row;
+	z-index: 10;
+}
 .list {
 	width: 80%;
 	margin: 0 auto;
@@ -265,7 +272,7 @@ Request Allrequest = new Request();
 		<%@ include file="../common/header.jsp"%>
 
 		<!-- メイン部分 -->
-		<div id="main" class="container">
+		<div id="main2" class="container">
 
 
 			<h2 style="text-align: center">-申請一覧-</h2>

@@ -13,6 +13,8 @@ import bean.AddressRequest;
 import bean.LicenseRequest;
 import bean.NameRequest;
 import bean.Request;
+import bean.RequestLicenseRequestUser;
+import bean.User;
 import bean.WorkRequest;
 
 public class RequestDAO {
@@ -234,31 +236,40 @@ public class RequestDAO {
 			return addressRequest;
 		}
 		//license_request_infoの情報を取り出すメソッド
-		public LicenseRequest selectByLicenseRequestId(int requestid) {
+		public RequestLicenseRequestUser selectLicenseRequestId(int requestid) {
 			//変数宣言
 			Connection con = null;
 			Statement smt = null;
+			RequestLicenseRequestUser requestLicenseRequestUser = new RequestLicenseRequestUser();
 			LicenseRequest licenseRequest = new LicenseRequest();
+			Request request = new Request();
+			User user = new User();
 			
 			try {
 				con = getConnection();
 				smt = con.createStatement();
 
 				//SQL文
-				String sql = "SELECT * FROM license_request_info where request_id=" + requestid ;
+				String sql = "SELECT user_info.department,user_info.team,request_info.name,license_request_info.license_name,license_request_info.exam_date,"
+						+ "license_request_info.exam_time FROM user_info INNER JOIN request_info ON user_info.user_id = request_info.applicant_id"
+						+ " INNER JOIN license_request_info ON request_info.request_id = license_request_info.request_id "
+						+ "WHERE .request_info.request_id=" + requestid;
 
 				ResultSet rs = smt.executeQuery(sql);
 				
 				while (rs.next()) {
-					
-
-					licenseRequest.setLicenseId(rs.getInt("license_request_id"));
-					licenseRequest.setRequestId(rs.getInt("request_id"));
 					licenseRequest.setLicenseName(rs.getString("license_name"));
-					licenseRequest.setImage(rs.getString("image"));
 					licenseRequest.setExamDate(rs.getTimestamp("exam_date"));
 					licenseRequest.setExamTime(rs.getInt("exam_time"));
-
+					
+					user.setDepartment(rs.getString("department"));
+					user.setTeam(rs.getString("team"));
+					
+					request.setName(rs.getString("name"));
+					
+					requestLicenseRequestUser.setRequest(request);
+					requestLicenseRequestUser.setLicenseRequest(licenseRequest);
+					requestLicenseRequestUser.setUser(user);
 
 				}
 
@@ -279,7 +290,7 @@ public class RequestDAO {
 					}
 				}
 			}
-			return licenseRequest;
+			return requestLicenseRequestUser;
 		}
 
 }

@@ -13,6 +13,13 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
+#main2 {
+	position: relative;
+	width: 100%;
+	margin: 0px;
+	flex-direction: row;
+	z-index: 10;
+}
 .detail {
 	width: 80%;
 	margin: 0 auto;
@@ -126,12 +133,10 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 .button .returnlist {
 	width: 150px;
 	height: 40px;
-	background-color: #e6e6e6;
 	border-radius: 4px 4px 4px 4px;
 }
 
 .button .returnlist:hover {
-	background-color: #cccccc;
 	transition: all 0.3s;
 }
 </style>
@@ -142,9 +147,9 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 		<%@ include file="../common/header.jsp"%>
 
 		<!-- メイン部分 -->
-		<div id="main" class="container">
+		<div id="main2" class="container">
 
-			<h2 style="text-align: center">-住所申請詳細-</h2>
+			<h2 style="text-align: center">-住所変更詳細-</h2>
 
 			<table class="beforeAfter">
 				<tr>
@@ -179,7 +184,7 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 					<th class="space"></th>
 				</tr>
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/requestList" class="returnlist">一覧に戻る</a></td>
+					<td><a href="<%=request.getContextPath()%>/requestList" class="returnlist">申請一覧に戻る</a></td>
 				</tr>
 				</table>
 				</div>
