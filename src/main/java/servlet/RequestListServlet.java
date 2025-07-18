@@ -17,28 +17,32 @@ public class RequestListServlet extends HttpServlet {
 	//doGetメソッド
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String error = null;
 		String cmd = null;
 		ArrayList<Request> requestList = new ArrayList<Request>();
 
 		try {
 			//オブジェクト化(doGetメソッド内の変数と名前が被るため AllRequest を変数名にしている)
-			RequestDAO requestDAO = new RequestDAO();	
+			RequestDAO requestDAO = new RequestDAO();
 
 			//申請テーブルから情報を取り出し、requestListに代入
 			requestList = requestDAO.selectAll();
 
-		//DB接続エラー	
-		} catch (Exception e) {
-			error = "DB接続エラーのため、申請一覧は表示できませんでした。";
+			//DB接続エラー	
+			//DB接続エラー	
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
 			cmd = "dbError";
+		} catch (Exception e) {
+			error = "予期せぬエラーが発生しました。" + e;
+			cmd = "logout";
 		}
 		//エラーがない場合は、RequestList.jspに遷移する
 		if (error == null) {
 			request.setAttribute("requestList", requestList);
 			request.getRequestDispatcher("/view/requestList.jsp").forward(request, response);
-		//エラーがある場合はerror.jspに遷移する
+			//エラーがある場合はerror.jspに遷移する
 		} else {
 			request.setAttribute("error", "error");
 			request.setAttribute("cmd", "cmd");
@@ -46,4 +50,3 @@ public class RequestListServlet extends HttpServlet {
 		}
 	}
 }
-
