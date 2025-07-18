@@ -25,10 +25,7 @@ cursor
 #main {
 	position: relative;
 	width: 100%;
-<<<<<<< Upstream, based on ccccc
 	margin: 0px;
-=======
->>>>>>> 79f881c tst3
 	flex-direction: row;
 	z-index: 10;
 }
