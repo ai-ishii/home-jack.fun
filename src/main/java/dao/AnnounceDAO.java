@@ -169,7 +169,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT * FROM announce_info WHERE NOT announce_flag = '1' AND NOT announce_category_id = '0' ORDER BY regist_date DESC LIMIT 3";
+		String sql = "SELECT * FROM announce_info WHERE NOT announce_category_id = '2' ORDER BY regist_date DESC LIMIT 3";
 
 		try {
 			// DBに接続
@@ -215,8 +215,8 @@ public class AnnounceDAO {
 	}
 
 	/**
-	 * 重要なお知らせ(announce_flag = 2)をすべて取得するメソッド
-	 * @return announce_flag = 2のお知らせ 
+	 * 重要なお知らせ(announce_flag = 1)をすべて取得するメソッド
+	 * @return announce_flag = 1のお知らせ 
 	 */
 	public ArrayList<Announce> selectImportant() {
 
@@ -228,7 +228,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT * FROM announce_info WHERE announce_flag = '2' ORDER BY regist_date DESC LIMIT 3";
+		String sql = "SELECT * FROM announce_info WHERE announce_flag = '1' ORDER BY regist_date DESC";
 
 		try {
 			// DBに接続
@@ -275,7 +275,7 @@ public class AnnounceDAO {
 
 	/**
 	 * 最新3件のチーム活動を取得するメソッド
-	 * @return category = 0のチーム活動
+	 * @return category = 2のチーム活動
 	 */
 	public ArrayList<Announce> selectActivity() {
 
@@ -287,7 +287,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT * FROM announce_info WHERE announce_category_id = '0' ORDER BY regist_date DESC LIMIT 3";
+		String sql = "SELECT * FROM announce_info WHERE announce_category_id = '2' ORDER BY regist_date DESC LIMIT 3";
 
 		try {
 			// DBに接続

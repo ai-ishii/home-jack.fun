@@ -65,7 +65,6 @@ MyFormat myformat = new MyFormat();
 	border-bottom: 1px solid #cccccc;
 	padding: 20px 0;
 	width: 100%;
-
 }
 
 .announce-list .item:first-child a {
@@ -81,7 +80,7 @@ MyFormat myformat = new MyFormat();
 
 .announce-list .item .tag {
 	margin: 0;
-	min-width: 120px;
+	min-width: 130px;
 }
 
 .announce-list .item .tag span {
@@ -113,6 +112,10 @@ MyFormat myformat = new MyFormat();
 	min-width: 140px;
 	padding: 0 20px 0 0;
 	color: #999999;
+}
+
+.announce-list .item:hover a {
+	background-color: #eeeeee;
 }
 
 .announce-list .item a:hover .title {
