@@ -136,6 +136,7 @@ public class UserDAO {
 				user.setBirthday(rs.getDate("birthday"));
 				user.setAddress(rs.getString("address"));
 				user.setPhone(rs.getString("phone"));
+				user.setPost(rs.getString("post"));
 				user.setNearestStation(rs.getString("nearest_station"));
 				user.setTransportation(rs.getString("transportation"));
 				user.setSex(rs.getString("sex"));
@@ -232,7 +233,7 @@ public class UserDAO {
 	 * @param 疑似削除したいユーザーのid
 	 * @throws IllegalStateException メソッド内部で例外が発生した場合
 	 */
-	public void delete(String userId) {
+	public void delete(int userId) {
 		Connection con = null;
 		Statement smt = null;
 		

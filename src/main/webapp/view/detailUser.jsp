@@ -49,7 +49,7 @@ User user = (User) request.getAttribute("user");
 	text-align: center;
 }
 
-<%-- 追加したよ --%>
+/* 追加したよ */
 #detail-list{
 margin:0 auto;
 }

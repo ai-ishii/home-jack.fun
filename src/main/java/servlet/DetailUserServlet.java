@@ -28,20 +28,33 @@ public class DetailUserServlet extends HttpServlet {
 		String path = "/view/detailUser.jsp";
 		
 		try {
+			//cmdの取得
+			cmd = (String) request.getAttribute("cmd");
+			
+			if(cmd == null) {
+				cmd = "";
+			}
+			
 			// パラメータの取得
 			int userId = Integer.parseInt(request.getParameter("userId"));
 			
 			// DAOオブジェクトの宣言
-			UserDAO objUserDao = new UserDAO();
+			UserDAO userDAO = new UserDAO();
+			
+			if(cmd.equals("delete")) {
+				userDAO.delete(userId);
+				
+				return;
+			}
 
 			// メソッドを呼び出し
-			User user = objUserDao.selectByUserId(userId);
+			User user = userDAO.selectByUserId(userId);
 
 			// リクエストスコープに登録
 			request.setAttribute("user", user);
 			
 			} catch (IllegalStateException e) {
-				error = "DB接続エラーのため、ユーザー詳細は表示できませんでした。";
+				error = "DB接続エラーのため、個人情報詳細は表示できませんでした。";
 				cmd = "logout";
 			} catch (Exception e) {
 				error = "予期せぬエラーが発生しました。" + e;
