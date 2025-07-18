@@ -3,8 +3,8 @@ package servlet;
 import java.io.IOException;
 
 import bean.AddressRequest;
-import bean.LicenseRequest;
 import bean.NameRequest;
+import bean.RequestLicenseRequestUser;
 import bean.WorkRequest;
 import dao.RequestDAO;
 import jakarta.servlet.ServletException;
@@ -46,14 +46,17 @@ public class RequestDetailServlet extends HttpServlet {
 				WorkRequest workRequest = requestDAO.selectByWorkRequestId(requestid);
 				request.setAttribute("workRequest", workRequest);
 			} else if (type == 3) {
-				LicenseRequest licenseRequest = requestDAO.selectByLicenseRequestId(requestid);
-				request.setAttribute("licenseRequest", licenseRequest);
-					
+				RequestLicenseRequestUser requestLicenseRequestUser = requestDAO.selectLicenseRequestId(requestid);
+				request.setAttribute("requestLicenseRequestUser", requestLicenseRequestUser);
+
 			}
-		//DB接続エラー	
-		} catch (Exception e) {
-			error = "DB接続エラーのため、申請一覧は表示できませんでした。";
+			//DB接続エラー	
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
 			cmd = "dbError";
+		} catch (Exception e) {
+			error = "予期せぬエラーが発生しました。" + e;
+			cmd = "logout";
 		}
 		//エラーがない場合は、RequestList.jspに遷移する
 		if (error == null) {
