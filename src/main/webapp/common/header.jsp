@@ -86,6 +86,12 @@
 					</a></li>
 				</ul>
 			</div>
+			
+			<div class="jump">
+				<a href="#" onclick="{window.scrollTo({top: 0, left: 0, behavior: 'smooth'})}; return false;" ><p>▲<br>ページトップ</p></a>
+			</div>
+
+			
 		</div>
 	</header>
 

@@ -27,13 +27,13 @@ cursor
 	position: relative;
 	width: 100%;
 	margin: 0px;
-	display: flex;
 	flex-direction: row;
 	z-index: 10;
 }
 
 .flex {
 	display: flex;
+	width: 100%;
 }
 
 body {
@@ -42,6 +42,7 @@ body {
 		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 0;
 }
 
 h1, h2 {
@@ -214,6 +215,35 @@ ul ul {
 	cursor: pointer;
 }
 
+/*ページ上部にリンクするボタン*/
+.jump {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	z-index: 30;
+}
+
+.jump a {
+	text-decoration: none;
+	opacity: 0.3;
+	transition: 0.3s;
+}
+
+.jump a:hover {
+	opacity: 1.0;
+	transition: 0.3s;
+}
+
+.jump a p{
+	padding: 18px 0;
+	background-color: #ffcc55;
+	border-radius: 100%;
+	text-align: center;
+	text-decoration: none;
+	color: #000000;
+	font-size: 10.5px;
+	
+}
 
 .box-parent {
   width:100%;
