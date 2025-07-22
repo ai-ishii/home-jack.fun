@@ -169,7 +169,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT * FROM announce_info WHERE NOT announce_flag = '1' AND NOT announce_category_id = '0' ORDER BY regist_date DESC LIMIT 3";
+		String sql = "SELECT * FROM announce_info WHERE NOT announce_category_id = '2' ORDER BY regist_date DESC LIMIT 3";
 
 		try {
 			// DBに接続
@@ -228,7 +228,7 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT * FROM announce_info WHERE announce_flag = '1' ORDER BY regist_date DESC LIMIT 3";
+		String sql = "SELECT * FROM announce_info WHERE announce_flag = '1' ORDER BY regist_date DESC";
 
 		try {
 			// DBに接続
