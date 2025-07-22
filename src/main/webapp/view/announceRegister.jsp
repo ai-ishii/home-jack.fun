@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <html>
@@ -8,7 +9,24 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
-</head>
+<%-->
+tinyMCEの記述 textareaのCSS記述を外すと使えるよ
+<script src="../js/tinymce/tinymce.min.js"></script>
+<script>
+	tinymce
+			.init({
+				selector : '#text',
+				toolbar : [ 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | image paste' ],
+				language : 'ja',
+				language_url : '../js/tinymce/langs/ja/langs/ja.js',
+				plugins : 'image, paste image',
+				images_file_types: 'jpeg,jpg,png,gif,webp',
+				image_upload_url : '/announceRegister',
+				width: '100%'
+			});
+</script>
+<--%>
+
 <style>
 #content_box {
 	display: flex;
@@ -56,18 +74,22 @@ input[type="checkbox"] {
 	transform: scale(1.5);
 }
 
-textarea {
-	resize: vertical;
-	width: 100%;
-	height: 200px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-}
-
 input[type="submit"], input[type="button"] {
 	margin: 10px;
 }
+
+textarea {
+	width: 100%;
+	height: 200px;
+	resize: vertical;
+	border: 1px solid #ccc;
+}
+
+.tox-tinymce {
+	margin: 0 auto;
+}
 </style>
+</head>
 
 <body>
 	<div id="wrap">
@@ -86,8 +108,8 @@ input[type="submit"], input[type="button"] {
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="registDate" class="control_label">投稿日時</label>
-						<input id="registDate" type="datetime-local" name="registDate" />
+						<label for="registDate" class="control_label">投稿日時</label> <input
+							id="registDate" type="datetime-local" name="registDate" />
 					</div>
 
 					<div class="form_box tiny_form">
