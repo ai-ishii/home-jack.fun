@@ -107,7 +107,7 @@ public class AnnounceDAO {
 		Statement smt = null;
 
 		// SQL文
-		String sql = "select * from announce_info where announce_id = " + announceId + ";";
+		String sql = "SELECT * FROM announce_info WHERE announce_id = " + announceId + ";";
 
 		Announce announce = new Announce();
 
@@ -215,7 +215,7 @@ public class AnnounceDAO {
 	}
 
 	/**
-	 * 重要なお知らせ(announce_flag = 1)をすべて取得するメソッド
+	 * 重要なお知らせ(announce_flag = 1をすべて取得するメソッド
 	 * @return announce_flag = 1のお知らせ 
 	 */
 	public ArrayList<Announce> selectImportant() {
@@ -484,7 +484,8 @@ public class AnnounceDAO {
 		Statement smt = null;
 
 		String sql = "UPDATE announce_info SET title = '" + announce.getTitle() + "', update_date = '"
-				+ announce.getUpdateDate() + "', text = '" + announce.getText() + "' WHERE announce_id = '"
+				+ announce.getUpdateDate() + "', text = '" + announce.getText() + "', announce_category_id = "
+				+ announce.getAnnounceCategoryId() + " WHERE announce_id = '"
 				+ announce.getAnnounceId() + "'";
 
 		try {
@@ -512,5 +513,65 @@ public class AnnounceDAO {
 				}
 			}
 		}
+	}
+
+	/**
+	 * キーワード検索を行うメソッド
+	 * @param keyword
+	 * @return ArrayList<Announce> list
+	 */
+	public ArrayList<Announce> selectByKeyword(String keyword) {
+
+		// 変数宣言
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<Announce> list = new ArrayList<Announce>();
+
+		String sql = " SELECT * FROM announce_info "
+				+ "WHERE name LIKE '%"+ keyword + "%' "
+				+ "OR title LIKE '%" + keyword + "%' "
+				+ "OR text LIKE '%"+ keyword + "%' "
+				+ "OR tag LIKE '%" + keyword + "%';";
+
+		try {
+			// DBに接続
+			con = AnnounceDAO.getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			while (rs.next()) {
+				Announce announce = new Announce();
+				announce.setAnnounceId(rs.getInt("announce_id"));
+				announce.setName(rs.getString("name"));
+				announce.setRegistDate(rs.getTimestamp("regist_date"));
+				announce.setUpdateDate(rs.getTimestamp("update_date"));
+				announce.setTitle(rs.getString("title"));
+				announce.setAnnounceFlag(rs.getInt("announce_flag"));
+				announce.setAnnounceCategoryId(rs.getInt("announce_category_id"));
+				announce.setTag(rs.getString("tag"));
+				list.add(announce);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+
+		return list;
 	}
 }

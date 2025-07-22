@@ -21,6 +21,19 @@ Request Allrequest = new Request();
 	flex-direction: row;
 	z-index: 10;
 }
+
+h1 {
+	padding: 30px 0;
+	display: block;
+    font-size: 2.5em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
 .list {
 	width: 80%;
 	margin: 0 auto;
@@ -73,6 +86,10 @@ Request Allrequest = new Request();
 .display {
 	width: 80%;
 	margin: 0 auto;
+}
+
+.display tr {
+	height: 45px;
 }
 
 .display tr:nth-child(even) {
@@ -247,6 +264,10 @@ Request Allrequest = new Request();
 	background: #f0f8ff;
 	transition: all 0.3s;
 }
+
+.display tr {
+	height: 45px;
+}
 /* 行全体ホバーで色だけ変える（リンク風ではない） */
 .row-hover:hover {
 	background-color: #eef;
@@ -264,6 +285,63 @@ Request Allrequest = new Request();
 .request-table td button {
 	cursor: default;
 }
+/* 削除ボタンのCSS */
+html {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 62.5%;
+}
+
+.btn, a.btn, button.btn {
+	margin: 0 auto;
+	width: 68%;
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1.5;
+	position: relative;
+	display: inline-block;
+	padding: 0.5rem 1.5rem;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+	letter-spacing: 0.1em;
+	border-radius: 8.5rem;
+	font-size: 1.6rem;
+}
+
+a.btn--delete {
+	color: #eee;
+	background-color: #b35136;
+	border-bottom: 2px solid #8491c3 transparent;
+}
+
+a.btn--delete:hover {
+	margin-top: 3px;
+	color: #eee;
+	background: #662e1f;
+	border-bottom: 2px solid #4a488e;
+}
+
+a.btn--notApproved {
+	color: #000;
+	background-color: #bbc8e6;
+	border-bottom: 2px solid #8491c3 transparent;
+}
+
+a.btn--notApproved:hover {
+	margin-top: 3px;
+	color: #000;
+	background: #9192b3;
+	border-bottom: 2px solid #4a488e;
+	background: #9192b3;
+}
 </style>
 
 <body>
@@ -275,9 +353,7 @@ Request Allrequest = new Request();
 		<div id="main2" class="container">
 
 
-			<h2 style="text-align: center">-申請一覧-</h2>
-
-
+			<h1 style="text-align: center">-申請一覧-</h1>
 			<tr>
 				<form id="form1" action="requestSearch">
 					<input id="sbox1" name="search" type="text"
@@ -312,33 +388,42 @@ Request Allrequest = new Request();
 					%>
 
 					<tr class="row-hover">
-						<td class="requestid" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestId()%></td>
-						<td class="userid" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getApplicantId()%></td>
-						<td class="name" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getName()%></td>
+						<td class="requestid"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestId()%></td>
+						<td class="userid"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getApplicantId()%></td>
+						<td class="name"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getName()%></td>
 						<%
 						if (requestList.get(i).getRequestTypeFlag() == 0) {
 						%>
-						<td class="request" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">住所変更</td>
+						<td class="request"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">住所変更</td>
 						<%
 						} else if (requestList.get(i).getRequestTypeFlag() == 1) {
 						%>
-						<td class="request" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">氏名変更</td>
+						<td class="request"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">氏名変更</td>
 						<%
 						} else if (requestList.get(i).getRequestTypeFlag() == 2) {
 						%>
-						<td class="request" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">勤務状況変更</td>
+						<td class="request"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">勤務状況変更</td>
 						<%
 						} else {
 						%>
-						<td class="request" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">資格申請</td>
+						<td class="request"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">資格申請</td>
 						<%
 						}
 						%>
-						<td class="time" data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestDate()%></td>
+						<td class="time"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestDate()%></td>
 						<%
 						if (requestList.get(i).getRequestFlag() == 0) {
 						%>
-						<td><input class="notApproved" type="submit" value="承認"></td>
+						<td><a href="<%=request.getContextPath()%>/#?#%>"
+							onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
 						<%
 						} else if (requestList.get(i).getRequestFlag() == 1) {
 						%>
@@ -355,7 +440,8 @@ Request Allrequest = new Request();
 						<%
 						}
 						%>
-						<td><input class="delete" type="submit" value="取り消し"></td>
+						<td><a href="<%=request.getContextPath()%>/#?#%>"
+							onclick="return confirm('本当に削除しますか?')" class="btn btn--delete">削除</a></td>
 					</tr>
 
 					<%
@@ -364,24 +450,29 @@ Request Allrequest = new Request();
 
 
 				</table>
+				<br><br><br><br>
 		</div>
 	</div>
 	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			// class="requestid,userid,name,time,request" がついてる td を全部探す
-			const linkCells = document.querySelectorAll(".requestid, .userid, .name, .time, .request");
-			
+		document
+				.addEventListener(
+						"DOMContentLoaded",
 
-			// それぞれの td にクリックしたときの処理を追加
-			linkCells.forEach(function(cell) {
-				cell.addEventListener("click", function() {
-					const url = cell.dataset.href; // td に指定された data-href を取り出す
-					if (url) {
-						window.location.href = url; // そのURLへジャンプする
-					}
-				});
-			});
-		});
+						function() {
+							// class="requestid,userid,name,time,request" がついてる td を全部探す
+							const linkCells = document
+									.querySelectorAll(".requestid, .userid, .name, .time, .request");
+
+							// それぞれの td にクリックしたときの処理を追加
+							linkCells.forEach(function(cell) {
+								cell.addEventListener("click", function() {
+									const url = cell.dataset.href; // td に指定された data-href を取り出す
+									if (url) {
+										window.location.href = url; // そのURLへジャンプする
+									}
+								});
+							});
+						});
 	</script>
 </body>
 

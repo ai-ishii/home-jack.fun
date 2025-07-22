@@ -81,8 +81,8 @@ input[type="submit"], input[type="button"] {
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">
-			<form action="<%=request.getContextPath()%>/announceUpdate" method="post"
-				class="container">
+			<form action="<%=request.getContextPath()%>/announceUpdate"
+				method="post" class="container">
 				<div id="content_box">
 
 					<div class="form_box" class="container">
@@ -94,24 +94,25 @@ input[type="submit"], input[type="button"] {
 					<div class="form_box tiny_form">
 						<label for="updateDate" class="control_label">編集日時</label> <input
 							type="datetime-local" id="updateDate" name="updateDate"
-							value="<%=announce.getRegistDate()%>"/>
+							value="<%=announce.getRegistDate()%>" />
 					</div>
 
 					<div class="form_box tiny_form">
 						<label for="category" class="control_label">カテゴリ</label> <select
-							id="category" name="category">
-							<option <%if (categoryId == 1) {%> selected>お知らせ<%
-							}
-							%>
-							</option>
-							<option <%if (categoryId == 2) {%> selected>チーム活動<%
-							}
-							%>
-							</option>
-							<option <%if (categoryId == 3) {%> selected>ナレッジベース<%
-							}
-							%>
-							</option>
+							id="category" name="categoryId">
+
+							<option value="1" <%if (categoryId == 1) {%> selected <%}%>>
+								お知らせ</option>
+
+							<option value="2" <%if (categoryId == 2) {%> selected <%}%>>
+								チーム活動</option>
+
+							<option value="3" <%if (categoryId == 3) {%> selected <%}%>>
+								ナレッジベース</option>
+
+							<option value="9" <%if (categoryId == 9) {%> selected <%}%>>
+								その他</option>
+
 						</select>
 					</div>
 
@@ -123,15 +124,15 @@ input[type="submit"], input[type="button"] {
 					<div class="form_box">
 						<label for="text" class="control_label">本文</label>
 						<textarea id="text" name="text" rows="5" cols="15"><%=announce.getText()%></textarea>
-
 					</div>
 
 					<div class="form_box">
 						<label for="tag" class="control_label">タグ</label> <input
 							type="text" id="title" name="tag">
 					</div>
-					
-					<input type="hidden" name="announceId" value="<%= announce.getAnnounceId() %>">
+
+					<input type="hidden" name="announceId"
+						value="<%=announce.getAnnounceId()%>">
 
 					<div class="btm_box">
 						<input
