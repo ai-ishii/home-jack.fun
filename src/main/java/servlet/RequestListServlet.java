@@ -30,10 +30,10 @@ public class RequestListServlet extends HttpServlet {
 			requestList = requestDAO.selectAll();
 
 			//DB接続エラー	
-			//DB接続エラー	
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
 			cmd = "dbError";
+			//その他エラー
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";
