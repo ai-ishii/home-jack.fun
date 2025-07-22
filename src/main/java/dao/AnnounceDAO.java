@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import bean.Announce;
@@ -529,9 +530,9 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		String sql = " SELECT * FROM announce_info "
-				+ "WHERE name LIKE '%"+ keyword + "%' "
+				+ "WHERE name LIKE '%" + keyword + "%' "
 				+ "OR title LIKE '%" + keyword + "%' "
-				+ "OR text LIKE '%"+ keyword + "%' "
+				+ "OR text LIKE '%" + keyword + "%' "
 				+ "OR tag LIKE '%" + keyword + "%';";
 
 		try {
@@ -572,6 +573,64 @@ public class AnnounceDAO {
 			}
 		}
 
+		return list;
+	}
+
+	public ArrayList<Announce> selectByFilter(int announceFlag, int announceCategoryId, Timestamp startDate,
+			Timestamp endDate) {
+
+		// 変数宣言
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<Announce> list = new ArrayList<Announce>();
+
+		String sql = "SELECT * FROM announce_info "
+				+ "WHERE CASE WHEN '0' = '' THEN '0' "
+				+ "ELSE announce_flag END = '0' "
+				+ "AND CASE WHEN '2' = '' THEN '2' "
+				+ "ELSE announce_category_id END = '2' "
+				+ "AND regist_date BETWEEN '2024/01/01 00:00:00' "
+				+ "AND '2025/05/01 00:00:00';"
+				+ "";
+
+		try {
+			// DBに接続
+			con = AnnounceDAO.getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			while (rs.next()) {
+				Announce announce = new Announce();
+				announce.setAnnounceId(rs.getInt("announce_id"));
+				announce.setName(rs.getString("name"));
+				announce.setRegistDate(rs.getTimestamp("regist_date"));
+				announce.setUpdateDate(rs.getTimestamp("update_date"));
+				announce.setTitle(rs.getString("title"));
+				announce.setAnnounceFlag(rs.getInt("announce_flag"));
+				announce.setAnnounceCategoryId(rs.getInt("announce_category_id"));
+				announce.setTag(rs.getString("tag"));
+				list.add(announce);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
 		return list;
 	}
 }
