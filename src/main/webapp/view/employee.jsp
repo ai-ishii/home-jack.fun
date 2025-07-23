@@ -20,7 +20,7 @@ for (int i = 0; i < userList.size(); i++) {
 <html>
 <head>
 <!-- タイトル -->
-<title>社員紹介 - 一覧</title>
+<title>一覧 - 社員紹介</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
