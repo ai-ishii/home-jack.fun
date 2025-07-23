@@ -193,7 +193,7 @@ Timestamp timestamp = new Timestamp(millis);
 						<%
 						timestamp = announceList.get(i).getRegistDate();
 						%>
-						<%=myFormat.MonthDayFormat(timestamp) %>
+						<%=myFormat.monthDayFormat(timestamp) %>
 						</p>
 					</div>
 					<div class="content_box">
