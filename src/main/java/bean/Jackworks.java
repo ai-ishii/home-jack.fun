@@ -1,9 +1,10 @@
 package bean;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class Jackworks{
 
+	
 	private int jackworksId;				//JackWorksID
 	private int userId;						//ユーザー情報ID
 	private int employeeNumber;				//社員番号
@@ -11,7 +12,7 @@ public class Jackworks{
 	private String category;				//カテゴリ
 	private String assessment;				//評価項目
 	private int point;						//付与ポイント
-	private Timestamp pointsGetDate;		//ポイント取得年月日
+	private Date pointsGetDate;				//ポイント取得年月日
 	private String note;					//備考
 	private String project;					//案件名
 	private String workSeason;				//作業説明
@@ -28,6 +29,7 @@ public class Jackworks{
 	private String other;					//その他
 	private int managerFlag;				//マネージャー承認フラグ
 	private int adminFlag;					//管理者承認フラグ
+	private int temporaryFlag;				//仮登録フラグ
 	
 		public int getJackworksId() {
 			return jackworksId;
@@ -79,12 +81,12 @@ public class Jackworks{
 		}
 
 
-		public Timestamp getPointsGetDate() {
+		public Date getPointsGetDate() {
 			return pointsGetDate;
 		}
 
 
-		public void setPointsGetDate(Timestamp pointsGetDate) {
+		public void setPointsGetDate(Date pointsGetDate) {
 			this.pointsGetDate = pointsGetDate;
 		}
 
@@ -266,5 +268,24 @@ public class Jackworks{
 
 		public void setName(String name) {
 			this.name = name;
-		}	
+		}
+
+
+		public int getTemporaryFlag() {
+			return temporaryFlag;
+		}
+
+
+		public void setTemporaryFlag(int temporaryFlag) {
+			this.temporaryFlag = temporaryFlag;
+		}
+
+
+		
 }
+
+
+		
+
+
+
