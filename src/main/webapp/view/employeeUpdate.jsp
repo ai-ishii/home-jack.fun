@@ -9,41 +9,56 @@
 // cmdを取得
 //String cmd = (String)request.getAttribute("cmd");
 String cmd = "confirm";
-System.out.print(cmd);
+
+// 変数宣言
+String photo = "";
+String employeeNumber = "";
+String name = "";
+String nameKana = "";
+String birthday = "";
+String department = "";
+String team = "";
+String joiningDate = "";
+int devloper = 0;
+String langSkill = "";
+String middleSkill = "";
+String hobby = "";
+String talent = "";
+String intro = "";
+String position = "";
 
 // 確認画面の場合
 if (cmd.equals("confirm")) {
 // 入力された情報をJSPから取得
-String photo = request.getParameter("photo");
-System.out.print(photo);
-String employeeNumber = request.getParameter("employeeNumber");
-String name = request.getParameter("name");
-String nameKana = request.getParameter("nameKana");
+photo = request.getParameter("photo");
+employeeNumber = request.getParameter("employeeNumber");
+name = request.getParameter("name");
+nameKana = request.getParameter("nameKana");
 
 // String→Dateに変換
-String birthday = request.getParameter("birthday");
+birthday = request.getParameter("birthday");
 //String pattern = "yyyy-MM-dd";
 //SimpleDateFormat format = new SimpleDateFormat(pattern);
 //Date birthdayUtil = null;
 //birthdayUtil = format.parse(dateString);
 //java.sql.Date birthday = new java.sql.Date(birthdayUtil.getTime());
 
-String department = request.getParameter("department");
-String team = request.getParameter("team");
+department = request.getParameter("department");
+team = request.getParameter("team");
 
 // String→Timestampに変換
-String joiningDate = request.getParameter("joiningDate");
+joiningDate = request.getParameter("joiningDate");
 //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
 //Date parsedTime = dateFormat.parse(timeString);
 //Timestamp joiningDate = new Timestamp(parsedTime.getTime());
 
-int devloper = Integer.parseInt(request.getParameter("devloper"));
-String langSkill = request.getParameter("langSkill");
-String middleSkill = request.getParameter("middleSkill");
-String hobby = request.getParameter("hobby");
-String talent = request.getParameter("talent");
-String intro = request.getParameter("intro");
-String position = request.getParameter("position");
+devloper = Integer.parseInt(request.getParameter("devloper"));
+langSkill = request.getParameter("langSkill");
+middleSkill = request.getParameter("middleSkill");
+hobby = request.getParameter("hobby");
+talent = request.getParameter("talent");
+intro = request.getParameter("intro");
+position = request.getParameter("position");
 }
 %>
 
@@ -152,9 +167,17 @@ a {
 		<div id="main" class="container">
 
 			<div id="employeeUpdate">
+			
+				<%
+				if (cmd.equals("confirm")) {
+				%>
+				<h3>以下の内容で登録します</h3>
+				<%
+				}
+				%>
+			
 				<!-- 入力部分 -->
-				<form action="<%= request.getContextPath() %>/employeeRegister"
-					method="get">
+				<form action="<%= request.getContextPath() %>/employeeRegister" method="post">
 					<table id="inputArea">
 						<tr id="inputRow">
 							<td id="item"><label for="photo">写真</label></td>
@@ -256,7 +279,7 @@ a {
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="intro">自己紹介</label></td>
-							<td id="value"><textarea name="intro"><%= intro %></textarea>
+							<td id="value"><textarea id="readonlyInput" name="intro"><%= intro %></textarea>
 							</td>
 						</tr>
 						<tr id="inputRow">
@@ -281,7 +304,6 @@ a {
 	<script>
 	// 変数受け渡し
 	const cmd = "<%= cmd %>";
-	console.log(cmd);
 
 	// 必要な要素を取得
 	const readonlyInput = document.querySelectorAll("#readonlyInput");

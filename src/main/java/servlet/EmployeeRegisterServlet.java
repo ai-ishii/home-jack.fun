@@ -20,6 +20,16 @@ public class EmployeeRegisterServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		commonProcess(request, response);
+	}
+	
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		commonProcess(request, response);
+	}
+		
+	private void commonProcess (HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		
 		// 変数宣言
 		String error = "";
@@ -77,7 +87,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			employee.setMiddleSkill(middleSkill);
 			employee.setHobby(hobby);
 			employee.setTalent(talent);
-			employee.setIntro(intro);	// 中身がnullでした
+			employee.setIntro(intro);
 			employee.setPosition(position);
 			employee.setRegistDate(null);
 			employee.setUpdateDate(null);
@@ -95,7 +105,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			} else {	// エラーがなければ
-				// 社員登録確認画面に遷移する
+				// 社員紹介一覧画面に遷移する
 				request.getRequestDispatcher("/employee").forward(request, response);
 			}
 		}
