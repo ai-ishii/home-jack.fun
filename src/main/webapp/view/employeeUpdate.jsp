@@ -7,43 +7,16 @@
 
 <%
 // cmdを取得
-//String cmd = (String)request.getAttribute("cmd");
+
 String cmd = "confirm";
-System.out.print(cmd);
+
+String name = "";
 
 // 確認画面の場合
 if (cmd.equals("confirm")) {
 // 入力された情報をJSPから取得
-String photo = request.getParameter("photo");
-System.out.print(photo);
-String employeeNumber = request.getParameter("employeeNumber");
-String name = request.getParameter("name");
-String nameKana = request.getParameter("nameKana");
 
-// String→Dateに変換
-String birthday = request.getParameter("birthday");
-//String pattern = "yyyy-MM-dd";
-//SimpleDateFormat format = new SimpleDateFormat(pattern);
-//Date birthdayUtil = null;
-//birthdayUtil = format.parse(dateString);
-//java.sql.Date birthday = new java.sql.Date(birthdayUtil.getTime());
-
-String department = request.getParameter("department");
-String team = request.getParameter("team");
-
-// String→Timestampに変換
-String joiningDate = request.getParameter("joiningDate");
-//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-//Date parsedTime = dateFormat.parse(timeString);
-//Timestamp joiningDate = new Timestamp(parsedTime.getTime());
-
-int devloper = Integer.parseInt(request.getParameter("devloper"));
-String langSkill = request.getParameter("langSkill");
-String middleSkill = request.getParameter("middleSkill");
-String hobby = request.getParameter("hobby");
-String talent = request.getParameter("talent");
-String intro = request.getParameter("intro");
-String position = request.getParameter("position");
+name = request.getParameter("name");
 }
 %>
 
@@ -166,7 +139,7 @@ a {
 						} else if (cmd.equals("confirm")) {
 						%>
 							<td id="value"><img
-								src="<%= request.getContextPath() %>/img/<%= photo %>"
+								src=""
 								alt="アップロードした写真"></td>
 						<%
 						}
@@ -175,7 +148,7 @@ a {
 						<tr id="inputRow">
 							<td id="item"><label for="employeeNumber">社員番号</label></td>
 							<td id="value"><input id="readonlyInput" type="text"
-								name="employeeNumber" value="<%= employeeNumber %>"></td>
+								name="employeeNumber" value=""></td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="name">氏名</label></td>
@@ -185,19 +158,17 @@ a {
 						<tr id="inputRow">
 							<td id="item"><label for="nameKana">氏名（ふりがな）</label></td>
 							<td id="value"><input id="readonlyInput" type="text"
-								name="nameKana" value="<%= nameKana %>"></td>
+								name="nameKana" value=""></td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="birthday">生年月日</label></td>
 							<td id="value"><input id="readonlyInput" type="date"
-								name="birthday" value="<%= birthday %>"></td>
+								name="birthday" value=""></td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="department">部</label> <label
 								for="team">・グループ</label></td>
-						<%
-						if (cmd.equals("update")) {
-						%>
+						
 							<td id="value">第 <select name="department">
 									<option value=""></option>
 									<option value="1">1</option>
@@ -210,59 +181,52 @@ a {
 									<option value="4">4</option>
 							</select> グループ
 							</td>
-						<%
-						} else if (cmd.equals("confirm")) {
-						%>
-							<td id="value">第 <%= department %> 事業部 第 <%= team %> グループ
-							</td>
-						<%
-						}
-						%>
+						
 
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="joiningDate">入社年月</label></td>
 							<td id="value"><input id="readonlyInput" type="month"
-								name="joiningDate" value="<%= joiningDate %>">
+								name="joiningDate" value="">
 							</td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="devloper">開発経験年数</label></td>
 							<td id="value"><input id="readonlyInput" type="number"
-								name="devloper" value="<%= devloper %>" style="margin-left: 0;"
+								name="devloper" value="" style="margin-left: 0;"
 								min="0">年</td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="langSkill">習得技術（言語）</label></td>
 							<td id="value"><input id="readonlyInput" type="text"
-								name="langSkill" value="<%= langSkill %>"></td>
+								name="langSkill" value=""></td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="middleSkill">習得言語（ミドルウェア）</label>
 							</td>
 							<td id="value"><input id="readonlyInput" type="text"
-								name="middleSkill" value="<%= middleSkill %>">
+								name="middleSkill" value="">
 							</td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="hobby">趣味</label></td>
 							<td id="value"><input id="readonlyInput" type="text"
-								name="hobby" value="<%= hobby %>"></td>
+								name="hobby" value=""></td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="talent">特技</label></td>
 							<td id="value"><input id="readonlyInput" type="text"
-								name="talent" value="<%= talent %>"></td>
+								name="talent" value=""></td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="intro">自己紹介</label></td>
-							<td id="value"><textarea name="intro"><%= intro %></textarea>
+							<td id="value"><textarea name="intro"></textarea>
 							</td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="position">役職</label></td>
 							<td id="value"><input id="readonlyInput" type="text"
-								name="position" value="<%= position %>"></td>
+								name="position" value=""></td>
 						</tr>
 					</table>
 
