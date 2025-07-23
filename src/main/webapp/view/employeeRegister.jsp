@@ -117,7 +117,7 @@ a {
 			</table>
 			
 			<!-- 入力部分 -->
-			<form action="<%= request.getContextPath() %>/view/employeeUpdate.jsp" method="get">
+			<form action="./employeeUpdate.jsp" method="get">
 			<input type="hidden" name="cmd" value="confirm">
 			<table id="inputArea">
 				<tr id="inputRow">
