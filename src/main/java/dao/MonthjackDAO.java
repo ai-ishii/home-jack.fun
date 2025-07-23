@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import bean.Monthjack;
 
-public class MonthJackDAO {
+public class MonthjackDAO {
 
 	//接続用の情報をフィールドに定数として定義
 	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";

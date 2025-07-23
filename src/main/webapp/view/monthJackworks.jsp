@@ -5,7 +5,7 @@
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.text.SimpleDateFormat,java.util.Date,java.sql.Timestamp,java.util.ArrayList,bean.Jackworks,bean.Monthjack"%>
+<%@page import="bean.Monthjack"%>
 
 <html>
 <head>
@@ -13,14 +13,18 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 
-
+<!-- 以下CSS記述 -->
 <style type="text/css">
-#link-title {
-	text-align: center;
+
+#contents {
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
 }
 
-#link-collect {
-	margin-top: 5%;
+/* タイトル部分 */
+#link-title {
+	text-align: center;
 }
 
 #link-line {
@@ -37,16 +41,11 @@
 	text-align: center;
 }
 
-#contents {
-	width: 90%;
-	margin-right: auto;
-	margin-left: auto;
-}
-
 #box-mar {
 	margin: 0 auto;
 }
 
+/* 登録ボタンの配置 */
 #JackWorks-submit {
 	text-align: center;
 }
@@ -57,14 +56,17 @@ textarea {
 	height: 100px;
 }
 
+/* 米印の色 */
 .warning {
 	color: red;
 }
 
+/*  並べる方向を指定 */
 .dis-flex {
 	display: flex;
 }
 
+/* 登録ボタンのデザイン */
 *, *:before, *:after {
 	-webkit-box-sizing: inherit;
 	box-sizing: inherit;
@@ -157,20 +159,20 @@ button.btn-border:active:before {
 	bottom: -1px;
 }
 </style>
-
 </head>
-<body>
 
+<body>
 	<div id="contents">
 
 		<!-- タイトル部分 -->
 		<div id="link-title">
 			<h1 id="link-line">今月のJackWorks内容登録</h1>
 		</div>
+		
+		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
+		<form action="<%=request.getContextPath()%>/monthJackworks" enctype="multipart/form-data" method="post">
 
-		<form action="<%=request.getContextPath()%>/monthJackWorks" enctype="multipart/form-data">
-		<input type="hidden" name="cmd" value="update">
-
+			<!-- 入力フォーム -->
 			<table id="box-mar">
 				<tr>
 					<td style="display: flex">画像
@@ -178,15 +180,12 @@ button.btn-border:active:before {
 					</td>
 				</tr>
 				<td><input type="file" name="image" size="35" required></td>
-				
-
 				<tr>
 					<td style="display: flex">今月のテーマ
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="" size="35"></td>
-
+				<td><input type="text" name="theme" value="" size="35" required></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
@@ -195,12 +194,13 @@ button.btn-border:active:before {
 
 			<br>
 
+			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
 					<span>登録</span>
 				</button>
 			</div>
-	</div>
+		</div>
 	</form>
 </body>
 </html>

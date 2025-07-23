@@ -10,15 +10,15 @@ package servlet;
 
 import java.io.IOException;
 
-import dao.JackWorksDAO;
+import dao.JackworksDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/deleteJackWorks")
-public class DeleteJackWorksServlet extends HttpServlet {
+@WebServlet("/deleteJackworks")
+public class DeleteJackworksServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
@@ -26,16 +26,16 @@ public class DeleteJackWorksServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = null;
 		// 遷移先のパス
-		String path = "/monthJackWorks";
+		String path = "/monthJackworks";
 
 		//オブジェクト生成
-		JackWorksDAO jackworksDAO = new JackWorksDAO();
+		JackworksDAO jackworksDAO = new JackworksDAO();
 
 		try {
 			//JackWorksのJackWorksIDを取得する
-			String jackworksId=request.getParameter("jackworksId");
-			
-			//JackWorksの情報を削除するメソッド
+			String jackworksId = request.getParameter("jackworksId");
+
+			//取得したJackWorksの情報を削除するメソッド
 			jackworksDAO.delete(Integer.parseInt(jackworksId));
 
 		} catch (IllegalStateException e) {

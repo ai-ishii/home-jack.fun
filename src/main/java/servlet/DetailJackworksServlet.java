@@ -1,9 +1,9 @@
 /**
- * 今月のJackWorks機能
+ * JackWorks詳細機能
  * 
  * 作成者：青木美波
  * 
- * 作成日 2025/06/19
+ * 作成日 2025/07/08
  */
 
 package servlet;
@@ -12,16 +12,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.Jackworks;
-import bean.Monthjack;
-import dao.MonthJackDAO;
+import dao.JackworksDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/monthJackWorks")
-public class MonthJackWorksServlet extends HttpServlet {
+@WebServlet("/detailJackworks")
+public class DetailJackworksServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
@@ -29,53 +28,25 @@ public class MonthJackWorksServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = null;
 		// 遷移先のパス
-		String path = "/jackWorks";
+		String path = "/view/jackworksDetail.jsp";
 
 		//オブジェクト生成
-		MonthJackDAO monthJackDAO = new MonthJackDAO();
-		Monthjack monthJack = new Monthjack();
+		JackworksDAO jackworksDAO = new JackworksDAO();
+		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
 			
-			//JackWorksの全情報が格納されたjack_listを受け取る
-			ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+			//JackWorksのJackWorksIDを取得する
+			String jackworksId = request.getParameter("jackworksId");
 
-			cmd = request.getParameter("cmd");
+			//取得したJackWorksの情報詳細を表示するメソッド
+			jackList=jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
 			
-			if (cmd == null) {
-				cmd = "";
-			}
-
-			//更新情報を受け取る
-			if (cmd.equals("update")) {
-				String image = request.getParameter("image");
-				monthJack.setImage(image);
-				String theme = request.getParameter("theme");
-				monthJack.setTheme(theme);
-				String note = request.getParameter("note");
-				monthJack.setNote(note);
-
-				//JackWorksの全情報を更新するメソッド
-				monthJackDAO.update(monthJack);
-
-			}
-
-			//JackWorksの全情報を取得するメソッド
-			monthJack = monthJackDAO.selectAll();
-
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
-			request.setAttribute("monthJack", monthJack);
-			
-			// cmdをリクエストスコープに"cmd"という名前で格納する
-			request.setAttribute("cmd", cmd);
-			
-			if(jackList != null) {
-			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
-			}
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、今月のJackWorksは表示できませんでした。";
+			error = "DB接続エラーのため、JackWorksは表示できませんでした。";
 			cmd = "home";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
@@ -93,5 +64,4 @@ public class MonthJackWorksServlet extends HttpServlet {
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
-
 }
