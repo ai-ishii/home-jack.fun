@@ -37,6 +37,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			int announceId = Integer.parseInt(request.getParameter("announceId"));
 			String title = request.getParameter("title");
 			String text = request.getParameter("text");
+			int categoryId = Integer.parseInt(request.getParameter("categoryId"));
 
 			// フォームから受け取った登録日時(String型)をLocalDateTimeに変換する
 			String update = request.getParameter("updateDate");
@@ -53,6 +54,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			announce.setTitle(title);
 			announce.setUpdateDate(updateDate);
 			announce.setText(text);
+			announce.setAnnounceCategoryId(categoryId);
 
 			// メソッドを呼び出してSQL文実行
 			announceDAO.update(announce);
