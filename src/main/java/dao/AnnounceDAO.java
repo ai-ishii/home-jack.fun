@@ -216,7 +216,7 @@ public class AnnounceDAO {
 	}
 
 	/**
-	 * 重要なお知らせ(announce_flag = 1をすべて取得するメソッド
+	 * 重要なお知らせ(announce_flag = 1)をすべて取得するメソッド
 	 * @return announce_flag = 1のお知らせ 
 	 */
 	public ArrayList<Announce> selectImportant() {
