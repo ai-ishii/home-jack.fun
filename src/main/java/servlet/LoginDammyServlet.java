@@ -3,7 +3,9 @@ package servlet;
 import java.io.IOException;
 
 import bean.Account;
+import bean.User;
 import dao.AccountDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,22 +22,42 @@ public class LoginDammyServlet extends HttpServlet {
 		String error = "";
 		String cmd = "";
 		
+		//セッションの型宣言
 		HttpSession session = request.getSession();
 		
+		//DAO宣言
 		AccountDAO accountDAO = new AccountDAO();
+		UserDAO userDAO = new UserDAO();
 		
+		//DTO宣言
 		Account account = new Account();
+		User user = new User();
+		
+		int userId = 0;
+		String name = "";
 		
 		try {
-			
+			//メールアドレスの取得
 			String email = request.getParameter("email");
 			
+			//アカウント情報を取得
 			account = accountDAO.selectByEmail(email);
+			String accountId = account.getAccountId();
 			
-			if(account.getAccountId() == null) {
+			if(accountId == null) {
 				error = "このアカウントは登録されていません";
 				cmd = "login";
+				return;
 			}
+			
+			//ユーザー情報を取得
+			user = userDAO.selectByAccountId(accountId);
+			
+			//名前とユーザーIDを格納
+			userId = user.getUserId();
+			name = user.getName();
+			
+			
 			
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は行えませんでした。";
