@@ -214,11 +214,12 @@ a.btn--delete:hover {
 if (list != null) {
 	for (int i = 0; i < list.size(); i++) {
 		User user = (User) list.get(i);
+		if(user.getDisplayFlag() != 1){
 %>
 
 		<tr>
 			<td class="box-user" data-label="社員番号">
-			<a class= "content" href="<%=request.getContextPath()%>/detailUser?userId=<%=user.getUserId() %>"><%=user.getEmployeeNumber() %></a>
+			<a class= "content" href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>"><%=user.getEmployeeNumber() %></a>
 			</td>
 			<td class="box-user" data-label="名前">
 			<%=user.getName() %>
@@ -228,13 +229,14 @@ if (list != null) {
 			</td>
 			<td>
 			<div style="text-align: center">
-			<a href="<%=request.getContextPath()%>detailUser?userId=<%=user.getUserId() %>&cmd=delete" 
+			<a href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>&cmd=delete" 
 				onclick="return confirm('本当に削除しますか?')" class="btn btn--delete">削除</a>
 			</div>
 			</td>
 		</tr>
 
 		<%
+		}
 	}
 }
 %>

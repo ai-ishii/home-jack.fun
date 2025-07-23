@@ -107,6 +107,15 @@ text-align: center;
 				String birthday = myFormat.breakDateFormat(user.getBirthday());
 				
 				String post = myFormat.addHyphen(user.getPost());
+				
+				String updateDate = "";
+				String registDate = "";
+				
+				if(user.getUpdateDate() != null){
+					updateDate = myFormat.dateFormat(user.getUpdateDate());
+				}else{
+					registDate = myFormat.dateFormat(user.getRegistDate());
+				}
 				%>
 				
 				<h3 id="koji-name">個人情報：<%=user.getName() %></h3>
@@ -150,7 +159,11 @@ text-align: center;
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">子供</td>
-						<td><%=user.getChildren() %>人</td>
+						<td>
+						<%if(user.getChildren() != 0){ %>
+						<%=user.getChildren() %>人
+						<%} %>
+						</td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">勤務年数</td>
@@ -169,18 +182,18 @@ text-align: center;
 						<td><%=user.getQualification() %></td>
 					</tr>
 					<%
-					if(user.getUpdateDate() != null){
+					if(updateDate != ""){
 					%>
 					<tr class="table-single">
 						<td class="table-double">更新日時</td>
-						<td><%=user.getUpdateDate() %></td>
+						<td><%=updateDate %></td>
 					</tr>
 					<%
 					}else{
 					%>
 					<tr>
 						<td class="table-double">登録日時</td>
-						<td><%=user.getRegistDate() %></td>
+						<td><%=registDate %></td>
 					</tr>
 					<%
 					}

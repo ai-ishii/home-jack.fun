@@ -16,8 +16,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/detailUser")
-public class DetailUserServlet extends HttpServlet {
+@WebServlet("/userDetail")
+public class UserDetailServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		// エラー文を格納用
@@ -25,11 +25,11 @@ public class DetailUserServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = "";
 		// 遷移先のパス
-		String path = "/view/detailUser.jsp";
+		String path = "/view/userDetail.jsp";
 		
 		try {
 			//cmdの取得
-			cmd = (String) request.getAttribute("cmd");
+			cmd = (String)request.getParameter("cmd");
 			
 			if(cmd == null) {
 				cmd = "";
@@ -43,7 +43,7 @@ public class DetailUserServlet extends HttpServlet {
 			
 			if(cmd.equals("delete")) {
 				userDAO.delete(userId);
-				
+				path = "/userList";
 				return;
 			}
 
