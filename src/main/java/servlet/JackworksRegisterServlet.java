@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import util.MyFormat;
 
 @WebServlet("/jackworksRegister")
 public class JackworksRegisterServlet extends HttpServlet {
@@ -34,7 +35,8 @@ public class JackworksRegisterServlet extends HttpServlet {
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
 		Jackworks jack = new Jackworks();
-		HttpSession session= request.getSession();
+		HttpSession session = request.getSession();
+		MyFormat format = new MyFormat();
 
 		try {
 
@@ -45,10 +47,9 @@ public class JackworksRegisterServlet extends HttpServlet {
 			if (cmd.equals("next")) {
 
 				//registerJackworks.jspから各値を受け取り、オブジェクトに格納
-				int employeeNumber = Integer.parseInt(request.getParameter("employeeNumber"));
-				jack.setEmployeeNumber(employeeNumber);
+				jack.setEmployeeNumber(request.getParameter("employeeNumber"));
 				String date = request.getParameter("date");
-				Date pointDate = java.sql.Date.valueOf(date);
+				Date pointDate = java.sql.Date.valueOf(format.forRegisterDate(date));
 				jack.setPointsGetDate(pointDate);
 				jack.setName(request.getParameter("name"));
 				jack.setCategory(category);
@@ -56,7 +57,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 				int point = Integer.parseInt(request.getParameter("point"));
 				jack.setPoint(point);
 				jack.setNote(request.getParameter("note"));
-				
+
 				session.setAttribute("jack", jack);
 
 				if (!category.equals("案件情報収集")) {
@@ -68,44 +69,41 @@ public class JackworksRegisterServlet extends HttpServlet {
 				return;
 			}
 
-				//仮登録のJackWorksIDを取得する
-//				int jackworksId = jackworksDAO.selectByTemporaryFlag();
-//
-//				if (jackworksId == 0) {
-//					error = "仮登録の情報が見つからないため、登録が出来ません。";
-//					cmd = "JackworksList";
-//					return;
-//				}
-//
-//				jack.setJackworksId(jackworksId);
-				
-				jack = (Jackworks)session.getAttribute("jack");
-				
-				//registerJackworks.jspから各値を受け取り、オブジェクトに格納
-				jack.setProject(request.getParameter("project"));
-				jack.setWorkSeason(request.getParameter("workSeason"));
-				String price = request.getParameter("price");
-				if (!price.equals("")) {
-					jack.setPrice(Integer.parseInt(price));
-				}
-				String pay = request.getParameter("pay");
-				if (!pay.equals("")) {
-					jack.setPay(Integer.parseInt(pay));
-				}
-				jack.setWorkPlace(request.getParameter("workPlace"));
-				jack.setWorkContent(request.getParameter("workContent"));
-				jack.setPhase(request.getParameter("phase"));
-				jack.setLanguage(request.getParameter("language"));
-				jack.setSkill(request.getParameter("skill"));
-				String needPeople = request.getParameter("needPeople");
-				if (!needPeople.equals("")) {
-					jack.setNeedPeople(Integer.parseInt(needPeople));
-				}
-				jack.setSeller(request.getParameter("seller"));
-				jack.setContact(request.getParameter("contact"));
-				jack.setOther(request.getParameter("other"));
+			//仮登録のJackWorksIDを取得する
+			//				int jackworksId = jackworksDAO.selectByTemporaryFlag();
+			//
+			//				if (jackworksId == 0) {
+			//					error = "仮登録の情報が見つからないため、登録が出来ません。";
+			//					cmd = "JackworksList";
+			//					return;
+			//				}
+			//
+			//				jack.setJackworksId(jackworksId);
 
-				jackworksDAO.insert(jack);
+			jack = (Jackworks) session.getAttribute("jack");
+
+			//registerJackworks.jspから各値を受け取り、オブジェクトに格納
+			jack.setProject(request.getParameter("project"));
+			jack.setWorkSeason(request.getParameter("workSeason"));
+			String price = request.getParameter("price");
+			if (!price.equals("")) {
+				jack.setPrice(Integer.parseInt(price));
+			}
+			String pay = request.getParameter("pay");
+			if (!pay.equals("")) {
+				jack.setPay(Integer.parseInt(pay));
+			}
+			jack.setWorkPlace(request.getParameter("workPlace"));
+			jack.setWorkContent(request.getParameter("workContent"));
+			jack.setPhase(request.getParameter("phase"));
+			jack.setLanguage(request.getParameter("language"));
+			jack.setSkill(request.getParameter("skill"));
+			jack.setNeedPeople(request.getParameter("needPeople"));
+			jack.setSeller(request.getParameter("seller"));
+			jack.setContact(request.getParameter("contact"));
+			jack.setOther(request.getParameter("other"));
+
+			jackworksDAO.insert(jack);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、JackWorksの登録は表示できませんでした。";

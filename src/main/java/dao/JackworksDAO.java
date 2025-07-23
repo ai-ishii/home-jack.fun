@@ -54,7 +54,7 @@ public class JackworksDAO {
 				Jackworks jack = new Jackworks();
 				jack.setJackworksId(rs.getInt("jackworks_id"));
 				jack.setUserId(rs.getInt("user_id"));
-				jack.setEmployeeNumber(rs.getInt("employee_number"));
+				jack.setEmployeeNumber(rs.getString("employee_number"));
 				jack.setName(rs.getString("name"));
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
@@ -70,7 +70,7 @@ public class JackworksDAO {
 				jack.setPhase(rs.getString("phase"));
 				jack.setLanguage(rs.getString("language"));
 				jack.setSkill(rs.getString("skill"));
-				jack.setNeedPeople(rs.getInt("need_people"));
+				jack.setNeedPeople(rs.getString("need_people"));
 				jack.setSeller(rs.getString("seller"));
 				jack.setContact(rs.getString("contact"));
 				jack.setOther(rs.getString("other"));
@@ -252,7 +252,7 @@ public class JackworksDAO {
 			while (rs.next()) {
 				Jackworks jack = new Jackworks();
 				jack.setJackworksId(rs.getInt("jackworks_id"));
-				jack.setEmployeeNumber(rs.getInt("employee_number"));
+				jack.setEmployeeNumber(rs.getString("employee_number"));
 				jack.setPoint(rs.getInt("point"));
 				jack.setPointsGetDate(rs.getDate("points_get_date"));
 				jack.setName(rs.getString("name"));
@@ -275,7 +275,7 @@ public class JackworksDAO {
 				while (rs.next()) {
 					Jackworks jack = new Jackworks();
 					jack.setJackworksId(rs.getInt("jackworks_id"));
-					jack.setEmployeeNumber(rs.getInt("employee_number"));
+					jack.setEmployeeNumber(rs.getString("employee_number"));
 					jack.setPoint(rs.getInt("point"));
 					jack.setPointsGetDate(rs.getDate("points_get_date"));
 					jack.setName(rs.getString("name"));
@@ -330,7 +330,7 @@ public class JackworksDAO {
 			while (rs.next()) {
 				Jackworks jack = new Jackworks();
 				jack.setJackworksId(rs.getInt("jackworks_id"));
-				jack.setEmployeeNumber(rs.getInt("employee_number"));
+				jack.setEmployeeNumber(rs.getString("employee_number"));
 				jack.setPoint(rs.getInt("point"));
 				jack.setPointsGetDate(rs.getDate("points_get_date"));
 				jack.setName(rs.getString("name"));
@@ -426,7 +426,7 @@ public class JackworksDAO {
 				Jackworks jack = new Jackworks();
 				jack.setJackworksId(rs.getInt("jackworks_id"));
 				jack.setUserId(rs.getInt("user_id"));
-				jack.setEmployeeNumber(rs.getInt("employee_number"));
+				jack.setEmployeeNumber(rs.getString("employee_number"));
 				jack.setName(rs.getString("name"));
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
@@ -442,7 +442,7 @@ public class JackworksDAO {
 				jack.setPhase(rs.getString("phase"));
 				jack.setLanguage(rs.getString("language"));
 				jack.setSkill(rs.getString("skill"));
-				jack.setNeedPeople(rs.getInt("need_people"));
+				jack.setNeedPeople(rs.getString("need_people"));
 				jack.setSeller(rs.getString("seller"));
 				jack.setContact(rs.getString("contact"));
 				jack.setOther(rs.getString("other"));

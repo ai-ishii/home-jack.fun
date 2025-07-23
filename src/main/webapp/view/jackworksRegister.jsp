@@ -65,7 +65,7 @@ if(cmd == null){
 
 textarea {
 	resize: none;
-	width: 270px;
+	width: 336px;
 	height: 100px;
 }
 
@@ -194,37 +194,37 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="date" value="" size="35" required></td>
+					<td><input type="text" name="date" value="" size="45" placeholder="2024年09月18日" required></td>
 				<tr>
 					<td style="display: flex">社員No
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="employeeNumber" value="" size="35" required></td>
+					<td><input type="text" name="employeeNumber" value="" size="45" placeholder="001234" required></td>
 				<tr>
 					<td style="display: flex">氏名
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="name" value="" size="35" required></td>
+					<td><input type="text" name="name" value="" size="45" placeholder="山田太郎" required></td>
 				<tr>
 					<td style="display: flex">カテゴリ
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="category" value="" size="35" required></td>
+					<td><input type="text" name="category" value="" size="45" placeholder="チーム取組み" required></td>
 				<tr>
 					<td style="display: flex">評価項目
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="assessment" rows="" cols="" required></textarea></td>
+					<td><textarea name="assessment" rows="" cols="" placeholder="チーム活動報告の投稿" required></textarea></td>
 				<tr>
 					<td style="display: flex">付与ポイント
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="point" value="" size="35" required></td>
+					<td><input type="text" name="point" value="" size="45" placeholder="10" required></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
@@ -252,41 +252,42 @@ button.btn-border:active:before {
 				
 				<!-- 入力フォーム -->
 				<table id="box-mar">
-					<td>案件名
-					<div class="warning">*</div>
-					</td>
-				</tr>
-					<td><input type="text" name="project" value="" size="35"></td>
 				<tr>
-					<td>作業時期
-					<div class="warning">*</div>
+					<td style="display: flex">案件名
+						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="workSeason" value="" size="35"></td>
+					<td><input type="text" name="project" value="" size="45" required></td>
 				<tr>
-					<td>単価
-					<div class="warning">*</div>
+					<td style="display: flex">作業時期
+						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="price" value="" size="35"></td>
+					<td><input type="text" name="workSeason" value="" size="45"  required></td>
 				<tr>
-					<td>精算
-					<div class="warning">*</div>
+					<td style="display: flex">単価
+						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="pay" value="" size="35"></td>
+					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" required></td>
 				<tr>
-					<td>作業場所
-					<div class="warning">*</div>
+					<td style="display: flex">精算
+						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="workPlace" value="" size="35"></td>
+					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" required></td>
 				<tr>
-					<td>作業内容
-					<div class="warning">*</div>
+					<td style="display: flex">作業場所
+						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="workContent" rows="" cols=""></textarea></td>
+					<td><input type="text" name="workPlace" value="" size="45" required></td>
+				<tr>
+					<td style="display: flex">作業内容
+						<div class="warning">*</div>
+					</td>
+				</tr>
+					<td><textarea name="workContent" rows="" cols="" required></textarea></td>
 				<tr>
 					<td>フェーズ</td>
 				</tr>
@@ -302,15 +303,19 @@ button.btn-border:active:before {
 				<tr>
 					<td>必要人数</td>
 				</tr>
-					<td><input type="text" name="needPeople" value="" size="35"></td>
+					<td><input type="text" name="needPeople" value="" size="45"></td>
 				<tr>
-					<td>営業担当者</td>
+					<td style="display: flex">営業担当者
+						<div class="warning">*</div>
+					</td>
 				</tr>
-					<td><input type="text" name="seller" value="" size="35"></td>
+					<td><input type="text" name="seller" value="" size="45" required></td>
 				<tr>
-					<td>連絡先</td>
+					<td style="display: flex">連絡先
+						<div class="warning">*</div>
+					</td>
 				</tr>
-					<td><textarea name="contact" rows="" cols=""></textarea></td>
+					<td><textarea name="contact" rows="" cols="" required></textarea></td>
 				<tr>
 					<td>その他</td>
 				</tr>

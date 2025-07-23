@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							String note = jack.getNote();
 						
 							MyFormat myformat = new MyFormat();
-							String date = myformat.BreakDateFormat(jack.getPointsGetDate());
+							String date = myformat.breakDateFormat(jack.getPointsGetDate());
 						
 						if (note == null) {
 							note = "";
@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					%>
 					<tr>
 						<td data-label="年月日" class="num" name="date"><%= date %></td>
-						<td data-label="社員No" class="num" name="employeeNumber"><%=jack.getEmployeeNumber()%></td>
+						<td data-label="社員No" class="num" name="employeeNumber"><%=jack.getEmployeeNumber() %></td>
 						<td data-label="氏名" class="text-point" name="name"><%=jack.getName()%></td>
 						<td data-label="カテゴリ" class="text-point" name="category"><%=jack.getCategory()%></td>
 						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>

@@ -64,6 +64,7 @@ ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jac
 table td{
 padding:10px 10px 15px;
 vertical-align:top;
+ height:50px;
 }
 
 td[colspan="2"]{
@@ -166,7 +167,7 @@ text-align:center;
 				for(int i=0; i < jackList.size(); i++){
 					
 					MyFormat myformat = new MyFormat();
-					String date = myformat.BreakDateFormat(jackList.get(i).getPointsGetDate());
+					String date = myformat.breakDateFormat(jackList.get(i).getPointsGetDate());
 				%>
 				
 				<div><strong>
@@ -226,7 +227,7 @@ text-align:center;
 					<th colspan="2" >必要人数</th>
 				</tr>
 				<tr>
-				<td colspan="2"><%=jackList.get(i).getNeedPeople()%></td>
+				<td colspan="2"><%=jackList.get(i).getNeedPeople() %></td>
 				</tr>
 				<tr class="jack-double">
 					<th class="jack-left">営業担当者</th>
