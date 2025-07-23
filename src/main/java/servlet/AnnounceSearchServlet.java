@@ -49,8 +49,9 @@ public class AnnounceSearchServlet extends HttpServlet {
 			}
 
 			if (cmd.equals("filter")) {
-				int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
-				int categoryId = Integer.parseInt(request.getParameter("category_id"));
+				String announceFlag = request.getParameter("announceFlag");
+				String categoryId = request.getParameter("categoryId");
+				
 				String start = request.getParameter("startDate");
 				String end = request.getParameter("endDate");
 
@@ -91,7 +92,12 @@ public class AnnounceSearchServlet extends HttpServlet {
 			if (cmd.equals("keyword")) {
 				request.setAttribute("announceList", announceList);
 				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
+			} else if (cmd.equals("filter")) {
+				request.setAttribute("announceList", announceList);
+				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
 			}
+			
+			
 		}
 	}
 
