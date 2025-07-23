@@ -18,12 +18,12 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/employeeRegister")
 public class EmployeeRegisterServlet extends HttpServlet {
 	
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		commonProcess(request, response);
 	}
 	
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		commonProcess(request, response);
 	}

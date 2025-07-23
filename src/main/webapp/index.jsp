@@ -18,10 +18,15 @@
 */
 
 .login {
-	margin: 20px
+	margin: 20px;
+	text-align: center;
 }
 
-
+.center {
+	margin: 0 auto;	
+	text-align: center;
+	width: 200px;
+}
 
 /*
 -----------------------------------------------------------------------------------
@@ -37,13 +42,14 @@
 		<div id="main" class="container">
 			<div class="login">
 				<h2>Googleアカウントでログイン</h2>
-				
+				<div class="center">
 				<div id="g_id_onload"
 					data-client_id="534918220824-ejk2iu9vqoh1oq6lpb5avgprak4hl05f.apps.googleusercontent.com"
 					data-callback="handleCredentialResponse"></div>
 				<div class="g_id_signin" data-type="standard"></div>
-	
+		
 				<div id="status"></div>
+				</div>
 			</div>
 			<div class="login">
 				<h2>ダミーデータでログイン</h2>
@@ -80,7 +86,7 @@
 					window.location.href = data.redirectUrl;
 				} else {
 					// 失敗した場合、エラーメッセージを表示する
-					document.getElementById('status').innerText = data.message;
+					document.getElementById('status').innerText = data.message<br>"接続できませんでした";
 				}
 				})
 				.catch(error => {
