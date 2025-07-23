@@ -8,7 +8,6 @@ import java.util.Date;
 import bean.Employee;
 import bean.User;
 import dao.EmployeeDAO;
-import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -38,7 +37,6 @@ public class EmployeeRegisterServlet extends HttpServlet {
 		try {
 			
 			// オブジェクト生成
-			UserDAO userDAO = new UserDAO();
 			EmployeeDAO employeeDAO = new EmployeeDAO();
 			User user = new User();
 			Employee employee = new Employee();
