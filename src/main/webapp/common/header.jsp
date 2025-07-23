@@ -54,12 +54,20 @@
 				</ul>
 			</nav>
 
+			
 			<div id="page-title">
-				<h6>
-					<small>満足を超える、感動を贈りたい</small>
-				</h6>
-				<h1>HOME JACK</h1>
+				
+				 <div class="title" style="width: 300px; margin: 0 auto; text-align: center;">
+					 <a id="home-link" href="<%= request.getContextPath() %>/home">
+						<h6>
+							<small>満足を超える、感動を贈りたい</small>
+						</h6>
+						<h1>HOME JACK</h1>
+					</a>
+				</div>
+				
 			</div>
+			
 			<div id="hamburger" class="hamburger">
 				<span></span><span></span><span></span>
 			</div>
