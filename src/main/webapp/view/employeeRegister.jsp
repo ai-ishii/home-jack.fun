@@ -117,7 +117,7 @@ a {
 			</table>
 			
 			<!-- 入力部分 -->
-			<form action="./employeeUpdate.jsp" method="get">
+			<form action="<%= request.getContextPath() %>/view/employeeUpdate.jsp" method="post">
 			<input type="hidden" name="cmd" value="confirm">
 			<table id="inputArea">
 				<tr id="inputRow">
@@ -162,8 +162,11 @@ a {
 				</tr>
 				<tr id="inputRow">
 					<td id="item">
+					<!-- 
 						<label for="department">部</label>
 						<label for="team">・グループ</label>
+					 -->
+					 <label for="belong">所属</label>
 					</td>
 					<td id="value">
 						第
