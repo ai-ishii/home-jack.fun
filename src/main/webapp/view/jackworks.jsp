@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						<td class="search-box">
 						
 							<!-- 検索を行うフォーム -->
-							<form action="<%=request.getContextPath()%>/searchJackworks"
+							<form action="<%=request.getContextPath()%>/jackworksSearch"
 									class="search-form">
 								<label><input type="text" name="name" placeholder="キーワードを入力"></label>
 								<button type="submit" aria-label="検索"></button>
@@ -461,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						</td>
 							
 						<!-- 十年間の西暦検索を行うフォーム -->
-						<form action="<%=request.getContextPath()%>/searchJackworks">
+						<form action="<%=request.getContextPath()%>/jackworksSearch">
 						<td><label class="selectbox-4">
 								<select id="yearSelect" name="year-search">
 							</label>
@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						
 						<!-- JackWorkの新規登録を行うボタン -->
 						<td style="text-align: right">
-							<a href="<%=request.getContextPath()%>/view/registerJackworks.jsp"
+							<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
 								class="btn btn--insert">新規登録</a>
 						</td>
 					</tr>
@@ -532,9 +532,9 @@ document.addEventListener('DOMContentLoaded', function() {
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
 						<td data-label="備考" class="text" name="note"><%=note%></td>
 						<td><div style="text-align: center">
-							<a href="<%=request.getContextPath()%>/deleteJackworks?jackworksId=<%=jack.getJackworksId()%>" onclick="return confirm('本当に削除しますか?')"
+							<a href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>" onclick="return confirm('本当に削除しますか?')"
 								class="btn btn--delete">削除</a>
-								<a href="<%=request.getContextPath()%>/detailJackworks?jackworksId=<%=jack.getJackworksId()%>" class="btn btn--delete">詳細</a>
+								<a href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>" class="btn btn--delete">詳細</a>
 							</div>
 						</td>
 					</tr>

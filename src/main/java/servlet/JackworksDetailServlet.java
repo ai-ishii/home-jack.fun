@@ -19,8 +19,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/detailJackworks")
-public class DetailJackworksServlet extends HttpServlet {
+@WebServlet("/jackworksDetail")
+public class JackworksDetailServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用

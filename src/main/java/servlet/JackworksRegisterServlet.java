@@ -20,8 +20,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/registerJackworks")
-public class RegisterJackworksServlet extends HttpServlet {
+@WebServlet("/jackworksRegister")
+public class JackworksRegisterServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
@@ -64,7 +64,7 @@ public class RegisterJackworksServlet extends HttpServlet {
 					jackworksDAO.insert(jack);
 					return;
 				}
-				path = "/view/registerJackworks.jsp";
+				path = "/view/jackworksRegister.jsp";
 				return;
 			}
 

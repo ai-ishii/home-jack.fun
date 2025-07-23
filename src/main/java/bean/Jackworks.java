@@ -12,7 +12,7 @@ public class Jackworks{
 	private String category;				//カテゴリ
 	private String assessment;				//評価項目
 	private int point;						//付与ポイント
-	private Date pointsGetDate;		//ポイント取得年月日
+	private Date pointsGetDate;				//ポイント取得年月日
 	private String note;					//備考
 	private String project;					//案件名
 	private String workSeason;				//作業説明

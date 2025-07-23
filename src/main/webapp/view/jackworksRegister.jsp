@@ -183,7 +183,7 @@ button.btn-border:active:before {
 		</div>
 
 		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
-		<form action="<%=request.getContextPath()%>/registerJackworks">
+		<form action="<%=request.getContextPath()%>/jackworksRegister">
 		
 		<% if(cmd.equals("")){ %>
 
@@ -248,7 +248,7 @@ button.btn-border:active:before {
 				<% if(cmd.equals("next")){ %>
 				
 				<!-- 入力された今月のJackWorksのデータを送るフォーム -->
-				<form action="<%=request.getContextPath()%>/registerJackworks">
+				<form action="<%=request.getContextPath()%>/jackworksRegister">
 				
 				<!-- 入力フォーム -->
 				<table id="box-mar">

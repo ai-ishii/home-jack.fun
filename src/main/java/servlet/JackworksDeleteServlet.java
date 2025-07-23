@@ -17,8 +17,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/deleteJackworks")
-public class DeleteJackworksServlet extends HttpServlet {
+@WebServlet("/jackworksDelete")
+public class JackworksDeleteServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
