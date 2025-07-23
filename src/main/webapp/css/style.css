@@ -25,10 +25,14 @@ cursor
 #main {
 	position: relative;
 	width: 100%;
+	margin: 0px;
 	display: flex;
 	flex-direction: row;
 	z-index: 10;
-	
+}
+
+.flex {
+	display: flex;
 }
 
 body {
@@ -41,180 +45,6 @@ body {
 
 h1, h2 {
 	padding: 10px 0;
-}
-
-
-/*↓社員紹介一覧画面のcss*/
-#employee {
-	text-align: center;
-}
-
-/*社員1人分（div）*/
-#employee #employee_card,
-#detailEmployee #employee_card {
-	display: inline-block;
-	height: 200px;
-	/*	大きさが変わるときのスピード*/
-	transition: 0.3s;
-}
-
-#employee #employee_card:hover,
-#detailEmployee #employee_card:hover {
-	/*	どれくらい大きくなるか*/
-	transform: scale(1.1);
-}
-
-/*社員一覧の1行分（div）*/
-#employee #employee_line {
-	margin-top: 100px;
-	margin-bottom: 100px;
-}
-
-#employee a,
-#detailEmployee a {
-	text-decoration: none;
-}
-
-/*社員名（p）*/
-#employee #employee_name,
-#detailEmployee #employee_name {
-	color: black;
-	font-size: 30px;
-	font-weight: 500;
-	margin: 0;
-	/*	画像の上に文字を重ねるため*/
-	position: relative;
-	top: -70px;
-	cursor: pointer;
-}
-
-/*社員情報（p）*/
-#employee #employee_detail,
-#detailEmployee #employee_detail {
-	color: black;
-	margin: 0;
-	/*	画像の上に文字を重ねるため*/
-	position: relative;
-	top: -70px;
-	cursor: pointer;
-}
-
-#employee #employee_name,
-#employee_detail {
-	background-color: rgba(255, 255, 255, 0.8);
-}
-
-#detailEmployee #employee_name,
-#employee_detail {
-	width: 220px;
-	background-color: rgba(255, 255, 255, 0.8);
-}
-
-/*↓社員詳細画面のcss*/
-#detailEmployee {
-	text-align: center;
-	z-index: 10;
-}
-
-/*社員情報（div）*/
-#detailEmployee #employee_info {
-	width: 450px;
-	text-align: left;
-}
-
-/*社員画像（img）*/
-#detailEmployee #employee_img {
-	width: 350px;
-	height: 450px;
-	margin-right: 50px;
-	/*	縦横比を固定する*/
-	object-fit: none;
-}
-
-#detailEmployee #employee_info,
-#back_employeeList {
-	display: inline-block;
-	/*	要素を上揃え*/
-	vertical-align: top;
-}
-
-/*社員名（p）*/
-#detailEmployee #detailEmployee_name {
-	margin: 0;
-	margin-right: 20px;
-	font-size: 80px;
-}
-
-/*社員名と社員名フリガナを横並びにする*/
-#detailEmployee #detailEmployee_name,
-#detailEmployee_kana {
-	display: inline-block;
-}
-
-/*社員所属と社員入社年を横並びにする*/
-#detailEmployee #detailEmployee_belong,
-#detailEmployee_joinTiming {
-	display: inline-block;
-}
-
-#detailEmployee #detailEmployee_joinTiming + p {
-	border-top: solid 1px gray;
-	margin: 0;
-	padding-top: 10px;
-}
-
-/*社員候補エリア（div）*/
-#detailEmployee #imgSlider_area {
-	width: 80%;
-	margin-top: 30px;
-	margin-right: auto;
-	margin-left: auto;
-}
-
-/*サブタイトル（div）*/
-#detailEmployee #belong_title, #detailEmployee #joinTiming_title {
-	margin-bottom: 30px;
-	font-size: 30px;
-	font-weight: 500;
-	text-align: left;
-}
-
-/*画像スライダー（div）*/
-#detailEmployee #img_slider {
-	height: 80%;
-	position: relative;
-}
-
-/*画像スライダーの中の画像（div）*/
-#detailEmployee #employee_card {
-	width: 20%;
-	margin-left: 15px;
-	margin-right: 15px;
-}
-
-/*画像をスライダーさせるボタン（button）*/
-#detailEmployee #img_slider button {
-	width: 10%;
-	position: absolute;
-	top: 40%;
-}
-
-/*左ボタン（button）*/
-#detailEmployee #prev {
-	left: 30px;
-}
-
-/*右ボタン（button）*/
-#detailEmployee #next {
-	right: 15px;
-}
-
-#employee img,
-#detailEmployee img {
-	width: 220px;
-	height: 300px;
-	/*	縦横比を固定する*/
-	object-fit: none;
 }
 
 /*-----------------------------------*/
@@ -381,4 +211,179 @@ ul ul {
 	filter: brightness(0) invert(1);
 	text-align: center;
 	cursor: pointer;
+}
+
+
+.box-parent {
+  width:100%;
+  height:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center; /* 中央揃え */
+}
+.box-child {
+  width:500px; /* 任意の値 */
+  height:100px; /* 任意の値 */
+}
+
+
+
+
+
+
+
+@import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+.license  {
+  margin:0 auto;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  min-height: 500px;
+}
+
+.license h1 {
+  font-family: 'Lato', sans-serif;
+  font-weight:300;
+  letter-spacing: 2px;
+  font-size:48px;
+}
+.license p {
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+  font-size:14px;
+  color: #333333;
+}
+
+.license .header {
+  position:relative;
+  text-align:center;
+  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  color:white;
+  width:100%;
+ 
+}
+.license .logo {
+  width:50px;
+  fill:white;
+  padding-right:15px;
+  display:inline-block;
+  vertical-align: middle;
+}
+
+.license .inner-header {
+  /*height:65vh;*/
+  width:100%;
+  margin: 0;
+  padding: 0;
+}
+
+.license .flex { /*Flexbox for containers*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.license .waves {
+  position:relative;
+  width: 100%;
+  height:15vh;
+  margin-bottom:-7px; /*Fix for safari gap*/
+  min-height:100px;
+  max-height:150px;
+}
+
+.license .content {
+  position:relative;
+  height:20vh;
+  text-align:center;
+  background-color: rgb(255, 255, 255);
+}
+
+/* Animation */
+
+.license .parallax > use {
+  animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+}
+.license .parallax > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.license .parallax > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.license .parallax > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.license .parallax > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+@keyframes move-forever {
+  0% {
+   transform: translate3d(-90px,0,0);
+  }
+  100% { 
+    transform: translate3d(85px,0,0);
+  }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+  .license .waves {
+    height:40px;
+    
+  }
+  .license .content {
+    height:30vh;
+  }
+  .license h1 {
+    font-size:24px;
+  }
+}
+
+
+.license .item-list{
+  display: flex;
+  justify-content: center; /* 中央寄せ */
+}
+.license .item-list .item{
+  box-sizing: border-box;
+  padding: 40px 80px;  
+}
+
+/*フォーム全体を中央へ*/
+.license #form1{
+  display: flex;
+  justify-content: center; /*中央へ固定*/	
+  height:50px;/*高さ*/	
+}
+/*入力フォーム*/
+.license #sbox1{
+  width:250px;/*横幅*/
+  padding:0 15px;/*プレースホルダーの位置調整*/
+  border-radius:4px 0 0 4px;/*左側の角を少し丸める*/		
+  background:#eee;/*検背景カラー*/
+  border:none;/*枠線を消す*/ 
+  outline:0;/*クリック時の青い枠線消す*/	
+}
+/*検索ボタン*/
+.license #sbtn1{
+  width:70px;/*横幅*/ 
+  border-radius:0 4px 4px 0;/*右側の角を少し丸める*/ 
+  background:#7fbfff;/*背景カラー*/ 
+  border:none;/*枠線を消す*/ 
+  color:#fff;/*テキストカラー*/ 
+  font-size:16px;/*フォントサイズ指定*/ 
+  cursor: pointer;/*マウスを乗せると指差しポインターになる*/
+}
+/*検索ボタンマウスオーバー時*/
+.license #sbtn1:hover {
+  background: #92dbff;/*背景カラー変更*/
+  
+  
+  
+  
+  
 }

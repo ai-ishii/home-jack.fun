@@ -14,7 +14,21 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/announce")
 public class AnnounceServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request,
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// 共通処理メソッドの呼び出し
+		commonProcess(request, response);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// 共通処理メソッドの呼び出し
+		commonProcess(request, response);
+	}
+
+	private void commonProcess(HttpServletRequest request,
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -26,7 +40,7 @@ public class AnnounceServlet extends HttpServlet {
 		try {
 			AnnounceDAO announceDAO = new AnnounceDAO();
 
-			announceList = announceDAO.selectAnnounceAll();
+			announceList = announceDAO.selectAll();
 		} catch (Exception e) {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
