@@ -576,7 +576,7 @@ public class AnnounceDAO {
 		return list;
 	}
 
-	public ArrayList<Announce> selectByFilter(int announceFlag, int announceCategoryId, Timestamp startDate,
+	public ArrayList<Announce> selectByFilter(String announceFlag, String announceCategoryId, Timestamp startDate,
 			Timestamp endDate) {
 
 		// 変数宣言
@@ -586,12 +586,12 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		String sql = "SELECT * FROM announce_info "
-				+ "WHERE CASE WHEN '0' = '' THEN '0' "
-				+ "ELSE announce_flag END = '0' "
-				+ "AND CASE WHEN '2' = '' THEN '2' "
-				+ "ELSE announce_category_id END = '2' "
-				+ "AND regist_date BETWEEN '2024/01/01 00:00:00' "
-				+ "AND '2025/05/01 00:00:00';"
+				+ "WHERE CASE WHEN '" + announceFlag +"' = '' THEN '" + announceFlag + "' "
+				+ "ELSE announce_flag END = '" + announceFlag + "' "
+				+ "AND CASE WHEN '" + announceCategoryId + "' = '' THEN '" + announceCategoryId + "' "
+				+ "ELSE announce_category_id END = '" + announceCategoryId + "' "
+				+ "AND regist_date BETWEEN '" + startDate + "' "
+				+ "AND '" + endDate + "';"
 				+ "";
 
 		try {
