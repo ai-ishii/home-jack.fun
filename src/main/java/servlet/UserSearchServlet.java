@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import bean.User;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,12 +28,12 @@ public class UserSearchServlet extends HttpServlet {
 			UserDAO userDAO = new UserDAO();
 
 			// メソッドを呼び出し
-			User user = userDAO.selectByUserId(userId);
+			
 			
 			
 
 			// リクエストスコープに登録
-			request.setAttribute("user", user);
+			//request.setAttribute("user", user);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、検索結果は表示できませんでした。";
