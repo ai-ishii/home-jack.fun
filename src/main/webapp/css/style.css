@@ -26,12 +26,7 @@ cursor
 #main {
 	position: relative;
 	width: 100%;
-<<<<<<< HEAD
-=======
 	margin: 0px;
-	display: flex;
->>>>>>> branch 'master' of https://github.com/ai-ishii/home-jack.fun.git
-	flex-direction: row;
 	z-index: 10;
 }
 
