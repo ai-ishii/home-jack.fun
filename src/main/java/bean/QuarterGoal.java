@@ -1,9 +1,11 @@
 package bean;
 
-public class QuaterGoal {
+import java.sql.Timestamp;
+
+public class QuarterGoal {
 
 	
-	private int quaterGoalId;				//四半期目標ID
+	private int quarterGoalId;				//四半期目標ID
 	private int goalId;						//個人目標ID
 	private int userId;						//ユーザー情報ID
 	private String smallGoal;				//小目標
@@ -12,14 +14,20 @@ public class QuaterGoal {
 	private String report;					//報告内容
 	private String achieveRateReviewer;		//達成率（評価者）
 	private String evaluation;				//評価
-	private int quaterlyFlag;				//四半期判断フラグ
+	private int quarterlyFlag;				//四半期判断フラグ
+	private Timestamp registDate;			//登録日時
+	private Timestamp updateDate;			//更新日時
 	
 	
-	public int getQuaterGoalId() {
-		return quaterGoalId;
+
+	
+	
+	
+	public int getQuarterGoalId() {
+		return quarterGoalId;
 	}
-	public void setQuaterGoalId(int quaterGoalId) {
-		this.quaterGoalId = quaterGoalId;
+	public void setQuarterGoalId(int quarterGoalId) {
+		this.quarterGoalId = quarterGoalId;
 	}
 	public int getGoalId() {
 		return goalId;
@@ -69,11 +77,24 @@ public class QuaterGoal {
 	public void setEvaluation(String evaluation) {
 		this.evaluation = evaluation;
 	}
-	public int getQuaterlyFlag() {
-		return quaterlyFlag;
+	public int getQuarterlyFlag() {
+		return quarterlyFlag;
 	}
-	public void setQuaterlyFlag(int quaterlyFlag) {
-		this.quaterlyFlag = quaterlyFlag;
+	public void setQuarterlyFlag(int quarterlyFlag) {
+		this.quarterlyFlag = quarterlyFlag;
+	}
+
+	public Timestamp getRegistDate() {
+		return registDate;
+	}
+	public void setRegistDate(Timestamp registDate) {
+		this.registDate = registDate;
+	}
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
 	}
 	
 	

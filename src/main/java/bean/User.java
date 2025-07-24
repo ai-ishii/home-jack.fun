@@ -18,8 +18,8 @@ public class User {
 	private String transportation;		//交通手段
 	private String sex;					//性別
 	private String employeeNumber;		//社員番号
-	private String department;			//部
-	private String team;				//グループ
+	private int departmentId;			//部
+	private int groupId;				//グループ
 	private Timestamp joiningDate;		//入社年月
 	private int workHistory;			//勤務年数
 	private int marriageFlag;			//既婚・未婚フラグ	
@@ -103,17 +103,17 @@ public class User {
 	public void setEmployeeNumber(String employeeNumber) {
 		this.employeeNumber = employeeNumber;
 	}
-	public String getDepartment() {
-		return department;
+	public int getDepartmentId() {
+		return departmentId;
 	}
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
 	}
-	public String getTeam() {
-		return team;
+	public int getGroupId() {
+		return groupId;
 	}
-	public void setTeam(String team) {
-		this.team = team;
+	public void setGroupId(int groupId) {
+		this.groupId= groupId;
 	}
 	public Timestamp getJoiningDate() {
 		return joiningDate;

@@ -6,11 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
-import bean.QuarterGoal;
+import bean.TeamGoal;
 
-public class QuarterGoalDAO {
+public class TeamGoalDAO {
 
 	//接続用の情報をフィールドに定数として定義
 	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
@@ -36,42 +35,37 @@ public class QuarterGoalDAO {
 	/**
 	 * 検索を行うメソッド
 	 * 
-	 * @return すべての四半期目標情報
-	 * @throws IllegalStateException 例外が発生した場合
+	 * @return ユーザーの部目標
 	 */
-	public ArrayList<QuarterGoal> selectByUserId(int userId) {
+	public TeamGoal selectByUserId(int userId) {
 
 		Connection con = null;
 		Statement smt = null;
 
 		//呼び出し元に返すオブジェクトの生成
-		ArrayList<QuarterGoal> quaterGoalList = new ArrayList<QuarterGoal>();
 
 		//SQL文
-		String sql = "SELECT * FROM quarter_goal_info WHERE user_id=" + userId;
+		String sql = "SELECT * FROM team_goal_info WHERE user_id=" + userId;
+		TeamGoal teamGoal = new TeamGoal();
 
 		try {
 			con = getConnection();
 			smt = con.createStatement();
 
+	
+			
 			//SQL文をDBに移行
 			ResultSet rs = smt.executeQuery(sql);
 
 			//検索結果を配列に格納
 			while (rs.next()) {
-				QuarterGoal quarterGoal = new QuarterGoal();
-				quarterGoal.setQuarterGoalId(rs.getInt("quarter_goal_id"));
-				quarterGoal.setGoalId(rs.getInt("goal_id"));
-				quarterGoal.setUserId(rs.getInt("user_id"));
-				quarterGoal.setSmallGoal(rs.getString("small_goal"));
-				quarterGoal.setJudgeMaterial(rs.getString("judge_material"));
-				quarterGoal.setAchieveRate(rs.getString("achieve_rate"));
-				quarterGoal.setReport(rs.getString("report"));
-				quarterGoal.setAchieveRateReviewer(rs.getString("achieve_rate_reviewer"));
-				quarterGoal.setEvaluation(rs.getString("evaluation"));
-				quarterGoal.setQuarterlyFlag(rs.getInt("quarterly_flag"));
-
-				quaterGoalList.add(quarterGoal);
+				teamGoal.setTeamId(rs.getString("team_id"));
+				teamGoal.setUserId(rs.getInt("user_id"));
+				teamGoal.setManagementTheme(rs.getString("management_theme"));
+				teamGoal.setDepartmentGoal(rs.getString("department_goal"));
+				teamGoal.setGroupGoal(rs.getString("group_goal"));
+				teamGoal.setRegistDate(rs.getTimestamp("regist_date"));
+				teamGoal.setUpdateDate(rs.getTimestamp("update_date"));
 			}
 
 		} catch (Exception e) {
@@ -90,18 +84,17 @@ public class QuarterGoalDAO {
 				} catch (SQLException ignore) {
 				}
 			}
-
 		}
-		return quaterGoalList;
+		return teamGoal;
 	}
 	
-		
+	
 	/**
 	 * 
-	 * @param quarterGoal
+	 * @param teamGoal
 	 * @throws IllegalStateException 例外が発生した場合
 	 */
-	public void update(QuarterGoal quarterGoal) {
+	public void update(TeamGoal teamGoal) {
 
 		Connection con = null;
 		Statement smt = null;
@@ -109,28 +102,18 @@ public class QuarterGoalDAO {
 		
 
 		//SQL文
-		String sql = "UPDATE quarter_goal_info SET "
-				+ "small_goal=?,"
-				+ "judge_material=?,"
-				+ "achieve_rate=?,"
-				+ "report=?,"
-				+ "achieve_rate_reviewer=?,"
-				+ "evaluation=?, "
-				+ "quarterly_flag=? "
-				+ "WHERE quarter_goal_id = ?";
+		String sql = "UPDATE team_goal_info SET "
+				+ "department_goal=?,"
+				+ "group_goal=? "
+				+ "WHERE team_id = ?";
 		try {
 			con = getConnection();
 			smt = con.createStatement();
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, quarterGoal.getSmallGoal());
-			ps.setString(2, quarterGoal.getJudgeMaterial());
-			ps.setString(3, quarterGoal.getAchieveRate());
-			ps.setString(4, quarterGoal.getReport());
-			ps.setString(5, quarterGoal.getAchieveRateReviewer());
-			ps.setString(6, quarterGoal.getEvaluation());
-			ps.setInt(7,quarterGoal.getQuarterlyFlag());
-			ps.setInt(8,quarterGoal.getQuarterGoalId());
+			ps.setString(1, teamGoal.getDepartmentGoal());
+			ps.setString(2, teamGoal.getGroupGoal());
+			ps.setString(3, teamGoal.getTeamId());
 
 			//SQL文をDBに移行
 			ps.executeUpdate();
@@ -159,4 +142,6 @@ public class QuarterGoalDAO {
 			}
 		}
 	}
+
+	
 }
