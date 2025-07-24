@@ -183,6 +183,138 @@ a.btn--delete:hover {
 	border-bottom: 2px solid #4a488e;
 }
 
+/*　検索を行うフォーム */
+.search-form {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 250px; 
+	overflow: hidden;
+	border-radius: 25px;
+	background-color: #feffe0;
+}
+
+.search-form input {
+	height: 45px;
+	padding: 5px 15px;
+	border: none;
+	box-sizing: border-box;
+	background-color: #feffe0;
+	font-size: 1em;
+	outline: none;
+}
+
+.search-form input::placeholder {
+	color: #d9811c;
+}
+
+.search-form button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50px;
+	height: 45px;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.search-form button::after {
+	width: 20px;
+	height: 20px;
+	background-image:
+		url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%23d9811c%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E');
+	background-repeat: no-repeat;
+	content: '';
+}
+
+.mar {
+	margin: 0 auto
+}
+
+/*　西暦と月の検索ボックスの配置 */
+td.search-box {
+	height: 100px;
+	margin-bottom: 1px;
+	display: flex;
+	align-items: center;
+}
+
+td.search-box form {
+	padding: 6px;
+}
+
+/*　西暦と月を検索ボックス */
+.selectbox-4 {
+	display: inline-flex;
+	align-items: center;
+	position: relative;
+}
+
+.selectbox-4::after {
+	position: absolute;
+	right: 15px;
+	width: 10px;
+	height: 7px;
+	background-color: #ffbe20;
+	clip-path: polygon(0 0, 100% 0, 50% 100%);
+	content: '';
+	pointer-events: none;
+}
+
+.selectbox-4 select {
+	appearance: none;
+	min-width: 230px;
+	height: 2.8em;
+	padding: .4em calc(.8em + 30px) .4em .8em;
+	border: none;
+	border-radius: 25px;
+	box-shadow: 0 4px 4px rgb(0 0 0/ 2%), 0 2px 3px -2px rgba(0 0 0/ 5%);
+	background-color: #fff;
+	color: #fa9e00;
+	font-size: 1em;
+	cursor: pointer;
+}
+
+/* buttonタグのリセットCSS */
+button {
+	padding: 0;
+	font-family: inherit;
+	appearance: none;
+	cursor: pointer;
+	background-color: transparent;
+	border: none;
+}
+
+/* ボタンのスタイル */
+.select-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 70px;
+	aspect-ratio: 200/100;
+	color: #222;
+	background-color: #f5f5f5;
+	border-radius: 50%;
+	box-shadow: -2px -2px 4px #fff, 2px 2px 4px rgb(0 0 0/ 24%);
+	color: #737373;
+}
+
+@media ( any-hover : hover) {
+	.select-button {
+		transition: box-shadow 0.2s;
+	}
+	.select-button:hover {
+		box-shadow: -2px -2px 4px #fff, 2px 2px 4px rgb(0 0 0/ 24%);
+	}
+	.select-button:active {
+		background-color: #ebebeb;
+		box-shadow: inset 4px 4px 8px rgb(0 0 0/ 16%);
+	}
+	option {
+		color: #000;
+	}
+}
 
 </style>
 
@@ -201,6 +333,51 @@ a.btn--delete:hover {
 
 	<br>
 	<table id="info">
+	<td class="search-box">
+	<!-- 検索を行うフォーム -->
+	<form action="<%=request.getContextPath()%>/jackworksSearch"
+		class="search-form">
+	<label><input type="text" name="name" placeholder="キーワードを入力"></label>
+	<button type="submit" aria-label="検索"></button>
+	</form>
+	</td>
+							
+	<!-- 十年間の西暦検索を行うフォーム -->
+	<form action="<%=request.getContextPath()%>/jackworksSearch">
+	<td>
+		<label class="selectbox-4"> 
+		<select id="yearSelect" name="year-search"></label></select>
+	</td>
+
+	<!-- 月の検索を行うセレクトボックス -->
+	<td><label class="selectbox-4"> 
+	<select name="month-search">
+		<option value="01">1月</option>
+		<option value="02">2月</option>
+		<option value="03">3月</option>
+		<option value="04">4月</option>
+		<option value="05">5月</option>
+		<option value="06">6月</option>
+		<option value="07">7月</option>
+									<option value="08">8月</option>
+									<option value="09">9月</option>
+									<option value="10">10月</option>
+									<option value="11">11月</option>
+									<option value="12">12月</option>
+							</select></td> </label>
+						<td><button type="submit" class="select-button">検索</button>
+					</form>
+					</td>
+
+					<!-- JackWorkの新規登録を行うボタン -->
+					<td style="text-align: right"><a
+						href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
+						class="btn btn--insert">新規登録</a></td>
+					</tr>
+					</thead>
+				</table>
+	
+	
 		 <thead style="margin:0 auto">
 		<tr>
 			<th scope="col">【 社員番号 】</th>
