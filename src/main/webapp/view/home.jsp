@@ -119,6 +119,8 @@ MyFormat myformat = new MyFormat();
 	color: #0000ff;
 }
 
+.announce
+
 @media screen and (max-width: 767px) {
 	.announce-list .item a {
 		flex-wrap: wrap;
@@ -149,7 +151,7 @@ MyFormat myformat = new MyFormat();
 				</div>
 
 				<div id="announce" class="container">
-					<h2>重要なお知らせ</h2><span>もっと見る</span>
+					<h2>重要なお知らせ</h2>
 					<div class="announce-list">
 						<ul>
 							<%
@@ -181,8 +183,8 @@ MyFormat myformat = new MyFormat();
 							%>
 						</ul>
 						<a href="<%= request.getContextPath() %>/announce">
-								<p >一覧へ</p>
-							</a>
+							<p class="list-link">一覧へ</p>
+						</a>
 					</div>
 					
 					<h2>最新のお知らせ</h2>
@@ -216,6 +218,9 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
+						<a href="<%= request.getContextPath() %>/announce">
+							<p class="list-link">一覧へ</p>
+						</a>
 					</div>
 					
 					<h2>最新のチーム活動</h2>
@@ -248,6 +253,9 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
+						<a href="<%= request.getContextPath() %>/announce">
+							<p class="list-link">一覧へ</p>
+						</a>
 					</div>
 				</div>
 			</div>

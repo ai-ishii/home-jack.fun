@@ -44,29 +44,39 @@ public class LoginServlet extends HttpServlet {
 		UserDAO userDAO = new UserDAO();
 
 		try {
+			//idTokenが正しいものか検証するルールの設定
 			GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
 					.setAudience(Collections.singletonList(CLIENT_ID))
 					.build();
 
+			//検証の実行
 			GoogleIdToken idToken = verifier.verify(idTokenString);
+			
+			//検証成功の場合
 			if (idToken != null) {
-				// 成功した場合、成功したこととリダイレクト先のURLをJSONで返す
+				//googleユーザー情報の取得
 				GoogleIdToken.Payload payload = idToken.getPayload();
-				// (セッションにユーザー情報を保存するなどの処理をここに追加できる)
+				//セッション登録準備
 				HttpSession session = request.getSession(true);
 				
-				
+				//ユーザー情報からID、メールアドレスを取得
 				String accountId = payload.getSubject();
 				String email = payload.getEmail();
 				Account account = accountDAO.selectByAccountId(accountId);
 				
+				//アカウントが存在しない場合登録を行う
 				if(account.getAccountId() == null) {
-					int count = accountDAO.insert(accountId, email);
+					//account_infoに登録
+					accountDAO.insert(accountId, email);
+					//user.infoに登録
 					userDAO.insert(accountId);
+					//登録したアカウント情報を取得
 					account = accountDAO.selectByAccountId(accountId);
 				}
+				//ユーザーIDの取得
 				int userId = userDAO.selectByAccountId(accountId).getUserId();
 				
+				//セッション登録
 				session.setAttribute("account", account);
 				session.setAttribute("user_id", userId);
 				session.setAttribute("user_name", payload.get("name"));
@@ -74,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";
 				response.getWriter().write(jsonResponse);
 			} else {
-				// 失敗した場合、失敗したことをJSONで返す
+
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				String jsonResponse = "{\"success\": false, \"redirectUrl\": \"view/error.jsp\"}";
 				response.getWriter().write(jsonResponse);

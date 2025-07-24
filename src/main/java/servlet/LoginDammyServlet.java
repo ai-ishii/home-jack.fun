@@ -47,7 +47,7 @@ public class LoginDammyServlet extends HttpServlet {
 				
 				return;
 			}
-			
+			//ユーザー情報を取得
 			user = userDAO.selectByAccountId(accountId);
 			
 		} catch (IllegalStateException e) {
