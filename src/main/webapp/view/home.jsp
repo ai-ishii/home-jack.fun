@@ -24,17 +24,13 @@ MyFormat myformat = new MyFormat();
 <style>
 /*-----------------------------------------------------------------------------------*/
 /*サイドバー表示*/
-.flex {
-	display: flex;
-	width: 100%;
-}
-
 #sidebar {
-	width: 30%;
+	flex: 1;
+	margin-left: 10px;
 }
 
 #announce {
-	width: 70%;
+	flex: 3;
 }
 
 
@@ -61,11 +57,11 @@ MyFormat myformat = new MyFormat();
 	flex-wrap: wrap;
 	flex-wrap: nowrap;
 	text-decoration: none;
+	align-items: center;
 	color: #333333;
 	border-bottom: 1px solid #cccccc;
 	padding: 20px 0;
 	width: 100%;
-
 }
 
 .announce-list .item:first-child a {
@@ -81,7 +77,7 @@ MyFormat myformat = new MyFormat();
 
 .announce-list .item .tag {
 	margin: 0;
-	min-width: 120px;
+	min-width: 130px;
 }
 
 .announce-list .item .tag span {
@@ -113,6 +109,10 @@ MyFormat myformat = new MyFormat();
 	min-width: 140px;
 	padding: 0 20px 0 0;
 	color: #999999;
+}
+
+.announce-list .item:hover a {
+	background-color: #eeeeee;
 }
 
 .announce-list .item a:hover .title {
@@ -149,7 +149,7 @@ MyFormat myformat = new MyFormat();
 				</div>
 
 				<div id="announce" class="container">
-					<h2>重要なお知らせ</h2>
+					<h2>重要なお知らせ</h2><span>もっと見る</span>
 					<div class="announce-list">
 						<ul>
 							<%
@@ -163,7 +163,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/detailAnnounce&announceId=<%= importantList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= importantList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(importantList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= announceDAO.selectByCategory(importantList.get(i).getAnnounceCategoryId()) %></span>
@@ -180,6 +180,9 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
+						<a href="<%= request.getContextPath() %>/announce">
+								<p >一覧へ</p>
+							</a>
 					</div>
 					
 					<h2>最新のお知らせ</h2>
@@ -196,7 +199,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/detailAnnounce&announceId=<%= announceList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= announceList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(announceList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= announceDAO.selectByCategory(announceList.get(i).getAnnounceCategoryId()) %></span>
@@ -221,7 +224,7 @@ MyFormat myformat = new MyFormat();
 							<%
 							if (activityList == null || activityList.size() == 0) {
 							%>
-							<p>最新のお知らせはありません</p>
+							<p>最新のチーム活動はありません</p>
 							
 							<%
 							} else {
@@ -229,7 +232,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/detailAnnounce&announceId=<%= activityList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= activityList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(activityList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= announceDAO.selectByCategory(activityList.get(i).getAnnounceCategoryId()) %></span>

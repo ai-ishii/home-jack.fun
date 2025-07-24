@@ -22,6 +22,9 @@ public class AnnounceRegisterServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// 受け取る文字のコードを指定
+		request.setCharacterEncoding("UTF-8");
+
 		// 変数宣言
 		String error = "";
 		String cmd = "";
@@ -51,8 +54,8 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			// パラメータをAnnounceに格納する
 			announce.setTitle(title);
 			announce.setRegistDate(registDate);
-			announce.setAnnounceCategoryId(categoryId);
 			announce.setText(text);
+			announce.setAnnounceCategoryId(categoryId);
 
 			// メソッドを呼び出してSQL文を実行する
 			announceDAO.regist(announce);

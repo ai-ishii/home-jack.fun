@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, bean.Announce, util.MyFormat"%>
+<%@ page
+	import="java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, bean.Announce, util.MyFormat"%>
 
 <%
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
+int categoryId = 0;
+String category = null;
 %>
 <!DOCTYPE html>
 <html>
@@ -14,11 +17,15 @@ Timestamp timestamp = new Timestamp(millis);
 <title>お知らせ</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <style>
 .tab {
 	display: flex;
-	flex-direction: row;
-	max-width: 90%;
+	flex-direction: column;
+	align-items: center;
+	width: 90%;
 	margin: 0 auto;
 	margin-top: 120px;
 }
@@ -26,141 +33,99 @@ Timestamp timestamp = new Timestamp(millis);
 /* タブメニュー */
 .tab_menu {
 	display: flex;
-	align-items: flex-start;
-	justify-content: flex-center;
-	min-height: 50px; /* メニュー切替時にタブがズレないように */
-	padding: 0;
-	margin: 0;
 	flex-direction: column;
 }
 
 .tab_menu-item {
-	list-style: none;
-	width: 200px;
+	width: 80%;
 	padding: 8px 5px; /* メニューに高さを付ける */
 	text-align: center;
 	margin: 5px 10px;
 	background-color: #cdcdcd;
 	border-radius: 20px;
-	cursor: pointer;
-	transition: all .3s; /* アニメーション */
-	z-index: 10;
-}
-
-.tab_menu-item:last-of-type {
-	margin-right: 0px;
-}
-
-/* is-activeがついている時のスタイル */
-.tab_menu-item.tab_panel001.is-active {
-	background-color: #dd9933;
-	color: #ffffff;
-	padding: 12px 5px;
-}
-
-.tab_menu-item.tab_panel002.is-active {
-	background-color: rgba(48, 172, 249);
-	color: #ffffff;
-	padding: 12px 5px;
-}
-
-.tab_menu-item.tab_panel003.is-active {
-	background-color: rgba(220, 30, 30);
-	color: #ffffff;
-	padding: 12px 5px;
-}
-
-.tab_menu-item.tab_panel004.is-active {
-	background-color: rgba(90, 200, 90);
-	color: #ffffff;
-	padding: 12px 5px;
-}
-
-/* タブパネル */
-.tab_panel {
-	width: 100%;
 }
 
 .tab_panel-box {
 	min-height: 400px; /* テキスト量が多くなっても対応できるように */
-	padding: 10px 30px;
+	padding: 10px;
 	border-radius: 10px;
 }
 
-.tab_panel-box001 {
-	background-color: whitesmoke;
-	display: none;
+.main_box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.tab_panel-box002 {
-	background-color: rgb(205, 246, 246);
-	display: none;
-}
-
-.tab_panel-box003 {
-	background-color: rgb(249, 227, 243);
-	display: none;
-}
-
-.tab_panel-box004 {
-	background-color: rgb(200, 248, 195);
-	display: none;
-}
-
-/* is-showがついている時のスタイル */
-.tab_panel-box.is-show {
-	display: block;
+.content_box {
+	display: flex;
+	width: 80%;
 }
 
 .announce_box {
 	display: flex;
 	justify-content: center;
+	width: 90%;
 	margin: 5px;
+	color: #000000;
+	background-color: #ffffff;
+	transition: all 0.5s 0s ease;
+	border-radius: 10px;
+	background-color: #ffffff;
+}
+
+.announce_box :hover {
+	color: #ffffff;
+	background-color: #ff701e;
+	border-radius: 10px;
 }
 
 .date_box {
 	min-height: 100px;
 	width: 20%;
-	background-color: #ffffff;
-	padding: 0 20px;
-	border-top-left-radius: 10px;
-	border-bottom-left-radius: 10px;
 }
 
 .date_box p {
 	text-align: center;
-	font-size: 50px;
-	color: #000000;
-	padding: 10px 0;
+	font-size: 40px;
+	padding: 20px 0;
+	margin: 0;
+}
+
+.title_box {
+	min-height: 100px;
+	width: 80%;;
+}
+
+.title_box p {
+	text-align: left;
+	font-size: 18px;
+	padding: 35px 0;
 	margin: 0;
 }
 
 .category_box {
 	width: 10%;
 	background-color: whitesmoke;
+	overflow: visible;
+	white-space: nowrap;
 }
 
 .category_box p {
 	color: #aaaaaa;
 	font-size: 17px;
-	text-align: center;
-	margin: 0;
-}
-
-.content_box {
-	min-height: 100px;
-	width: 70%;;
-	background-color: #ffffff;
-	border-top-right-radius: 10px;
-	border-bottom-right-radius: 10px;
-}
-
-.content_box p {
 	text-align: left;
-	font-size: 22px;
-	color: #000000;
-	padding: 30px 0;
 	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: #000000;
+}
+
+.box_link {
+	display: flex;
+	width: 100%;
 }
 
 .blank_box {
@@ -170,129 +135,112 @@ Timestamp timestamp = new Timestamp(millis);
 
 </head>
 <body>
+	<div id="wrap">
 
-	<%@include file="../common/header.jsp"%>
+		<!-- ヘッダー部分 -->
+		<%@include file="../common/header.jsp"%>
 
-	<div class="tab">
-		<!-- タブ -->
-		<ul class="tab_menu">
-			<li class="tab_menu-item tab_panel001 is-active" data-tab="01">すべてのお知らせ</li>
-			<li class="tab_menu-item tab_panel002" data-tab="02">お知らせ</li>
-			<li class="tab_menu-item tab_panel003" data-tab="03">チーム活動</li>
-			<li class="tab_menu-item tab_panel004" data-tab="04">ナレッジベース</li>
-		</ul>
-		<!-- タブの中身 -->
-		<div class="tab_panel">
-			<div class="tab_panel-box tab_panel-box001 is-show" data-panel="01">
-				<%
-				for (int i = 0; i < announceList.size(); i++) {
-				%>
-				<div class="announce_box">
-					<div class="date_box">
-						<p>
-						<%
-						timestamp = announceList.get(i).getRegistDate();
-						%>
-						<%=myFormat.MonthDayFormat(timestamp) %>
-						</p>
+		<!-- メイン部分 -->
+		<div id="main" class="container">
+			<div class="tab">
+				<!-- タブ -->
+				<div class="tab_menu">
+					<div class="tab_menu-item">
+						<a href="<%=request.getContextPath()%>/view/announceRegister.jsp">新規投稿</a>
 					</div>
-					<div class="content_box">
-						<p><%=announceList.get(i).getTitle()%></p>
-					</div>
-					<div class="category_box">
-						<p>#お知らせ</p>
-					</div>
+
+					<form action="<%=request.getContextPath()%>/announceSearch"
+						method="GET">
+						<div>
+							<input type="text" id="searchInput" name="keyword"
+								placeholder="キーワードを入力してください"> <input type="hidden"
+								name="cmd" value="keyword">
+							<button type="submit">検索</button>
+						</div>
+					</form>
+
+
+					<form action="<%=request.getContextPath()%>/announceSearch"
+						method="GET">
+						<div>
+							<input type="hidden" name="announceFlag" value=""> <input
+								type="checkbox" id="important" value="1" name="announceFlag">
+							<label for="important">重要記事</label>
+						</div>
+						<div>
+							<label for="categorySelect">重要記事</label> <select
+								id="categorySelect" name="categoryId">
+								<option value="">全カテゴリ</option>
+								<option value="1">お知らせ</option>
+								<option value="2">チーム活動</option>
+								<option value="3">ナレッジベース</option>
+								<option value="9">その他</option>
+							</select>
+						</div>
+						<div>
+							<label for="startDate">開始日</label>
+								<input type="datetime-local" id="startDate" name="startDate">
+							<label for="endDate">終了日</label>
+								<input type="datetime-local" id="endDate" name="endDate">
+						</div>
+						<input type="hidden" name="cmd" value="filter">
+						<button type="submit">検索</button>
+					</form>
 				</div>
-				<%
-				}
-				%>
-				<div class="announce_box">
-					<div class="date_box">
-						<p>7/7</p>
-					</div>
+
+				<!-- タブの中身 -->
+				<div class="container main_box">
+					<%
+					if (announceList != null) {
+						for (int i = 0; i < announceList.size(); i++) {
+					%>
 					<div class="content_box">
-						<p>タイトル</p>
+						<div class="announce_box">
+							<a
+								href="<%=request.getContextPath()%>/detailAnnounce?announceId=<%=announceList.get(i).getAnnounceId()%>&cmd=detail"
+								class="box_link">
+								<div class="date_box">
+									<p>
+										<%
+										timestamp = announceList.get(i).getRegistDate();
+										%>
+										<%=myFormat.monthDayFormat(timestamp)%>
+									</p>
+								</div>
+								<div class="title_box">
+									<p><%=announceList.get(i).getTitle()%></p>
+								</div>
+							</a>
+						</div>
+						<div class="category_box">
+							<p>
+								<%
+								categoryId = announceList.get(i).getAnnounceCategoryId();
+								if (categoryId == 1) {
+									category = "お知らせ";
+								} else if (categoryId == 2) {
+									category = "チーム活動";
+								} else if (categoryId == 3) {
+									category = "ナレッジベース";
+								} else {
+									category = "その他";
+								}
+								%>
+
+								#<%=category%>
+							</p>
+						</div>
 					</div>
-					<div class="category_box">
-						<p>#お知らせ</p>
-					</div>
+					<%
+					}
+					}
+					%>
 				</div>
-			</div>
-			<div class="tab_panel-box tab_panel-box002" data-panel="02">
-				<div class="blank_box"></div>
-				<div class="announce_box">
-					<div class="date_box">
-						<p>7/7</p>
-					</div>
-					<div class="category_box">
-						<p>お知らせ</p>
-					</div>
-					<div class="content_box">
-						<p>タイトル</p>
-					</div>
-				</div>
-			</div>
-			<div class="tab_panel-box tab_panel-box003" data-panel="03">
-				<p class="tab_panel-text">2枚目のタブです。2枚目のタブです。2枚目のタブです。2枚目のタブです。2枚目のタブです。2枚目のタブです。2枚目のタブです。2枚目のタブです。2枚目のタブです。2枚目のタブです。</p>
-			</div>
-			<div class="tab_panel-box tab_panel-box004" data-panel="04">
-				<p class="tab_panel-text">3枚目のタブです。3枚目のタブです。3枚目のタブです。3枚目のタブです。3枚目のタブです。3枚目のタブです。3枚目のタブです。3枚目のタブです。3枚目のタブです。3枚目のタブです。</p>
 			</div>
 		</div>
 	</div>
 
-	<script>
 
-		'use strict'; /* 厳格にエラーをチェック */
-
-		{ /* ローカルスコープ */
-
-		// DOM取得
-		const tabMenus = document.querySelectorAll('.tab_menu-item');
-		console.log(tabMenus);
-
-		// イベント付加
-		tabMenus.forEach((tabMenu) => {
-		  tabMenu.addEventListener('click', tabSwitch);
-		})
-
-		// イベントの処理
-		function tabSwitch(e) {
-
-		  // クリックされた要素のデータ属性を取得
-		  const tabTargetData = e.currentTarget.dataset.tab;
-		  // クリックされた要素の親要素と、その子要素を取得
-		  const tabList = e.currentTarget.closest('.tab_menu');
-		  console.log(tabList);
-		  const tabItems = tabList.querySelectorAll('.tab_menu-item');
-		  console.log(tabItems);
-		  // クリックされた要素の親要素の兄弟要素の子要素を取得
-		  const tabPanelItems = tabList.
-		  nextElementSibling.querySelectorAll('.tab_panel-box');
-		  console.log(tabPanelItems);
-
-		  // クリックされたtabの同階層のmenuとpanelのクラスを削除
-		  tabItems.forEach((tabItem) => {
-		    tabItem.classList.remove('is-active');
-		  })
-		  tabPanelItems.forEach((tabPanelItem) => {
-		    tabPanelItem.classList.remove('is-show');
-		  })
-
-		  // クリックされたmenu要素にis-activeクラスを付加
-		  e.currentTarget.classList.add('is-active');
-		  // クリックしたmenuのデータ属性と等しい値を持つパネルにis-showクラスを付加
-		  tabPanelItems.forEach((tabPanelItem) => {
-		    if (tabPanelItem.dataset.panel ===  tabTargetData) {
-		      tabPanelItem.classList.add('is-show');
-		    }
-		  })
-
-		}
-
-		}
-
-		</script>
 
 </body>
 </html>

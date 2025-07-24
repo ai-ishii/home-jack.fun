@@ -1,6 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
-<%@page import="java.util.ArrayList, util.MyFormat, bean.User, dao.UserDAO"%>
+<%@page
+	import="java.util.ArrayList, util.MyFormat, bean.User, dao.UserDAO"%>
 
 <%
 // サーブレットから送られてきた情報を取得
@@ -12,14 +13,14 @@ MyFormat myFormat = new MyFormat();
 String[] joiningDates = new String[userList.size()];
 // タイムスタンプ型のデータを全てフォーマット化
 for (int i = 0; i < userList.size(); i++) {
-	joiningDates[i] = myFormat.YearMonthFormat(userList.get(i).getJoiningDate());
+	joiningDates[i] = myFormat.yearMonthFormat(userList.get(i).getJoiningDate());
 }
 %>
 
 <html>
 <head>
 <!-- タイトル -->
-<title>社員一覧</title>
+<title>一覧 - 社員紹介</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -122,7 +123,6 @@ a:hover {
 	color: black;
 	cursor: pointer;
 }
-
 </style>
 
 <body>
@@ -136,16 +136,18 @@ a:hover {
 				<!-- タイトル部分 -->
 				<table style="width: 80%;">
 					<tr>
-						<td style="width: 20%;">
-							<input type="text" name="search" style="height: 20px;">
-							<img src="<%=request.getContextPath()%>/img/searchIcon.png" alt="検索アイコン" style="width: 30px; height: auto;">
-						</td>
+						<td style="width: 20%;"><input type="search" name="search"
+							style="height: 20px;"> <img
+							src="<%=request.getContextPath()%>/img/searchIcon.png"
+							alt="検索アイコン" style="width: 30px; height: auto;"></td>
 						<td style="width: 40%;">
 							<h1>社員紹介</h1>
 						</td>
-						<td style="width: 20%;">
-							<input type="submit" value="登録" style="width: 80px; height: 50px; font-size: large;">
-						</td>
+						<td style="width: 20%;"><a
+							href="<%=request.getContextPath()%>/view/employeeRegister.jsp">
+								<input type="submit" value="登録"
+								style="width: 80px; height: 50px; font-size: large;">
+						</a></td>
 					</tr>
 				</table>
 
@@ -156,14 +158,17 @@ a:hover {
 						if (userList != null) {
 							for (int i = 0; i < userList.size(); i++) {
 						%>
-						<a href="<%= request.getContextPath() %>/detailEmployee?userId=<%= userList.get(i).getUserId() %>">
+						<a
+							href="<%=request.getContextPath()%>/detailEmployee?userId=<%=userList.get(i).getUserId()%>">
 							<div id="employee_card">
-								<img src="<%=request.getContextPath()%>/img/<%=photos[i]%>" alt="社員画像">
+								<img src="<%=request.getContextPath()%>/img/<%=photos[i]%>"
+									alt="社員画像">
 								<p id="employee_name"><%=userList.get(i).getName()%></p>
 								<p id="employee_detail">
 									第<%=userList.get(i).getDepartment()%>事業部 第<%=userList.get(i).getTeam()%>グループ
 								</p>
-								<p id="employee_detail"><%=joiningDates[i]%>入社</p>
+								<p id="employee_detail"><%=joiningDates[i]%>入社
+								</p>
 							</div>
 						</a>
 						<%
@@ -173,8 +178,8 @@ a:hover {
 					</div>
 					<div id="employee_line">
 						<%
-								}
-							}
+						}
+						}
 						}
 						%>
 					</div>

@@ -63,7 +63,7 @@ public class UserDAO {
 			while (rs.next()) {
 				User user = new User();
 				user.setUserId(rs.getInt("user_id"));
-				user.setAccountId(rs.getInt("account_id"));
+				user.setAccountId(rs.getString("account_id"));
 				user.setName(rs.getString("name"));
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
@@ -280,7 +280,75 @@ public class UserDAO {
 
 			if (rs.next()) {
 				user.setUserId(rs.getInt("user_id"));
-				user.setAccountId(rs.getInt("account_id"));
+				user.setAccountId(rs.getString("account_id"));
+				user.setName(rs.getString("name"));
+				user.setNameKana(rs.getString("name_kana"));
+				user.setBirthday(rs.getDate("birthday"));
+				user.setAddress(rs.getString("address"));
+				user.setPost(rs.getString("post"));
+				user.setPhone(rs.getString("phone"));
+				user.setNearestStation(rs.getString("nearest_station"));
+				user.setTransportation(rs.getString("transportation"));
+				user.setSex(rs.getString("sex"));
+				user.setEmployeeNumber(rs.getString("employee_number"));
+				user.setDepartment(rs.getString("department"));
+				user.setTeam(rs.getString("team"));
+				user.setJoiningDate(rs.getTimestamp("joining_date"));
+				user.setWorkHistory(rs.getInt("work_history"));
+				user.setMarriageFlag(rs.getInt("marriage_flag"));
+				user.setChildren(rs.getInt("children"));
+				user.setQualification(rs.getString("qualification"));
+				user.setDisplayFlag(rs.getInt("display_flag"));
+				user.setRestFlag(rs.getInt("rest_flag"));
+				user.setRegistDate(rs.getTimestamp("regist_date"));
+				user.setUpdateDate(rs.getTimestamp("update_date"));
+			}
+			
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		// 戻り値返却
+		return user;
+	}
+	/**
+	 * アカウントIDが一致するユーザー情報を返すメソッド
+	 * 
+	 * @param 詳細表示したいアカウントID
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 * @return 詳細表示された情報
+	 */
+	public User selectByAccountId(String accountId) {
+		Connection con = null;
+		Statement smt = null;
+		
+		User user = new User();
+		
+		//SQL文の作成
+		String sql = "SELECT * FROM user_info WHERE account_id = '" + accountId + "'";
+		
+		try {
+
+			con = getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			if (rs.next()) {
+				user.setUserId(rs.getInt("user_id"));
+				user.setAccountId(rs.getString("account_id"));
 				user.setName(rs.getString("name"));
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
@@ -324,6 +392,7 @@ public class UserDAO {
 		return user;
 	}
 	
+	
 	/**
 	 * 検索を行うメソッド ※オプション
 	 * 
@@ -362,7 +431,7 @@ public class UserDAO {
 			while (rs.next()) {
 				User user = new User();
 				user.setUserId(rs.getInt("user_id"));
-				user.setAccountId(rs.getInt("account_id"));
+				user.setAccountId(rs.getString("account_id"));
 				user.setName(rs.getString("name"));
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
@@ -432,7 +501,7 @@ public class UserDAO {
 			while (rs.next()) {
 				User user = new User();
 				user.setUserId(rs.getInt("user_id"));
-				user.setAccountId(rs.getInt("account_id"));
+				user.setAccountId(rs.getString("account_id"));
 				user.setName(rs.getString("name"));
 				user.setNameKana(rs.getString("name_kana"));
 				user.setBirthday(rs.getDate("birthday"));
@@ -474,6 +543,39 @@ public class UserDAO {
 		}
 		return userList;
 	}
+	
+	public void insert (String accountId) {
+		Connection con = null;
+		Statement smt = null;
+		
+		
+		String sql = "INSERT INTO user_info (account_id) VALUES ('" + accountId + "')";
+		
+		try {
+			// DBに接続
+			con = getConnection();
+			smt = con.createStatement();
+			
+			smt.executeUpdate(sql);
+			
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) { }
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) { }
+			}
+		}		
+	}
+	
+	
 
 	
 	/**

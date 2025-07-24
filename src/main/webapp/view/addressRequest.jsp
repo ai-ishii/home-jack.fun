@@ -20,6 +20,19 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 	flex-direction: row;
 	z-index: 10;
 }
+
+h1 {
+	padding: 30px 0;
+	display: block;
+	font-size: 2.5em;
+	margin-block-start: 0.67em;
+	margin-block-end: 0.67em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	font-weight: bold;
+	unicode-bidi: isolate;
+}
+
 .detail {
 	width: 80%;
 	margin: 0 auto;
@@ -54,7 +67,6 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 }
 
 .detail .newpostnumber {
-	color: #e65d45;
 	background-color: #e6e6b1;
 }
 
@@ -101,7 +113,6 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 }
 
 .newaddressnumber {
-	color: #e65d45;
 	background-color: #e6e6b1;
 }
 
@@ -113,30 +124,71 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 	width: 80%;
 	margin: 0 auto;
 	text-align: center;
-	padding: 50px;
+	padding: 50px 10px 10px 10px;
 }
 
-.button .approval {
-	width: 150px;
-	height: 40px;
-	background-color: #e6e6e6;
-	color: #000000;
-	border-radius: 4px 4px 4px 4px;
+html {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 62.5%;
 }
 
-.button .approval:hover {
-	background-color: #32adfa;
+.btn, a.btn, button.btn {
+	margin: 0 auto;
+	width: 15%;
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1.5;
+	position: relative;
+	display: inline-block;
+	padding: 0.5rem 1.5rem;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
-	color: f0f8ff;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+	letter-spacing: 0.1em;
+	border-radius: 8.5rem;
+	font-size: 1.6rem;
 }
 
-.button .returnlist {
+a.btn--notApproved {
+	color: #000;
+	background-color: #bbc8e6;
+	border-bottom: 2px solid #8491c3 transparent;
+}
+
+a.btn--notApproved:hover {
+	margin-top: 3px;
+	color: #000;
+	background: #9192b3;
+	border-bottom: 2px solid #4a488e;
+	background: #9192b3;
+}
+
+.button tr {
+	height: 40px
+}
+
+.return {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+
+}
+
+.return .returnlist {
 	width: 150px;
 	height: 40px;
 	border-radius: 4px 4px 4px 4px;
 }
 
-.button .returnlist:hover {
+.return .returnlist:hover {
 	transition: all 0.3s;
 }
 </style>
@@ -149,7 +201,7 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 		<!-- メイン部分 -->
 		<div id="main2" class="container">
 
-			<h2 style="text-align: center">-住所変更詳細-</h2>
+			<h1 style="text-align: center">-住所変更詳細-</h1>
 
 			<table class="beforeAfter">
 				<tr>
@@ -178,16 +230,22 @@ AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRe
 			</table>
 			<table class="button">
 				<tr>
-					<td><input class="approval" type="submit" value="承認"></td>
+					<td><a href="<%=request.getContextPath()%>/#?#%>"
+						onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
+
 				</tr>
 				<tr>
 					<th class="space"></th>
 				</tr>
+			</table>
+			<table class="return">
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/requestList" class="returnlist">申請一覧に戻る</a></td>
+					<td><a href="<%=request.getContextPath()%>/requestList"
+						class="returnlist">申請一覧に戻る</a></td>
 				</tr>
-				</table>
-				</div>
-				</div>
+			</table>
+			<br><br><br><br>
+		</div>
+	</div>
 </body>
 </html>

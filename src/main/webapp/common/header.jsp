@@ -54,12 +54,20 @@
 				</ul>
 			</nav>
 
+			
 			<div id="page-title">
-				<h6>
-					<small>満足を超える、感動を贈りたい</small>
-				</h6>
-				<h1>HOME JACK</h1>
+				
+				 <div class="title">
+					 <a id="home-link" href="<%= request.getContextPath() %>/home">
+						<h6>
+							<small>満足を超える、感動を贈りたい</small>
+						</h6>
+						<h1>HOME JACK</h1>
+					</a>
+				</div>
+				
 			</div>
+			
 			<div id="hamburger" class="hamburger">
 				<span></span><span></span><span></span>
 			</div>
@@ -86,6 +94,12 @@
 					</a></li>
 				</ul>
 			</div>
+			
+			<div class="jump">
+				<a href="#" onclick="{window.scrollTo({top: 0, left: 0, behavior: 'smooth'})}; return false;" ><p>▲<br>ページトップ</p></a>
+			</div>
+
+			
 		</div>
 	</header>
 

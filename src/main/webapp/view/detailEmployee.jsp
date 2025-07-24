@@ -15,7 +15,7 @@ ArrayList<User> userListBySameJoiningDate = (ArrayList<User>) request.getAttribu
 //フォーマットを使用するためのオブジェクト生成
 MyFormat myFormat = new MyFormat();
 //タイムスタンプ型、Date型のデータを全てフォーマット化
-String joiningDate = myFormat.YearMonthFormat(user.getJoiningDate());
+String joiningDate = myFormat.yearMonthFormat(user.getJoiningDate());
 String birthday = myFormat.birthDateFormat(user.getBirthday());
 
 //--------入社年月の取得-----------
@@ -24,10 +24,10 @@ String[] joiningDatesBySameBelong = new String[userListBySameBelong.size()];
 String[] joiningDatesBySameJoin = new String[userListBySameJoiningDate.size()];
 //タイムスタンプ型のデータを全てフォーマット化
 for (int i = 0; i < userListBySameBelong.size(); i++) {
-	joiningDatesBySameBelong[i] = myFormat.YearMonthFormat(userListBySameBelong.get(i).getJoiningDate());
+	joiningDatesBySameBelong[i] = myFormat.yearMonthFormat(userListBySameBelong.get(i).getJoiningDate());
 }
 for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
-	joiningDatesBySameJoin[i] = myFormat.YearMonthFormat(userListBySameJoiningDate.get(i).getJoiningDate());
+	joiningDatesBySameJoin[i] = myFormat.yearMonthFormat(userListBySameJoiningDate.get(i).getJoiningDate());
 }
 
 //--------画像の取得-----------
@@ -44,7 +44,7 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 <html>
 <head>
 <!-- タイトル -->
-<title>社員詳細</title>
+<title>社員紹介 - 詳細</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -53,6 +53,9 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 <style>
 /* ページ全体（div）*/
 #detailEmployee {
+	margin-right: auto;
+	margin-left: auto;
+	width: 90%;
 	text-align: center;
 	z-index: 10;
 }
@@ -160,7 +163,7 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 /* 画像スライダー（div）*/
 #img_slider {
 	position: relative;
-	height: 80%;
+	height: 20%;
 }
 
 a {
@@ -170,8 +173,8 @@ a {
 /* 画像スライダーの中の社員1人分の画像&情報（div）*/
 #employee_card {
 	display: inline-block;
-	margin-right: 15px;
-	margin-left: 15px;
+	margin-right: 25px;
+	margin-left: 25px;
 	width: 20%;
 	height: 200px;
 	/*	大きさが変わるときのスピード*/
@@ -229,7 +232,7 @@ a {
 
 /*右ボタン（button）*/
 #next {
-	right: 15px;
+	right: -15px;
 }
 </style>
 
@@ -246,7 +249,7 @@ a {
 					<a href="<%=request.getContextPath()%>/employee"> <input
 						id="backEmployeeList_button" type="submit" value="一覧へ"
 						style="width: 80px; height: 50px; font-size: large;">
-					</a>&nbsp;&nbsp;&nbsp; <a href="updateEmployee.jsp"> <input
+					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/view/employeeUpdate.jsp?cmd=update"> <input
 						id="update_button" type="submit" value="編集"
 						style="width: 80px; height: 50px; font-size: large;">
 					</a> <a> <input id="delete_button" type="submit" value="削除"
