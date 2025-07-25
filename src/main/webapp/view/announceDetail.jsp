@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page
-	import="bean.Announce, java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, util.MyFormat"%>
+	import="bean.Announce, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, util.MyFormat"%>
 
 <%
 Announce announce = (Announce) request.getAttribute("announce");
-ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
-int announceId = announce.getAnnounceId();
-int announceNum = announceList.indexOf(announce);
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
@@ -169,27 +166,8 @@ String category = null;
 					</div>
 				</div>
 
-				<a href="<%=request.getContextPath()%>/announce">一覧へ</a> 
-				<a href="<%=request.getContextPath()%>/announceDetail?announceId=<%=announceId%>&cmd=update">編集</a>
-				<a href="<%=request.getContextPath()%>/announceDelete?announceId=<%=announceId%>">削除</a>
-				<%
-				if (announceNum > 0) {
-					Announce beforeAnnounce = announceList.get(announceNum - 1);
-					int beforeAnnounceId = beforeAnnounce.getAnnounceId();
-				%>
-				<a
-					href="<%=request.getContextPath()%>/announceDetail?announceId=<%=beforeAnnounceId%>&cmd=detail">前の記事</a>
-				<%
-				}
-				if (announceNum < announceList.size() - 1) {
-				Announce nextAnnounce = announceList.get(announceNum + 1);
-				int nextAnnounceId = nextAnnounce.getAnnounceId();
-				%>
-				<a
-					href="<%=request.getContextPath()%>/announceDetail?announceId=<%=nextAnnounceId%>&cmd=detail">次の記事</a>
-				<%
-				}
-				%>
+				<a href="<%=request.getContextPath()%>/announce">一覧へ</a>
+				<a href="<%= request.getContextPath() %>/detailAnnounce?announceId=<%= announce.getAnnounceId() %>&cmd=update">編集</a>
 			</div>
 		</div>
 	</div>

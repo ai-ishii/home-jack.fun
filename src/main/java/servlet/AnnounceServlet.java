@@ -32,18 +32,15 @@ public class AnnounceServlet extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 変数宣言
 		String error = "";
 		String cmd = "";
 
-		// オブジェクト生成
-		AnnounceDAO announceDAO = new AnnounceDAO();
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
 
 		try {
-			// メソッドを呼び出してSQL文実行
-			announceList = announceDAO.selectAll();
+			AnnounceDAO announceDAO = new AnnounceDAO();
 
+			announceList = announceDAO.selectAll();
 		} catch (Exception e) {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
