@@ -37,11 +37,23 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/plain; charset=UTF-8");
 		
+		//セッション登録準備
+		HttpSession session = request.getSession(true);
+		
 		String idTokenString = request.getParameter("idtoken");
 		
 		//DAO宣言
 		AccountDAO accountDAO = new AccountDAO();
 		UserDAO userDAO = new UserDAO();
+		
+		//DTO宣言
+		Account account = new Account();
+		
+		String error = "";
+		String cmd = "";
+		
+		int userId = -1;
+		String name = "";
 
 		try {
 			//idTokenが正しいものか検証するルールの設定
@@ -56,13 +68,12 @@ public class LoginServlet extends HttpServlet {
 			if (idToken != null) {
 				//googleユーザー情報の取得
 				GoogleIdToken.Payload payload = idToken.getPayload();
-				//セッション登録準備
-				HttpSession session = request.getSession(true);
+				
 				
 				//ユーザー情報からID、メールアドレスを取得
 				String accountId = payload.getSubject();
 				String email = payload.getEmail();
-				Account account = accountDAO.selectByAccountId(accountId);
+				account = accountDAO.selectByAccountId(accountId);
 				
 				//アカウントが存在しない場合登録を行う
 				if(account.getAccountId() == null) {
@@ -74,27 +85,36 @@ public class LoginServlet extends HttpServlet {
 					account = accountDAO.selectByAccountId(accountId);
 				}
 				//ユーザーIDの取得
-				int userId = userDAO.selectByAccountId(accountId).getUserId();
+				userId = userDAO.selectByAccountId(accountId).getUserId();
+				//名前の取得
+				name = (String)payload.get("name");
 				
-				//セッション登録
-				session.setAttribute("account", account);
-				session.setAttribute("user_id", userId);
-				session.setAttribute("user_name", payload.get("name"));
-				
-				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";
-				response.getWriter().write(jsonResponse);
 			} else {
-
+				error = "アカウントが認証できませんでした";
+				cmd = "login";
+				//ステータスコード(404とか)の取得
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				//リダイレクト先の設定
 				String jsonResponse = "{\"success\": false, \"redirectUrl\": \"view/error.jsp\"}";
 				response.getWriter().write(jsonResponse);
 			}
 		} catch (Exception e) {
+			error = "接続エラーです";
+			cmd = "login";
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			String jsonResponse = "{\"success\": false, \"redirectUrl\": \"view/error.jsp\"}";
 			response.getWriter().write(jsonResponse);
 			e.printStackTrace();
 
+		} finally {
+			if (!error.equals("")) {			// エラーがない場合 homeにフォワード
+				//セッション登録
+				session.setAttribute("account", account);
+				session.setAttribute("user_id", userId);
+				session.setAttribute("user_name", name);
+				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";
+				response.getWriter().write(jsonResponse);
+			}
 		}
 		
 	}

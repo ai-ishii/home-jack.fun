@@ -50,7 +50,7 @@ public class HomeServlet extends HttpServlet {
 				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			
-			} else {				// エラーがない場合 home.jspにフォワード
+			} else {					// エラーがない場合 home.jspにフォワード
 				request.setAttribute("important_list", importantList);
 				request.setAttribute("announce_list", announceList);
 				request.setAttribute("activity_list", activityList);
