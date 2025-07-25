@@ -63,8 +63,10 @@ public class RequestDAO {
 				request.setRequestId(rs.getInt("request_id"));
 				request.setApplicantId(rs.getInt("applicant_id"));
 				request.setApproverId(rs.getInt("approver_id"));
-				request.setName(rs.getString("name"));
+				request.setApplicant(rs.getString("applicant"));
+				request.setApprover(rs.getString("approver"));
 				request.setRequestDate(rs.getTimestamp("request_date"));
+				request.setApprovalDate(rs.getTimestamp("approval_date"));
 				request.setRequestTypeFlag(rs.getInt("request_type_flag"));
 				request.setRequestFlag(rs.getInt("request_flag"));
 				
@@ -250,7 +252,7 @@ public class RequestDAO {
 				smt = con.createStatement();
 
 				//SQL文
-				String sql = "SELECT user_info.department,user_info.team,request_info.name,license_request_info.license_name,license_request_info.exam_date,"
+				String sql = "SELECT user_info.department_id,user_info.group_id,request_info.name,license_request_info.license_name,license_request_info.exam_date,"
 						+ "license_request_info.exam_time FROM user_info INNER JOIN request_info ON user_info.user_id = request_info.applicant_id"
 						+ " INNER JOIN license_request_info ON request_info.request_id = license_request_info.request_id "
 						+ "WHERE .request_info.request_id=" + requestid;
@@ -262,10 +264,11 @@ public class RequestDAO {
 					licenseRequest.setExamDate(rs.getTimestamp("exam_date"));
 					licenseRequest.setExamTime(rs.getInt("exam_time"));
 					
-					user.setDepartment(rs.getString("department"));
-					user.setTeam(rs.getString("team"));
+					user.setDepartmentId(rs.getInt("department_id"));
+					user.setGroupId(rs.getInt("group_id"));
 					
-					request.setName(rs.getString("name"));
+					request.setApplicant(rs.getString("applicant"));
+					request.setApprover(rs.getString("approver"));
 					
 					requestLicenseRequestUser.setRequest(request);
 					requestLicenseRequestUser.setLicenseRequest(licenseRequest);
