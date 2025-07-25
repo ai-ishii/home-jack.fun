@@ -208,11 +208,11 @@ a.btn--notApproved:hover {
 					<td class="user"><%=requestLicenseRequestUser.getRequest().getName()%></td>
 				</tr>
 				<td class="affiliationdepartment">部</td>
-				<td class="department"><%=requestLicenseRequestUser.getUser().getDepartment()%>部</td>
+				<td class="department"><%=requestLicenseRequestUser.getUser().getDepartmentId()%>部</td>
 				</tr>
 				<tr>
 					<td class="affiliationteam">グループ</td>
-					<td class="team"><%=requestLicenseRequestUser.getUser().getTeam()%>グループ</td>
+					<td class="team"><%=requestLicenseRequestUser.getUser().getGroupId()%>グループ</td>
 				</tr>
 				<tr>
 					<td class="licenseexamdate">受験日</td>
