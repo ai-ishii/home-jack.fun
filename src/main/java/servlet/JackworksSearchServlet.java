@@ -24,9 +24,9 @@ public class JackworksSearchServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
-		String error = null;
+		String error = "";
 		// 例外判定用
-		String cmd = null;
+		String cmd = "";
 		// 遷移先のパス
 		String path = "/monthJackworks";
 
