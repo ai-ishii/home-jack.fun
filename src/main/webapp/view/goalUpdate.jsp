@@ -1,8 +1,7 @@
 <%@page import="bean.QuarterGoal"%>
+<%@page import="bean.TeamGoal"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList,bean.Goal"%>
-<%@page import="bean.TeamGoal"%>
-
 
 <%
 //オブジェクト宣言
@@ -26,6 +25,7 @@ String resultCommentReviewer = "";
 
 //teamGoalの値がnullでなければ
 if (teamGoal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	departmentGoal = teamGoal.getDepartmentGoal();
 	groupGoal = teamGoal.getGroupGoal();
@@ -33,6 +33,7 @@ if (teamGoal != null) {
 
 //goalの値がnullでなければ
 if (goal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
@@ -60,7 +61,7 @@ if (goal != null) {
 	margin-bottom: 10px;
 	width: 80%;
 	border-radius: 30px;
-	background-color: #ffffff;
+	background-color: #fffadd;
 	box-shadow: 1px 2px 5px #CCCCEE;
 	text-align: center;
 	font-size: 20px;
@@ -84,7 +85,7 @@ if (goal != null) {
 	margin-bottom: 10px;
 	width: 80%;
 	border-radius: 30px;
-	background-color: #ffffff;
+	background-color: #fffadd;
 	box-shadow: 1px 2px 5px #CCCCEE;
 	text-align: center;
 	font-size: 20px;
@@ -102,7 +103,7 @@ if (goal != null) {
 }
 
 .goalpadding {
-	padding: 0 50px 20px;
+	padding: 20px 50px 10px;
 	text-align: left;
 }
 
@@ -299,13 +300,13 @@ body {
 	align-items: center;
 }
 
-.button {
+.goalButton {
 	background-color: #fff;
 	border: solid 2px #FFD700;
 	color: #191970;
 	border-radius: 20px;
 	padding: 10px 30px;
-	margin: 30px;
+	margin: 50 auto;
 	text-decoration: none;
 	font-size: 1em;
 	box-shadow: 0 5px 0 #FFD700;
@@ -313,7 +314,7 @@ body {
 	transition: .3s;
 }
 
-.button:hover {
+.goalButton:hover {
 	color: #000000;
 	transform: translateY(5px);
 	box-shadow: 0 0 0 #191970;
@@ -445,7 +446,7 @@ body {
 								<textarea  name="result" rows="10" cols="80"><%=result%></textarea>
 							</div>
 							<div style="width: 80%">
-								<textarea  name="resultComment" rows="10" cols="80"><%=resultComment%></textarea>
+								<textarea  name="result_comment" rows="10" cols="80"><%=resultComment%></textarea>
 							</div>
 						</div>
 					</div>
@@ -461,12 +462,12 @@ body {
 								<textarea  name="result_reviewer" rows="10" cols="80"><%=resultReviewer%></textarea>
 							</div>
 							<div style="width: 80%">
-								<textarea  name="annualGoal" rows="10" cols="80"><%=resultCommentReviewer%></textarea>
+								<textarea  name="result_comment_reviewer" rows="10" cols="80"><%=resultCommentReviewer%></textarea>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div style="text-align: center" class="button">
+				<div  class="goalButton">
 				<input type="submit" value="更新">
 				</div>
 			</form>

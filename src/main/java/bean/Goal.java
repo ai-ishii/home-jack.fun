@@ -25,7 +25,6 @@ public class Goal {
 		this.goalId = goalId;
 	}
 	
-	
 	public String getTeamId() {
 		return teamId;
 	}
@@ -87,10 +86,6 @@ public class Goal {
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
-	
-	
-
-		
 }
 
 
