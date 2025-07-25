@@ -26,7 +26,10 @@ cursor
 	position: relative;
 	width: 100%;
 	margin: 0px;
+<<<<<<< Upstream, based on ccccc
 	flex-direction: row;
+=======
+>>>>>>> e524bf4 cssの修正を行いました。
 	z-index: 10;
 }
 
