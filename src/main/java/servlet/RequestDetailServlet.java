@@ -31,6 +31,10 @@ public class RequestDetailServlet extends HttpServlet {
 		String stType = request.getParameter("type");
 		int type = Integer.parseInt(stType);
 
+		//cmdを受け取りint型に変換する
+		String stflag = request.getParameter("flag");
+		int flag = Integer.parseInt(stflag);
+
 		try {
 			//オブジェクト化
 			RequestDAO requestDAO = new RequestDAO();
@@ -39,15 +43,19 @@ public class RequestDetailServlet extends HttpServlet {
 			if (type == 0) {
 				AddressRequest addressRequest = requestDAO.selectByAddressRequestId(requestid);
 				request.setAttribute("addressRequest", addressRequest);
+				request.setAttribute("flag", flag);
 			} else if (type == 1) {
 				NameRequest nameRequest = requestDAO.selectByNameRequestId(requestid);
 				request.setAttribute("nameRequest", nameRequest);
+				request.setAttribute("flag", flag);
 			} else if (type == 2) {
 				WorkRequest workRequest = requestDAO.selectByWorkRequestId(requestid);
 				request.setAttribute("workRequest", workRequest);
+				request.setAttribute("flag", flag);
 			} else if (type == 3) {
 				RequestLicenseRequestUser requestLicenseRequestUser = requestDAO.selectLicenseRequestId(requestid);
 				request.setAttribute("requestLicenseRequestUser", requestLicenseRequestUser);
+				request.setAttribute("flag", flag);
 
 			}
 			//DB接続エラー	

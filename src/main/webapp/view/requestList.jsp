@@ -389,36 +389,36 @@ a.btn--notApproved:hover {
 
 					<tr class="row-hover">
 						<td class="requestid"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestId()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getRequestId()%></td>
 						<td class="userid"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getApplicantId()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getApplicantId()%></td>
 						<td class="name"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getName()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getName()%></td>
 						<%
 						if (requestList.get(i).getRequestTypeFlag() == 0) {
 						%>
 						<td class="request"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">住所変更</td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>">住所変更</td>
 						<%
 						} else if (requestList.get(i).getRequestTypeFlag() == 1) {
 						%>
 						<td class="request"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">氏名変更</td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>">氏名変更</td>
 						<%
 						} else if (requestList.get(i).getRequestTypeFlag() == 2) {
 						%>
 						<td class="request"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">勤務状況変更</td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>">勤務状況変更</td>
 						<%
 						} else {
 						%>
 						<td class="request"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>">資格申請</td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>">資格申請</td>
 						<%
 						}
 						%>
 						<td class="time"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestDate()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getRequestDate()%></td>
 						<%
 						if (requestList.get(i).getRequestFlag() == 0) {
 						%>
