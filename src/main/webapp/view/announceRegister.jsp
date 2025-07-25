@@ -124,7 +124,8 @@ textarea {
 
 					<div class="form_box">
 						<label for="announce_flag" class="control_label">重要記事</label> <input
-							type="checkbox" id="announce_flag" value="2">
+							type="checkbox" id="announce_flag" name="announceFlag" value="1">
+						<input type="hidden" name="announceFlag" value="0">
 					</div>
 
 					<div class="form_box">
