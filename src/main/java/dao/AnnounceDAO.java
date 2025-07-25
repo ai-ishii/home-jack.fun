@@ -444,8 +444,7 @@ public class AnnounceDAO {
 				+ " regist_date, update_date, title, text, comment,"
 				+ " like_flag, announce_flag, announce_category_id, tag) "
 				+ "VALUES (null, null, '" + announce.getRegistDate() + "', null, '"
-				+ announce.getTitle() + "', '" + announce.getText() + "', null, 0, "
-				+ announce.getAnnounceFlag() + ", "
+				+ announce.getTitle() + "', '" + announce.getText() + "', null, 0, 0, "
 				+ announce.getAnnounceCategoryId() + ", null)";
 
 		try {
@@ -487,8 +486,7 @@ public class AnnounceDAO {
 
 		String sql = "UPDATE announce_info SET title = '" + announce.getTitle() + "', update_date = '"
 				+ announce.getUpdateDate() + "', text = '" + announce.getText() + "', announce_category_id = "
-				+ announce.getAnnounceCategoryId() + ", announce_flag = " + announce.getAnnounceFlag()
-				+ " WHERE announce_id = '"
+				+ announce.getAnnounceCategoryId() + " WHERE announce_id = '"
 				+ announce.getAnnounceId() + "'";
 
 		try {
@@ -535,15 +533,13 @@ public class AnnounceDAO {
 				+ "WHERE name LIKE '%" + keyword + "%' "
 				+ "OR title LIKE '%" + keyword + "%' "
 				+ "OR text LIKE '%" + keyword + "%' "
-				+ "OR tag LIKE '%" + keyword + "%'"
-				+ "ORDER BY regist_date DESC;";
+				+ "OR tag LIKE '%" + keyword + "%';";
 
 		try {
 			// DBに接続
 			con = AnnounceDAO.getConnection();
 			smt = con.createStatement();
 
-			// SQL文発行
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -563,29 +559,23 @@ public class AnnounceDAO {
 			throw new IllegalStateException(e);
 		} finally {
 			// リソースの解放
-			try {
-				if (smt != null) {
+			if (smt != null) {
+				try {
 					smt.close();
-				} 
-				if (con != null) {
-					con.close();
+				} catch (SQLException ignore) {
 				}
-			} catch (SQLException ignore) {
 			}
-			
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
 		}
 
 		return list;
 	}
 
-	/**
-	 * 絞り込み検索を行うメソッド
-	 * @param announceFlag
-	 * @param announceCategoryId
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
 	public ArrayList<Announce> selectByFilter(String announceFlag, String announceCategoryId, Timestamp startDate,
 			Timestamp endDate) {
 
@@ -596,20 +586,19 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		String sql = "SELECT * FROM announce_info "
-				+ "WHERE CASE WHEN '" + announceFlag + "' = '' THEN '" + announceFlag + "' "
+				+ "WHERE CASE WHEN '" + announceFlag +"' = '' THEN '" + announceFlag + "' "
 				+ "ELSE announce_flag END = '" + announceFlag + "' "
 				+ "AND CASE WHEN '" + announceCategoryId + "' = '' THEN '" + announceCategoryId + "' "
 				+ "ELSE announce_category_id END = '" + announceCategoryId + "' "
 				+ "AND regist_date BETWEEN '" + startDate + "' "
-				+ "AND '" + endDate + "' "
-				+ "ORDER BY regist_date DESC;";
+				+ "AND '" + endDate + "';"
+				+ "";
 
 		try {
 			// DBに接続
 			con = AnnounceDAO.getConnection();
 			smt = con.createStatement();
 
-			// SQL文発行
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -643,44 +632,5 @@ public class AnnounceDAO {
 			}
 		}
 		return list;
-	}
-
-	/**
-	 * 投稿を削除するメソッド
-	 * @param announceId
-	 */
-	public void delete(int announceId) {
-
-		// 変数宣言
-		Connection con = null;
-		Statement smt = null;
-
-		String sql = "DELETE FROM announce_info WHERE announce_id = "+ announceId;
-
-		try {
-			// DBに接続
-			con = AnnounceDAO.getConnection();
-			smt = con.createStatement();
-			
-			// SQL文発行
-			smt.executeUpdate(sql);
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException ignore) {
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
 	}
 }
