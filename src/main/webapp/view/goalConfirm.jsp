@@ -32,6 +32,7 @@ if (teamGoal != null) {
 
 //goalの値がnullでなければ
 if (goal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();

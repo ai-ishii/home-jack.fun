@@ -25,6 +25,7 @@ String resultCommentReviewer = "";
 
 //teamGoalの値がnullでなければ
 if (teamGoal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	departmentGoal = teamGoal.getDepartmentGoal();
 	groupGoal = teamGoal.getGroupGoal();
@@ -32,6 +33,7 @@ if (teamGoal != null) {
 
 //goalの値がnullでなければ
 if (goal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
