@@ -163,7 +163,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= importantList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= importantList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(importantList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= announceDAO.selectByCategory(importantList.get(i).getAnnounceCategoryId()) %></span>
@@ -199,7 +199,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= announceList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= announceList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(announceList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= announceDAO.selectByCategory(announceList.get(i).getAnnounceCategoryId()) %></span>
@@ -232,7 +232,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= activityList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= activityList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(activityList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= announceDAO.selectByCategory(activityList.get(i).getAnnounceCategoryId()) %></span>

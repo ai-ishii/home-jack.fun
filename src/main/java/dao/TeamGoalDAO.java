@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import bean.Goal;
+import bean.TeamGoal;
 
-public class GoalDAO {
+public class TeamGoalDAO {
 
 	//接続用の情報をフィールドに定数として定義
 	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
@@ -33,12 +33,11 @@ public class GoalDAO {
 	}
 
 	/**
-	 * 全検索を行うメソッド
+	 * 検索を行うメソッド
 	 * 
-	 * @return ユーザー情報
-	 * @throws IllegalStateException 例外が発生した場合
+	 * @return ユーザーの部目標
 	 */
-	public Goal selectByUserId(int userId) {
+	public TeamGoal selectByUserId(int userId) {
 
 		Connection con = null;
 		Statement smt = null;
@@ -46,29 +45,27 @@ public class GoalDAO {
 		//呼び出し元に返すオブジェクトの生成
 
 		//SQL文
-		String sql = "SELECT * FROM goal_info WHERE user_id=" + userId;
-		Goal goal = new Goal();
+		String sql = "SELECT * FROM team_goal_info WHERE user_id=" + userId;
+		TeamGoal teamGoal = new TeamGoal();
 
 		try {
 			con = getConnection();
 			smt = con.createStatement();
 
+	
+			
 			//SQL文をDBに移行
 			ResultSet rs = smt.executeQuery(sql);
 
 			//検索結果を配列に格納
 			while (rs.next()) {
-				goal.setGoalId(rs.getInt("goal_id")); 										//個人目標ID
-				goal.setTeamId(rs.getString("team_id")); 									//グループ目標ID
-				goal.setUserId(rs.getInt("user_id")); 										//ユーザー情報ID
-				goal.setAnnualGoal(rs.getString("annual_goal")); 							//年間目標
-				goal.setSituationChallenge(rs.getString("situation_challenge"));			//現状と課題
-				goal.setResult(rs.getString("result")); 									//年間結果達成率
-				goal.setResultComment(rs.getString("result_comment")); 						//年間結果コメント
-				goal.setResultReviewer(rs.getString("result_reviewer")); 					//年間結果達成率（評価者）
-				goal.setResultCommentReviewer(rs.getString("result_comment_reviewer")); 	//年間結果コメント（評価者）
-				goal.setRegistDate(rs.getTimestamp("regist_date")); 						//登録日時
-				goal.setUpdateDate(rs.getTimestamp("update_date")); 						//更新日時
+				teamGoal.setTeamId(rs.getString("team_id"));
+				teamGoal.setUserId(rs.getInt("user_id"));
+				teamGoal.setManagementTheme(rs.getString("management_theme"));
+				teamGoal.setDepartmentGoal(rs.getString("department_goal"));
+				teamGoal.setGroupGoal(rs.getString("group_goal"));
+				teamGoal.setRegistDate(rs.getTimestamp("regist_date"));
+				teamGoal.setUpdateDate(rs.getTimestamp("update_date"));
 			}
 
 		} catch (Exception e) {
@@ -88,34 +85,35 @@ public class GoalDAO {
 				}
 			}
 		}
-		return goal;
+		return teamGoal;
 	}
 	
+	
 	/**
-	 * 情報を更新するメソッド
 	 * 
-	 * @param 更新したい情報
+	 * @param teamGoal
 	 * @throws IllegalStateException 例外が発生した場合
 	 */
-	public void update(Goal goal) {
+	public void update(TeamGoal teamGoal) {
 
 		Connection con = null;
 		Statement smt = null;
 		PreparedStatement ps = null;
+		
 
 		//SQL文
-		String sql = "UPDATE goal_info SET "
-				+ "annual_goal=?,"
-				+ "situation_challenge=? "
-				+ "WHERE goal_id = ?";
+		String sql = "UPDATE team_goal_info SET "
+				+ "department_goal=?,"
+				+ "group_goal=? "
+				+ "WHERE team_id = ?";
 		try {
 			con = getConnection();
 			smt = con.createStatement();
 			ps = con.prepareStatement(sql);
 
-			ps.setString(1, goal.getAnnualGoal());
-			ps.setString(2, goal.getSituationChallenge());
-			ps.setInt(3, goal.getGoalId());
+			ps.setString(1, teamGoal.getDepartmentGoal());
+			ps.setString(2, teamGoal.getGroupGoal());
+			ps.setString(3, teamGoal.getTeamId());
 
 			//SQL文をDBに移行
 			ps.executeUpdate();
@@ -136,6 +134,14 @@ public class GoalDAO {
 				} catch (SQLException ignore) {
 				}
 			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException ignore) {
+				}
+			}
 		}
 	}
+
+	
 }
