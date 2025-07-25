@@ -1,6 +1,7 @@
 package bean;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class Announce {
 
@@ -115,5 +116,16 @@ public class Announce {
 		this.tag = tag;
 	}
 
-	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Announce announce = (Announce) o;
+        return Objects.equals(announceId, announce.announceId); // announceIdが同じなら同じannounceとみなす
+	}
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(announceId); 
+    }
 }
