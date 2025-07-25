@@ -38,7 +38,7 @@ public class GoalDetailServlet extends HttpServlet {
 
 		try {
 			//セッション登録がまだなため、仮で登録
-			strUserId = "5";
+			strUserId = "4";
 
 			//userIdをStringからintへキャスト
 			int userId = Integer.parseInt(strUserId);

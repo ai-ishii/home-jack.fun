@@ -25,13 +25,17 @@ public class GoalServlet extends HttpServlet {
 		//DAO宣言
 		UserDAO userDAO = new UserDAO();
 		
+		//配列宣言
+		ArrayList<User> userList = new ArrayList<User>();
+		
+		
 		try {
 			
 			//getParameterメソッドを呼び出す
 			strUserId = request.getParameter("user_id");
 			cmd = request.getParameter("cmd");
-
-			strUserId = "5";
+			
+			strUserId = "4";
 
 			if (cmd == null) {
 				cmd = ""; //※ここは後で絶対に変える文章なので覚えておいてください
@@ -39,9 +43,12 @@ public class GoalServlet extends HttpServlet {
 			//userIdをキャスト
 			int userId = Integer.parseInt(strUserId);
 
-			//全検索メソッドを呼び出す
-			user = userDAO.selectByUserId(userId);
 
+			//selectAllメソッドを呼び出す
+			userList = userDAO.selectAll();
+			
+			
+			
 		} catch (Exception e) {
 
 		} finally {
@@ -49,7 +56,7 @@ public class GoalServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-			request.setAttribute("user", user);
+			request.setAttribute("userList", userList);
 			request.getRequestDispatcher("/view/goal.jsp").forward(request, response);
 		}
 	}

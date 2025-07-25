@@ -55,7 +55,7 @@ public class GoalConfirmServlet extends HttpServlet {
 			cmd = request.getParameter("cmd");
 
 			//セッション登録がまだなため、仮で登録
-			strUserId = "5";
+			strUserId = "4";
 			
 			//※ここは後で絶対に変える文章なので覚えておいてください
 			if (cmd == null) {
@@ -67,7 +67,7 @@ public class GoalConfirmServlet extends HttpServlet {
 
 			//部目標を呼び出す
 			teamGoal = teamGoalDAO.selectByUserId(userId);
-
+			
 			//目標を呼び出す
 			goal = goalDAO.selectByUserId(userId);
 

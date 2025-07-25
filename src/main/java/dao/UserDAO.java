@@ -291,8 +291,8 @@ public class UserDAO {
 				user.setTransportation(rs.getString("transportation"));
 				user.setSex(rs.getString("sex"));
 				user.setEmployeeNumber(rs.getString("employee_number"));
-				user.setDepartment(rs.getString("department"));
-				user.setTeam(rs.getString("team"));
+				user.setDepartmentId(rs.getInt("department_id"));
+				user.setGroupId(rs.getInt("group_id"));
 				user.setJoiningDate(rs.getTimestamp("joining_date"));
 				user.setWorkHistory(rs.getInt("work_history"));
 				user.setMarriageFlag(rs.getInt("marriage_flag"));
@@ -607,7 +607,7 @@ public class UserDAO {
             while (rs.next()) {
                 User user = new User();
                 user.setUserId(rs.getInt("user_id"));
-                user.setAccountId(rs.getInt("account_id"));
+                user.setAccountId(rs.getString("account_id"));
                 user.setName(rs.getString("name"));
                 user.setNameKana(rs.getString("name_kana"));
                 user.setBirthday(rs.getDate("birthday"));
@@ -679,7 +679,7 @@ public class UserDAO {
             while (rs.next()) {
                 User user = new User();
                 user.setUserId(rs.getInt("user_id"));
-                user.setAccountId(rs.getInt("account_id"));
+                user.setAccountId(rs.getString("account_id"));
                 user.setName(rs.getString("name"));
                 user.setNameKana(rs.getString("name_kana"));
                 user.setBirthday(rs.getDate("birthday"));

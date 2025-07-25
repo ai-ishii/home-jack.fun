@@ -34,7 +34,7 @@ public class TeamGoalDAO {
 
 	/**
 	 * 検索を行うメソッド
-	 * 
+	 * @param ユーザID
 	 * @return ユーザーの部目標
 	 */
 	public TeamGoal selectByUserId(int userId) {
