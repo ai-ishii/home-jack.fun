@@ -318,6 +318,53 @@ button {
 
 </style>
 
+<script type="text/javascript">
+//リンクにするjavascript
+document.addEventListener("DOMContentLoaded", function() {
+	// .jack-link がついてるタグを全部探す
+	const linkCells = document.querySelectorAll(`.user-link`);
+            
+	// クラスが記述されたタグにクリックしたときの処理を追加
+	linkCells.forEach(function(cell) {
+		cell.addEventListener("click", function(event) {
+			//ボタンを押した場合を省く
+			if(event.target.closest('.btn')){
+				return;
+				}
+
+			//対象に設定されたdatasetを取り出す
+			const url = cell.dataset.href; 
+			
+			if (url) {
+				//設定したURLに遷移する
+				window.location.href = url;
+			}
+		});
+	});
+
+	const btn = document.querySelectorAll(".btn--delete");
+
+	// それぞれの td にクリックしたときの処理を追加
+	btn.forEach(function(button) {
+		button.addEventListener("click", function(event) {
+			event.stopPropagation();
+			event.preventDefault();
+			const jackDelete = button.dataset.href;
+
+			if(confirm("本当に削除しますか？")){
+				alert("削除しました。");
+				window.location.href= jackDelete;
+			}else{
+				alert("キャンセルしました。");
+			}
+		});
+	});
+	
+});
+
+</script>
+
+
 <body>
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
@@ -333,51 +380,20 @@ button {
 
 	<br>
 	<table id="info">
+	<tr>
 	<td class="search-box">
 	<!-- 検索を行うフォーム -->
-	<form action="<%=request.getContextPath()%>/jackworksSearch"
-		class="search-form">
+	<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
 	<label><input type="text" name="name" placeholder="キーワードを入力"></label>
 	<button type="submit" aria-label="検索"></button>
 	</form>
 	</td>
-							
-	<!-- 十年間の西暦検索を行うフォーム -->
-	<form action="<%=request.getContextPath()%>/jackworksSearch">
-	<td>
-		<label class="selectbox-4"> 
-		<select id="yearSelect" name="year-search"></label></select>
-	</td>
-
-	<!-- 月の検索を行うセレクトボックス -->
-	<td><label class="selectbox-4"> 
-	<select name="month-search">
-		<option value="01">1月</option>
-		<option value="02">2月</option>
-		<option value="03">3月</option>
-		<option value="04">4月</option>
-		<option value="05">5月</option>
-		<option value="06">6月</option>
-		<option value="07">7月</option>
-									<option value="08">8月</option>
-									<option value="09">9月</option>
-									<option value="10">10月</option>
-									<option value="11">11月</option>
-									<option value="12">12月</option>
-							</select></td> </label>
-						<td><button type="submit" class="select-button">検索</button>
-					</form>
-					</td>
-
-					<!-- JackWorkの新規登録を行うボタン -->
-					<td style="text-align: right"><a
-						href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
-						class="btn btn--insert">新規登録</a></td>
-					</tr>
-					</thead>
-				</table>
 	
+	</tr>
+	</thead>
+	</table>
 	
+	<table>
 		 <thead style="margin:0 auto">
 		<tr>
 			<th scope="col">【 社員番号 】</th>
@@ -394,9 +410,9 @@ if (list != null) {
 		if(user.getDisplayFlag() != 1){
 %>
 
-		<tr>
+		<tr class="user-link" data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>">
 			<td class="box-user" data-label="社員番号">
-			<a class= "content" href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>"><%=user.getEmployeeNumber() %></a>
+			<a class= "content" ><%=user.getEmployeeNumber() %></a>
 			</td>
 			<td class="box-user" data-label="名前">
 			<%=user.getName() %>
