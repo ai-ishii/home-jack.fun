@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bean.AddressRequest;
 import bean.NameRequest;
+import bean.Request;
 import bean.RequestLicenseRequestUser;
 import bean.WorkRequest;
 import dao.RequestDAO;
@@ -38,23 +39,32 @@ public class RequestDetailServlet extends HttpServlet {
 		try {
 			//オブジェクト化
 			RequestDAO requestDAO = new RequestDAO();
+			Request allRequest = new Request();
 
 			//申請内容ごとに対応したメソッドを呼び出す
 			if (type == 0) {
 				AddressRequest addressRequest = requestDAO.selectByAddressRequestId(requestid);
+				allRequest = requestDAO.selectByRequestId(requestid);
 				request.setAttribute("addressRequest", addressRequest);
+				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);
 			} else if (type == 1) {
 				NameRequest nameRequest = requestDAO.selectByNameRequestId(requestid);
+				allRequest = requestDAO.selectByRequestId(requestid);
 				request.setAttribute("nameRequest", nameRequest);
+				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);
 			} else if (type == 2) {
 				WorkRequest workRequest = requestDAO.selectByWorkRequestId(requestid);
+				allRequest = requestDAO.selectByRequestId(requestid);
 				request.setAttribute("workRequest", workRequest);
+				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);
 			} else if (type == 3) {
 				RequestLicenseRequestUser requestLicenseRequestUser = requestDAO.selectLicenseRequestId(requestid);
+				allRequest = requestDAO.selectByRequestId(requestid);
 				request.setAttribute("requestLicenseRequestUser", requestLicenseRequestUser);
+				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);
 
 			}

@@ -1,7 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@ page import="bean.AddressRequest"%>
+<%@ page import="bean.AddressRequest,bean.Request"%>
 <%
 AddressRequest addressRequest = (AddressRequest) request.getAttribute("addressRequest");
+Request allRequest = (Request) request.getAttribute("allRequest");
+int flag = (int) request.getAttribute("flag");
 %>
 <html>
 <head>
@@ -179,7 +181,6 @@ a.btn--notApproved:hover {
 	width: 80%;
 	margin: 0 auto;
 	text-align: center;
-
 }
 
 .return .returnlist {
@@ -190,6 +191,27 @@ a.btn--notApproved:hover {
 
 .return .returnlist:hover {
 	transition: all 0.3s;
+}
+
+.app {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.approved {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.approver {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.approvaldate {
+	width: 80%;
+	margin: 0 auto;
 }
 </style>
 
@@ -228,23 +250,43 @@ a.btn--notApproved:hover {
 					<td class="newaddressnumber"><%=addressRequest.getNewAddress()%></td>
 				</tr>
 			</table>
-			<table class="button">
+			<%
+			if (flag == 0) {
+			%>
+			<table  class="button">
+			<tr>
+			<td><a href="<%=request.getContextPath()%>/#?#%>"
+				onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
+				</tr>
+				</table>
+			<%
+			} else if (flag == 1) {
+			%>
+			<table class="app">
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/#?#%>"
-						onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
-
+					<td class="approved">承認済み</td>
 				</tr>
 				<tr>
-					<th class="space"></th>
+					<td class="approver">承認者名：<%=allRequest.getApprover()%></td>
+				</tr>
+				<tr>
+					<td class="approvaldate">承認日時：<%=allRequest.getApprovalDate()%></td>
 				</tr>
 			</table>
+			<%
+			}
+			%>
+			<tr>
+				<th class="space"></th>
+			</tr>
 			<table class="return">
 				<tr>
 					<td><a href="<%=request.getContextPath()%>/requestList"
 						class="returnlist">申請一覧に戻る</a></td>
 				</tr>
 			</table>
-			<br><br><br><br>
+
+			<br> <br> <br> <br>
 		</div>
 	</div>
 </body>

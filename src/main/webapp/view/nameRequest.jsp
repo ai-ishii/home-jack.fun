@@ -1,7 +1,9 @@
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="bean.NameRequest"%>
+<%@page import="bean.NameRequest,bean.Request"%>
 <%
 NameRequest nameRequest = (NameRequest) request.getAttribute("nameRequest");
+Request allRequest = (Request) request.getAttribute("allRequest");
+int flag = (int) request.getAttribute("flag");
 %>
 
 <html>
@@ -185,6 +187,27 @@ a.btn--notApproved:hover {
 .return .returnlist:hover {
 	transition: all 0.3s;
 }
+
+.app {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.approved {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.approver {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.approvaldate {
+	width: 80%;
+	margin: 0 auto;
+}
 </style>
 
 <body>
@@ -222,15 +245,35 @@ a.btn--notApproved:hover {
 					<td class="newnamekana"><%=nameRequest.getNewNameKana()%></td>
 				</tr>
 			</table>
+			<%
+			if (flag == 0) {
+			%>
 			<table class="button">
 				<tr>
 					<td><a href="<%=request.getContextPath()%>/#?#%>"
 						onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
-
+				</tr>
+			</table>
+			<%
+			} else if (flag == 1) {
+			%>
+			<table class="app">
+				<tr>
+					<td class="approved">承認済み</td>
 				</tr>
 				<tr>
-					<th class="space"></th>
+					<td class="approver">承認者名：<%=allRequest.getApprover()%></td>
 				</tr>
+				<tr>
+					<td class="approvaldate">承認日時：<%=allRequest.getApprovalDate()%></td>
+				</tr>
+			</table>
+			<%
+			}
+			%>
+			<tr>
+				<th class="space"></th>
+			</tr>
 			</table>
 			<table class="return">
 				<tr>

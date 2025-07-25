@@ -1,10 +1,12 @@
 <%@page import="util.MyFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@ page import="bean.RequestLicenseRequestUser"%>
+<%@ page import="bean.RequestLicenseRequestUser,bean.Request"%>
 <%
 RequestLicenseRequestUser requestLicenseRequestUser = (RequestLicenseRequestUser) request
 		.getAttribute("requestLicenseRequestUser");
+Request allRequest = (Request) request.getAttribute("allRequest");
 MyFormat myFormat = new MyFormat();
+int flag = (int) request.getAttribute("flag");
 %>
 
 <html>
@@ -24,6 +26,7 @@ MyFormat myFormat = new MyFormat();
 	flex-direction: row;
 	z-index: 10;
 }
+
 h1 {
 	padding: 30px 0;
 	display: block;
@@ -35,7 +38,6 @@ h1 {
 	font-weight: bold;
 	unicode-bidi: isolate;
 }
-
 
 .license {
 	width: 70%;
@@ -183,6 +185,26 @@ a.btn--notApproved:hover {
 .return .returnlist:hover {
 	transition: all 0.3s;
 }
+.app {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.approved {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.approver {
+	width: 80%;
+	margin: 0 auto;
+}
+
+.approvaldate {
+	width: 80%;
+	margin: 0 auto;
+}
 </style>
 <body>
 	<div id="wrap">
@@ -201,47 +223,78 @@ a.btn--notApproved:hover {
 				</tr>
 				<tr>
 					<td class="licensename">資格名</td>
-					<td class="name"><%--<%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%>--%></td>
+					<td class="name">
+						<%--<%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%>--%>
+					</td>
 				</tr>
 				<tr>
 					<td class="username">氏名</td>
-					<td class="user"><%--<%=requestLicenseRequestUser.getRequest().getName()%>--%></td>
+					<td class="user">
+						<%--<%=requestLicenseRequestUser.getRequest().getName()%>--%>
+					</td>
 				</tr>
 				<td class="affiliationdepartment">部</td>
-				<td class="department"><%--<%=requestLicenseRequestUser.getUser().getDepartment()%>--%>部</td>
+				<td class="department">
+					<%--<%=requestLicenseRequestUser.getUser().getDepartment()%>--%>部
+				</td>
 				</tr>
 				<tr>
 					<td class="affiliationteam">グループ</td>
-					<td class="team"><%--<%=requestLicenseRequestUser.getUser().getTeam()%>--%>グループ</td>
+					<td class="team">
+						<%--<%=requestLicenseRequestUser.getUser().getTeam()%>--%>グループ
+					</td>
 				</tr>
 				<tr>
 					<td class="licenseexamdate">受験日</td>
-					<td class="examdate"><%--<%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%>--%></td>
+					<td class="examdate">
+						<%--<%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%>--%>
+					</td>
 				</tr>
 				<tr>
 					<td class="licenseexamtime">受験回数</td>
-					<td class="examtime"><%--<%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>--%>回</td>
+					<td class="examtime">
+						<%--<%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>--%>回
+					</td>
 				</tr>
 			</table>
+			<%
+			if (flag == 0) {
+			%>
 			<table class="button">
 				<tr>
-					<td><a href="<%--<%=request.getContextPath()%>/#?#%>--%>"
+					<td><a href="<%=request.getContextPath()%>/#?#%>"
 						onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
-
+				</tr>
+			</table>
+			<%
+			} else if (flag == 1) {
+			%>
+			<table class="app">
+				<tr>
+					<td class="approved">承認済み</td>
 				</tr>
 				<tr>
-					<th class="space"></th>
+					<td class="approver">承認者名：<%=allRequest.getApprover()%></td>
 				</tr>
+				<tr>
+					<td class="approvaldate">承認日時：<%=allRequest.getApprovalDate()%></td>
+				</tr>
+			</table>
+			<%
+			}
+			%>
+			<tr>
+				<th class="space"></th>
+			</tr>
 			</table>
 			<table class="return">
 				<tr>
-					<td><a href="<%--<%=request.getContextPath()%>--%>/requestList"
+					<td><a
+						href="<%=request.getContextPath()%>/requestList"
 						class="returnlist">申請一覧に戻る</a></td>
 				</tr>
 			</table>
-			<br>
-			<br>
-			<br><br><br>
+			<br> <br> <br> <br> <br>
 		</div>
 	</div>
 </body>
