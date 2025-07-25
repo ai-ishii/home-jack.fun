@@ -201,31 +201,31 @@ a.btn--notApproved:hover {
 				</tr>
 				<tr>
 					<td class="licensename">資格名</td>
-					<td class="name"><%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%></td>
+					<td class="name"><%--<%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%>--%></td>
 				</tr>
 				<tr>
 					<td class="username">氏名</td>
-					<td class="user"><%=requestLicenseRequestUser.getRequest().getName()%></td>
+					<td class="user"><%--<%=requestLicenseRequestUser.getRequest().getName()%>--%></td>
 				</tr>
 				<td class="affiliationdepartment">部</td>
-				<td class="department"><%=requestLicenseRequestUser.getUser().getDepartment()%>部</td>
+				<td class="department"><%--<%=requestLicenseRequestUser.getUser().getDepartment()%>--%>部</td>
 				</tr>
 				<tr>
 					<td class="affiliationteam">グループ</td>
-					<td class="team"><%=requestLicenseRequestUser.getUser().getTeam()%>グループ</td>
+					<td class="team"><%--<%=requestLicenseRequestUser.getUser().getTeam()%>--%>グループ</td>
 				</tr>
 				<tr>
 					<td class="licenseexamdate">受験日</td>
-					<td class="examdate"><%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%></td>
+					<td class="examdate"><%--<%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%>--%></td>
 				</tr>
 				<tr>
 					<td class="licenseexamtime">受験回数</td>
-					<td class="examtime"><%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>回</td>
+					<td class="examtime"><%--<%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>--%>回</td>
 				</tr>
 			</table>
 			<table class="button">
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/#?#%>"
+					<td><a href="<%--<%=request.getContextPath()%>/#?#%>--%>"
 						onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
 
 				</tr>
@@ -235,7 +235,7 @@ a.btn--notApproved:hover {
 			</table>
 			<table class="return">
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/requestList"
+					<td><a href="<%--<%=request.getContextPath()%>--%>/requestList"
 						class="returnlist">申請一覧に戻る</a></td>
 				</tr>
 			</table>

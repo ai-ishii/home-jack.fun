@@ -41,6 +41,7 @@ public class RequestDAO {
 
 	//request_info から全てのデータを取得するメソッド
 	public ArrayList<Request> selectAll() {
+		
 		//変数宣言
 		Connection con = null;
 		Statement smt = null;
