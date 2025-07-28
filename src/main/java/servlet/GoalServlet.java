@@ -47,12 +47,12 @@ public class GoalServlet extends HttpServlet {
 			//selectAllメソッドを呼び出す
 			userList = userDAO.selectAll();
 			
-			
+			System.out.print(userList);
 			
 		} catch (Exception e) {
-
+			error = "エラーです。";
 		} finally {
-			if (error != "") {
+			if (!error.isEmpty()) {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
