@@ -447,8 +447,8 @@ a {
 	String joiningDateList = Arrays.toString(arrayJoiningDateList);	// 配列を文字列に変換して受け渡す
 
 	// -------------部・グループ（部）---------------
-	int departmentListElement = "";	// リストを一つ一つ代入するための変数
-	String[] arrayDepartmentList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	int departmentListElement = 0;	// リストを一つ一つ代入するための変数
+	int[] arrayDepartmentList = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
 	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 		departmentListElement = userListBySameJoiningDate.get(i).getDepartmentId();	// 値を一つ一つ取ってきて代入していく
 		arrayDepartmentList[i] = departmentListElement;		// 代入された値を配列に入れていく
@@ -456,8 +456,8 @@ a {
 	String departmentList = Arrays.toString(arrayDepartmentList);	// 配列を文字列に変換して受け渡す
 
 	// -------------部・グループ（グループ）---------------
-	int teamListElement = "";	// リストを一つ一つ代入するための変数
-	String[] arrayTeamList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	int teamListElement = 0;	// リストを一つ一つ代入するための変数
+	int[] arrayTeamList = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
 	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 		teamListElement = userListBySameJoiningDate.get(i).getGroupId();	// 値を一つ一つ取ってきて代入していく
 		arrayTeamList[i] = teamListElement;		// 代入された値を配列に入れていく
