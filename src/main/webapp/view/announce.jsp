@@ -59,6 +59,7 @@ String category = null;
 
 .content_box {
 	display: flex;
+	position: relative;
 	width: 80%;
 }
 
@@ -128,8 +129,20 @@ a {
 	width: 100%;
 }
 
-.blank_box {
+.announce_flag {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 2px;
 	height: 30px;
+	color: #ffffff;
+	background-color: orange;
+	border-radius: 5px;
+}
+
+.announce_flag p {
+	font-size: 17px;
+	margin: 0;
 }
 </style>
 
@@ -163,9 +176,9 @@ a {
 					<form action="<%=request.getContextPath()%>/announceSearch"
 						method="GET">
 						<div>
-							<input type="hidden" name="announceFlag" value=""> <input
-								type="checkbox" id="important" value="1" name="announceFlag">
+							<input type="checkbox" id="important" value="1" name="announceFlag">
 							<label for="important">重要記事</label>
+							<input type="hidden" name="announceFlag" value="">
 						</div>
 						<div>
 							<label for="categorySelect">重要記事</label> <select
@@ -178,10 +191,9 @@ a {
 							</select>
 						</div>
 						<div>
-							<label for="startDate">開始日</label>
-								<input type="datetime-local" id="startDate" name="startDate">
-							<label for="endDate">終了日</label>
-								<input type="datetime-local" id="endDate" name="endDate">
+							<label for="startDate">開始日</label> <input type="datetime-local"
+								id="startDate" name="startDate"> <label for="endDate">終了日</label>
+							<input type="datetime-local" id="endDate" name="endDate">
 						</div>
 						<input type="hidden" name="cmd" value="filter">
 						<button type="submit">検索</button>
@@ -197,7 +209,7 @@ a {
 					<div class="content_box">
 						<div class="announce_box">
 							<a
-								href="<%=request.getContextPath()%>/detailAnnounce?announceId=<%=announceList.get(i).getAnnounceId()%>&cmd=detail"
+								href="<%=request.getContextPath()%>/announceDetail?announceId=<%=announceList.get(i).getAnnounceId()%>&cmd=detail"
 								class="box_link">
 								<div class="date_box">
 									<p>
@@ -230,17 +242,25 @@ a {
 								#<%=category%>
 							</p>
 						</div>
+						<%
+						int announceFlag = announceList.get(i).getAnnounceFlag();
+						if (announceFlag == 1) {
+						%>
+						<div class="announce_flag">
+							<p>重要！</p>
+						</div>
+						<%
+						}
+						%>
 					</div>
-					<%
-					}
-					}
-					%>
+				<%
+				}
+				}
+				%>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 
 </body>
 </html>
