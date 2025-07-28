@@ -32,7 +32,7 @@ public class RequestDetailServlet extends HttpServlet {
 		String stType = request.getParameter("type");
 		int type = Integer.parseInt(stType);
 
-		//cmdを受け取りint型に変換する
+		//flagを受け取りint型に変換する
 		String stflag = request.getParameter("flag");
 		int flag = Integer.parseInt(stflag);
 
@@ -44,25 +44,25 @@ public class RequestDetailServlet extends HttpServlet {
 			//申請内容ごとに対応したメソッドを呼び出す
 			if (type == 0) {
 				AddressRequest addressRequest = requestDAO.selectByAddressRequestId(requestid);
-				allRequest = requestDAO.selectByRequestId(requestid);
+				allRequest = requestDAO.selectRequestInfo(requestid);
 				request.setAttribute("addressRequest", addressRequest);
 				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);
 			} else if (type == 1) {
 				NameRequest nameRequest = requestDAO.selectByNameRequestId(requestid);
-				allRequest = requestDAO.selectByRequestId(requestid);
+				allRequest = requestDAO.selectRequestInfo(requestid);
 				request.setAttribute("nameRequest", nameRequest);
 				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);
 			} else if (type == 2) {
-				WorkRequest workRequest = requestDAO.selectByWorkRequestId(requestid);
-				allRequest = requestDAO.selectByRequestId(requestid);
+				WorkRequest workRequest = requestDAO.selectWorkRequestInfo(requestid);
+				allRequest = requestDAO.selectRequestInfo(requestid);
 				request.setAttribute("workRequest", workRequest);
 				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);
 			} else if (type == 3) {
 				RequestLicenseRequestUser requestLicenseRequestUser = requestDAO.selectLicenseRequestId(requestid);
-				allRequest = requestDAO.selectByRequestId(requestid);
+				allRequest = requestDAO.selectRequestInfo(requestid);
 				request.setAttribute("requestLicenseRequestUser", requestLicenseRequestUser);
 				request.setAttribute("allRequest", allRequest);
 				request.setAttribute("flag", flag);

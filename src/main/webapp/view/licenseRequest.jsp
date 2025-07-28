@@ -224,36 +224,36 @@ a.btn--notApproved:hover {
 				<tr>
 					<td class="licensename">資格名</td>
 					<td class="name">
-						<%--<%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%>--%>
+						<%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%>
 					</td>
 				</tr>
 				<tr>
 					<td class="username">氏名</td>
 					<td class="user">
-						<%--<%=requestLicenseRequestUser.getRequest().getName()%>--%>
+						<%=requestLicenseRequestUser.getRequest().getApplicant()%>
 					</td>
 				</tr>
 				<td class="affiliationdepartment">部</td>
 				<td class="department">
-					<%--<%=requestLicenseRequestUser.getUser().getDepartment()%>--%>部
+					<%=requestLicenseRequestUser.getUser().getDepartmentId()%>部
 				</td>
 				</tr>
 				<tr>
 					<td class="affiliationteam">グループ</td>
 					<td class="team">
-						<%--<%=requestLicenseRequestUser.getUser().getTeam()%>--%>グループ
+						<%=requestLicenseRequestUser.getUser().getGroupId()%>グループ
 					</td>
 				</tr>
 				<tr>
 					<td class="licenseexamdate">受験日</td>
 					<td class="examdate">
-						<%--<%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%>--%>
+						<%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%>
 					</td>
 				</tr>
 				<tr>
 					<td class="licenseexamtime">受験回数</td>
 					<td class="examtime">
-						<%--<%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>--%>回
+						<%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>回
 					</td>
 				</tr>
 			</table>

@@ -94,8 +94,8 @@ public class RequestDAO {
 		}
 		return requestList;
 	}
-	//request_info から全てのデータを取得するメソッド
-		public  Request selectByRequestId(int requestid) {
+	//request_info からrequestidと一致したデータを取得するメソッド
+		public  Request selectRequestInfo(int requestid) {
 			
 			//変数宣言
 			Connection con = null;
@@ -145,8 +145,8 @@ public class RequestDAO {
 			}
 			return request;
 		}
-	//work_request_infoの情報を取り出すメソッド
-	public WorkRequest selectByWorkRequestId(int requestid) {
+	//work_request_infoからrequestidと一致した情報を取得するメソッド
+	public WorkRequest selectWorkRequestInfo(int requestid) {
 		//変数宣言
 		Connection con = null;
 		Statement smt = null;
@@ -194,7 +194,7 @@ public class RequestDAO {
 		}
 		return workRequest;
 	}
-	//name_request_infoの情報を取り出すメソッド
+	//name_request_infoからrequestidと一致した情報を取得するメソッド
 		public NameRequest selectByNameRequestId(int requestid) {
 			//変数宣言
 			Connection con = null;
@@ -242,7 +242,7 @@ public class RequestDAO {
 			}
 			return nameRequest;
 		}
-		//address_request_infoの情報を取り出すメソッド
+		//address_request_infoからrequestidと一致した情報を取得するメソッド
 		public AddressRequest selectByAddressRequestId(int requestid) {
 			//変数宣言
 			Connection con = null;
@@ -289,7 +289,7 @@ public class RequestDAO {
 			}
 			return addressRequest;
 		}
-		//license_request_infoの情報を取り出すメソッド
+		//
 		public RequestLicenseRequestUser selectLicenseRequestId(int requestid) {
 			//変数宣言
 			Connection con = null;
@@ -347,5 +347,59 @@ public class RequestDAO {
 			}
 			return requestLicenseRequestUser;
 		}
+		//address_request_infoからrequestidと一致した情報を取得するメソッド
+		public  ArrayList<Request>  requestSearch(String search) {
+			//変数宣言
+			Connection con = null;
+			Statement smt = null;
+
+            ArrayList<Request> requestList = new ArrayList<Request>();
+	
+			try {
+				con = getConnection();
+				smt = con.createStatement();
+                Request request = new Request();
+                
+				//SQL文
+				String sql = "SELECT * FROM address_request_info where request_id=" + requestid ;
+
+				ResultSet rs = smt.executeQuery(sql);
+				
+				while (rs.next()) {
+					
+					request.setRequestId(rs.getInt("request_id"));
+					request.setApplicantId(rs.getInt("applicant_id"));
+					request.setApproverId(rs.getInt("approver_id"));
+					request.setApplicant(rs.getString("applicant"));
+					request.setApprover(rs.getString("approver"));
+					request.setRequestDate(rs.getTimestamp("request_date"));
+					request.setApprovalDate(rs.getTimestamp("approval_date"));
+					request.setRequestTypeFlag(rs.getInt("request_type_flag"));
+					request.setRequestFlag(rs.getInt("request_flag"));
+					
+					requestList.add(request);	
+
+				}
+
+			} catch (Exception e) {
+				throw new IllegalStateException(e);
+			} finally {
+				//リソースの開放
+				if (smt != null) {
+					try {
+						smt.close();
+					} catch (SQLException ignore) {
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException ignore) {
+					}
+				}
+			}
+			return requestList;
+		}
+		
 
 }

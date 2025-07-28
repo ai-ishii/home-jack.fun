@@ -360,9 +360,9 @@ a.btn--notApproved:hover {
 
 			<h1 style="text-align: center">-申請一覧-</h1>
 			<tr>
-				<form id="form1" action="requestSearch">
-					<input id="sbox1" name="search" type="text"
-						placeholder="申請者名やIDで検索" /> <select name="sort" id="sort">
+				<form id="form1" action="<%= request.getContextPath() %>/requestSearch" method"="get">
+					<input id="sbox1" name="search" type="text" placeholder="申請者名やIDで検索" /> 
+						<select name="sort" id="sort">
 						<option value="default">すべての内容</option>
 						<option value="changeAddress">住所変更</option>
 						<option value="changeName">氏名変更</option>
@@ -370,7 +370,8 @@ a.btn--notApproved:hover {
 						<option value="licenseRequest">資格申請</option>
 						<option value="notApproved">承認待ち</option>
 						<option value="approved">承認済み</option>
-					</select> <input id="sbtn1" type="submit" value="検索" />
+					</select> 
+					<input id="sbtn1" type="submit" value="検索" />
 				</form>
 
 				<table class="list">
@@ -395,11 +396,11 @@ a.btn--notApproved:hover {
 
 					<tr class="row-hover">
 						<td class="requestid"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestId()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%=requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getRequestId()%></td>
 						<td class="userid"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getApplicantId()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%=requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getApplicantId()%></td>
 						<td class="applicant"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>>"><%=requestList.get(i).getApplicant()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%=requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getApplicant()%></td>
 						<%
 						if (requestList.get(i).getRequestTypeFlag() == 0) {
 						%>
@@ -424,7 +425,7 @@ a.btn--notApproved:hover {
 						}
 						%>
 						<td class="time"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestDate()%></td>
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>&flag=<%=requestList.get(i).getRequestFlag()%>"><%=requestList.get(i).getRequestDate()%></td>
 						<%
 						if (requestList.get(i).getRequestFlag() == 0) {
 						%>
@@ -478,9 +479,9 @@ a.btn--notApproved:hover {
 						"DOMContentLoaded",
 
 						function() {
-							// class="requestid,userid,name,time,request" がついてる td を全部探す
+							// class="requestid,userid,applicant,time,request" がついてる td を全部探す
 							const linkCells = document
-									.querySelectorAll(".requestid, .userid, .name, .time, .request");
+									.querySelectorAll(".requestid, .userid, .applicant, .time, .request");
 
 							// それぞれの td にクリックしたときの処理を追加
 							linkCells.forEach(function(cell) {
