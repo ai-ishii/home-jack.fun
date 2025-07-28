@@ -25,13 +25,13 @@ Request Allrequest = new Request();
 h1 {
 	padding: 30px 0;
 	display: block;
-    font-size: 2.5em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
+	font-size: 2.5em;
+	margin-block-start: 0.67em;
+	margin-block-end: 0.67em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	font-weight: bold;
+	unicode-bidi: isolate;
 }
 
 .list {
@@ -49,15 +49,15 @@ h1 {
 }
 
 .userid {
-	width: 10%;
+	width: 6%;
 }
 
-.name {
+.applicant {
 	width: 15%;
 }
 
 .requestid {
-	width: 10%;
+	width: 6%;
 }
 
 .request {
@@ -75,6 +75,11 @@ h1 {
 
 .request_flag {
 	width: 7%;
+	text-align: center;
+}
+
+.approver {
+	width: 8%;
 	text-align: center;
 }
 
@@ -373,11 +378,12 @@ a.btn--notApproved:hover {
 						<tr>
 							<th class="requestid">申請ID</th>
 							<th class="userid">申請者ID</th>
-							<th class="name">氏名</th>
+							<th class="applicant">申請者名</th>
 							<th class="request">申請内容</th>
-							<th class="time">申請日時</th>
+							<th class="approvaltime">承認日時</th>
 							<th class="approval">承認</th>
 							<th class="request_flag">申請状況</th>
+							<th class="approver">承認者名</th>
 							<th class="delete">取り消し</th>
 						</tr>
 					</thead>
@@ -392,8 +398,8 @@ a.btn--notApproved:hover {
 							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestId()%></td>
 						<td class="userid"
 							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getApplicantId()%></td>
-						<td class="name"
-							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getName()%></td>
+						<td class="applicant"
+							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getApplicant()%></td>
 						<%
 						if (requestList.get(i).getRequestTypeFlag() == 0) {
 						%>
@@ -419,6 +425,7 @@ a.btn--notApproved:hover {
 						%>
 						<td class="time"
 							data-href="<%=request.getContextPath()%>/requestDetail?request_id=<%=requestList.get(i).getRequestId()%>&type=<%=requestList.get(i).getRequestTypeFlag()%>"><%=requestList.get(i).getRequestDate()%></td>
+
 						<%
 						if (requestList.get(i).getRequestFlag() == 0) {
 						%>
@@ -437,6 +444,15 @@ a.btn--notApproved:hover {
 						} else if (requestList.get(i).getRequestFlag() == 1) {
 						%>
 						<td class="request_flag">承認済み</td>
+						<% 
+						}
+						if(requestList.get(i).getRequestFlag() == 1){
+						%>
+						<td class="approver"><%=requestList.get(i).getApprover()%></td>
+						<%
+                        } else if (requestList.get(i).getRequestFlag() == 0) {
+                        %>
+						<td class="approver">――</td>
 						<%
 						}
 						%>
@@ -450,7 +466,10 @@ a.btn--notApproved:hover {
 
 
 				</table>
-				<br><br><br><br>
+				<br>
+				<br>
+				<br>
+				<br>
 		</div>
 	</div>
 	<script>
