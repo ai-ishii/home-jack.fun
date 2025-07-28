@@ -31,12 +31,11 @@ public class AnnounceSearchServlet extends HttpServlet {
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
 		LocalDateTime localDateTimeStart = null;
 		LocalDateTime localDateTimeEnd = null;
-		
+
 		// 時系列検索の際の初期値
 		LocalDateTime defaultStart = LocalDateTime.of(2012, Month.APRIL, 17, 0, 0, 0);
 		Timestamp startDate = Timestamp.valueOf(defaultStart);
 		Timestamp endDate = new Timestamp(System.currentTimeMillis());
-		
 
 		// フォームから送信した検索方法をを受け取る
 		cmd = request.getParameter("cmd");
@@ -51,7 +50,7 @@ public class AnnounceSearchServlet extends HttpServlet {
 			if (cmd.equals("filter")) {
 				String announceFlag = request.getParameter("announceFlag");
 				String categoryId = request.getParameter("categoryId");
-				
+
 				String start = request.getParameter("startDate");
 				String end = request.getParameter("endDate");
 
@@ -74,7 +73,7 @@ public class AnnounceSearchServlet extends HttpServlet {
 					Instant instantEnd = zonedDateTimeEnd.toInstant();
 					endDate = Timestamp.from(instantEnd);
 				}
-				
+
 				announceList = announceDAO.selectByFilter(announceFlag, categoryId, startDate, endDate);
 
 			}
@@ -89,15 +88,8 @@ public class AnnounceSearchServlet extends HttpServlet {
 				request.getRequestDispatcher("").forward(request, response);
 			}
 
-			if (cmd.equals("keyword")) {
-				request.setAttribute("announceList", announceList);
-				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
-			} else if (cmd.equals("filter")) {
-				request.setAttribute("announceList", announceList);
-				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
-			}
-			
-			
+			request.setAttribute("announceList", announceList);
+			request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
 		}
 	}
 
