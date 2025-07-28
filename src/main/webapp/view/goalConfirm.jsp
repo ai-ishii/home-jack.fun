@@ -32,6 +32,7 @@ if (teamGoal != null) {
 
 //goalの値がnullでなければ
 if (goal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
@@ -107,7 +108,7 @@ if (goal != null) {
 }
 
 .goalpadding {
-	padding: 20px 50px 20px;
+	padding: 20px 50px 10px;
 	text-align: left;
 }
 
@@ -388,9 +389,9 @@ body {
 										<div style="width: 80%; margin: 0 auto;">
 											<div class="flex">
 												<textarea readonly class="details-content"
-													name="achieve_rate" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
-												<textarea readonly class="details-content" name="report"
-													rows="10" style="flex: 3"><%=quarterGoalList.get(i).getReport()%></textarea>
+													name="achieve_rate_reviewer" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRateReviewer()%></textarea>
+												<textarea readonly class="details-content" name="evaluation"
+													rows="10" style="flex: 3"><%=quarterGoalList.get(i).getEvaluation()%></textarea>
 											</div>
 										</div>
 									</div>

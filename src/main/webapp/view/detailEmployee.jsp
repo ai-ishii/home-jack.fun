@@ -1,10 +1,12 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="java.util.Arrays, java.util.ArrayList, util.MyFormat, bean.Employee, bean.User, dao.EmployeeDAO"%>
+	import="java.util.Arrays, java.util.ArrayList, util.MyFormat, util.Common, bean.Employee, bean.User, dao.EmployeeDAO"%>
 
 <%
+// オブジェクトの生成
 EmployeeDAO employeeDAO = new EmployeeDAO();
+Common common = new Common();
 
 //サーブレットから送られてきた情報を取得
 Employee employee = (Employee) request.getAttribute("Employee");
@@ -39,6 +41,9 @@ for (int i = 0; i < userListBySameBelong.size(); i++) {
 for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 	sameJoinTiming_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameJoiningDate.get(i).getUserId());
 }
+
+String department = common.selectDepartment(user.getDepartmentId());
+String group = common.selectGroup(user.getGroupId());
 %>
 
 <html>
@@ -60,13 +65,13 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 	z-index: 10;
 }
 
-#buttonList {
+#detailEmployee #buttonList {
 	margin-top: 30px;
 	margin-right: 30px;
 	text-align: right;
 }
 
-#mainEmployee {
+#detailEmployee #mainEmployee {
 	margin-top: 50px;
 	margin-right: auto;
 	margin-bottom: 50px;
@@ -74,16 +79,16 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 	width: 80%;
 }
 
-#employee_imgArea {
+#detailEmployee #employee_imgArea {
 	width: 40%;
 }
 
-#employee_infoArea {
+#detailEmployee #employee_infoArea {
 	width: 40%;
 }
 
 /* メインで出す社員画像（img）*/
-#employee_img {
+#detailEmployee #employee_img {
 	margin-top: auto;
 	margin-right: 30px;
 	margin-bottom: auto;
@@ -93,7 +98,7 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 	object-fit: none;
 }
 
-#belong_img, #joinTiming_img {
+#detailEmployee #belong_img, #joinTiming_img {
 	width: 220px;
 	height: 300px;
 	/*	縦横比を固定する*/
@@ -101,30 +106,37 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 }
 
 /* 社員情報をまとめた領域（div）*/
-#employee_info {
+#detailEmployee #employee_info {
 	margin-left: 10px;
-	width: 500px;
+	width: 600px;
 	text-align: left;
 }
 
 /* メインで出す社員名（p）*/
-#detailEmployee_name {
+#detailEmployee #detailEmployee_name {
 	margin: 0;
 	margin-right: 20px;
 	font-size: 80px;
 }
 
 /*社員名と社員名フリガナを横並びにする*/
-#detailEmployee_name, #detailEmployee_kana {
+#detailEmployee #detailEmployee_name, #detailEmployee_kana {
 	display: inline-block;
 }
 
 /*社員所属と社員入社年を横並びにする*/
-#detailEmployee_belong, #detailEmployee_joinTiming {
+#detailEmployee #detailEmployee_belong, #detailEmployee_joinTiming {
 	line-height: 0.8;
 }
 
-#intro_area {
+/* 入社年月の下に線*/
+#detailEmployee #detailEmployee_joinTiming+p {
+	padding-top: 10px;
+	margin: 0;
+	border-top: solid 1px gray;
+}
+
+#detailEmployee #intro_area {
 	padding: 10px 30px;
 	margin-right: auto;
 	margin-bottom: 120px;
@@ -138,62 +150,57 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 }
 
 /* 社員候補エリア（div）*/
-#imgSlider_area {
-	margin-top: 30px;
+#detailEmployee #imgSlider_area {
 	margin-right: auto;
+	margin-bottom: 100px;
 	margin-left: auto;
 	width: 80%;
 }
 
-/* 社員候補のタイトル（div）*/
-#belong_title, #joinTiming_title {
+/* 社員候補のタイトル（div）*/	/*タイトルを2つのidにまとめる必要ないかも*/
+#detailEmployee #belong_title, #joinTiming_title {
 	margin-bottom: 30px;
 	text-align: left;
 	font-size: 30px;
 	font-weight: 500;
 }
 
-/* 入社年月の下に線*/
-#detailEmployee_joinTiming+p {
-	padding-top: 10px;
-	margin: 0;
-	border-top: solid 1px gray;
-}
-
 /* 画像スライダー（div）*/
-#img_slider {
-	position: relative;
-	height: 20%;
+#detailEmployee #img_slider {
+	display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-a {
+#detailEmployee a {
 	text-decoration: none;
 }
 
-/* 画像スライダーの中の社員1人分の画像&情報（div）*/
-#employee_card {
+#detailEmployee #belong_link, #joinTiming_link {
 	display: inline-block;
-	margin-right: 25px;
-	margin-left: 25px;
-	width: 20%;
-	height: 200px;
+	height: 300px;
+}
+
+/* 画像スライダーの中の社員1人分の画像&情報（div）*/
+#detailEmployee #employee_card {
+	display: inline-block;
+	margin: 5px;
+	height: 100%;
 	/*	大きさが変わるときのスピード*/
 	transition: 0.3s;
 }
 
-#employee_card:hover {
+#detailEmployee #employee_card:hover {
 	/*	どれくらい大きくなるか*/
 	transform: scale(1.1);
 }
 
 /* 社員名（p）*/
-#employee_name {
+#detailEmployee #employee_name {
 	/*	画像の上に文字を重ねるため*/
 	position: relative;
 	top: -90px;
 	margin: 0;
-	width: 220px;
-	background-color: rgba(255, 255, 255, 0.8);
 	color: black;
 	font-size: 30px;
 	font-weight: 500;
@@ -201,39 +208,39 @@ a {
 }
 
 /* 社員情報（p）*/
-#employee_detail {
+#detailEmployee #employee_detail {
 	/*	画像の上に文字を重ねるため*/
 	position: relative;
 	top: -90px;
 	margin: 0;
-	width: 220px;
-	background-color: rgba(255, 255, 255, 0.8);
 	color: black;
+	font-size: 15px;
 	cursor: pointer;
 }
 
 /* 社員1人分の名前と所属と入社年月（p）*/
-#employee_name, #employee_detail {
+#detailEmployee #employee_name, #employee_detail {
 	width: 220px;
 	background-color: rgba(255, 255, 255, 0.8);
 }
 
 /* 画像をスライダーさせるボタン（button）*/
-#img_slider button {
-	position: absolute;
-	top: 40%;
-	width: 10%;
+#detailEmployee #img_slider button {
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
 }
 
 /*左ボタン（button）*/
-#prev {
-	left: 30px;
+#detailEmployee #prev {
+	margin-right: 20px;
 }
 
 /*右ボタン（button）*/
-#next {
-	right: -15px;
+#detailEmployee #next {
+	margin-left: 20px;
 }
+
 </style>
 
 <body>
@@ -274,7 +281,7 @@ a {
 								<p id="detailEmployee_name"><%=user.getName()%></p>
 								<p id="detailEmployee_kana"><%=user.getNameKana()%></p>
 								<p id="detailEmployee_belong">
-									第<%=user.getDepartment()%>事業部 第<%=user.getTeam()%>グループ
+									<%= department %> <%= group %>
 								</p>
 								<p id="detailEmployee_joinTiming"><%=joiningDate%>入社
 								</p>
@@ -313,7 +320,7 @@ a {
 				<!-- 社員候補リスト（同じ所属） -->
 				<div id="imgSlider_area">
 					<div id="belong_title">
-						第<%=user.getDepartment()%>事業部 第<%=user.getTeam()%>グループ
+						<%= department %> <%= group %>
 					</div>
 					<div id="img_slider">
 						<button id="prev">◀</button>
@@ -321,6 +328,8 @@ a {
 						<%
 						if (userListBySameBelong != null) {
 							for (int i = 0; i < 3; i++) {
+								department = common.selectDepartment(user.getDepartmentId());
+								group = common.selectGroup(user.getGroupId());
 						%>
 						<a id="belong_link" href="detailEmployee?userId=<%= userListBySameBelong.get(i).getUserId() %>">
 							<div id="employee_card">
@@ -328,7 +337,7 @@ a {
 									src="<%=request.getContextPath()%>/img/<%=sameBelong_imgList[i]%>" alt="社員画像">
 								<p id="employee_name" class="sameBelong_employeeName"><%=userListBySameBelong.get(i).getName()%></p>
 								<p id="employee_detail">
-									第<%=userListBySameBelong.get(i).getDepartment()%>事業部 第<%=userListBySameBelong.get(i).getTeam()%>グループ
+									<%= department %> <%= group %>
 								</p>
 								<p id="employee_detail" class="employee_joinTiming"><%=joiningDatesBySameBelong[i]%>入社
 								</p>
@@ -360,7 +369,7 @@ a {
 									src="<%=request.getContextPath()%>/img/<%=sameJoinTiming_imgList[i]%>" alt="社員画像">
 								<p id="employee_name" class="sameJoinTiming_employeeName"><%=userListBySameJoiningDate.get(i).getName()%></p>
 								<p id="employee_detail" class="employee_belong">
-									第<%=userListBySameJoiningDate.get(i).getDepartment()%>事業部 第<%=userListBySameJoiningDate.get(i).getTeam()%>グループ
+									第<%=userListBySameJoiningDate.get(i).getDepartmentId()%>事業部 第<%=userListBySameJoiningDate.get(i).getGroupId()%>グループ
 								</p>
 								<p id="employee_detail"><%=joiningDatesBySameJoin[i]%>入社
 								</p>
@@ -447,19 +456,19 @@ a {
 	String joiningDateList = Arrays.toString(arrayJoiningDateList);	// 配列を文字列に変換して受け渡す
 
 	// -------------部・グループ（部）---------------
-	String departmentListElement = "";	// リストを一つ一つ代入するための変数
-	String[] arrayDepartmentList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	int departmentListElement = 0;	// リストを一つ一つ代入するための変数
+	int[] arrayDepartmentList = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
 	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
-		departmentListElement = userListBySameJoiningDate.get(i).getDepartment();	// 値を一つ一つ取ってきて代入していく
+		departmentListElement = userListBySameJoiningDate.get(i).getDepartmentId();	// 値を一つ一つ取ってきて代入していく
 		arrayDepartmentList[i] = departmentListElement;		// 代入された値を配列に入れていく
 	}
 	String departmentList = Arrays.toString(arrayDepartmentList);	// 配列を文字列に変換して受け渡す
 
 	// -------------部・グループ（グループ）---------------
-	String teamListElement = "";	// リストを一つ一つ代入するための変数
-	String[] arrayTeamList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
+	int teamListElement = 0;	// リストを一つ一つ代入するための変数
+	int[] arrayTeamList = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
 	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
-		teamListElement = userListBySameJoiningDate.get(i).getTeam();	// 値を一つ一つ取ってきて代入していく
+		teamListElement = userListBySameJoiningDate.get(i).getGroupId();	// 値を一つ一つ取ってきて代入していく
 		arrayTeamList[i] = teamListElement;		// 代入された値を配列に入れていく
 	}
 	String teamList = Arrays.toString(arrayTeamList);	// 配列を文字列に変換して受け渡す

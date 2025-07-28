@@ -291,8 +291,8 @@ public class UserDAO {
 				user.setTransportation(rs.getString("transportation"));
 				user.setSex(rs.getString("sex"));
 				user.setEmployeeNumber(rs.getString("employee_number"));
-				user.setDepartmentId(rs.getInt("department"));
-				user.setGroupId(rs.getInt("team"));
+				user.setDepartmentId(rs.getInt("department_id"));
+				user.setGroupId(rs.getInt("group_id"));
 				user.setJoiningDate(rs.getTimestamp("joining_date"));
 				user.setWorkHistory(rs.getInt("work_history"));
 				user.setMarriageFlag(rs.getInt("marriage_flag"));
@@ -409,7 +409,7 @@ public class UserDAO {
 	 * @return ArrayList<User>
 	 * @throws IllegalStateException メソッド内部で例外が発生した場合
 	 */
-	public ArrayList<User> selectByDepartmentTeam(String department, String team) {
+	public ArrayList<User> selectByDepartmentGroup(int departmentId, int groupId) {
 		Connection con = null;
 		Statement smt = null;
 		
@@ -418,8 +418,8 @@ public class UserDAO {
 		
 		//SQL文の作成
 		String sql = "SELECT * FROM user_info "
-				+ "WHERE department = '" + department
-				+ "' AND team = '" + team + "';";
+				+ "WHERE department_id = " + departmentId
+				+ " AND group_id = " + groupId + ";";
 		
 		try {
 			// データベース接続

@@ -18,7 +18,16 @@
 */
 
 .login {
-	margin: 20px;
+	margin: 20px auto;
+	padding: 50px 0;
+	min-width:600px;
+	width: 50%;
+	height: 200px;
+	border-radius: 20px;
+	background-color: #ffffff;
+	box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2);
 	text-align: center;
 }
 
