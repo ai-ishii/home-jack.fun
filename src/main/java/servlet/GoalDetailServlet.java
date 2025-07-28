@@ -37,8 +37,8 @@ public class GoalDetailServlet extends HttpServlet {
 		ArrayList<QuarterGoal> quarterGoalList = new ArrayList<QuarterGoal>();
 
 		try {
-			//セッション登録がまだなため、仮で登録
-			strUserId = "5";
+			//セッション登録がまだなため、仮で登録してます
+			strUserId = "4";
 
 			//userIdをStringからintへキャスト
 			int userId = Integer.parseInt(strUserId);
