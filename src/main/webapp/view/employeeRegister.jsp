@@ -68,7 +68,7 @@ input[type="date"], input[type="month"] {
 }
 
 select {
-	width: 50px;
+	width: 300px;
 	height: 40px;
 	font-size: large;
 }
@@ -169,22 +169,22 @@ a {
 					 <label for="belong">所属</label>
 					</td>
 					<td id="value">
-						第
 						<select name="department">
-							<option value=""></option>
-							<option value="1">1</option>
-							<option value="2">2</option>
+							<option value="" selected disabled></option>
+							<option value="1">ビジネスソリューション第1部</option>
+							<option value="2">ビジネスソリューション第2部</option>
+							<option value="99">営業部</option>
+							<option value="100">NEXTINOVATION</option>
+							<option value="101">経営管理部</option>
+						</select>&nbsp;
+						<select name="group">
+							<option value="" selected disabled></option>
+							<option value="0">／</option>
+							<option value="1">第1グループ</option>
+							<option value="2">第2グループ</option>
+							<option value="3">第3グループ</option>
+							<option value="4">第4グループ</option>
 						</select>
-						事業部　
-						第
-						<select name="team">
-							<option value=""></option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-						</select>
-						グループ
 					</td>
 				</tr>
 				<tr id="inputRow">
