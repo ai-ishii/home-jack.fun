@@ -49,9 +49,6 @@ public class LoginServlet extends HttpServlet {
 		//DTO宣言
 		Account account = new Account();
 		
-		String error = "";
-		String cmd = "";
-		
 		int userId = -1;
 		String name = "";
 
@@ -89,34 +86,26 @@ public class LoginServlet extends HttpServlet {
 				//名前の取得
 				name = (String)payload.get("name");
 				
-			} else {
-				error = "アカウントが認証できませんでした";
-				cmd = "login";
-				//ステータスコード(404とか)の取得
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				//リダイレクト先の設定
-				String jsonResponse = "{\"success\": false, \"redirectUrl\": \"view/error.jsp\"}";
-				response.getWriter().write(jsonResponse);
-			}
-		} catch (Exception e) {
-			error = "接続エラーです";
-			cmd = "login";
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			String jsonResponse = "{\"success\": false, \"redirectUrl\": \"view/error.jsp\"}";
-			response.getWriter().write(jsonResponse);
-			e.printStackTrace();
-
-		} finally {
-			if (!error.equals("")) {			// エラーがない場合 homeにフォワード
-				//セッション登録
 				session.setAttribute("account", account);
 				session.setAttribute("user_id", userId);
 				session.setAttribute("user_name", name);
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";
 				response.getWriter().write(jsonResponse);
+				
+			} else {
+				request.setAttribute("error", "アカウントが認証できませんでした");
+				request.setAttribute("cmd", "login");
+				//ステータスコード(404とか)の取得
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				//リダイレクト先の設定
+				String jsonResponse = "{\"success\": false, \"error\": \"アカウントが認証できませんでした。\nもう一度やり直してください！\"}";
+				response.getWriter().write(jsonResponse);
 			}
-		}
-		
-	}
+		} catch (Exception e) {
+			String jsonResponse = "{\"success\": false, \"error\": \"接続エラーです。\nもう一度やり直してください！\"}";
+			response.getWriter().write(jsonResponse);
+			e.printStackTrace();
 
+		}
+	}
 }
