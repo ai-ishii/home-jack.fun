@@ -151,7 +151,7 @@ a:hover {
 							<h1>社員紹介</h1>
 						</td>
 						<td style="width: 20%;"><a
-							href="<%=request.getContextPath()%>/view/employeeRegister.jsp">
+							href="<%=request.getContextPath()%>/view/employeeRegister.jsp?cmd=register">
 								<input type="submit" value="登録"
 								style="width: 80px; height: 50px; font-size: large;">
 						</a></td>
