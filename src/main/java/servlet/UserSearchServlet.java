@@ -22,7 +22,7 @@ public class UserSearchServlet extends HttpServlet {
 
 		try {
 			// パラメータの取得
-			
+			String keyword = (String)request.getParameter("keyword");
 
 			// DAOオブジェクトの宣言
 			UserDAO userDAO = new UserDAO();

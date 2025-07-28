@@ -339,8 +339,8 @@ public class UserDAO {
 		
 		//SQL文の作成
 		String sql = "SELECT isbn,title,price FROM user_info " +
-				"WHERE employee_number LIKE '%" + input + "%'"
-				+ " OR name LIKE '%" + input + "%'";
+				"WHERE employee_number = '" + input + "'"
+				+ " OR name = '" + input + "'";
 		
 		try {
 			//DB接続

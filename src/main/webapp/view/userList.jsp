@@ -24,7 +24,7 @@ ArrayList<User> list = (ArrayList<User>) request.getAttribute("user_List");
 </head>
 <style>
 
-#info {
+.info {
 	margin: auto;
 	text-aline: center;
 	width: 70%;
@@ -192,11 +192,12 @@ a.btn--delete:hover {
 	overflow: hidden;
 	border-radius: 25px;
 	background-color: #feffe0;
+	margin: 0;
 }
 
 .search-form input {
 	height: 45px;
-	padding: 5px 15px;
+	padding: 5px;
 	border: none;
 	box-sizing: border-box;
 	background-color: #feffe0;
@@ -226,6 +227,14 @@ a.btn--delete:hover {
 		url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%23d9811c%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E');
 	background-repeat: no-repeat;
 	content: '';
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    /* 背景色を元の色に戻す */
+	-webkit-box-shadow: 0 0 0px 1000px #feffe0 inset !important;
 }
 
 .mar {
@@ -379,12 +388,12 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 
 	<br>
-	<table id="info">
+	<table class="info">
 	<tr>
 	<td class="search-box">
 	<!-- 検索を行うフォーム -->
 	<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
-	<label><input type="text" name="name" placeholder="キーワードを入力"></label>
+	<label><input type="text" name="keyword" placeholder="キーワードを入力"></label>
 	<button type="submit" aria-label="検索"></button>
 	</form>
 	</td>
@@ -393,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	</thead>
 	</table>
 	
-	<table>
+	<table class="info">
 		 <thead style="margin:0 auto">
 		<tr>
 			<th scope="col">【 社員番号 】</th>
@@ -412,7 +421,7 @@ if (list != null) {
 
 		<tr class="user-link" data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>">
 			<td class="box-user" data-label="社員番号">
-			<a class= "content" ><%=user.getEmployeeNumber() %></a>
+			<%=user.getEmployeeNumber() %>
 			</td>
 			<td class="box-user" data-label="名前">
 			<%=user.getName() %>
@@ -423,7 +432,7 @@ if (list != null) {
 			<td>
 			<div style="text-align: center">
 			<a href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>&cmd=delete" 
-				onclick="return confirm('本当に削除しますか?')" class="btn btn--delete">削除</a>
+				class="btn btn--delete">削除</a>
 			</div>
 			</td>
 		</tr>
