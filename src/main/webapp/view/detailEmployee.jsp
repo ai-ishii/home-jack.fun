@@ -274,7 +274,7 @@ a {
 								<p id="detailEmployee_name"><%=user.getName()%></p>
 								<p id="detailEmployee_kana"><%=user.getNameKana()%></p>
 								<p id="detailEmployee_belong">
-									第<%=user.getDepartment()%>事業部 第<%=user.getTeam()%>グループ
+									第<%=user.getDepartmentId()%>事業部 第<%=user.getGroupId()%>グループ
 								</p>
 								<p id="detailEmployee_joinTiming"><%=joiningDate%>入社
 								</p>
@@ -313,7 +313,7 @@ a {
 				<!-- 社員候補リスト（同じ所属） -->
 				<div id="imgSlider_area">
 					<div id="belong_title">
-						第<%=user.getDepartment()%>事業部 第<%=user.getTeam()%>グループ
+						第<%=user.getDepartmentId()%>事業部 第<%=user.getGroupId()%>グループ
 					</div>
 					<div id="img_slider">
 						<button id="prev">◀</button>
@@ -328,7 +328,7 @@ a {
 									src="<%=request.getContextPath()%>/img/<%=sameBelong_imgList[i]%>" alt="社員画像">
 								<p id="employee_name" class="sameBelong_employeeName"><%=userListBySameBelong.get(i).getName()%></p>
 								<p id="employee_detail">
-									第<%=userListBySameBelong.get(i).getDepartment()%>事業部 第<%=userListBySameBelong.get(i).getTeam()%>グループ
+									第<%=userListBySameBelong.get(i).getDepartmentId()%>事業部 第<%=userListBySameBelong.get(i).getGroupId()%>グループ
 								</p>
 								<p id="employee_detail" class="employee_joinTiming"><%=joiningDatesBySameBelong[i]%>入社
 								</p>
@@ -360,7 +360,7 @@ a {
 									src="<%=request.getContextPath()%>/img/<%=sameJoinTiming_imgList[i]%>" alt="社員画像">
 								<p id="employee_name" class="sameJoinTiming_employeeName"><%=userListBySameJoiningDate.get(i).getName()%></p>
 								<p id="employee_detail" class="employee_belong">
-									第<%=userListBySameJoiningDate.get(i).getDepartment()%>事業部 第<%=userListBySameJoiningDate.get(i).getTeam()%>グループ
+									第<%=userListBySameJoiningDate.get(i).getDepartmentId()%>事業部 第<%=userListBySameJoiningDate.get(i).getGroupId()%>グループ
 								</p>
 								<p id="employee_detail"><%=joiningDatesBySameJoin[i]%>入社
 								</p>
@@ -447,19 +447,19 @@ a {
 	String joiningDateList = Arrays.toString(arrayJoiningDateList);	// 配列を文字列に変換して受け渡す
 
 	// -------------部・グループ（部）---------------
-	String departmentListElement = "";	// リストを一つ一つ代入するための変数
+	int departmentListElement = "";	// リストを一つ一つ代入するための変数
 	String[] arrayDepartmentList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
 	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
-		departmentListElement = userListBySameJoiningDate.get(i).getDepartment();	// 値を一つ一つ取ってきて代入していく
+		departmentListElement = userListBySameJoiningDate.get(i).getDepartmentId();	// 値を一つ一つ取ってきて代入していく
 		arrayDepartmentList[i] = departmentListElement;		// 代入された値を配列に入れていく
 	}
 	String departmentList = Arrays.toString(arrayDepartmentList);	// 配列を文字列に変換して受け渡す
 
 	// -------------部・グループ（グループ）---------------
-	String teamListElement = "";	// リストを一つ一つ代入するための変数
+	int teamListElement = "";	// リストを一つ一つ代入するための変数
 	String[] arrayTeamList = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
 	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
-		teamListElement = userListBySameJoiningDate.get(i).getTeam();	// 値を一つ一つ取ってきて代入していく
+		teamListElement = userListBySameJoiningDate.get(i).getGroupId();	// 値を一つ一つ取ってきて代入していく
 		arrayTeamList[i] = teamListElement;		// 代入された値を配列に入れていく
 	}
 	String teamList = Arrays.toString(arrayTeamList);	// 配列を文字列に変換して受け渡す

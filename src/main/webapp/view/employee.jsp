@@ -165,7 +165,7 @@ a:hover {
 									alt="社員画像">
 								<p id="employee_name"><%=userList.get(i).getName()%></p>
 								<p id="employee_detail">
-									第<%=userList.get(i).getDepartment()%>事業部 第<%=userList.get(i).getTeam()%>グループ
+									第<%=userList.get(i).getDepartmentId()%>事業部 第<%=userList.get(i).getGroupId()%>グループ
 								</p>
 								<p id="employee_detail"><%=joiningDates[i]%>入社
 								</p>
