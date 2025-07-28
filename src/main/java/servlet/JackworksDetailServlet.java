@@ -1,25 +1,26 @@
 /**
- * 今月のJackWorks機能
+ * JackWorks詳細機能
  * 
  * 作成者：青木美波
  * 
- * 作成日 2025/06/19
+ * 作成日 2025/07/08
  */
 
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-import bean.Monthjack;
-import dao.MonthJackDAO;
+import bean.Jackworks;
+import dao.JackworksDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/monthJackWorks")
-public class MonthJackWorksServlet extends HttpServlet {
+@WebServlet("/jackworksDetail")
+public class JackworksDetailServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
@@ -27,21 +28,25 @@ public class MonthJackWorksServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = null;
 		// 遷移先のパス
-		String path = "/jackWorks";
+		String path = "/view/jackworksDetail.jsp";
 
 		//オブジェクト生成
-		MonthJackDAO monthJackDAO = new MonthJackDAO();
+		JackworksDAO jackworksDAO = new JackworksDAO();
+		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
+			
+			//JackWorksのJackWorksIDを取得する
+			String jackworksId = request.getParameter("jackworksId");
 
-			//JackWorksの全情報を取得するメソッド
-			Monthjack monthJack = monthJackDAO.selectAll();
-
+			//取得したJackWorksの情報詳細を表示するメソッド
+			jackList=jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
+			
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
-			request.setAttribute("monthJack", monthJack);
+			request.setAttribute("jack_list", jackList);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、今月のJackWorksは表示できませんでした。";
+			error = "DB接続エラーのため、JackWorksは表示できませんでした。";
 			cmd = "home";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
@@ -59,5 +64,4 @@ public class MonthJackWorksServlet extends HttpServlet {
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
-
 }
