@@ -3,7 +3,7 @@ package util;
 import java.util.ArrayList;
 
 // テーブルを使用せずにデータを取得するメソッドまとめ
-public class Common {
+public class CommonTable {
 	
 	// 部を取得するメソッド
 	public String selectDepartment(int departmentId) {

@@ -7,8 +7,9 @@
 
 <%
 // cmdを取得
-//String cmd = (String)request.getAttribute("cmd");
-String cmd = "confirm";
+String cmd = (String)request.getAttribute("cmd");
+System.out.print(cmd);
+//String cmd = "confirm";
 
 // 変数宣言
 String photo = "";
