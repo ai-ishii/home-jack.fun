@@ -3,7 +3,8 @@
 
 package util;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 // テーブルを使用せずにデータを取得するメソッドまとめ
 public class CommonTable {
@@ -11,75 +12,45 @@ public class CommonTable {
 	// 部を取得するメソッド
 	public String selectDepartment(int departmentId) {
 		
-		// 部のデータ一覧
-		ArrayList<String> departmentList = new ArrayList<String>();
-		departmentList.add("ビジネスソリューション第1部");
-		departmentList.add("ビジネスソリューション第2部");
-		departmentList.add("営業部");
-		departmentList.add("NEXTINOVATION");
-		departmentList.add("経営管理部");
-
-		// 取得した部のデータを返すための変数
-		String department = "";
+		Map<Integer, String> map = new HashMap<>();
 		
-		switch(departmentId) {
-		case 1: 
-			department = departmentList.get(0);
-			break;
-		case 2: 
-			department = departmentList.get(1);
-			break;
-		case 99: 
-			department = departmentList.get(2);
-			break;
-		case 100: 
-			department = departmentList.get(3);
-			break;
-		case 101: 
-			department = departmentList.get(4);
-			break;
-//		default:	ここにエラー処理を書いたらいいのかもしれない
-		}
+		map.put(1, "ビジネスソリューション第1部");
+		map.put(2, "ビジネスソリューション第2部");
+		map.put(100, "営業部");
+		map.put(200, "NEXTINOVATION");
+		map.put(300, "経営管理部");
 		
-		return department;
+		return map.get(departmentId);
 		
 	}
 	
 	// グループを取得するメソッド
 	public String selectGroup(int groupId) {
 		
-		// 部のデータ一覧
-		ArrayList<String> groupList = new ArrayList<String>();
-		groupList.add("／");
-		groupList.add("第1グループ");
-		groupList.add("第2グループ");
-		groupList.add("第3グループ");
-		groupList.add("第4グループ");
+		Map<Integer, String> map = new HashMap<>();
 		
-		// 取得した部のデータを返すための変数
-		String group = "";
+		map.put(0, "／");
+		map.put(1, "第1グループ");
+		map.put(2, "第2グループ");
+		map.put(3, "第3グループ");
+		map.put(4, "第4グループ");
 		
-		switch(groupId) {
-		case 0: 
-			group = groupList.get(0);
-			break;
-		case 1: 
-			group = groupList.get(1);
-			break;
-		case 2: 
-			group = groupList.get(2);
-			break;
-		case 3: 
-			group = groupList.get(3);
-			break;
-		case 4: 
-			group = groupList.get(4);
-			break;
-//		default:	ここにエラー処理を書いたらいいのかもしれない
-		}
-		
-		return group;
-		
+		return map.get(groupId);
 	}
+	
+	//お知らせカテゴリを取得するメソッド
+	public String selectAnnounceCategory(int categoryId) {
+		
+		Map<Integer, String> map = new HashMap<>();
+		
+		map.put(1, "お知らせ");
+		map.put(2, "チーム活動");
+		map.put(3, "ナレッジベース");
+		map.put(4, "その他");
+		
+		return map.get(categoryId);
+	}
+	
+	
 
 }
