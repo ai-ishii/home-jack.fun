@@ -259,6 +259,7 @@ public class JackworksDAO {
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
 				jack.setNote(rs.getString("note"));
+				jack.setAdminFlag(rs.getInt("admin_flag"));
 				jackList.add(jack);
 			}
 
@@ -282,6 +283,7 @@ public class JackworksDAO {
 					jack.setCategory(rs.getString("category"));
 					jack.setAssessment(rs.getString("assessment"));
 					jack.setNote(rs.getString("note"));
+					jack.setAdminFlag(rs.getInt("admin_flag"));
 					jackList.add(jack);
 				}
 			}
@@ -337,6 +339,7 @@ public class JackworksDAO {
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
 				jack.setNote(rs.getString("note"));
+				jack.setAdminFlag(rs.getInt("admin_flag"));
 				jackList.add(jack);
 			}
 
@@ -357,51 +360,6 @@ public class JackworksDAO {
 			}
 		}
 		return jackList;
-	}
-
-	/**
-	 * 仮登録フラグを引数にJackWorksIdを取得するメソッド
-	 * 
-	 * @param 仮登録フラグ
-	 * @return 登録したいJackworksId
-	 */
-
-	public int selectByTemporaryFlag() {
-
-		Connection con = null;
-		Statement smt = null;
-
-		int JackworksId = 0;
-
-		try {
-			con = getConnection();
-			smt = con.createStatement();
-
-			String sql = "SELECT * FROM jackworks_info WHERE temporary_flag = '0' ";
-
-			ResultSet rs = smt.executeQuery(sql);
-
-			if (rs.next()) {
-				JackworksId = rs.getInt("jackworks_id");
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException ignore) {
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
-		return JackworksId;
 	}
 
 	/**
@@ -470,4 +428,85 @@ public class JackworksDAO {
 		}
 		return jackList;
 	}
+	
+	/**
+	 * JackWorksIdを引数にフラグを変更するメソッド
+	 * 
+	 * @param 申請許可したい情報
+	 */
+	public void updateAdminFlag(int jackworksId) {
+		Connection con = null;
+		Statement smt = null;
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			String sql = "UPDATE jackworks_info SET admin_flag = ' 1 '"
+						+ "WHERE jackworks_id = '" + jackworksId + "'";
+
+			smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 管理者が未承認のJackWorksIdを取得するメソッド
+	 * 
+	 * @param なし
+	 * @return 登録したいJackworksId
+	 */
+
+//	public int selectByAdminFlag() {
+//
+//		Connection con = null;
+//		Statement smt = null;
+//
+//		int JackworksId = 0;
+//
+//		try {
+//			con = getConnection();
+//			smt = con.createStatement();
+//
+//			String sql = "SELECT * FROM jackworks_info WHERE admin_flag = '0' ";
+//
+//			ResultSet rs = smt.executeQuery(sql);
+//
+//			if (rs.next()) {
+//				JackworksId = rs.getInt("jackworks_id");
+//			}
+//
+//		} catch (Exception e) {
+//			throw new IllegalStateException(e);
+//		} finally {
+//			if (smt != null) {
+//				try {
+//					smt.close();
+//				} catch (SQLException ignore) {
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException ignore) {
+//				}
+//			}
+//		}
+//		return JackworksId;
+//	}
 }

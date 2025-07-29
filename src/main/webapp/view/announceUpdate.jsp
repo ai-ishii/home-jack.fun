@@ -118,7 +118,8 @@ input[type="submit"], input[type="button"] {
 
 					<div class="form_box">
 						<label for="announce_flag" class="control_label">重要記事</label> <input
-							type="checkbox" name="announce_flag" value="2">
+							type="checkbox" name="announceFlag" value="1">
+						<input type="hidden" name="announceFlag" value="0">
 					</div>
 
 					<div class="form_box">
@@ -136,7 +137,7 @@ input[type="submit"], input[type="button"] {
 
 					<div class="btm_box">
 						<input
-							onclick="location.href='<%=request.getContextPath()%>/detailAnnounce?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
+							onclick="location.href='<%=request.getContextPath()%>/announceDetail?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
 							type="button" value="キャンセル"> <input type="submit"
 							value="一時保存"> <input type="submit" value="編集確定">
 					</div>

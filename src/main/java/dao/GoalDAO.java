@@ -59,17 +59,17 @@ public class GoalDAO {
 
 			//検索結果を配列に格納
 			while (rs.next()) {
-				goal.setGoalId(rs.getInt("goal_id")); 										//個人目標ID
-				goal.setTeamId(rs.getString("team_id")); 									//グループ目標ID
-				goal.setUserId(rs.getInt("user_id")); 										//ユーザー情報ID
-				goal.setAnnualGoal(rs.getString("annual_goal")); 							//年間目標
-				goal.setSituationChallenge(rs.getString("situation_challenge"));			//現状と課題
-				goal.setResult(rs.getString("result")); 									//年間結果達成率
-				goal.setResultComment(rs.getString("result_comment")); 						//年間結果コメント
-				goal.setResultReviewer(rs.getString("result_reviewer")); 					//年間結果達成率（評価者）
-				goal.setResultCommentReviewer(rs.getString("result_comment_reviewer")); 	//年間結果コメント（評価者）
-				goal.setRegistDate(rs.getTimestamp("regist_date")); 						//登録日時
-				goal.setUpdateDate(rs.getTimestamp("update_date")); 						//更新日時
+				goal.setGoalId(rs.getInt("goal_id")); //個人目標ID
+				goal.setTeamId(rs.getString("team_id")); //グループ目標ID
+				goal.setUserId(rs.getInt("user_id")); //ユーザー情報ID
+				goal.setAnnualGoal(rs.getString("annual_goal")); //年間目標
+				goal.setSituationChallenge(rs.getString("situation_challenge")); //現状と課題
+				goal.setResult(rs.getString("result")); //年間結果達成率
+				goal.setResultComment(rs.getString("result_comment")); //年間結果コメント
+				goal.setResultReviewer(rs.getString("result_reviewer")); //年間結果達成率（評価者）
+				goal.setResultCommentReviewer(rs.getString("result_comment_reviewer")); //年間結果コメント（評価者）
+				goal.setRegistDate(rs.getTimestamp("regist_date")); //登録日時
+				goal.setUpdateDate(rs.getTimestamp("update_date")); //更新日時
 			}
 
 		} catch (Exception e) {
@@ -91,7 +91,7 @@ public class GoalDAO {
 		}
 		return goal;
 	}
-	
+
 	/**
 	 * 情報を更新するメソッド
 	 * 
@@ -106,9 +106,13 @@ public class GoalDAO {
 
 		//SQL文
 		String sql = "UPDATE goal_info SET "
-				+ "annual_goal=?,"
-				+ "situation_challenge=? "
-				+ "WHERE goal_id = ?";
+		        + "annual_goal=?,"
+		        + "situation_challenge=?,"
+		        + "result=?,"
+		        + "result_comment=?,"
+		        + "result_reviewer=?,"
+		        + "result_comment_reviewer=? "
+		        + "WHERE goal_id = ?";
 		try {
 			con = getConnection();
 			smt = con.createStatement();
@@ -116,7 +120,11 @@ public class GoalDAO {
 
 			ps.setString(1, goal.getAnnualGoal());
 			ps.setString(2, goal.getSituationChallenge());
-			ps.setInt(3, goal.getGoalId());
+			ps.setString(3, goal.getResult());
+			ps.setString(4, goal.getResultComment());
+			ps.setString(5, goal.getResultReviewer());
+			ps.setString(6, goal.getResultCommentReviewer());
+			ps.setInt(7, goal.getGoalId());
 
 			//SQL文をDBに移行
 			ps.executeUpdate();
@@ -134,6 +142,12 @@ public class GoalDAO {
 			if (con != null) {
 				try {
 					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
 				} catch (SQLException ignore) {
 				}
 			}

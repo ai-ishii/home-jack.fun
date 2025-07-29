@@ -308,6 +308,46 @@ public class EmployeeDAO {
 				}
 			}
 		}
+		
+		/**
+		 * 削除処理を行うメソッド（DELETE）
+		 * @param employee
+		 */
+		public void delete(int userId) {
+			
+			// 変数宣言
+			Connection con = null;
+			Statement smt = null;
+			
+			String sql = "DELETE FROM employee_info WHERE user_id = " + userId + ";";
+			
+			try {
+				// DBに接続
+				con = EmployeeDAO.getConnection();
+				smt = con.createStatement();
+				
+				// SQL文発行
+				smt.executeUpdate(sql);
+				
+			} catch (Exception e) {
+				throw new IllegalStateException(e);
+			} finally {
+				// リソースの解放
+				if (smt != null) {
+					try {
+						smt.close();
+					} catch (SQLException ignore) {
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException ignore) {
+					}
+				}
+			}
+		}
+
 
 
 }
