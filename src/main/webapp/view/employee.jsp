@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="java.util.ArrayList, util.MyFormat, util.Common, bean.User, dao.UserDAO"%>
+	import="java.util.ArrayList, util.MyFormat, util.CommonTable, bean.User, dao.UserDAO"%>
 
 <%
 // サーブレットから送られてきた情報を取得
@@ -19,7 +19,7 @@ for (int i = 0; i < userList.size(); i++) {
 // オブジェクトの生成
 User user = new User();
 UserDAO userDAO = new UserDAO();
-Common common = new Common();
+CommonTable commonTable = new CommonTable();
 
 %>
 
@@ -165,8 +165,8 @@ a:hover {
 						if (userList != null) {
 							for (int i = 0; i < userList.size(); i++) {
 								user = userDAO.selectByUserId(userList.get(i).getUserId());
-								String department = common.selectDepartment(user.getDepartmentId());
-								String group = common.selectGroup(user.getGroupId());
+								String department = commonTable.selectDepartment(user.getDepartmentId());
+								String group = commonTable.selectGroup(user.getGroupId());
 						%>
 						<a
 							href="<%=request.getContextPath()%>/detailEmployee?userId=<%=userList.get(i).getUserId()%>">
