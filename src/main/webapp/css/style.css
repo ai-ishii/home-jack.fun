@@ -26,10 +26,7 @@ cursor
 	position: relative;
 	width: 100%;
 	margin: 0px;
-<<<<<<< Upstream, based on ccccc
 	flex-direction: row;
-=======
->>>>>>> e524bf4 cssの修正を行いました。
 	z-index: 10;
 }
 
@@ -186,9 +183,10 @@ ul ul {
 	background-attachment: fixed;
 }
 
-#pagetitle .title {
+.header-title {
 	width: 300px;
 	text-align: center;
+	margin: 0 auto;
 }
 
 #page-title h6 {
@@ -236,25 +234,25 @@ ul ul {
 }
 
 /*ページ上部にリンクするボタン*/
-.jump {
+#menu .jump {
 	position: fixed;
 	right: 20px;
 	bottom: 20px;
 	z-index: 30;
 }
 
-.jump a {
+#menu .jump a {
 	text-decoration: none;
 	opacity: 0.3;
 	transition: 0.3s;
 }
 
-.jump a:hover {
+#menu .jump a:hover {
 	opacity: 1.0;
 	transition: 0.3s;
 }
 
-.jump a p{
+#menu .jump a p{
 	padding: 18px 0;
 	background-color: #ffcc55;
 	border-radius: 100%;

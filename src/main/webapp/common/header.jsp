@@ -57,7 +57,7 @@
 			
 			<div id="page-title">
 				
-				 <div class="title">
+				 <div class="header-title">
 					 <a id="home-link" href="<%= request.getContextPath() %>/home">
 						<h6>
 							<small>満足を超える、感動を贈りたい</small>
