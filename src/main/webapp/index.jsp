@@ -1,5 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!--
+/**
+ * ログイン画面
+ * 
+ * 作成者：石田允彦
+ * 
+ * 作成日：2025/07/03
+ * 最終更新日：2025/07/29
+ */
+-->
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>

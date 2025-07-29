@@ -1,8 +1,19 @@
+<!--
+/**
+ * ホーム画面
+ * 
+ * 作成者：石田允彦
+ * 
+ * 作成日：2025/07/04
+ * 最終更新日：2025/07/29
+ */
+-->
+
 <%@page import="dao.AnnounceDAO"%>
 <%@page import="util.MyFormat"%>
 <%@page import="bean.Announce"%>
 <%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 ArrayList<Announce> importantList = (ArrayList<Announce>)request.getAttribute("important_list");
