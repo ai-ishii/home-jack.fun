@@ -41,7 +41,7 @@ public class AccountDAO {
 			
 			Account account = new Account();
 			
-			String sql = "SELECT * FROM account_info WHERE email = '" + email + "'";
+			String sql = "SELECT account_id, email, admin_flag, manager_flag FROM account_info WHERE email = '" + email + "'";
 			
 			try {
 				// DBに接続
@@ -87,7 +87,7 @@ public class AccountDAO {
 			
 			Account account = new Account();
 			
-			String sql = "SELECT * FROM account_info WHERE account_id = '" + accountId + "'";
+			String sql = "SELECT account_id, email, admin_flag, manager_flag FROM account_info WHERE account_id = '" + accountId + "'";
 			
 			try {
 				// DBに接続
