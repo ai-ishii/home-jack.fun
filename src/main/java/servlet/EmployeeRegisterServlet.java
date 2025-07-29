@@ -57,8 +57,8 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			birthdayUtil = format.parse(dateString);
 			java.sql.Date birthday = new java.sql.Date(birthdayUtil.getTime());
 			
-			String department = request.getParameter("department");
-			String team = request.getParameter("team");
+			int department = Integer.parseInt(request.getParameter("department"));
+			int group = Integer.parseInt(request.getParameter("group"));
 			
 			// String→Timestampに変換
 			String timeString = request.getParameter("joiningDate");
@@ -78,8 +78,8 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			user.setName(name);
 			user.setNameKana(nameKana);
 			user.setBirthday(birthday);
-			user.setDepartment(department);
-			user.setTeam(team);
+			user.setDepartmentId(department);
+			user.setGroupId(group);
 			user.setJoiningDate(joiningDate);
 			employee.setPhoto(photo);
 			employee.setDevloper(devloper);

@@ -7,8 +7,8 @@
 
 <%
 // cmdを取得
-String cmd = (String)request.getAttribute("cmd");
-System.out.print(cmd);
+//String cmd = (String)request.getAttribute("cmd");
+String cmd = "update";
 //String cmd = "confirm";
 
 // 変数宣言
@@ -45,7 +45,7 @@ birthday = request.getParameter("birthday");
 //java.sql.Date birthday = new java.sql.Date(birthdayUtil.getTime());
 
 department = request.getParameter("department");
-team = request.getParameter("team");
+group = request.getParameter("group");
 
 // String→Timestampに変換
 joiningDate = request.getParameter("joiningDate");
@@ -132,7 +132,7 @@ input[type="date"], input[type="month"] {
 }
 
 select {
-	width: 50px;
+	width: 300px;
 	height: 40px;
 	font-size: large;
 }
@@ -216,33 +216,36 @@ a {
 							<td id="value"><input id="readonlyInput" type="date"
 								name="birthday" value="<%= birthday %>"></td>
 						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="department">部</label> <label
-								for="team">・グループ</label></td>
-						<%
-						if (cmd.equals("update")) {
-						%>
-							<td id="value">第 <select name="department">
-									<option value=""></option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-							</select> 事業部 第 <select name="team">
-									<option value=""></option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-							</select> グループ
-							</td>
-						<%
-						} else if (cmd.equals("confirm")) {
-						%>
-							<td id="value">第 <%= department %> 事業部 第 <%= team %> グループ
-							</td>
-						<%
-						}
-						%>
-
+							<tr id="inputRow">
+								<td id="item"><label for="department">所属</label></td>
+								<%
+								if (cmd.equals("register") || cmd.equals("reRegister")) {
+								%>
+								<td id="value">
+									<select name="department">
+										<option value="" selected disabled></option>
+										<option value="ビジネスソリューション第1部">ビジネスソリューション第1部</option>
+										<option value="ビジネスソリューション第2部">ビジネスソリューション第2部</option>
+										<option value="営業部">営業部</option>
+										<option value="NEXTINOVATION">NEXTINOVATION</option>
+										<option value="経営管理部">経営管理部</option>
+									</select> 
+									<select name="group">
+										<option value="" selected disabled></option>
+										<option value="／">／</option>
+										<option value="第1グループ">第1グループ</option>
+										<option value="第2グループ">第2グループ</option>
+										<option value="第3グループ">第3グループ</option>
+										<option value="第4グループ">第4グループ</option>
+									</select>
+								</td>
+								<%
+								} else if (cmd.equals("confirm")) {
+								%>
+								<td id="value"><%=department%> <%=group%></td>
+								<%
+								}
+								%>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="joiningDate">入社年月</label></td>
