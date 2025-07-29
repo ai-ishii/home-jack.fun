@@ -1,9 +1,12 @@
+//<!-- 疑似テーブルメソッド（作：石井） -->
+//<!-- 作成日：7/28　最終更新日：7/29 11:45 -->
+
 package util;
 
 import java.util.ArrayList;
 
 // テーブルを使用せずにデータを取得するメソッドまとめ
-public class Common {
+public class CommonTable {
 	
 	// 部を取得するメソッド
 	public String selectDepartment(int departmentId) {
