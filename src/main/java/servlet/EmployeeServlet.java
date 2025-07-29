@@ -1,3 +1,6 @@
+//<!-- 社員紹介 一覧機能（作：石井） -->
+//<!-- 作成日：7/2　最終更新日：7/29 11:45 -->
+
 package servlet;
 
 import java.io.IOException;
@@ -47,7 +50,7 @@ public class EmployeeServlet extends HttpServlet {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
 		} finally {
-			// エラーが空じゃなければ（エラーがあれば）
+			// エラーがあれば
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);

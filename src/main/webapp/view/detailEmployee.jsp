@@ -1,12 +1,12 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="java.util.Arrays, java.util.ArrayList, util.MyFormat, util.Common, bean.Employee, bean.User, dao.EmployeeDAO"%>
+	import="java.util.Arrays, java.util.ArrayList, util.MyFormat, util.CommonTable, bean.Employee, bean.User, dao.EmployeeDAO"%>
 
 <%
 // オブジェクトの生成
 EmployeeDAO employeeDAO = new EmployeeDAO();
-Common common = new Common();
+CommonTable commonTable = new CommonTable();
 
 //サーブレットから送られてきた情報を取得
 Employee employee = (Employee) request.getAttribute("Employee");
@@ -42,8 +42,8 @@ for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 	sameJoinTiming_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameJoiningDate.get(i).getUserId());
 }
 
-String department = common.selectDepartment(user.getDepartmentId());
-String group = common.selectGroup(user.getGroupId());
+String department = commonTable.selectDepartment(user.getDepartmentId());
+String group = commonTable.selectGroup(user.getGroupId());
 %>
 
 <html>
@@ -256,7 +256,7 @@ String group = common.selectGroup(user.getGroupId());
 					<a href="<%=request.getContextPath()%>/employee"> <input
 						id="backEmployeeList_button" type="submit" value="一覧へ"
 						style="width: 80px; height: 50px; font-size: large;">
-					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/view/employeeUpdate.jsp?cmd=update"> <input
+					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/view/employeeUpdate.jsp?cmd=update&userId=<%= user.getUserId() %>"> <input
 						id="update_button" type="submit" value="編集"
 						style="width: 80px; height: 50px; font-size: large;">
 					</a> <a> <input id="delete_button" type="submit" value="削除"
@@ -328,8 +328,8 @@ String group = common.selectGroup(user.getGroupId());
 						<%
 						if (userListBySameBelong != null) {
 							for (int i = 0; i < 3; i++) {
-								department = common.selectDepartment(user.getDepartmentId());
-								group = common.selectGroup(user.getGroupId());
+								department = commonTable.selectDepartment(user.getDepartmentId());
+								group = commonTable.selectGroup(user.getGroupId());
 						%>
 						<a id="belong_link" href="detailEmployee?userId=<%= userListBySameBelong.get(i).getUserId() %>">
 							<div id="employee_card">
