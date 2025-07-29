@@ -220,7 +220,7 @@ public class EmployeeDAO {
 	 	 * 社員情報をDBに登録するメソッド（INSERT）
 	 	 * @param employee
 	 	 */
-		public void regist(Employee employee) {
+		public void regist(Employee employee, int userId) {
 
 			// 変数宣言
 			Connection con = null;
@@ -229,7 +229,7 @@ public class EmployeeDAO {
 			String sql = "INSERT INTO employee_info(employee_id, user_id,"
 					+ " devloper, lang_skill, middle_skill, hobby, talent,"
 					+ " intro, position, regist_date, update_date, photo) "
-					+ "VALUES (null, null, " + employee.getDevloper() + ", '"
+					+ "VALUES (null, " + userId + ", " + employee.getDevloper() + ", '"
 					+ employee.getLangSkill() + "', '" + employee.getMiddleSkill() + "', '"
 					+ employee.getHobby() + "', '" + employee.getTalent() + "', '"
 					+ employee.getIntro() + "', '" + employee.getPosition() + "', '"
@@ -267,7 +267,7 @@ public class EmployeeDAO {
 		 * 更新処理を行うメソッド（UPDATE）
 		 * @param employee
 		 */
-		public void update(Employee employee) {
+		public void update(Employee employee, int userId) {
 			
 			// 変数宣言
 			Connection con = null;
@@ -280,7 +280,7 @@ public class EmployeeDAO {
 					+ "hobby = '" + employee.getHobby() + "', talent = '" + employee.getTalent() + "', "
 					+ "intro = '" + employee.getIntro() + "', position = '" + employee.getPosition() + "', "
 					+ "regist_date = '" + employee.getRegistDate() + "', update_date = '" + nowDate + "', "
-					+ "photo = '" + employee.getPhoto() + "' WHERE user_id = " + employee.getUserId() + ";";
+					+ "photo = '" + employee.getPhoto() + "' WHERE user_id = " + userId + ";";
 			
 			try {
 				// DBに接続

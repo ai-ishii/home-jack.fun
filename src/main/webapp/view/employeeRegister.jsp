@@ -1,21 +1,47 @@
+<!-- 社員紹介 登録機能（作：石井） -->
+<!-- 作成日：7/17　最終更新日：7/29 11:45 -->
+
 <%@page contentType="text/html; charset=UTF-8"%>
 
+<%@page
+	import="bean.Account, bean.User, dao.UserDAO, util.CommonTable, util.MyFormat, java.sql.Timestamp, java.util.Date, java.text.SimpleDateFormat"%>
+
 <%
+// オブジェクトの生成
+Account account = new Account();
+User user = new User();
+UserDAO userDAO = new UserDAO();
+CommonTable commonTable = new CommonTable();
+
 // セッションでユーザーのデータを取得
+account = (Account)session.getAttribute("account");
+int userId = (int)session.getAttribute("user_id");
+String name = (String)session.getAttribute("name");
+
+// セッションからユーザー情報を取得
+user = userDAO.selectByUserId(userId);
+
+String employeeNumber = user.getEmployeeNumber();
+String nameKana = user.getNameKana();
+Date birthday = user.getBirthday();
+int departmentId = user.getDepartmentId();
+int groupId = user.getGroupId();
+Timestamp joiningDate = user.getJoiningDate();
+
+// フォーマット化し表示形式を変更
+MyFormat myFormat = new MyFormat();
+String birthdayStr = myFormat.birthDateFormat(birthday);
+String joiningDateStr = myFormat.yearMonthFormat(joiningDate);
+
+// 疑似テーブルメソッドからデータを取得
+String department = commonTable.selectDepartment(departmentId);
+String group = commonTable.selectGroup(groupId);
 
 // cmdを取得
 String cmd = request.getParameter("cmd");
-//String cmd = "confirm";
 
 // 変数宣言
 String photo = "";
-String employeeNumber = "";
-String name = "";
-String nameKana = "";
-String birthday = "";
-String department = "";
-String group = "";
-String joiningDate = "";
 int devloper = 0;
 String langSkill = "";
 String middleSkill = "";
@@ -28,19 +54,6 @@ String position = "";
 if (cmd.equals("confirm") || cmd.equals("reRegister")) {
 	// 入力された情報をJSPから取得
 	photo = request.getParameter("photo");
-	employeeNumber = request.getParameter("employeeNumber");
-	name = request.getParameter("name");
-	nameKana = request.getParameter("nameKana");
-
-	// String→Dateに変換
-	birthday = request.getParameter("birthday");
-
-	department = request.getParameter("department");
-	group = request.getParameter("group");
-
-	// String→Timestampに変換
-	joiningDate = request.getParameter("joiningDate");
-
 	devloper = Integer.parseInt(request.getParameter("devloper"));
 	langSkill = request.getParameter("langSkill");
 	middleSkill = request.getParameter("middleSkill");
@@ -227,55 +240,27 @@ a {
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="employeeNumber">社員番号</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="employeeNumber" value="<%=employeeNumber%>"></td>
+								<td id="value"><%=employeeNumber%></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="name">氏名</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="name" value="<%=name%>"></td>
+								<td id="value"><%=name%></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="nameKana">氏名（ふりがな）</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="nameKana" value="<%=nameKana%>"></td>
+								<td id="value"><%=nameKana%></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="birthday">生年月日</label></td>
-								<td id="value"><input id="readonlyInput" type="date" name="birthday" value="<%=birthday%>"></td>
+								<td id="value"><%=birthdayStr%></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="department">所属</label></td>
-								<%
-								if (cmd.equals("register") || cmd.equals("reRegister")) {
-								%>
-								<td id="value">
-									<select name="department">
-										<option value="" selected disabled></option>
-										<option value="ビジネスソリューション第1部">ビジネスソリューション第1部</option>
-										<option value="ビジネスソリューション第2部">ビジネスソリューション第2部</option>
-										<option value="営業部">営業部</option>
-										<option value="NEXTINOVATION">NEXTINOVATION</option>
-										<option value="経営管理部">経営管理部</option>
-									</select> 
-									<select name="group">
-										<option value="" selected disabled></option>
-										<option value="／">／</option>
-										<option value="第1グループ">第1グループ</option>
-										<option value="第2グループ">第2グループ</option>
-										<option value="第3グループ">第3グループ</option>
-										<option value="第4グループ">第4グループ</option>
-									</select>
-								</td>
-								<%
-								} else if (cmd.equals("confirm")) {
-								%>
-								<td id="value"><%=department%> <%=group%></td>
-								<%
-								}
-								%>
-
+								<td><%=department%> <%=group%></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="joiningDate">入社年月</label></td>
-								<td id="value"><input id="readonlyInput" type="month" name="joiningDate" value="<%=joiningDate%>"></td>
+								<td id="value"><%=joiningDateStr%></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="devloper">開発経験年数</label></td>

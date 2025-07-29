@@ -1,3 +1,6 @@
+//<!-- 疑似テーブルメソッド（作：石井） -->
+//<!-- 作成日：7/28　最終更新日：7/29 11:45 -->
+
 package util;
 
 import java.util.ArrayList;

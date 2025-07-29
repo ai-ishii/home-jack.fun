@@ -1,3 +1,6 @@
+<!-- 社員紹介 一覧機能（作：石井） -->
+<!-- 作成日：7/2　最終更新日：7/29 11:45 -->
+
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
@@ -20,7 +23,6 @@ for (int i = 0; i < userList.size(); i++) {
 User user = new User();
 UserDAO userDAO = new UserDAO();
 CommonTable commonTable = new CommonTable();
-
 %>
 
 <html>

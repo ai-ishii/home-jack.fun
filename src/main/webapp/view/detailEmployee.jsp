@@ -256,7 +256,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 					<a href="<%=request.getContextPath()%>/employee"> <input
 						id="backEmployeeList_button" type="submit" value="一覧へ"
 						style="width: 80px; height: 50px; font-size: large;">
-					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/view/employeeUpdate.jsp?cmd=update"> <input
+					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/view/employeeUpdate.jsp?cmd=update&userId=<%= user.getUserId() %>"> <input
 						id="update_button" type="submit" value="編集"
 						style="width: 80px; height: 50px; font-size: large;">
 					</a> <a> <input id="delete_button" type="submit" value="削除"
