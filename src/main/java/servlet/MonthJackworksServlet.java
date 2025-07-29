@@ -43,8 +43,10 @@ public class MonthJackworksServlet extends HttpServlet {
 		Monthjack monthJack = new Monthjack();
 
 		try {
+			
 			//jackWorksの検索結果が格納されたjack_listを受け取る
 			ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+			String name = (String) request.getAttribute("name");
 
 			//SearchJackworksからcmd=searchを受け取る
 			cmd = (String) request.getAttribute("cmd");
@@ -60,6 +62,7 @@ public class MonthJackworksServlet extends HttpServlet {
 			request.setAttribute("monthJack", monthJack);
 			//cmdをリクエストスコープにcmdで登録
 			request.setAttribute("cmd", cmd);
+			request.setAttribute("name", name);
 
 			//取得したjackListをリクエストスコープにjackListで登録
 			if (jackList != null) {
