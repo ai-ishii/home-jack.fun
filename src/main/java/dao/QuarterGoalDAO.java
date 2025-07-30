@@ -48,7 +48,8 @@ public class QuarterGoalDAO {
 		ArrayList<QuarterGoal> quaterGoalList = new ArrayList<QuarterGoal>();
 
 		//SQL文
-		String sql = "SELECT * FROM quarter_goal_info WHERE user_id=" + userId;
+		String sql = "SELECT quarter_goal_id, goal_id, user_id, small_goal,judge_material, achieve_rate, report, "
+				+ "achieve_rate_reviewer, evaluation, quarterly_flag  FROM quarter_goal_info WHERE user_id=" + userId;
 
 		try {
 			con = getConnection();

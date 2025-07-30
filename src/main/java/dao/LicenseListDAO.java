@@ -100,7 +100,7 @@ public class LicenseListDAO {
 
 
  
-	public ArrayList<LicenseList> selectByLicenseListID(int licenseListId) {
+	public ArrayList<LicenseList> selectByLicenseListId(int licenseListId) {
 		//変数の宣言
 		Connection con = null;
 		Statement smt = null;
@@ -155,7 +155,7 @@ public class LicenseListDAO {
 	}
 
 	
-	public ArrayList<LicenseList> selectByUserID(int userId) {
+	public ArrayList<LicenseList> selectByUserId(int userId) {
 		//変数の宣言
 		Connection con = null;
 		Statement smt = null;

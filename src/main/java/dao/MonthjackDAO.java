@@ -46,7 +46,7 @@ public class MonthjackDAO {
 			con = getConnection();
 			smt = con.createStatement();
 
-			String sql = "SELECT * FROM month_jackworks_info";
+			String sql = "SELECT month_jackworks_id, user_id, image, theme, note FROM month_jackworks_info";
 			ResultSet rs = smt.executeQuery(sql);
 
 			if (rs.next()) {

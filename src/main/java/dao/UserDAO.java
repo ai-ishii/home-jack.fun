@@ -51,7 +51,9 @@ public class UserDAO {
 		ArrayList<User> userList = new ArrayList<User>();
 
 		//SQL文の作成
-		String sql = "SELECT * FROM user_info order by employee_number asc";
+		String sql = "SELECT user_id, account_id, name, name_kana, birthday, address, post, phone, nearest_station, "
+				+ "transportation, sex, employee_number, department_id, group_id, joining_date, work_history, marriage_flag, "
+				+ "children, qualification, display_flag, rest_flag, regist_date, update_date FROM user_info order by employee_number asc";
 
 		try {
 			// データベース接続
@@ -269,7 +271,9 @@ public class UserDAO {
 		User user = new User();
 		
 		//SQL文の作成
-		String sql = "SELECT * FROM user_info WHERE user_id = " + userId;
+		String sql = "SELECT user_id, account_id, name, name_kana, birthday, address, post, phone, nearest_station, "
+				+ "transportation, sex, employee_number, department_id, group_id, joining_date, work_history, marriage_flag, "
+				+ "children, qualification, display_flag, rest_flag, regist_date, update_date FROM user_info WHERE user_id = " + userId;
 		
 		try {
 
@@ -337,7 +341,9 @@ public class UserDAO {
 		User user = new User();
 		
 		//SQL文の作成
-		String sql = "SELECT * FROM user_info WHERE account_id = '" + accountId + "'";
+		String sql = "SELECT user_id, account_id, name, name_kana, birthday, address, post, phone, nearest_station, "
+				+ "transportation, sex, employee_number, department_id, group_id, joining_date, work_history, marriage_flag, "
+				+ "children, qualification, display_flag, rest_flag, regist_date, update_date FROM user_info WHERE account_id = '" + accountId + "'";
 		
 		try {
 
@@ -417,9 +423,10 @@ public class UserDAO {
 		ArrayList<User> userList = new ArrayList<User>();
 		
 		//SQL文の作成
-		String sql = "SELECT * FROM user_info "
-				+ "WHERE department_id = " + departmentId
-				+ " AND group_id = " + groupId + ";";
+		String sql = "SELECT user_id, account_id, name, name_kana, birthday, address, post, phone, nearest_station, "
+				+ "transportation, sex, employee_number, department_id, group_id, joining_date, work_history, marriage_flag, "
+				+ "children, qualification, display_flag, rest_flag, regist_date, update_date FROM user_info "
+				+ "WHERE department_id = " + departmentId + " AND group_id = " + groupId + ";";
 		
 		try {
 			// データベース接続
@@ -488,7 +495,9 @@ public class UserDAO {
 		ArrayList<User> userList = new ArrayList<User>();
 		
 		//SQL文の作成
-		String sql = "SELECT * FROM user_info "
+		String sql = "SELECT user_id, account_id, name, name_kana, birthday, address, post, phone, nearest_station, "
+				+ "transportation, sex, employee_number, department_id, group_id, joining_date, work_history, marriage_flag, "
+				+ "children, qualification, display_flag, rest_flag, regist_date, update_date FROM user_info "
 				+ "WHERE joining_date = '" + joiningDate + "';";
 		
 		try {

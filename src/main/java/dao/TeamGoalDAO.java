@@ -45,7 +45,8 @@ public class TeamGoalDAO {
 		//呼び出し元に返すオブジェクトの生成
 
 		//SQL文
-		String sql = "SELECT * FROM team_goal_info WHERE user_id=" + userId;
+		String sql = "SELECT team_id, user_id, management_theme, department_goal, group_goal, regist_date, update_date "
+				+ "FROM team_goal_info WHERE user_id=" + userId;
 		TeamGoal teamGoal = new TeamGoal();
 
 		try {

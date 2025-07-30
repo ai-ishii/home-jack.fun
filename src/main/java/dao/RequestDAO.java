@@ -53,7 +53,8 @@ public class RequestDAO {
 			smt = con.createStatement();
 
 			//SQL文
-			String sql = "SELECT * FROM request_info ORDER BY request_info.request_date DESC";
+			String sql = "SELECT request_id, applicant_id, approver, applicant, approver, request_date, approval_date, "
+					+ "request_type_flag, request_flag FROM request_info ORDER BY request_info.request_date DESC";
 
 			ResultSet rs = smt.executeQuery(sql);
 
@@ -105,7 +106,8 @@ public class RequestDAO {
 			smt = con.createStatement();
 
 			//SQL文
-			String sql = "SELECT * FROM work_request_info where request_id=" + requestid ;
+			String sql = "SELECT work_request_id, situation, job_location, low_root, price, near_station, route_name "
+					+ "FROM work_request_info where request_id=" + requestid ;
 
 			ResultSet rs = smt.executeQuery(sql);
 			
@@ -154,7 +156,8 @@ public class RequestDAO {
 				smt = con.createStatement();
 
 				//SQL文
-				String sql = "SELECT * FROM name_request_info where request_id=" + requestid ;
+				String sql = "SELECT name_request_id, request_id, old_name, old_name_kana, new_name, new_name_kana "
+						+ "FROM name_request_info where request_id=" + requestid ;
 
 				ResultSet rs = smt.executeQuery(sql);
 				
@@ -202,7 +205,8 @@ public class RequestDAO {
 				smt = con.createStatement();
 
 				//SQL文
-				String sql = "SELECT * FROM address_request_info where request_id=" + requestid ;
+				String sql = "SELECT address_request_id, request_id, old_address, new_address, old_post, new_post "
+						+ "FROM address_request_info where request_id=" + requestid ;
 
 				ResultSet rs = smt.executeQuery(sql);
 				
