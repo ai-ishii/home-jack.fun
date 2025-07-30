@@ -3,7 +3,7 @@ JackWorks登録画面
 作成者：青木美波
 作成日 2025/07/10
  --%>
-
+ 
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.text.SimpleDateFormat,java.util.Date,java.sql.Timestamp,java.util.ArrayList,bean.Jackworks,bean.Monthjack"%>
 
@@ -18,12 +18,15 @@ if(cmd == null){
 
 <html>
 <head>
+<!-- タイトル -->
 <title>JackWorks</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
 
-<!-- 以下CSS記述 -->
-<style type="text/css">
+<!--　以下CSS　-->
+<style>
 
 #contents {
 	width: 90%;
@@ -171,15 +174,22 @@ button.btn-border:active {
 button.btn-border:active:before {
 	bottom: -1px;
 }
+
 </style>
-</head>
 
 <body>
-	<div id="contents">
+	<div id="wrap">
+		<!-- ヘッダー部分 -->
+		<%@ include file="../common/header.jsp"%>
+
+		<!-- メイン部分 -->
+		<div id="main" class="container">
+		
+		<div id="contents">
 
 		<!-- タイトル部分 -->
 		<div id="link-title">
-			<h1 id="link-line">JackWorks登録</h1>
+			<h1 id="link-line">JackWorks申請</h1>
 		</div>
 
 		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
@@ -238,7 +248,7 @@ button.btn-border:active:before {
 				<div id="JackWorks-submit">
 					<button type="submit" class="btn btn-border">
 					<input type="hidden" name="cmd" value="next">
-						<span>次へ</span>
+						<span>申請</span>
 					</button>
 				</div>
 		</form>
@@ -328,12 +338,15 @@ button.btn-border:active:before {
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
 				<input type="hidden" name="cmd" value="register">
-					<span>登録</span>
+					<span>申請</span>
 				</button>
 			</div>
 			</form>
 			
 			<% } %>
+	</div>
+		
+		</div>
 	</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
-//<!-- 社員紹介 登録機能（作：石井） -->
-//<!-- 作成日：7/17　最終更新日：7/29 11:45 -->
+//<!-- 社員紹介 変更機能（作：石井） -->
+//<!-- 作成日：7/18　最終更新日：7/29 11:45 -->
 
 package servlet;
 
@@ -18,8 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet("/employeeRegister")
-public class EmployeeRegisterServlet extends HttpServlet {
+@WebServlet("/employeeUpdate")
+public class EmployeeUpdateServlet extends HttpServlet {
 	
 	public void doGet (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -51,7 +51,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 //			String employeeNumber = request.getParameter("employeeNumber");
 //			String name = request.getParameter("name");
 //			String nameKana = request.getParameter("nameKana");
-			
+//			
 			// String→Dateに変換
 //			String dateString = request.getParameter("birthday");
 //			String pattern = "yyyy-MM-dd";
@@ -63,7 +63,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 //			int department = Integer.parseInt(request.getParameter("department"));
 //			int group = Integer.parseInt(request.getParameter("group"));
 //			
-//			// String→Timestampに変換
+			// String→Timestampに変換
 //			String timeString = request.getParameter("joiningDate");
 //			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
 //			Date parsedTime = dateFormat.parse(timeString);
@@ -102,7 +102,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			employee.setUpdateDate(null);
 			
 			// メソッドからSQL実行
-			employeeDAO.regist(employee, userId);
+			employeeDAO.update(employee, userId);
 			
 		} catch (Exception e) {
 			cmd = "";

@@ -1,13 +1,3 @@
-/**
- * 個人目標確認機能
- * 
- * 作成者：月向亮太
- * 
- * 作成日：7月8日
- * 
- * 最終更新日：7月25日
- * 
- */
 package servlet;
 
 import java.io.IOException;
@@ -25,28 +15,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
-@WebServlet("/goalConfirm")
-public class GoalConfirmServlet extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		commonProcess(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		commonProcess(request, response);
-	}
-
-	//共通メソッド
-	private void commonProcess(HttpServletRequest request, HttpServletResponse response)
+@WebServlet("/goalUser")
+public class GoalUserServlet extends HttpServlet {
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		//変数の宣言
 		String error = "";
 		String strUserId = "";
 		String cmd = "";
-
+		
 		//オブジェクト宣言
 		Goal goal = new Goal();
 		TeamGoal teamGoal = new TeamGoal();
@@ -58,22 +35,20 @@ public class GoalConfirmServlet extends HttpServlet {
 		
 		//配列宣言
 		ArrayList<QuarterGoal> quarterGoalList = new ArrayList<QuarterGoal>();
-
+		
 		try {
-			//getParameterメソッドを使い、取得した値を代入する
+			
+			//getParameterメソッドを呼び出す
 			strUserId = request.getParameter("user_id");
 			cmd = request.getParameter("cmd");
+			
 
-			//セッション登録がまだなため、仮で登録
-			strUserId = "4";
-			
-			//※ここは後で絶対に変える文章なので覚えておいてください
 			if (cmd == null) {
-				cmd = ""; 
+				cmd = ""; //※ここは後で絶対に変える文章なので覚えておいてください
 			}
-			
 			//userIdをStringからintへキャスト
 			int userId = Integer.parseInt(strUserId);
+
 
 			//部目標を呼び出す
 			teamGoal = teamGoalDAO.selectByUserId(userId);
@@ -83,19 +58,20 @@ public class GoalConfirmServlet extends HttpServlet {
 
 			//四半期目標を呼び出す
 			quarterGoalList = quarterGoalDAO.selectByUserId(userId);
-
+			
+			
+			
 		} catch (Exception e) {
-			error = "エラーです！";
-
+			error = "エラーです。";
 		} finally {
-			if (error != "") {
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			}
-			//リクエストスコープを使ってフォワード
-			request.setAttribute("teamGoal", teamGoal);
-			request.setAttribute("goal", goal);
-			request.setAttribute("quarter_goal_list", quarterGoalList);
-			request.getRequestDispatcher("/view/goalConfirm.jsp").forward(request, response);
+			if (!error.isEmpty()) {
+					request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				}
+				//リクエストスコープを使ってフォワード
+				request.setAttribute("teamGoal", teamGoal);
+				request.setAttribute("goal", goal);
+				request.setAttribute("quarter_goal_list", quarterGoalList);
+			request.getRequestDispatcher("/view/goalUser.jsp").forward(request, response);
 		}
 	}
 }

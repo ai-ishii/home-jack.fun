@@ -1,24 +1,51 @@
+<!-- 社員紹介 変更機能（作：石井） -->
+<!-- 作成日：7/18　最終更新日：7/29 11:45 -->
+
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="java.text.SimpleDateFormat, java.util.Date, java.sql.Timestamp"%>
+	import="bean.Account, bean.User, dao.UserDAO, util.CommonTable, util.MyFormat, java.text.SimpleDateFormat, java.util.Date, java.sql.Timestamp"%>
 
 <!-- cmdで確認画面と編集画面分ける -->
 
 <%
+//オブジェクトの生成
+Account account = new Account();
+User user = new User();
+UserDAO userDAO = new UserDAO();
+CommonTable commonTable = new CommonTable();
+
+//セッションでユーザーのデータを取得
+account = (Account)session.getAttribute("account");
+int userId_session = (int)session.getAttribute("user_id");
+String name = (String)session.getAttribute("name");
+
+//セッションからユーザー情報を取得
+user = userDAO.selectByUserId(userId_session);
+
+String employeeNumber = user.getEmployeeNumber();
+String nameKana = user.getNameKana();
+Date birthday = user.getBirthday();
+int departmentId = user.getDepartmentId();
+int groupId = user.getGroupId();
+Timestamp joiningDate = user.getJoiningDate();
+
+//フォーマット化し表示形式を変更
+MyFormat myFormat = new MyFormat();
+String birthdayStr = myFormat.birthDateFormat(birthday);
+String joiningDateStr = myFormat.yearMonthFormat(joiningDate);
+
+//疑似テーブルメソッドからデータを取得
+String department = commonTable.selectDepartment(departmentId);
+String group = commonTable.selectGroup(groupId);
+
 // cmdを取得
-//String cmd = (String)request.getAttribute("cmd");
-String cmd = "confirm";
+String cmd = request.getParameter("cmd");
+// JSPから送られてきたユーザーIDを取得
+int userId = request.getParameter("user_id");
 
 // 変数宣言
 String photo = "";
-String employeeNumber = "";
-String name = "";
-String nameKana = "";
-String birthday = "";
-String department = "";
-String team = "";
-String joiningDate = "";
 int devloper = 0;
 String langSkill = "";
 String middleSkill = "";
@@ -28,37 +55,16 @@ String intro = "";
 String position = "";
 
 // 確認画面の場合
-if (cmd.equals("confirm")) {
-// 入力された情報をJSPから取得
-photo = request.getParameter("photo");
-employeeNumber = request.getParameter("employeeNumber");
-name = request.getParameter("name");
-nameKana = request.getParameter("nameKana");
-
-// String→Dateに変換
-birthday = request.getParameter("birthday");
-//String pattern = "yyyy-MM-dd";
-//SimpleDateFormat format = new SimpleDateFormat(pattern);
-//Date birthdayUtil = null;
-//birthdayUtil = format.parse(dateString);
-//java.sql.Date birthday = new java.sql.Date(birthdayUtil.getTime());
-
-department = request.getParameter("department");
-team = request.getParameter("team");
-
-// String→Timestampに変換
-joiningDate = request.getParameter("joiningDate");
-//SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-//Date parsedTime = dateFormat.parse(timeString);
-//Timestamp joiningDate = new Timestamp(parsedTime.getTime());
-
-devloper = Integer.parseInt(request.getParameter("devloper"));
-langSkill = request.getParameter("langSkill");
-middleSkill = request.getParameter("middleSkill");
-hobby = request.getParameter("hobby");
-talent = request.getParameter("talent");
-intro = request.getParameter("intro");
-position = request.getParameter("position");
+if (cmd.equals("confirm") || cmd.equals("reUpdate")) {
+	// 入力された情報をJSPから取得
+	photo = request.getParameter("photo");
+	devloper = Integer.parseInt(request.getParameter("devloper"));
+	langSkill = request.getParameter("langSkill");
+	middleSkill = request.getParameter("middleSkill");
+	hobby = request.getParameter("hobby");
+	talent = request.getParameter("talent");
+	intro = request.getParameter("intro");
+	position = request.getParameter("position");
 }
 %>
 
@@ -167,135 +173,125 @@ a {
 		<div id="main" class="container">
 
 			<div id="employeeUpdate">
-			
+
 				<%
 				if (cmd.equals("confirm")) {
 				%>
-				<h3>以下の内容で登録します</h3>
+				<h3>以下の内容で変更します</h3>
 				<%
 				}
 				%>
-			
+
 				<!-- 入力部分 -->
-				<form action="<%= request.getContextPath() %>/employeeRegister" method="post">
-					<table id="inputArea">
-						<tr id="inputRow">
-							<td id="item"><label for="photo">写真</label></td>
+				<%
+				if (cmd.equals("update") || cmd.equals("reUpdate")) {
+				%>
+				<form action="<%=request.getContextPath()%>/view/employeeUpdate.jsp" method="post">
+					<input type="hidden" name="cmd" value="confirm">
+					<input type="hidden" name="userId" value="<%= userId %>">
+				<%
+				} else if (cmd.equals("confirm")) {
+				%>
+				<form action="<%=request.getContextPath()%>/employeeUpdate" method="post">
+					<input type="hidden" name="cmd" value="reUpdate">
+				<%
+				}
+				%>
+
+						<table id="inputArea">
+							<tr id="inputRow">
+								<td id="item"><label for="photo">写真</label></td>
+								<%
+								if (cmd.equals("update") || cmd.equals("reUpdate")) {
+								%>
+								<td id="value"><input type="file" name="photo"></td>
+								<%
+								} else if (cmd.equals("confirm")) {
+								%>
+								<td id="value"><img src="<%=request.getContextPath()%>/img/<%=photo%>" alt="アップロードした写真"></td>
+								<%
+								}
+								%>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="employeeNumber">社員番号</label></td>
+								<td id="value"><%=employeeNumber%></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="name">氏名</label></td>
+								<td id="value"><%=name%></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="nameKana">氏名（ふりがな）</label></td>
+								<td id="value"><%=nameKana%></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="birthday">生年月日</label></td>
+								<td id="value"><%=birthdayStr%></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="department">所属</label></td>
+								<td><%=department%> <%=group%></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="joiningDate">入社年月</label></td>
+								<td id="value"><%=joiningDateStr%></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="devloper">開発経験年数</label></td>
+								<td id="value"><input id="readonlyInput" type="number" name="devloper" value="<%=devloper%>" style="margin-left: 0;" min="0">年</td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="langSkill">習得技術（言語）</label></td>
+								<td id="value"><input id="readonlyInput" type="text" name="langSkill" value="<%=langSkill%>"></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="middleSkill">習得言語（ミドルウェア）</label></td>
+								<td id="value"><input id="readonlyInput" type="text" name="middleSkill" value="<%=middleSkill%>"></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="hobby">趣味</label></td>
+								<td id="value"><input id="readonlyInput" type="text" name="hobby" value="<%=hobby%>"></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="talent">特技</label></td>
+								<td id="value"><input id="readonlyInput" type="text" name="talent" value="<%=talent%>"></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="intro">自己紹介</label></td>
+								<td id="value"><textarea id="readonlyInput" name="intro"><%=intro%></textarea></td>
+							</tr>
+							<tr id="inputRow">
+								<td id="item"><label for="position">役職</label></td>
+								<td id="value"><input id="readonlyInput" type="text" name="position" value="<%=position%>"></td>
+							</tr>
+						</table>
+
 						<%
-						if (cmd.equals("update")) {
+						if (cmd.equals("update") || cmd.equals("reUpdate")) {
 						%>
-							<td id="value"><input type="file" name="photo"></td>
+						<a href="<%=request.getContextPath()%>/detailEmployee?userId=<%= userId %>">
+							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
+						</a>
 						<%
 						} else if (cmd.equals("confirm")) {
 						%>
-							<td id="value"><img
-								src="<%= request.getContextPath() %>/img/<%= photo %>"
-								alt="アップロードした写真"></td>
+						<a href="<%=request.getContextPath()%>/view/employeeUpdate.jsp?cmd=update&userId=<%= userId %>">
+							<input type="button" value="戻る" style="width: 120px; height: 50px; font-size: large;">
+						</a>
 						<%
 						}
+						if (cmd.equals("update") || cmd.equals("reUpdate")) {
 						%>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="employeeNumber">社員番号</label></td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="employeeNumber" value="<%= employeeNumber %>"></td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="name">氏名</label></td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="name" value="<%= name %>"></td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="nameKana">氏名（ふりがな）</label></td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="nameKana" value="<%= nameKana %>"></td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="birthday">生年月日</label></td>
-							<td id="value"><input id="readonlyInput" type="date"
-								name="birthday" value="<%= birthday %>"></td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="department">部</label> <label
-								for="team">・グループ</label></td>
-						<%
-						if (cmd.equals("update")) {
-						%>
-							<td id="value">第 <select name="department">
-									<option value=""></option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-							</select> 事業部 第 <select name="team">
-									<option value=""></option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-							</select> グループ
-							</td>
+						<input type="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
 						<%
 						} else if (cmd.equals("confirm")) {
 						%>
-							<td id="value">第 <%= department %> 事業部 第 <%= team %> グループ
-							</td>
+						<input type="submit" value="完了" style="width: 120px; height: 50px; font-size: large;">
 						<%
 						}
 						%>
-
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="joiningDate">入社年月</label></td>
-							<td id="value"><input id="readonlyInput" type="month"
-								name="joiningDate" value="<%= joiningDate %>">
-							</td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="devloper">開発経験年数</label></td>
-							<td id="value"><input id="readonlyInput" type="number"
-								name="devloper" value="<%= devloper %>" style="margin-left: 0;"
-								min="0">年</td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="langSkill">習得技術（言語）</label></td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="langSkill" value="<%= langSkill %>"></td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="middleSkill">習得言語（ミドルウェア）</label>
-							</td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="middleSkill" value="<%= middleSkill %>">
-							</td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="hobby">趣味</label></td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="hobby" value="<%= hobby %>"></td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="talent">特技</label></td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="talent" value="<%= talent %>"></td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="intro">自己紹介</label></td>
-							<td id="value"><textarea id="readonlyInput" name="intro"><%= intro %></textarea>
-							</td>
-						</tr>
-						<tr id="inputRow">
-							<td id="item"><label for="position">役職</label></td>
-							<td id="value"><input id="readonlyInput" type="text"
-								name="position" value="<%= position %>"></td>
-						</tr>
-					</table>
-
-					<a href="<%= request.getContextPath() %>/view/employeeRegister.jsp">
-						<input type="button" value="戻る"
-						style="width: 120px; height: 50px; font-size: large;">
-					</a> <input type="submit" value="完了"
-						style="width: 120px; height: 50px; font-size: large;">
-				</form>
-
+					</form>
 			</div>
 
 		</div>
@@ -303,16 +299,16 @@ a {
 
 	<script>
 	// 変数受け渡し
-	const cmd = "<%= cmd %>";
+	const cmd = "<%=cmd%>";
 
-	// 必要な要素を取得
-	const readonlyInput = document.querySelectorAll("#readonlyInput");
+		// 必要な要素を取得
+		const readonlyInput = document.querySelectorAll("#readonlyInput");
 
-	if (cmd == "confirm") {
-		for (let i = 0; i < readonlyInput.length; i++) {
-			readonlyInput[i].readOnly = true;
+		if (cmd == "confirm") {
+			for (let i = 0; i < readonlyInput.length; i++) {
+				readonlyInput[i].readOnly = true;
+			}
 		}
-	}
 	</script>
 </body>
 </html>
