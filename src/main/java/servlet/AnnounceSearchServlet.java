@@ -42,12 +42,18 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 		try {
 			if (cmd.equals("keyword")) {
+				// フォームからパラメータを受け取る
 				String keyword = request.getParameter("keyword");
 
+				// メソッドを呼び出してSQL文実行
 				announceList = announceDAO.selectByKeyword(keyword);
+				
+				// 検索キーワードをリクエストスコープに登録する
+				request.setAttribute("keyword", keyword);
 			}
 
 			if (cmd.equals("filter")) {
+				// フォームからパラメータを受け取る
 				String announceFlag = request.getParameter("announceFlag");
 				String categoryId = request.getParameter("categoryId");
 
