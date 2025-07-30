@@ -667,7 +667,7 @@ public class UserDAO {
         //SQL文の作成
         String sql = "SELECT isbn,title,price FROM user_info " +
                 "WHERE department_id LIKE '%" + part + "%'"
-                + " AND team LIKE '%" + group  + "%'";
+                + " AND group_id LIKE '%" + group  + "%'";
         
         try {
             //DB接続
