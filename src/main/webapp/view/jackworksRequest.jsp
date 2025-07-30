@@ -1,7 +1,7 @@
 <%--
-JackWorks画面
+JackWorks申請一覧画面
 作成者：青木美波
-作成日 2025/07/11
+作成日 2025/07/28
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -20,24 +20,20 @@ String name = (String) request.getAttribute("name");
 if(name == null){
 	name = "";
 }
-
-int adminFlag = 1;
-int managerFlag = 0;
-// int adminFlag = account.getAdminFlag();
-// int adminFlag = account.getManagerFlag();
 %>
 
 <html>
 <head>
 <!-- タイトル -->
 <title>JackWorks</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
+<!-- 以下CSS -->
 <style>
+
 #contents {
 	width: 90%;
 	margin-right: auto;
@@ -444,16 +440,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	yearSelect.value = currentYear;
 });
 
-</script>
-
-
-<!-- 管理者/マネージャーのみ表示：管理者・マネージャー1 -->
-<%
-if((adminFlag == 1 && managerFlag == 0)||(adminFlag == 0 && managerFlag == 1)){
-%>
-
-<script>
-
 //リンクにするjavascript
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -509,8 +495,8 @@ document.addEventListener("DOMContentLoaded", function() {
 			//対象に設定されたdatasetを取り出す
 			const jackDelete = button.dataset.href; 
 			
-			if(confirm("本当に削除しますか？")){
-				alert("削除しました。");
+			if(confirm("申請を承認しますか？")){
+				alert("承認しました。");
 				
 				//設定したURLに遷移する
 				window.location.href = jackDelete;
@@ -524,58 +510,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </script>
 
-<%
-}
-%>
-
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
 		<%@ include file="../common/header.jsp"%>
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">
-			<div id="contents">
+		
+		<div id="contents">
 
 				<!-- タイトル部分 -->
 				<div id="link-title">
-					<h1 id="link-line">JackWorks</h1>
+					<h1 id="link-line">JackWorks申請一覧</h1>
 				</div>
-
-				<!-- ポイント一覧 -->
-				<div class="point-text">
-					<ul>
-						<li>ポイント一覧</li>
-					</ul>
-					<li><strong><%=monthJack.getTheme()%></strong></li>
-					
-					<!-- 管理者のみ表示：管理者1 -->
-					<%
-						if(adminFlag == 1 && managerFlag == 0){
-					%>
-					<!-- 今月のJackWorksを登録するボタン -->
-					<li><a href="<%=request.getContextPath()%>/view/monthJackworks.jsp"
-							class="btn btn--insert">テーマ更新</a></li>
-							
-					<!-- Jackworksの申請一覧ボタン -->
-					<li><a href="<%=request.getContextPath()%>/jackworksRequest"
-							class="btn btn--insert">申請一覧</a></li>
-					<% } %>
-
-				</div>
-				
-				
-
-				<!-- 画像表示 -->
-				<div id="point-img">
-					<img src="<%=request.getContextPath()%>/file/<%=monthJack.getImage()%>"
-							alt="ポイント一覧表" width="80%">
-				</div><br>
-
-				<!-- ポイント一覧説明 -->
-				<div class="point-box"><%=monthJack.getNote()%></div>
-				<div id="mag"></div>
-
-				<p>ポイント取得者一覧</p>
 
 				<!-- ポイント取得者一覧表示 -->
 				<table class="mar">
@@ -584,8 +531,8 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td class="search-box">
 						
 							<!-- 検索を行うフォーム -->
-							<form action="<%=request.getContextPath()%>/jackworksSearch"
-									class="search-form">
+							<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
+							<input type="hidden" name="cmd" value="request">
 								<label><input type="text" name="name" placeholder="キーワードを入力" value="<%= name %>"></label>
 								<button type="submit" aria-label="検索"></button>
 							</form>
@@ -593,6 +540,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							
 						<!-- 十年間の西暦検索を行うフォーム -->
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
+						<input type="hidden" name="cmd" value="request">
 						<td><label class="selectbox-4">
 								<select id="yearSelect" name="year-search">
 							</label>
@@ -618,16 +566,11 @@ document.addEventListener("DOMContentLoaded", function() {
 							</label>
 						<td><button type="submit" class="select-button" >検索</button>
 						</form></td>
-						
-				<!-- 管理者のみ表示：管理者1 -->
-				<%
-				if(adminFlag == 1 && managerFlag == 0){
-				%>
-					
+
 					<!-- JackWorkの新規登録を行うボタン -->
 					<td style="text-align: right">
-						<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
-							class="btn btn--insert">新規申請</a>
+						<a href="<%=request.getContextPath()%>/monthJackworks"
+							class="btn btn--insert">一覧に戻る</a>
 					</td>
 					</tr>
 				</thead>
@@ -659,10 +602,10 @@ document.addEventListener("DOMContentLoaded", function() {
 						if (note == null) {
 							note = "";
 						}
-						if (jack.getAdminFlag() == 1) {
+						if(jack.getAdminFlag() == 0){
 					%>
 					
-					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>">
+					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>&cmd=request">
 						<td data-label="年月日" class="num" name="date"><%= date %></td>
 						<td data-label="社員No" class="num" name="employeeNumber"><%=jack.getEmployeeNumber() %></td>
 						<td data-label="氏名" class="text-point" name="name"><%=jack.getName()%></td>
@@ -671,7 +614,8 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
 						<td data-label="備考" class="text" name="note"><%=note%></td>
 						<td><div style="text-align: center">
-							<a data-href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>" class="btn btn--delete">削除</a>
+							<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=agree" class="btn btn--delete">承認</a>
+							<a data-href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>&cmd=agree" class="btn btn--delete">不承認</a>
 							</div>
 						</td>
 					</tr>
@@ -683,127 +627,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				</tbody>
 				</table>
 
-				<%
-				}
-				%>
-						
-				<!-- マネージャーのみ表示：マネージャー1 -->
-				<%
-				if(adminFlag == 0 && managerFlag == 1){
-				%>
-					<!-- JackWorkの新規登録を行うボタン -->
-					<td style="text-align: right">
-						<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
-							class="btn btn--insert">新規申請</a>
-					</td>
-					</tr>
-				</thead>
-				</table>
-				
-				<!-- JackWork一覧表の表示 -->
-				<table style="width: 100%">
-					<thead style="margin: 0 auto">
-						<tr class="jack-table">
-							<th scope="col" class="jack-table">年月日</th>
-							<th scope="col" class="jack-table">社員No.</th>
-							<th scope="col" class="jack-table">氏名</th>
-							<th scope="col" class="jack-table">カテゴリ</th>
-							<th scope="col" class="jack-table">評価項目</th>
-							<th scope="col" class="jack-table">付与ポイント</th>
-							<th scope="col" class="jack-table">備考</th>
-						</tr>
-					</thead>
-					<tbody>
-					<%
-					for (int i = 0; i < jackList.size(); i++) {
-						Jackworks jack = (Jackworks) jackList.get(i);
-							String note = jack.getNote();
-						
-							MyFormat myformat = new MyFormat();
-							String date = myformat.breakDateFormat(jack.getPointsGetDate());
-						
-						if (note == null) {
-							note = "";
-						}
-						if (jack.getAdminFlag() == 1) {
-				
-					%>
-					
-					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>">
-						<td data-label="年月日" class="num" name="date"><%= date %></td>
-						<td data-label="社員No" class="num" name="employeeNumber"><%=jack.getEmployeeNumber() %></td>
-						<td data-label="氏名" class="text-point" name="name"><%=jack.getName()%></td>
-						<td data-label="カテゴリ" class="text-point" name="category"><%=jack.getCategory()%></td>
-						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
-						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
-						<td data-label="備考" class="text" name="note"><%=note%></td>
-					</tr>
-
-					<%			
-						}
-					}
-					%>
-				</tbody>
-				</table>
-
-				<%
-				}
-				%>
-				
-
-				<!-- ユーザーのみ表示：ユーザー0 -->
-				<%
-					if(adminFlag == 0 && managerFlag == 0){
-				%>
-				<!-- JackWork一覧表の表示 -->
-				<table style="width: 100%">
-					<thead style="margin: 0 auto">
-						<tr class="jack-table">
-							<th scope="col" class="jack-table">年月日</th>
-							<th scope="col" class="jack-table">社員No.</th>
-							<th scope="col" class="jack-table">氏名</th>
-							<th scope="col" class="jack-table">カテゴリ</th>
-							<th scope="col" class="jack-table">評価項目</th>
-							<th scope="col" class="jack-table">付与ポイント</th>
-							<th scope="col" class="jack-table">備考</th>
-						</tr>
-					</thead>
-					<tbody>
-					<%
-					for (int i = 0; i < jackList.size(); i++) {
-						Jackworks jack = (Jackworks) jackList.get(i);
-							String note = jack.getNote();
-						
-							MyFormat myformat = new MyFormat();
-							String date = myformat.breakDateFormat(jack.getPointsGetDate());
-						
-						if (note == null) {
-							note = "";
-						}
-						if (jack.getAdminFlag() == 1) {
-					%>
-					
-					<tr>
-						<td data-label="年月日" class="num" name="date"><%= date %></td>
-						<td data-label="社員No" class="num" name="employeeNumber"><%=jack.getEmployeeNumber() %></td>
-						<td data-label="氏名" class="text-point" name="name"><%=jack.getName()%></td>
-						<td data-label="カテゴリ" class="text-point" name="category"><%=jack.getCategory()%></td>
-						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
-						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
-						<td data-label="備考" class="text" name="note"><%=note%></td>
-					</tr>
-
-					<%
-						}
-					}
-					%>
-				</tbody>
-				</table>
-				
-				<%
-				}
-				%>
-				
 				<!-- ページネーション -->
 				<ol class="pagination">
     				<li class="prev"><a href="#">前へ</a></li>

@@ -30,7 +30,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = null;
 		// 遷移先のパス
-		String path = "/monthJackworks";
+		String path = "/homejack_renewal/monthJackworks";
 
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
@@ -69,17 +69,6 @@ public class JackworksRegisterServlet extends HttpServlet {
 				return;
 			}
 
-			//仮登録のJackWorksIDを取得する
-			//				int jackworksId = jackworksDAO.selectByTemporaryFlag();
-			//
-			//				if (jackworksId == 0) {
-			//					error = "仮登録の情報が見つからないため、登録が出来ません。";
-			//					cmd = "JackworksList";
-			//					return;
-			//				}
-			//
-			//				jack.setJackworksId(jackworksId);
-
 			jack = (Jackworks) session.getAttribute("jack");
 
 			//registerJackworks.jspから各値を受け取り、オブジェクトに格納
@@ -104,6 +93,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 			jack.setOther(request.getParameter("other"));
 
 			jackworksDAO.insert(jack);
+			session.invalidate();
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、JackWorksの登録は表示できませんでした。";
@@ -120,8 +110,13 @@ public class JackworksRegisterServlet extends HttpServlet {
 			}
 			// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
 			request.setAttribute("cmd", cmd);
+			
+			if(path.equals("/homejack_renewal/monthJackworks")) {
+			response.sendRedirect(path);
 			// jackWorks.jspにフォワード
+			}else {
 			request.getRequestDispatcher(path).forward(request, response);
+			}
 		}
 	}
 
