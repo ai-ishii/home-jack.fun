@@ -39,7 +39,7 @@ public class CommonTable {
 	}
 	
 	//お知らせカテゴリを取得するメソッド
-	public String selectAnnounceCategory(int categoryId) {
+	public String selectCategory(int categoryId) {
 		
 		Map<Integer, String> map = new HashMap<>();
 		

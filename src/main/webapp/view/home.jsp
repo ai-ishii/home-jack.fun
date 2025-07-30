@@ -9,11 +9,12 @@
  */
 -->
 
+<%@page import="util.CommonTable"%>
 <%@page import="dao.AnnounceDAO"%>
 <%@page import="util.MyFormat"%>
 <%@page import="bean.Announce"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 ArrayList<Announce> importantList = (ArrayList<Announce>)request.getAttribute("important_list");
@@ -23,6 +24,7 @@ ArrayList<Announce> activityList = (ArrayList<Announce>)request.getAttribute("ac
 AnnounceDAO announceDAO = new AnnounceDAO();
 
 MyFormat myformat = new MyFormat();
+CommonTable commonTable = new CommonTable();
 %>
 
 <html>
@@ -166,7 +168,7 @@ MyFormat myformat = new MyFormat();
 					<div class="announce-list">
 						<ul>
 							<%
-							if (importantList == null || importantList.size() == 0) {
+							if (importantList.isEmpty()) {
 							%>
 							<p>重要なお知らせはありません</p>
 							
@@ -179,7 +181,7 @@ MyFormat myformat = new MyFormat();
 								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= importantList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(importantList.get(i).getRegistDate()) %></p>
 									<p class="tag">
-										<span><%= announceDAO.selectByCategory(importantList.get(i).getAnnounceCategoryId()) %></span>
+										<span><%= commonTable.selectCategory(importantList.get(i).getAnnounceCategoryId()) %></span>
 									</p>
 									<div class="title">
 										<p class="article"><%= importantList.get(i).getTitle() %></p>
@@ -202,7 +204,7 @@ MyFormat myformat = new MyFormat();
 					<div class="announce-list">
 						<ul>
 							<%
-							if (announceList == null || announceList.size() == 0) {
+							if (announceList.isEmpty()) {
 							%>
 							<p>最新のお知らせはありません</p>
 							
@@ -215,7 +217,7 @@ MyFormat myformat = new MyFormat();
 								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= announceList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(announceList.get(i).getRegistDate()) %></p>
 									<p class="tag">
-										<span><%= announceDAO.selectByCategory(announceList.get(i).getAnnounceCategoryId()) %></span>
+										<span><%= commonTable.selectCategory(announceList.get(i).getAnnounceCategoryId()) %></span>
 									</p>
 									<div class="title">
 										<p class="article"><%= announceList.get(i).getTitle() %></p>
@@ -238,7 +240,7 @@ MyFormat myformat = new MyFormat();
 					<div class="announce-list">
 						<ul>
 							<%
-							if (activityList == null || activityList.size() == 0) {
+							if (activityList.isEmpty()) {
 							%>
 							<p>最新のチーム活動はありません</p>
 							
@@ -251,7 +253,7 @@ MyFormat myformat = new MyFormat();
 								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= activityList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(activityList.get(i).getRegistDate()) %></p>
 									<p class="tag">
-										<span><%= announceDAO.selectByCategory(activityList.get(i).getAnnounceCategoryId()) %></span>
+										<span><%= commonTable.selectCategory(activityList.get(i).getAnnounceCategoryId()) %></span>
 									</p>
 									<div class="title">
 										<p class="article"><%= activityList.get(i).getTitle() %></p>
