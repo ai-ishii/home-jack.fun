@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,29 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.QuarterGoal;
+import util.DAOconnection;
 
 public class QuarterGoalDAO {
-
-	//接続用の情報をフィールドに定数として定義
-	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
-	private static final String URL = "jdbc:mariadb://localhost/jackdb";
-	private static final String USER = "root";
-	private static final String PASSWD = "root123";
-
-	/**
-	 * データベース接続を行うメソッド
-	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
-	 * @return con
-	 */
-	private static Connection getConnection() {
-		try {
-			Class.forName(RDB_DRIVE);
-			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
-			return con;
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
-	}
 
 	/**
 	 * 検索を行うメソッド
@@ -52,7 +31,7 @@ public class QuarterGoalDAO {
 				+ "achieve_rate_reviewer, evaluation, quarterly_flag  FROM quarter_goal_info WHERE user_id=" + userId;
 
 		try {
-			con = getConnection();
+			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
 			//SQL文をDBに移行
@@ -95,8 +74,7 @@ public class QuarterGoalDAO {
 		}
 		return quaterGoalList;
 	}
-	
-		
+
 	/**
 	 * 
 	 * @param quarterGoal
@@ -107,7 +85,6 @@ public class QuarterGoalDAO {
 		Connection con = null;
 		Statement smt = null;
 		PreparedStatement ps = null;
-		
 
 		//SQL文
 		String sql = "UPDATE quarter_goal_info SET "
@@ -120,7 +97,7 @@ public class QuarterGoalDAO {
 				+ "quarterly_flag=? "
 				+ "WHERE quarter_goal_id = ?";
 		try {
-			con = getConnection();
+			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 			ps = con.prepareStatement(sql);
 
@@ -130,8 +107,8 @@ public class QuarterGoalDAO {
 			ps.setString(4, quarterGoal.getReport());
 			ps.setString(5, quarterGoal.getAchieveRateReviewer());
 			ps.setString(6, quarterGoal.getEvaluation());
-			ps.setInt(7,quarterGoal.getQuarterlyFlag());
-			ps.setInt(8,quarterGoal.getQuarterGoalId());
+			ps.setInt(7, quarterGoal.getQuarterlyFlag());
+			ps.setInt(8, quarterGoal.getQuarterGoalId());
 
 			//SQL文をDBに移行
 			ps.executeUpdate();
