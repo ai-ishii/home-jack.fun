@@ -295,8 +295,8 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
-				+ "WHERE announce_category_id = '2' ORDER BY regist_date DESC LIMIT " + numArticles;
+		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag "
+				+ "FROM announce_info WHERE announce_category_id = '2' ORDER BY regist_date DESC LIMIT " + numArticles;
 
 		try {
 			// DBに接続
@@ -539,7 +539,7 @@ public class AnnounceDAO {
 
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
-		String sql = " SELECT * FROM announce_info "
+		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
 				+ "WHERE name LIKE '%" + keyword + "%' "
 				+ "OR title LIKE '%" + keyword + "%' "
 				+ "OR text LIKE '%" + keyword + "%' "
@@ -604,7 +604,7 @@ public class AnnounceDAO {
 
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
-		String sql = "SELECT * FROM announce_info "
+		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
 				+ "WHERE CASE WHEN '" + announceFlag + "' = '' THEN '" + announceFlag + "' "
 				+ "ELSE announce_flag END = '" + announceFlag + "' "
 				+ "AND CASE WHEN '" + announceCategoryId + "' = '' THEN '" + announceCategoryId + "' "
