@@ -108,7 +108,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
 		} finally {
-			// エラーが空じゃなければ（エラーがあれば）
+			// エラーがあれば
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
