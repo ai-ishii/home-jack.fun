@@ -1,3 +1,13 @@
+/**
+ * 個人目標確認機能
+ * 
+ * 作成者：月向亮太
+ * 
+ * 作成日：7月8日
+ * 
+ * 最終更新日：7月25日
+ * 
+ */
 package servlet;
 
 import java.io.IOException;
@@ -14,6 +24,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 
 @WebServlet("/goalConfirm")
 public class GoalConfirmServlet extends HttpServlet {

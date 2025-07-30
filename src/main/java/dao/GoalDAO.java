@@ -1,3 +1,13 @@
+/**
+ * 年間目標DAO
+ * 
+ * 作成者：月向亮太
+ * 
+ * 作成日：7月8日
+ * 
+ * 最終更新日：7月25日
+ * 
+ */
 package dao;
 
 import java.sql.Connection;

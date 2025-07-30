@@ -1,3 +1,13 @@
+/**
+ * 個人目標詳細機能
+ * 
+ * 作成者：月向亮太
+ * 
+ * 作成日：7月11日
+ * 
+ * 最終更新日：7月25日
+ * 
+ */
 package servlet;
 
 import java.io.IOException;
