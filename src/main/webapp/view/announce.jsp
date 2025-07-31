@@ -176,6 +176,10 @@ String category = null;
 	margin-top: 10px;
 }
 
+.modal_content label {
+	color: #777;
+}
+
 /* モーダルのコンテンツ部分のテキストの指定 */
 .modal_content p {
 	margin: 1em 0;
@@ -297,7 +301,7 @@ a {
 					</div>
 
 					<form action="<%=request.getContextPath()%>/announceSearch"
-							method="GET">
+							method="POST">
 						<div class="search-form">
 							<input type="text" id="searchInput" name="keyword"
 								placeholder="キーワードを入力"> 
@@ -311,17 +315,18 @@ a {
 						<div class="modal js_modal">
 							<div class="modal_container">
 								<div class="modal_close js_modal_close">×</div>
-								<div class="modal_content">
+								<div class="modal_content js_modal_content">
 									<form action="<%=request.getContextPath()%>/announceSearch"
-										method="GET">
+										method="POST">
 										<div>
 											<input type="checkbox" id="important" value="1"
-												name="announceFlag"> <label for="important">重要記事</label>
-											<input type="hidden" name="announceFlag" value="">
+												name="announce_flag"> 
+												<label for="important">重要記事</label>
+											<input type="hidden" name="announce_flag" value="">
 										</div>
 										<div>
-											<label for="categorySelect">重要記事</label> <select
-												id="categorySelect" name="categoryId">
+											<label for="category_select">カテゴリ</label> 
+											<select id="category_select" name="category_id">
 												<option value="">全カテゴリ</option>
 												<option value="1">お知らせ</option>
 												<option value="2">チーム活動</option>
@@ -330,12 +335,12 @@ a {
 											</select>
 										</div>
 										<div>
-											<label for="startDate">開始日</label> <input
-												type="datetime-local" id="startDate" name="startDate">
+											<label for="start_date">開始日</label> 
+											<input type="datetime-local" id="start_date" name="start_date">
 										</div>
 										<div>
-											<label for="endDate">終了日</label> <input type="datetime-local"
-												id="endDate" name="endDate">
+											<label for="end_date">終了日</label> 
+											<input type="datetime-local" id="end_date" name="end_date">
 										</div>
 										<input type="hidden" name="cmd" value="filter">
 										<button type="submit">検索</button>
@@ -411,7 +416,8 @@ a {
 	<script>
 		const modal = document.querySelector('.js_modal'), 
 			open = document.querySelector('.js_modal_open'), 
-			close = document.querySelector('.js_modal_close');
+			close = document.querySelector('.js_modal_close'),
+			content = document.querySelector('.js_modal_content');
 
 		function modalOpen() {
 			modal.classList.add('is-active');
@@ -423,12 +429,10 @@ a {
 		}
 		close.addEventListener('click', modalClose);
 
-		function modalOut(e) {
-			if (e.target == modal) {
-				modal.classList.remove('is-active');
-			}
+		function modalOut() {
+			modal.classList.remove('is-active');
 		}
-		addEventListener('click', modalOut);
+		addEventListener('blur', modalOut);
 	</script>
 </body>
 </html>

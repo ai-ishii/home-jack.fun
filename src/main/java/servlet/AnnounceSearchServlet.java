@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/announceSearch")
 public class AnnounceSearchServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// 変数宣言
@@ -62,11 +62,11 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 			if (cmd.equals("filter")) {
 				// フォームからパラメータを受け取る
-				String announceFlag = request.getParameter("announceFlag");
-				String categoryId = request.getParameter("categoryId");
+				String announceFlag = request.getParameter("announce_flag");
+				String categoryId = request.getParameter("category_id");
 
-				String start = request.getParameter("startDate");
-				String end = request.getParameter("endDate");
+				String start = request.getParameter("start_date");
+				String end = request.getParameter("end_date");
 
 				ZoneId zoneId = ZoneId.of("Asia/Tokyo");
 

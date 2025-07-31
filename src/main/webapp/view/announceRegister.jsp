@@ -111,18 +111,18 @@ textarea {
 				<div id="content_box">
 
 					<div class="form_box">
-						<label for="title" class="control_label">タイトル</label> <input
-							type="text" id="title" name="title">
+						<label for="title" class="control_label">タイトル</label> 
+						<input type="text" id="title" name="title">
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="registDate" class="control_label">投稿日時</label> <input
-							id="registDate" type="datetime-local" name="registDate" />
+						<label for="regist_date" class="control_label">投稿日時</label> 
+						<input id="regist_date" type="datetime-local" name="regist_date" />
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="category" class="control_label">カテゴリ</label> <select
-							id="category" name="categoryId">
+						<label for="category" class="control_label">カテゴリ</label> 
+						<select id="category" name="category_id">
 							<option value="1">お知らせ</option>
 							<option value="2">チーム活動</option>
 							<option value="3">ナレッジベース</option>
@@ -131,9 +131,9 @@ textarea {
 					</div>
 
 					<div class="form_box">
-						<label for="announce_flag" class="control_label">重要記事</label> <input
-							type="checkbox" id="announce_flag" name="announceFlag" value="1">
-						<input type="hidden" name="announceFlag" value="0">
+						<label for="announce_flag" class="control_label">重要記事</label> 
+						<input type="checkbox" id="announce_flag" name="announce_flag" value="1">
+						<input type="hidden" name="announce_flag" value="0">
 					</div>
 
 					<div class="form_box">
@@ -142,15 +142,15 @@ textarea {
 					</div>
 
 					<div class="form_box">
-						<label for="tag" class="control_label">タグ</label> <input
-							type="text" id="tag" name="tag">
+						<label for="tag" class="control_label">タグ</label> 
+						<input type="text" id="tag" name="tag">
 					</div>
 
 					<div class="btm_box">
-						<input
-							onclick="location.href='<%=request.getContextPath()%>/announce'"
-							type="button" value="キャンセル"> <input type="submit"
-							value="一時保存"> <input type="submit" value="登録確定">
+						<input onclick="location.href='<%=request.getContextPath()%>/announce'"
+							type="button" value="キャンセル"> 
+						<input onclick="location.href='#'" type="button" value="一時保存"> 
+						<input type="submit" value="登録確定">
 					</div>
 				</div>
 			</form>
