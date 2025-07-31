@@ -1,3 +1,11 @@
+/**
+ * お知らせを登録するサーブレット
+ * 
+ * 作成者 : 大北直弥
+ * 
+ * 作成日 : 2025/07/14
+ * 更新日 : 2025/07/30
+ */
 package servlet;
 
 import java.io.IOException;
@@ -39,11 +47,11 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			// jspファイルからパラメータ取得
 			String title = request.getParameter("title");
 			String text = request.getParameter("text");
-			int announceFlag = Integer.parseInt(request.getParameter("announceFlag"));
-			int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
+			int categoryId = Integer.parseInt(request.getParameter("category_id"));
 
 			// フォームから受け取った登録日時(String型)をLocalDateTimeに変換する
-			String regist = request.getParameter("registDate");
+			String regist = request.getParameter("regist_date");
 			localDateTime = LocalDateTime.parse(regist);
 
 			// LocalDateTimeをTimestampに変換する(タイムゾーンを考慮)
