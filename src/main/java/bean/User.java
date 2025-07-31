@@ -7,7 +7,7 @@ public class User {
 
 	
 	private int userId;					//ユーザー情報ID
-	private String accountId;				//アカウントID
+	private String accountId;			//アカウントID
 	private String name;				//氏名
 	private String nameKana;			//氏名（カナ）
 	private Date birthday;				//生年月日

@@ -1,9 +1,10 @@
 <%--
-商品登録画面(ユーザー画面)
+個人情報詳細画面(管理者)
 
 作成者:占部虎司郎
 
 作成日: 2025/7/11
+更新日: 2025/7/25
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -22,7 +23,6 @@ User user = (User) request.getAttribute("user");
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-</head>
 <style>
 
 #contents {
@@ -49,7 +49,7 @@ User user = (User) request.getAttribute("user");
 	text-align: center;
 }
 
-<%-- 追加したよ --%>
+/* 追加したよ */
 #detail-list{
 margin:0 auto;
 }
@@ -88,6 +88,7 @@ text-align: center;
 
 
 </style>
+</head>
 
 <body>
 	<div id="wrap">
@@ -107,6 +108,15 @@ text-align: center;
 				String birthday = myFormat.breakDateFormat(user.getBirthday());
 				
 				String post = myFormat.addHyphen(user.getPost());
+				
+				String updateDate = "";
+				String registDate = "";
+				
+				if(user.getUpdateDate() != null){
+					updateDate = myFormat.dateFormat(user.getUpdateDate());
+				}else{
+					registDate = myFormat.dateFormat(user.getRegistDate());
+				}
 				%>
 				
 				<h3 id="koji-name">個人情報：<%=user.getName() %></h3>
@@ -118,7 +128,7 @@ text-align: center;
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">所属</td>
-						<td>第<%=user.getDepartment() %>部&nbsp;第<%=user.getTeam() %>グループ</td>
+						<td>第<%=user.getDepartmentId() %>部&nbsp;第<%=user.getGroupId() %>グループ</td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">氏名</td>
@@ -150,7 +160,11 @@ text-align: center;
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">子供</td>
-						<td><%=user.getChildren() %>人</td>
+						<td>
+						<%if(user.getChildren() != 0){ %>
+						<%=user.getChildren() %>人
+						<%} %>
+						</td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">勤務年数</td>
@@ -169,18 +183,18 @@ text-align: center;
 						<td><%=user.getQualification() %></td>
 					</tr>
 					<%
-					if(user.getUpdateDate() != null){
+					if(updateDate != ""){
 					%>
 					<tr class="table-single">
 						<td class="table-double">更新日時</td>
-						<td><%=user.getUpdateDate() %></td>
+						<td><%=updateDate %></td>
 					</tr>
 					<%
 					}else{
 					%>
 					<tr>
 						<td class="table-double">登録日時</td>
-						<td><%=user.getRegistDate() %></td>
+						<td><%=registDate %></td>
 					</tr>
 					<%
 					}
