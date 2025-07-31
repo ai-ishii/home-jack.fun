@@ -4,7 +4,7 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/07/30
+更新日 : 2025/07/31
  -->
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Announce"%>
@@ -150,8 +150,13 @@ input[type="submit"], input[type="button"] {
 						<input type="submit" value="一時保存"> 
 						<input type="submit" value="編集確定">
 					</div>
+					
+					<a href="<%=request.getContextPath()%>/announceDelete
+					?announceId=<%=announce.getAnnounceId()%>"
+					onclick="return confirm('本当に削除しますか？')">削除</a>
+					
 				</div>
 			</form>
 		</div>
-	</div>
+</div>
 </body>

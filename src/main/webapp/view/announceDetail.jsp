@@ -4,7 +4,7 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/07/30
+更新日 : 2025/07/31
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -172,9 +172,6 @@ String category = null;
 
 				<a href="<%=request.getContextPath()%>/announceDetail
 					?announceId=<%=announce.getAnnounceId()%>&cmd=update">編集</a>
-
-				<a href="<%=request.getContextPath()%>/announceDelete
-					?announceId=<%=announceId%>">削除</a>
 
 				<%
 				if (announceNum > 0) {
