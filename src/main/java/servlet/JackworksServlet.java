@@ -11,6 +11,8 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 import bean.Jackworks;
 import dao.JackworksDAO;
 import jakarta.servlet.ServletException;
@@ -35,19 +37,19 @@ public class JackworksServlet extends HttpServlet {
 		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
-			//SearchJackworksからcmd=search もしくはmonthJackworks.jspからcmd=update受け取る
+			//SearchJackworksからcmd=search もしくはjackworksRequest.jspからcmd=requestを受け取る
 			cmd = (String) request.getAttribute("cmd");
 			
 			if(cmd == null) {
 				cmd="";
 			}
 			
+			//検索された文字(name)を受け取る
 			String name = (String) request.getAttribute("name");
 
 			if (cmd.equals("search")||cmd.equals("request")){
 				//jackWorksの検索結果が格納されたjack_listを受け取る
 				jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
-				
 			} else {
 				// JackWorksの全情報を取得するメソッド
 				jackList = jackworksDAO.selectAll();
@@ -56,6 +58,13 @@ public class JackworksServlet extends HttpServlet {
 			if(cmd.equals("request")){
 				path="/view/jackworksRequest.jsp";
 			}
+			
+			// jackListをJSON形式の文字列に変換
+			String jackListJson = new Gson().toJson(jackList);
+			
+			// JSPにJSON文字列を渡す
+			request.setAttribute("jackList_json", jackListJson);
+			
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
 			request.setAttribute("name", name);
@@ -80,6 +89,7 @@ public class JackworksServlet extends HttpServlet {
 		}
 	}
 
+	//以下ファイル出力用の処理
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -95,7 +105,7 @@ public class JackworksServlet extends HttpServlet {
 		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
-			//SearchJackworksからcmd=search もしくはmonthJackworks.jspからcmd=update受け取る
+			//SearchJackworksからcmd=searchを受け取る
 			cmd = (String) request.getAttribute("cmd");
 
 			if (cmd == null) {
@@ -128,7 +138,7 @@ public class JackworksServlet extends HttpServlet {
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// jackWorks.jspにフォワード
+			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}

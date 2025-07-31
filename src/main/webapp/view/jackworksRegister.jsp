@@ -8,7 +8,7 @@ JackWorks登録画面
 <%@page import="java.text.SimpleDateFormat,java.util.Date,java.sql.Timestamp,java.util.ArrayList,bean.Jackworks,bean.Monthjack"%>
 
 <%
-//JackWorksの全情報が格納されたjack_listを受け取る
+//ページ分けを行うためのcmdを受け取る
 String cmd = (String) request.getAttribute("cmd");
 
 if(cmd == null){
@@ -241,8 +241,6 @@ button.btn-border:active:before {
 					<td><textarea name="note" rows="" cols=""></textarea></td>
 				<tr>
 			</table>
-			
-			<br>
 				
 				<!-- 登録ボタン -->
 				<div id="JackWorks-submit">
@@ -332,8 +330,6 @@ button.btn-border:active:before {
 					<td><textarea name="other" rows="" cols=""></textarea></td>
 			</table>
 
-			<br>
-
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
@@ -344,8 +340,8 @@ button.btn-border:active:before {
 			</form>
 			
 			<% } %>
-	</div>
-		
+			
+		</div>
 		</div>
 	</div>
 </body>

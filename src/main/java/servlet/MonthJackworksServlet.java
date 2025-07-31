@@ -24,6 +24,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/monthJackworks")
@@ -41,11 +42,13 @@ public class MonthJackworksServlet extends HttpServlet {
 		//オブジェクト生成
 		MonthjackDAO monthJackDAO = new MonthjackDAO();
 		Monthjack monthJack = new Monthjack();
+		HttpSession session = request.getSession();
 
 		try {
 			
 			//jackWorksの検索結果が格納されたjack_listを受け取る
 			ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+			//検索された文字(name)を受け取る
 			String name = (String) request.getAttribute("name");
 
 			//SearchJackworksからcmd=searchを受け取る
@@ -58,8 +61,9 @@ public class MonthJackworksServlet extends HttpServlet {
 			//MonthJackWorksの全情報を取得するメソッド
 			monthJack = monthJackDAO.selectAll();
 
-			//取得したListをリクエストスコープにmonthJackで登録
-			request.setAttribute("monthJack", monthJack);
+			//取得したmonthJackをリクエストスコープにmonthJackで登録
+			session.setAttribute("monthJack", monthJack);
+			
 			//cmdをリクエストスコープにcmdで登録
 			request.setAttribute("cmd", cmd);
 			request.setAttribute("name", name);
@@ -84,12 +88,13 @@ public class MonthJackworksServlet extends HttpServlet {
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			//jackWorks.jspにフォワード
+			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 
 	}
 
+	//以下ファイル出力のための処理
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -103,6 +108,7 @@ public class MonthJackworksServlet extends HttpServlet {
 		//オブジェクト生成
 		MonthjackDAO monthJackDAO = new MonthjackDAO();
 		Monthjack monthJack = new Monthjack();
+		HttpSession session = request.getSession();
 
 		try {
 		// ファイル取得用の情報を受け取る
@@ -116,6 +122,7 @@ public class MonthJackworksServlet extends HttpServlet {
 			String fileName = "";
 			Pattern pattern = Pattern.compile("filename=\"(.*)\"");
 			Matcher matcher = pattern.matcher(contentDisposition);
+			
 			// 抽出したファイル名が存在していれば抽出、なければ空白
 			if (matcher.find()) {
 				fileName = matcher.group(1);
@@ -154,8 +161,8 @@ public class MonthJackworksServlet extends HttpServlet {
 		//MonthJackWorksの全情報を取得するメソッド
 		monthJack = monthJackDAO.selectAll();
 		
-		//取得したListをリクエストスコープにmonthJackで登録
-		request.setAttribute("monthJack", monthJack);
+		//取得したmonthJackをリクエストスコープにmonthJackで登録
+		session.setAttribute("monthJack", monthJack);
 		
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、今月のJackWorksは登録できませんでした。";
@@ -172,7 +179,7 @@ public class MonthJackworksServlet extends HttpServlet {
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 		}
-			//jackWorks.jspにフォワード
+			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}

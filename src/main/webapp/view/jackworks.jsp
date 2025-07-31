@@ -2,6 +2,7 @@
 JackWorks画面
 作成者：青木美波
 作成日 2025/07/11
+更新日 2025/07/29
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -11,16 +12,17 @@ JackWorks画面
 //JackWorksの全情報が格納されたjack_listを受け取る
 ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
 //今月のJackWorksの全情報が格納されたmonthJackを受け取る
-Monthjack monthJack = (Monthjack) request.getAttribute("monthJack");
-//権限分け
+Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
+//ログインしたアカウントの情報が格納されたaccountを受け取る
 Account account = (Account)session.getAttribute("account");
-
+//検索された文字列が格納されたnameを受け取る
 String name = (String) request.getAttribute("name");
 
 if(name == null){
 	name = "";
 }
 
+//権限分け
 int adminFlag = 1;
 int managerFlag = 0;
 // int adminFlag = account.getAdminFlag();
@@ -37,6 +39,7 @@ int managerFlag = 0;
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
+<!-- 以下CSS -->
 <style>
 #contents {
 	width: 90%;
@@ -72,12 +75,14 @@ int managerFlag = 0;
 	text-align: center;
 }
 
-#mag {
-	margin-top: 6%;
+/* 余白 */
+.mag {
+	margin-top: 2%;
 }
 
+/* 今月のJackworks備考欄 */
 .point-box {
-	width: 80%;
+	width: 90%;
 	white-space: pre-wrap;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
@@ -87,9 +92,10 @@ int managerFlag = 0;
 
 .point-text {
 	margin: 0 auto;
-	width: 80%;
+	width: 90%;
 }
 
+/* 表関係 */
 table {
 	border-collapse: collapse;
 	margin: 0 auto;
@@ -118,7 +124,7 @@ background-color: #ffffff;
 table thead th.jack-table{
 	font-size: .85em;
 	padding: 1em;
-	width: 1em;
+	width: 100px;
 }
 
 table thead tr.jack-table{
@@ -148,7 +154,7 @@ table thead tr.jack-table{
 	font-weight: bold;
 }
 
-/* 削除ボタン */
+/* ボタン関係 */
 html {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -176,6 +182,7 @@ html {
 	border-radius: 8.5rem;
 }
 
+/* 削除ボタン */
 a.btn--delete {
 	color: #000;
 	background-color: #bbc8e6;
@@ -305,6 +312,7 @@ td.search-box form {
 	cursor: pointer;
 }
 
+/* 検索窓のデザイン維持 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -323,7 +331,7 @@ button {
 	border: none;
 }
 
-/* ボタンのスタイル */
+/* 検索ボタン */
 .select-button {
 	display: flex;
 	align-items: center;
@@ -412,12 +420,34 @@ button {
     border-right: 1px solid #ffc342;
 }
 
+/* 案件情報収集用 */
 .case-link{
 cursor:pointer;
 }
 
 .case-link:hover{
 background-color:#c0c0c0;
+}
+
+.jack-fontsize{
+font-size: 16px;
+}
+
+.jack-button{
+height: 20px;
+margin-left: auto;
+display:inline-flex;
+gap: 6px;
+}
+
+.jack-display{
+display:inline-flex;
+justify-content: space-between;
+width: 100%;
+}
+
+.jack-mana{
+height: 20px;
 }
 
 </style>
@@ -427,7 +457,7 @@ background-color:#c0c0c0;
 <!-- 過去十年の年号を取得 -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-	const yearSelect = document.getElementById('yearSelect'); // セレクトボックスの要素を取得
+	const yearSelect = document.getElementById('yearSelect'); // セレクトボックスのidを取得
 	const currentYear = new Date().getFullYear(); // 現在の年を取得
 
 	// 現在の年から過去10年までを生成する範囲を設定
@@ -444,14 +474,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	yearSelect.value = currentYear;
 });
 
-</script>
+//Jackworksの情報が格納されたjackList_jsonを受け取る(ページネーション用)
+const allData = ${jackList_json};
 
+</script>
 
 <!-- 管理者/マネージャーのみ表示：管理者・マネージャー1 -->
 <%
 if((adminFlag == 1 && managerFlag == 0)||(adminFlag == 0 && managerFlag == 1)){
 %>
-
 <script>
 
 //リンクにするjavascript
@@ -463,24 +494,19 @@ document.addEventListener("DOMContentLoaded", function() {
 	//各セルをひとつずつチェック
 	categoryCells.forEach(cell =>{
 		console.log(cell.textContent);
-
 		//セル取得後、前後の空白削除
 		const category = cell.textContent.trim();
 
-		
 	if(category === '案件情報収集'){
-		
 		// 一致した場合、そのセルの親要素である行（tr）を取得
 		const row = cell.closest('tr');
 		
 		// クラスが記述されたタグにクリックしたときの処理を追加
 		if(row){
-
 			 // CSSを適用
 			row.classList.add('case-link');
-			
+		
 			row.addEventListener("click", function(event) {
-			
 				//ボタンを押した場合を省く
 				if(event.target.closest('.btn')){
 				return;
@@ -498,6 +524,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 	});
 
+	//削除アラート用
 	const btn = document.querySelectorAll(".btn--delete");
 
 	// それぞれの td にクリックしたときの処理を追加
@@ -544,45 +571,62 @@ document.addEventListener("DOMContentLoaded", function() {
 				<!-- ポイント一覧 -->
 				<div class="point-text">
 					<ul>
-						<li>ポイント一覧</li>
+						<li class="jack-fontsize">＜ポイント一覧＞</li>
 					</ul>
-					<li><strong><%=monthJack.getTheme()%></strong></li>
+				<div class="jack-display">
+					<li class="jack-fontsize"><strong><%=monthJack.getTheme()%></strong></li>
 					
 					<!-- 管理者のみ表示：管理者1 -->
 					<%
 						if(adminFlag == 1 && managerFlag == 0){
 					%>
 					<!-- 今月のJackWorksを登録するボタン -->
-					<li><a href="<%=request.getContextPath()%>/view/monthJackworks.jsp"
-							class="btn btn--insert">テーマ更新</a></li>
-							
-					<!-- Jackworksの申請一覧ボタン -->
-					<li><a href="<%=request.getContextPath()%>/jackworksRequest"
-							class="btn btn--insert">申請一覧</a></li>
+					<div class="jack-button">
+						<li><a href="<%=request.getContextPath()%>/view/monthJackworks.jsp"
+								class="btn btn--insert">テーマ更新</a>
+						</li>
+						<!-- Jackworksの申請一覧ボタン -->
+						<li><a href="<%=request.getContextPath()%>/jackworksRequest" 
+								class="btn btn--insert">申請一覧</a>
+						</li>
+					</div>
 					<% } %>
-
+					
+					<!-- マネージャーのみ表示：マネージャー1 -->
+					<%
+					if(adminFlag == 0 && managerFlag == 1){
+					%>
+					<div class="jack-mana">
+					<!-- Jackworksの申請一覧ボタン -->
+					<li><a href="<%=request.getContextPath()%>/jackworksRequest" 
+							class="btn btn--insert">申請一覧</a>
+					</li>
+					</div>
+					<% } %>
 				</div>
-				
-				
+				</div>
+			
+				<!-- 余白 -->
+				<div class="mag"></div>
 
 				<!-- 画像表示 -->
 				<div id="point-img">
 					<img src="<%=request.getContextPath()%>/file/<%=monthJack.getImage()%>"
-							alt="ポイント一覧表" width="80%">
-				</div><br>
+							alt="ポイント一覧表" width="90%">
+				</div>
 
 				<!-- ポイント一覧説明 -->
 				<div class="point-box"><%=monthJack.getNote()%></div>
-				<div id="mag"></div>
+				<div class="mag"></div>
 
-				<p>ポイント取得者一覧</p>
+				<p class="jack-fontsize">＜ポイント取得者一覧＞</p>
 
 				<!-- ポイント取得者一覧表示 -->
 				<table class="mar">
 				<thead style="margin: 0 auto">
 					<tr>
 						<td class="search-box">
-						
+
 							<!-- 検索を行うフォーム -->
 							<form action="<%=request.getContextPath()%>/jackworksSearch"
 									class="search-form">
@@ -614,16 +658,17 @@ document.addEventListener("DOMContentLoaded", function() {
 									<option value="10">10月</option>
 									<option value="11">11月</option>
 									<option value="12">12月</option>
-								</select></td>
-							</label>
-						<td><button type="submit" class="select-button" >検索</button>
-						</form></td>
+								</select>
+						</td></label>
+						<td>
+						<button type="submit" class="select-button" >検索</button>
+						</form>
+						</td>
 						
 				<!-- 管理者のみ表示：管理者1 -->
 				<%
 				if(adminFlag == 1 && managerFlag == 0){
 				%>
-					
 					<!-- JackWorkの新規登録を行うボタン -->
 					<td style="text-align: right">
 						<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
@@ -682,7 +727,6 @@ document.addEventListener("DOMContentLoaded", function() {
 					%>
 				</tbody>
 				</table>
-
 				<%
 				}
 				%>
@@ -745,12 +789,10 @@ document.addEventListener("DOMContentLoaded", function() {
 					%>
 				</tbody>
 				</table>
-
 				<%
 				}
 				%>
 				
-
 				<!-- ユーザーのみ表示：ユーザー0 -->
 				<%
 					if(adminFlag == 0 && managerFlag == 0){
@@ -799,21 +841,18 @@ document.addEventListener("DOMContentLoaded", function() {
 					%>
 				</tbody>
 				</table>
-				
 				<%
 				}
 				%>
 				
 				<!-- ページネーション -->
+				<div id="data-container"></div>
 				<ol class="pagination">
-    				<li class="prev"><a href="#">前へ</a></li>
-    				<li><a href="<%=request.getContextPath()%>/monthJackworks">1</a></li>
-   					<li class="current"><a href="#">2</a></li>
-    				<li><a href="#">3</a></li>
-    				<li><a href="#">4</a></li>
-    				<li><a href="#">5</a></li>
-    				<li class="next"><a href="#">次へ</a></li>
+    				<li class="prev" id="prev-btn">前へ</li>
+    				<li id="page-btn"></li>
+    				<li class="next" id="next-btn"></li>
 				</ol>
+			</div>
 			</div>
 		</div>
 	</div>
