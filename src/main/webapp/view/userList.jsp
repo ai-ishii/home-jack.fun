@@ -72,8 +72,9 @@ table th, table td {
     padding: .20em 1em;
 }
 
-table td {
-	cursor : pointer;
+.case-link:hover{
+cursor : pointer;
+background-color:#c0c0c0;
 }
 
 table thead th {
@@ -353,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				if(user.getDisplayFlag() != 1){
 %>
 
-		<tr class="user-link" data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>">
+		<tr class="user-link case-link" data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>">
 			<td class="box-user" data-label="社員番号">
 			<%=user.getEmployeeNumber() %>
 			</td>
