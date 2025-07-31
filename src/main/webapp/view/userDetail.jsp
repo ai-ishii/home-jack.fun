@@ -1,9 +1,10 @@
 <%--
-商品登録画面(ユーザー画面)
+個人情報詳細画面(管理者)
 
 作成者:占部虎司郎
 
 作成日: 2025/7/11
+更新日: 2025/7/25
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -22,7 +23,6 @@ User user = (User) request.getAttribute("user");
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-</head>
 <style>
 
 #contents {
@@ -88,6 +88,7 @@ text-align: center;
 
 
 </style>
+</head>
 
 <body>
 	<div id="wrap">
@@ -127,7 +128,7 @@ text-align: center;
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">所属</td>
-						<td>第<%=user.getDepartment() %>部&nbsp;第<%=user.getTeam() %>グループ</td>
+						<td>第<%=user.getDepartmentId() %>部&nbsp;第<%=user.getGroupId() %>グループ</td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">氏名</td>

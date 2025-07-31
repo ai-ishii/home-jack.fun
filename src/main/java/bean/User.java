@@ -7,7 +7,7 @@ public class User {
 
 	
 	private int userId;					//ユーザー情報ID
-	private int accountId;				//アカウントID
+	private String accountId;			//アカウントID
 	private String name;				//氏名
 	private String nameKana;			//氏名（カナ）
 	private Date birthday;				//生年月日
@@ -18,8 +18,8 @@ public class User {
 	private String transportation;		//交通手段
 	private String sex;					//性別
 	private String employeeNumber;		//社員番号
-	private String department;			//部
-	private String team;				//グループ
+	private int departmentId;			//部
+	private int groupId;				//グループ
 	private Timestamp joiningDate;		//入社年月
 	private int workHistory;			//勤務年数
 	private int marriageFlag;			//既婚・未婚フラグ	
@@ -37,10 +37,10 @@ public class User {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public int getAccountId() {
+	public String getAccountId() {
 		return accountId;
 	}
-	public void setAccountId(int accountId) {
+	public void setAccountId(String accountId) {
 		this.accountId = accountId;
 	}
 	public String getName() {
@@ -103,17 +103,17 @@ public class User {
 	public void setEmployeeNumber(String employeeNumber) {
 		this.employeeNumber = employeeNumber;
 	}
-	public String getDepartment() {
-		return department;
+	public int getDepartmentId() {
+		return departmentId;
 	}
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
 	}
-	public String getTeam() {
-		return team;
+	public int getGroupId() {
+		return groupId;
 	}
-	public void setTeam(String team) {
-		this.team = team;
+	public void setGroupId(int groupId) {
+		this.groupId= groupId;
 	}
 	public Timestamp getJoiningDate() {
 		return joiningDate;
@@ -169,4 +169,10 @@ public class User {
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	
+
+		
 }
+
+

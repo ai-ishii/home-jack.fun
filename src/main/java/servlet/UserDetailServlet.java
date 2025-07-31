@@ -1,7 +1,9 @@
 /*
  * プログラム名：Home-Jack.ver.2.0
+ * 				 個人情報詳細を取得する処理
  * 作成者：占部虎司郎
  * 作成日：2025/7/11
+ * 更新日：2025/7/25
  */
 
 package servlet;
@@ -28,7 +30,7 @@ public class UserDetailServlet extends HttpServlet {
 		String path = "/view/userDetail.jsp";
 		
 		try {
-			//cmdの取得
+			//cmdの取得(削除か詳細表示か判断する用)
 			cmd = (String)request.getParameter("cmd");
 			
 			if(cmd == null) {
@@ -41,16 +43,18 @@ public class UserDetailServlet extends HttpServlet {
 			// DAOオブジェクトの宣言
 			UserDAO userDAO = new UserDAO();
 			
+			//削除の場合は疑似削除メソッドを実行
 			if(cmd.equals("delete")) {
 				userDAO.delete(userId);
+				//遷移先を一覧に変更
 				path = "/userList";
 				return;
 			}
 
-			// メソッドを呼び出し
+			// 詳細取得メソッドを呼び出し
 			User user = userDAO.selectByUserId(userId);
 
-			// リクエストスコープに登録
+			// 取得した情報をリクエストスコープに登録
 			request.setAttribute("user", user);
 			
 			} catch (IllegalStateException e) {

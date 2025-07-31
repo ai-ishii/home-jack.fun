@@ -4,6 +4,7 @@
 作成者:占部虎司郎
 
 作成日:2025/7/4
+更新日:2025/7/30
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -11,7 +12,7 @@
 
 <%
 //個人情報を格納したListを受け取る
-ArrayList<User> list = (ArrayList<User>) request.getAttribute("user_List");
+ArrayList<User> list = (ArrayList<User>) request.getAttribute("userList");
 %>
 
 <html>
@@ -21,7 +22,7 @@ ArrayList<User> list = (ArrayList<User>) request.getAttribute("user_List");
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-</head>
+
 <style>
 
 .info {
@@ -69,6 +70,10 @@ table tr:nth-child(even) {
 
 table th, table td {
     padding: .20em 1em;
+}
+
+table td {
+	cursor : pointer;
 }
 
 table thead th {
@@ -241,50 +246,6 @@ input:-webkit-autofill:active {
 	margin: 0 auto
 }
 
-/*　西暦と月の検索ボックスの配置 */
-td.search-box {
-	height: 100px;
-	margin-bottom: 1px;
-	display: flex;
-	align-items: center;
-}
-
-td.search-box form {
-	padding: 6px;
-}
-
-/*　西暦と月を検索ボックス */
-.selectbox-4 {
-	display: inline-flex;
-	align-items: center;
-	position: relative;
-}
-
-.selectbox-4::after {
-	position: absolute;
-	right: 15px;
-	width: 10px;
-	height: 7px;
-	background-color: #ffbe20;
-	clip-path: polygon(0 0, 100% 0, 50% 100%);
-	content: '';
-	pointer-events: none;
-}
-
-.selectbox-4 select {
-	appearance: none;
-	min-width: 230px;
-	height: 2.8em;
-	padding: .4em calc(.8em + 30px) .4em .8em;
-	border: none;
-	border-radius: 25px;
-	box-shadow: 0 4px 4px rgb(0 0 0/ 2%), 0 2px 3px -2px rgba(0 0 0/ 5%);
-	background-color: #fff;
-	color: #fa9e00;
-	font-size: 1em;
-	cursor: pointer;
-}
-
 /* buttonタグのリセットCSS */
 button {
 	padding: 0;
@@ -328,9 +289,9 @@ button {
 </style>
 
 <script type="text/javascript">
-//リンクにするjavascript
+//テーブルリンクにする処理
 document.addEventListener("DOMContentLoaded", function() {
-	// .jack-link がついてるタグを全部探す
+	// .user-link がついてるタグを全部探す
 	const linkCells = document.querySelectorAll(`.user-link`);
             
 	// クラスが記述されたタグにクリックしたときの処理を追加
@@ -353,10 +314,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	const btn = document.querySelectorAll(".btn--delete");
 
-	// それぞれの td にクリックしたときの処理を追加
+	// 削除ボタンをクリックしたときの処理を追加
 	btn.forEach(function(button) {
 		button.addEventListener("click", function(event) {
+			//イベントの伝播を止める処理
 			event.stopPropagation();
+			//イベントのデフォルトの動作を止める処理
 			event.preventDefault();
 			const jackDelete = button.dataset.href;
 
@@ -372,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 </script>
-
+</head>
 
 <body>
 	<div id="wrap">
@@ -383,40 +346,41 @@ document.addEventListener("DOMContentLoaded", function() {
 		<div id="main" class="container">
 		
 		<div id = "contents">
-<div id="link-title">
-	<h1 id="link-line">個人情報一覧</h1>
-</div>
+	<div id="link-title">
+		<h1 id="link-line">個人情報一覧</h1>
+	</div>
 
 	<br>
 	<table class="info">
+	<tbody>
 	<tr>
 	<td class="search-box">
-	<!-- 検索を行うフォーム -->
-	<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
-	<label><input type="text" name="keyword" placeholder="キーワードを入力"></label>
-	<button type="submit" aria-label="検索"></button>
-	</form>
+		<!-- 検索を行うフォーム -->
+		<form class="search-form">
+		<label><input type="text" id="searchInput" placeholder="キーワードを入力"></label>
+		<button id="searchButton" type="button" aria-label="検索"></button>
+		</form>
 	</td>
-	
 	</tr>
-	</thead>
+	</tbody>
 	</table>
 	
 	<table class="info">
-		 <thead style="margin:0 auto">
-		<tr>
-			<th scope="col">【 社員番号 】</th>
-			<th scope="col">【 氏名 】</th>
-			<th scope="col">【 所属 】</th>
-			<th></th>
-		</tr>
-		 </thead>
+	<thead style="margin:0 auto">
+	<tr>
+		<th scope="col">【 社員番号 】</th>
+		<th scope="col">【 氏名 】</th>
+		<th scope="col">【 所属 】</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody>
 
-		<%
-if (list != null) {
-	for (int i = 0; i < list.size(); i++) {
-		User user = (User) list.get(i);
-		if(user.getDisplayFlag() != 1){
+<%
+		if (list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				User user = (User) list.get(i);
+				if(user.getDisplayFlag() != 1){
 %>
 
 		<tr class="user-link" data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>">
@@ -427,25 +391,30 @@ if (list != null) {
 			<%=user.getName() %>
 			</td>
 			<td class="box-user" data-label="所属">
-			第<%=user.getDepartment() %>部&emsp;第<%=user.getTeam() %>グループ
+			第<%=user.getDepartmentId() %>部&emsp;第<%=user.getGroupId() %>グループ
 			</td>
 			<td>
 			<div style="text-align: center">
-			<a href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>&cmd=delete" 
+			<a data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>&cmd=delete" 
 				class="btn btn--delete">削除</a>
 			</div>
 			</td>
 		</tr>
 
-		<%
+<%
+				}
+			}
 		}
-	}
-}
 %>
+	</tbody>
 	</table>
-</div>
-		
-		</div>
 	</div>
+	</div>
+	</div>
+	
+	<script>
+    const CONTEXT_PATH = "<%= request.getContextPath() %>";
+	</script>
+	<script src="<%= request.getContextPath() %>/js/userScript.js"></script>
 </body>
 </html>
