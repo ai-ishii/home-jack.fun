@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="bean.Announce"%>
+<%@ page
+	import="bean.Announce, java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, util.MyFormat"%>
 
 <%
 Announce announce = (Announce) request.getAttribute("announce");
+ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
+int announceId = announce.getAnnounceId();
+int announceNum = announceList.indexOf(announce);
+MyFormat myFormat = new MyFormat();
+long millis = System.currentTimeMillis();
+Timestamp timestamp = new Timestamp(millis);
+int categoryId = 0;
+String category = null;
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +29,8 @@ Announce announce = (Announce) request.getAttribute("announce");
 	align-items: center;
 	width: 80%;
 	margin: 0 auto;
-	
+	width: 80%;
+	background-color: whitesmoke;
 }
 
 #title_box {
@@ -34,6 +44,7 @@ Announce announce = (Announce) request.getAttribute("announce");
 	border-bottom: 3px solid #FFC465;
 	border-top-right-radius: 20px;
 	border-top-left-radius: 20px;
+	width: 100%;
 }
 
 .year {
@@ -64,7 +75,7 @@ Announce announce = (Announce) request.getAttribute("announce");
 .title p {
 	text-align: left;
 	font-size: 30px;
-	padding: 50px 0;
+	padding: 50px 20px 50px 0;
 	margin: 0;
 }
 
@@ -92,6 +103,7 @@ Announce announce = (Announce) request.getAttribute("announce");
 	margin: 0 auto 70px auto;
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
+	width: 100%;
 }
 
 .text_box {
@@ -116,25 +128,68 @@ Announce announce = (Announce) request.getAttribute("announce");
 			<div id="announce_box">
 				<div id="title_box">
 					<div class="year">
-						<p>2025</p>
+						<p>
+							<%
+							timestamp = announce.getRegistDate();
+							%>
+							<%=myFormat.yearFormat(timestamp)%>
+						</p>
 					</div>
 					<div class="date">
-						<p>7/7</p>
+						<p>
+							<%
+							timestamp = announce.getRegistDate();
+							%>
+							<%=myFormat.monthDayFormat(timestamp)%>
+						</p>
 					</div>
 					<div class="title">
 						<p><%=announce.getTitle()%></p>
 					</div>
 					<div class="category">
-						<p>#お知らせ</p>
+						<p>
+							<%
+							categoryId = announce.getAnnounceCategoryId();
+							if (categoryId == 1) {
+								category = "お知らせ";
+							} else if (categoryId == 2) {
+								category = "チーム活動";
+							} else {
+								category = "ナレッジベース";
+							}
+							%>
+
+							#<%=category%>
+						</p>
 					</div>
 				</div>
 				<div id="content_box">
 					<div class="text_box">
-					<p><%=announce.getText()%></p>
+						<p><%=announce.getText()%></p>
 					</div>
 				</div>
 
 				<a href="<%=request.getContextPath()%>/announce">一覧へ</a>
+				<a href="<%= request.getContextPath() %>/announceDetail?announceId=<%= announce.getAnnounceId() %>&cmd=update">編集</a>
+				<a href="<%=request.getContextPath()%>/announceDelete?announceId=<%=announceId%>">削除</a>
+				<%
+				if (announceNum > 0) {
+					Announce beforeAnnounce = announceList.get(announceNum - 1);
+					int beforeAnnounceId = beforeAnnounce.getAnnounceId();
+				%>
+				<a
+					href="<%=request.getContextPath()%>/announceDetail?announceId=<%=beforeAnnounceId%>&cmd=detail">前の記事</a>
+				<%
+				}
+				if (announceNum < announceList.size() - 1) {
+				Announce nextAnnounce = announceList.get(announceNum + 1);
+				int nextAnnounceId = nextAnnounce.getAnnounceId();
+				%>
+				<a
+					href="<%=request.getContextPath()%>/announceDetail?announceId=<%=nextAnnounceId%>&cmd=detail">次の記事</a>
+				<%
+				}
+				%>
 			</div>
 		</div>
 	</div>
