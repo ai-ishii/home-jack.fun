@@ -256,36 +256,6 @@ button {
 	border: none;
 }
 
-/* ボタンのスタイル */
-.select-button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 70px;
-	aspect-ratio: 200/100;
-	color: #222;
-	background-color: #f5f5f5;
-	border-radius: 50%;
-	box-shadow: -2px -2px 4px #fff, 2px 2px 4px rgb(0 0 0/ 24%);
-	color: #737373;
-}
-
-@media ( any-hover : hover) {
-	.select-button {
-		transition: box-shadow 0.2s;
-	}
-	.select-button:hover {
-		box-shadow: -2px -2px 4px #fff, 2px 2px 4px rgb(0 0 0/ 24%);
-	}
-	.select-button:active {
-		background-color: #ebebeb;
-		box-shadow: inset 4px 4px 8px rgb(0 0 0/ 16%);
-	}
-	option {
-		color: #000;
-	}
-}
-
 </style>
 
 <script type="text/javascript">
