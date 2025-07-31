@@ -1,5 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!--
+/**
+ * ログイン画面
+ * 
+ * 作成者：石田允彦
+ * 
+ * 作成日：2025/07/03
+ * 最終更新日：2025/07/29
+ */
+-->
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +28,16 @@
 */
 
 .login {
-	margin: 20px;
+	margin: 20px auto;
+	padding: 50px 0;
+	min-width:600px;
+	width: 50%;
+	height: 200px;
+	border-radius: 20px;
+	background-color: #ffffff;
+	box-shadow: 0px 8px 10px 1px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2);
 	text-align: center;
 }
 
@@ -69,9 +88,10 @@
 			<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 			<script>
-        // Googleサインインが成功した後に呼び出されるコールバック関数
+        // Googleサインインが成功した後に自動的に呼び出される
 			function handleCredentialResponse(response) {
 				console.log("Encoded JWT ID token: " + response.credential);
+				//ログインサーブレットへPOST送信
 				fetch('<%= request.getContextPath() %>/login', {
 					method: 'POST',
 					headers: {
@@ -79,19 +99,20 @@
 					},
 					body: 'idtoken=' + response.credential
 				})
-				.then(response => response.json()) // レスポンスをテキストではなくJSONとして解釈
+				.then(response => response.json()) // レスポンスをJSONとして解釈
 				.then(data => {
-				if (data.success) {
-					// 成功した場合、指定されたURLにページを遷移させる
+
+				if (data.redirectUrl) {
+					// reqitectUrlがある場合、指定されたURLにページを遷移させる
 					window.location.href = data.redirectUrl;
 				} else {
-					// 失敗した場合、エラーメッセージを表示する
-					document.getElementById('status').innerText = data.message<br>"接続できませんでした";
+					// ない場合、エラーメッセージを表示する
+					alert(data.error)
 				}
 				})
 				.catch(error => {
 				console.error('Error:', error);
-				window.location.href = 'view/error.jsp';
+				alert("不明なエラーです");
 				});
 			}
 

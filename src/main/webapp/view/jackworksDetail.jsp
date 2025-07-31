@@ -10,6 +10,13 @@ JackWorks詳細画面
 <%
 //JackWorksの全情報が格納されたjack_listを受け取る
 ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+
+String cmd = (String) request.getAttribute("cmd");
+
+if(cmd == null){
+	cmd="";
+}
+
 %>
 
 <html>
@@ -247,9 +254,18 @@ text-align:center;
 				
 				<%} %>
 			</table>
+			
+			<% if(cmd.equals("request")) {%>
 			<div class="jack-return">
-			<a href="<%=request.getContextPath()%>/monthJackworks"  class="btn btn--delete">戻る</a>
+				<a href="<%=request.getContextPath()%>/jackworksRequest"  class="btn btn--delete">戻る</a>
 			</div>
+			
+			<%}else{ %>
+			<div class="jack-return">
+				<a href="<%=request.getContextPath()%>/monthJackworks"  class="btn btn--delete">戻る</a>
+			</div>
+			<%} %>
+			
 		</div>
 	</div>
 </body>

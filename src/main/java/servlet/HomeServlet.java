@@ -1,3 +1,12 @@
+/**
+ * ホーム画面を表示するためのサーブレット
+ * 
+ * 作成者：石田允彦
+ * 
+ * 作成日：2025/07/18
+ * 最終更新日：2025/07/29
+ */
+
 package servlet;
 
 import java.io.IOException;
@@ -50,7 +59,7 @@ public class HomeServlet extends HttpServlet {
 				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			
-			} else {				// エラーがない場合 home.jspにフォワード
+			} else {					// エラーがない場合 home.jspにフォワード
 				request.setAttribute("important_list", importantList);
 				request.setAttribute("announce_list", announceList);
 				request.setAttribute("activity_list", activityList);

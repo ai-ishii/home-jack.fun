@@ -1,3 +1,13 @@
+/**
+ * 個人目標詳細機能
+ * 
+ * 作成者：月向亮太
+ * 
+ * 作成日：7月11日
+ * 
+ * 最終更新日：7月25日
+ * 
+ */
 package servlet;
 
 import java.io.IOException;
@@ -37,8 +47,8 @@ public class GoalDetailServlet extends HttpServlet {
 		ArrayList<QuarterGoal> quarterGoalList = new ArrayList<QuarterGoal>();
 
 		try {
-			//セッション登録がまだなため、仮で登録
-			strUserId = "5";
+			//セッション登録がまだなため、仮で登録してます
+			strUserId = "4";
 
 			//userIdをStringからintへキャスト
 			int userId = Integer.parseInt(strUserId);

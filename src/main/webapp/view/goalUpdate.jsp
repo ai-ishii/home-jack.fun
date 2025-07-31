@@ -1,8 +1,16 @@
+<!-- 
+　個人目標更新機能
+
+　作成者：月向亮太
+
+　作成日：7月14日
+
+　最終更新日：7月25日
+ -->
 <%@page import="bean.QuarterGoal"%>
+<%@page import="bean.TeamGoal"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList,bean.Goal"%>
-<%@page import="bean.TeamGoal"%>
-
 
 <%
 //オブジェクト宣言
@@ -26,6 +34,7 @@ String resultCommentReviewer = "";
 
 //teamGoalの値がnullでなければ
 if (teamGoal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	departmentGoal = teamGoal.getDepartmentGoal();
 	groupGoal = teamGoal.getGroupGoal();
@@ -33,6 +42,7 @@ if (teamGoal != null) {
 
 //goalの値がnullでなければ
 if (goal != null) {
+	
 	//ゲッターメソッドを使って値を取得する
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
@@ -60,7 +70,7 @@ if (goal != null) {
 	margin-bottom: 10px;
 	width: 80%;
 	border-radius: 30px;
-	background-color: #ffffff;
+	background-color: #fffadd;
 	box-shadow: 1px 2px 5px #CCCCEE;
 	text-align: center;
 	font-size: 20px;
@@ -84,7 +94,7 @@ if (goal != null) {
 	margin-bottom: 10px;
 	width: 80%;
 	border-radius: 30px;
-	background-color: #ffffff;
+	background-color: #fffadd;
 	box-shadow: 1px 2px 5px #CCCCEE;
 	text-align: center;
 	font-size: 20px;
@@ -102,7 +112,7 @@ if (goal != null) {
 }
 
 .goalpadding {
-	padding: 0 50px 20px;
+	padding: 20px 50px 10px;
 	text-align: left;
 }
 
@@ -299,21 +309,21 @@ body {
 	align-items: center;
 }
 
-.button {
+.goalButton {
 	background-color: #fff;
 	border: solid 2px #FFD700;
 	color: #191970;
 	border-radius: 20px;
 	padding: 10px 30px;
-	margin: 30px;
+	margin: auto;
 	text-decoration: none;
 	font-size: 1em;
 	box-shadow: 0 5px 0 #FFD700;
-	display: inline-block;
+	display: table;
 	transition: .3s;
 }
 
-.button:hover {
+.goalButton:hover {
 	color: #000000;
 	transform: translateY(5px);
 	box-shadow: 0 0 0 #191970;
@@ -350,11 +360,11 @@ body {
 					<div class="goalpadding">
 						<h3>年間目標</h3>
 						<input type="hidden" name="goal_id" value="<%=goal.getGoalId()%>">
-						<textarea name="annual_goal" rows="5" cols="80"><%=annualGoal%></textarea>
+						<textarea name="annual_goal" rows="5" cols="80" placeholder="例　〇〇に合格する、制作する"><%=annualGoal%></textarea>
 					</div>
 					<div class="goalpadding">
 						<h3>現状と課題</h3>
-						<textarea name="situation_challenge" rows="5" cols="80"><%=situationChallenge%></textarea>
+						<textarea name="situation_challenge" rows="5" cols="80" placeholder="例　〇〇について知識不足"><%=situationChallenge%></textarea>
 					</div>
 				</div>
 
@@ -384,21 +394,21 @@ body {
 										<input type="hidden" name="quarter_goal_id<%=i + 1%>"
 											value="<%=quarterGoalList.get(i).getQuarterGoalId()%>">
 										<textarea  class="details-content"
-											name="small_goal<%=i + 1%>" rows="5" cols="30"><%=quarterGoalList.get(i).getSmallGoal()%></textarea>
+											name="small_goal<%=i + 1%>" rows="5" cols="30" placeholder="例　〇〇について勉強し、レポートにまとめる"><%=quarterGoalList.get(i).getSmallGoal()%></textarea>
 									</div>
 									<div class="contents">
 										<h3>評価基準・材料</h3>
 										<textarea  class="details-content"
-											name="judge_material<%=i + 1%>" rows="5" cols="30"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
+											name="judge_material<%=i + 1%>" rows="5" cols="30" placeholder="例　レポートの発表"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
 									</div>
 									<div class="contents">
 										<h3>達成率 報告内容</h3>
 										<div style="width: 80%; margin: 0 auto;">
 											<div class="flex">
 												<textarea  class="details-content"
-													name="achieve_rate<%=i + 1%>" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
+													name="achieve_rate<%=i + 1%>" rows="10" style="flex: 1" placeholder="例　80%"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
 												<textarea  class="details-content" name="report<%=i + 1%>"
-													rows="10" style="flex: 3"><%=quarterGoalList.get(i).getReport()%></textarea>
+													rows="10" style="flex: 3"  placeholder="例　〇〇することができました。"><%=quarterGoalList.get(i).getReport()%></textarea>
 											</div>
 										</div>
 									</div>
@@ -407,9 +417,9 @@ body {
 										<div style="width: 80%; margin: 0 auto;">
 											<div class="flex">
 												<textarea  class="details-content"
-													name="achieve_rate_reviewer<%=i + 1%>" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRateReviewer()%></textarea>
+													name="achieve_rate_reviewer<%=i + 1%>" rows="10" style="flex: 1" placeholder="例　80"><%=quarterGoalList.get(i).getAchieveRateReviewer()%></textarea>
 												<textarea  class="details-content" name="evaluation<%=i + 1%>"
-													rows="10" style="flex: 3"><%=quarterGoalList.get(i).getEvaluation()%></textarea>
+													rows="10" style="flex: 3" placeholder="例　上出来です。"><%=quarterGoalList.get(i).getEvaluation()%></textarea>
 													<input type="hidden" name="quarterly_flag<%=i + 1%>"
 											value="<%=quarterGoalList.get(i).getQuarterlyFlag()%>">
 											</div>
@@ -442,10 +452,10 @@ body {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea  name="result" rows="10" cols="80"><%=result%></textarea>
+								<textarea  name="result" rows="10" cols="80" placeholder="例　100"><%=result%></textarea>
 							</div>
 							<div style="width: 80%">
-								<textarea  name="resultComment" rows="10" cols="80"><%=resultComment%></textarea>
+								<textarea  name="result_comment" rows="10" cols="80" placeholder="例　〇〇を達成できました。"><%=resultComment%></textarea>
 							</div>
 						</div>
 					</div>
@@ -458,15 +468,15 @@ body {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea  name="result_reviewer" rows="10" cols="80"><%=resultReviewer%></textarea>
+								<textarea  name="result_reviewer" rows="10" cols="80" placeholder="例　100"><%=resultReviewer%></textarea>
 							</div>
 							<div style="width: 80%">
-								<textarea  name="annualGoal" rows="10" cols="80"><%=resultCommentReviewer%></textarea>
+								<textarea  name="result_comment_reviewer" rows="10" cols="80"  placeholder="例　これからも期待してます。"><%=resultCommentReviewer%></textarea>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div style="text-align: center" class="button">
+				<div  class="goalButton">
 				<input type="submit" value="更新">
 				</div>
 			</form>
