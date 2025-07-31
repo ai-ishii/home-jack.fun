@@ -13,7 +13,7 @@
     Map<Integer, String> teamMap = new LinkedHashMap<>();
     if (userList != null) {
         for (User user : userList) {
-            teamMap.put(user.getDepartmentId(), "tst" + user.getDepartmentId());
+            teamMap.put(user.getDepartmentId(), "第" + user.getDepartmentId() + "事業部");
         }
     }
     pageContext.setAttribute("teamMap", teamMap);
@@ -186,7 +186,7 @@ window.onload = function() {
 					<c:forEach items="${teamMap}" var="teamEntry">
 						<div id="panel_${teamEntry.key}" class="nonee" >
 							<%-- idはMapのキー（チームID） --%>
-							<h3>${teamEntry.value}チーム一覧</h3>
+							<h3>${teamEntry.value}</h3>
 							<table>
 								<c:forEach items="${userList}" var="user">
 									<c:if test="${user.departmentId == teamEntry.key}">
