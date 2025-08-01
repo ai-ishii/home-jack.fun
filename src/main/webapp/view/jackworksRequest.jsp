@@ -17,6 +17,10 @@ Monthjack monthJack = (Monthjack) request.getAttribute("monthJack");
 Account account = (Account)session.getAttribute("account");
 //検索された文字列が格納されたnameを受け取る
 String name = (String) request.getAttribute("name");
+//検索された月が格納されたmonthSearchを受け取る
+String monthSearch = (String) request.getAttribute("monthSearch");
+//検索された年が格納されたyearSearchを受け取る
+String yearSearch = (String) request.getAttribute("yearSearch");
 
 if(name == null){
 	name = "";
@@ -440,6 +444,24 @@ document.addEventListener('DOMContentLoaded', function() {
 	yearSelect.value = currentYear;
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+	const selectmonth = "<%= monthSearch %>";
+
+	if(selectmonth && selectmonth != "null" && selectmonth != ""){
+	document.getElementById('monthSearch').value = selectmonth;
+	
+	}
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	const selectyear = "<%= yearSearch %>";
+
+	if(selectyear && selectyear != "null" && selectyear != ""){
+	document.getElementById('yearSelect').value = selectyear;
+	
+	}
+});
+
 //リンクにするjavascript
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -483,7 +505,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	}
 	});
-	
+
+	//承認確認アラート
 	const btn = document.querySelectorAll(".agree");
 
 	// それぞれの td にクリックしたときの処理を追加
@@ -506,6 +529,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	});
 
+	//承認拒否の確認アラート
 	const btnDenial = document.querySelectorAll(".denial");
 
 	// それぞれの td にクリックしたときの処理を追加
@@ -574,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<!-- 月の検索を行うセレクトボックス -->
 						<td>
 							<label class="selectbox-4">
-								<select name="month-search">
+								<select id="monthSearch" name="month-search">
 									<option value="01">1月</option>
 									<option value="02">2月</option>
 									<option value="03">3月</option>

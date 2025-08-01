@@ -17,6 +17,10 @@ Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
 Account account = (Account)session.getAttribute("account");
 //検索された文字列が格納されたnameを受け取る
 String name = (String) request.getAttribute("name");
+//検索された月が格納されたmonthSearchを受け取る
+String monthSearch = (String) request.getAttribute("monthSearch");
+//検索された年が格納されたyearSearchを受け取る
+String yearSearch = (String) request.getAttribute("yearSearch");
 
 if(name == null){
 	name = "";
@@ -461,8 +465,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	const currentYear = new Date().getFullYear(); // 現在の年を取得
 
 	// 現在の年から過去10年までを生成する範囲を設定
-	const startYear = currentYear;
-	const endYear = currentYear - 10; 
+	const startYear = currentYear;//現在
+	const endYear = currentYear - 10; //10年前
 
 	// セレクトボックスに年を追加
 	for (let year = startYear; year >= endYear; year--) {
@@ -474,8 +478,23 @@ document.addEventListener('DOMContentLoaded', function() {
 	yearSelect.value = currentYear;
 });
 
-//Jackworksの情報が格納されたjackList_jsonを受け取る(ページネーション用)
-const allData = ${jackList_json};
+document.addEventListener('DOMContentLoaded', function() {
+	const selectmonth = "<%= monthSearch %>";
+
+	if(selectmonth && selectmonth != "null" && selectmonth != ""){
+	document.getElementById('monthSearch').value = selectmonth;
+	
+	}
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	const selectyear = "<%= yearSearch %>";
+
+	if(selectyear && selectyear != "null" && selectyear != ""){
+	document.getElementById('yearSelect').value = selectyear;
+	
+	}
+});
 
 </script>
 
@@ -505,7 +524,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		if(row){
 			 // CSSを適用
 			row.classList.add('case-link');
-		
+
 			row.addEventListener("click", function(event) {
 				//ボタンを押した場合を省く
 				if(event.target.closest('.btn')){
@@ -530,7 +549,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	// それぞれの td にクリックしたときの処理を追加
 	btn.forEach(function(button) {
 		button.addEventListener("click", function(event) {
+
+			//イベントの伝播をとめる処理
 			event.stopPropagation();
+			//イベントのデフォルトの動作を止める処理
 			event.preventDefault();
 			
 			//対象に設定されたdatasetを取り出す
@@ -645,7 +667,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						
 						<!-- 月の検索を行うセレクトボックス -->
 						<td><label class="selectbox-4">
-								<select name="month-search">
+								<select id="monthSearch" name="month-search">
 									<option value="01">1月</option>
 									<option value="02">2月</option>
 									<option value="03">3月</option>

@@ -103,10 +103,10 @@ public class JackworksRegisterServlet extends HttpServlet {
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、JackWorksの登録は表示できませんでした。";
-			cmd = "home";
+			cmd = "";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			cmd = "";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する

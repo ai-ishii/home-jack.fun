@@ -71,18 +71,29 @@ public class JackworksSearchServlet extends HttpServlet {
 			
 			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
-			// cmdをリクエストスコープに"cmd"という名前で格納する
-			request.setAttribute("cmd", cmd);
-			
 			request.setAttribute("name", name);
+			
+			request.setAttribute("monthSearch", monthSearch);
+			request.setAttribute("yearSearch", yearSearch);
+			
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
-			cmd = "detail";
+			cmd = "";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			cmd = "";
 		} finally {
+			if (error != null) {
+				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", error);
+				// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", cmd);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
+			}
+			// cmdをリクエストスコープに"cmd"という名前で格納する
+			request.setAttribute("cmd", cmd);
 			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
