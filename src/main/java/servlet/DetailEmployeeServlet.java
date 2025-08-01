@@ -1,3 +1,6 @@
+//<!-- 社員紹介 詳細機能（作：石井） -->
+//<!-- 作成日：7/11　最終更新日：8/1 11:58 -->
+
 package servlet;
 
 import java.io.IOException;
@@ -52,6 +55,7 @@ public class DetailEmployeeServlet extends HttpServlet {
 		// 取得してきた社員情報をjspに送るためセットする
 		request.setAttribute("Employee", employee);
 		request.setAttribute("User", user);
+		request.setAttribute("userId", userId);
 		request.setAttribute("UserListBySameBelong", userListBySameBelong);
 		request.setAttribute("UserListBySameJoinDate", userListBySameJoinDate);
 			

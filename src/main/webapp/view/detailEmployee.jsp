@@ -1,3 +1,6 @@
+<!-- 社員紹介 詳細機能（作：石井） -->
+<!-- 作成日：7/2　最終更新日：8/1 11:58 -->
+
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
@@ -11,6 +14,7 @@ CommonTable commonTable = new CommonTable();
 //サーブレットから送られてきた情報を取得
 Employee employee = (Employee) request.getAttribute("Employee");
 User user = (User) request.getAttribute("User");
+int userId = (int)request.getAttribute("userId");
 ArrayList<User> userListBySameBelong = (ArrayList<User>) request.getAttribute("UserListBySameBelong");
 ArrayList<User> userListBySameJoiningDate = (ArrayList<User>) request.getAttribute("UserListBySameJoinDate");
 
@@ -49,7 +53,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 <html>
 <head>
 <!-- タイトル -->
-<title>社員紹介 - 詳細</title>
+<title>詳細 - 社員紹介</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -195,11 +199,11 @@ String group = commonTable.selectGroup(user.getGroupId());
 	transform: scale(1.1);
 }
 
-/* 社員名（p）*/
-#detailEmployee #employee_name {
+/* 同じ所属の社員名（p）*/
+#detailEmployee #belong_link #employee_name {
 	/*	画像の上に文字を重ねるため*/
 	position: relative;
-	top: -90px;
+	top: -106px;
 	margin: 0;
 	color: black;
 	font-size: 30px;
@@ -207,11 +211,34 @@ String group = commonTable.selectGroup(user.getGroupId());
 	cursor: pointer;
 }
 
-/* 社員情報（p）*/
-#detailEmployee #employee_detail {
+/* 同じ所属の社員情報（p）*/
+#detailEmployee #belong_link #employee_detail {
 	/*	画像の上に文字を重ねるため*/
 	position: relative;
-	top: -90px;
+	top: -106px;
+	margin: 0;
+	color: black;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+/* 同じ入社年月の社員名（p）*/
+#detailEmployee #joinTiming_link #employee_name {
+	/*	画像の上に文字を重ねるため*/
+	position: relative;
+	top: -86px;
+	margin: 0;
+	color: black;
+	font-size: 30px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+/* 同じ入社年月の社員情報（p）*/
+#detailEmployee #joinTiming_link #employee_detail {
+	/*	画像の上に文字を重ねるため*/
+	position: relative;
+	top: -86px;
 	margin: 0;
 	color: black;
 	font-size: 15px;
@@ -251,7 +278,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 		<!-- メイン部分 -->
 		<div id="main" class="container">
 			<div id="detailEmployee">
-				<!-- 一覧に戻るボタン・編集ボタン・削除ボタン -->
+				<!-- 一覧に戻るボタン・編集ボタン -->
 				<div id="buttonList">
 					<a href="<%=request.getContextPath()%>/employee"> <input
 						id="backEmployeeList_button" type="submit" value="一覧へ"
@@ -259,9 +286,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/view/employeeUpdate.jsp?cmd=update&userId=<%= user.getUserId() %>"> <input
 						id="update_button" type="submit" value="編集"
 						style="width: 80px; height: 50px; font-size: large;">
-					</a> <a> <input id="delete_button" type="submit" value="削除"
-						style="width: 80px; height: 50px; font-size: large;">
-					</a>
+					</a> 
 				</div>
 
 				<!-- プロフ欄 -->
@@ -269,12 +294,15 @@ String group = commonTable.selectGroup(user.getGroupId());
 					<tr>
 						<td id="employee_imgArea">
 							<!-- 社員画像 --> <img id="employee_img"
-							src="<%=request.getContextPath()%>/img/<%=employee.getPhoto()%>"
+							src="<%=request.getContextPath()%>/file/<%=employee.getPhoto()%>"
 							alt="社員画像">
 						</td>
 						<td id="employee_infoArea">
 							<!-- 社員情報 -->
 							<div id="employee_info">
+								<%
+								if (user != null || employee != null) {
+								%>
 								<p>
 									社員番号
 									<%=user.getEmployeeNumber()%></p>
@@ -307,6 +335,9 @@ String group = commonTable.selectGroup(user.getGroupId());
 								<p>
 									役職
 									<%=employee.getPosition()%></p>
+								<%
+								}
+								%>
 							</div>
 						</td>
 					</tr>
@@ -334,7 +365,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 						<a id="belong_link" href="detailEmployee?userId=<%= userListBySameBelong.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="belong_img"
-									src="<%=request.getContextPath()%>/img/<%=sameBelong_imgList[i]%>" alt="社員画像">
+									src="<%=request.getContextPath()%>/file/<%=sameBelong_imgList[i]%>" alt="社員画像">
 								<p id="employee_name" class="sameBelong_employeeName"><%=userListBySameBelong.get(i).getName()%></p>
 								<p id="employee_detail">
 									<%= department %> <%= group %>
@@ -366,7 +397,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 						<a id="joinTiming_link" href="detailEmployee?userId=<%= userListBySameJoiningDate.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="joinTiming_img"
-									src="<%=request.getContextPath()%>/img/<%=sameJoinTiming_imgList[i]%>" alt="社員画像">
+									src="<%=request.getContextPath()%>/file/<%=sameJoinTiming_imgList[i]%>" alt="社員画像">
 								<p id="employee_name" class="sameJoinTiming_employeeName"><%=userListBySameJoiningDate.get(i).getName()%></p>
 								<p id="employee_detail" class="employee_belong">
 									第<%=userListBySameJoiningDate.get(i).getDepartmentId()%>事業部 第<%=userListBySameJoiningDate.get(i).getGroupId()%>グループ
@@ -394,8 +425,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 	
 	// -------------ユーザーID（同じ所属）---------------
 	int idListByBelongElement;	// リストの要素を一つ一つ代入するための変数
-	int[] arrayIdListB = new int[userListBySameBelong.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameBelong.size(); i++) {
+	int[] arrayIdListB = new int[userListBySameBelongSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelongSize; i++) {
 		idListByBelongElement = userListBySameBelong.get(i).getUserId();	// 値を一つ一つ取ってきて代入していく
 		arrayIdListB[i] = idListByBelongElement;		// 代入された値を配列に入れていく
 	}
@@ -403,8 +434,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 
 	// -------------ユーザーID（同じ入社年月）---------------
 	int idListByJoinElement;	// リストの要素を一つ一つ代入するための変数
-	int[] arrayIdListJ = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+	int[] arrayIdListJ = new int[userListBySameJoiningDateSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDateSize; i++) {
 		idListByJoinElement = userListBySameJoiningDate.get(i).getUserId();	// 値を一つ一つ取ってきて代入していく
 		arrayIdListJ[i] = idListByJoinElement;		// 代入された値を配列に入れていく
 	}
@@ -412,8 +443,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 	
 	// -------------名前（同じ所属）---------------
 	String nameListByBelongElement = "";	// リストの要素を一つ一つ代入するための変数
-	String[] arrayNameListB = new String[userListBySameBelong.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameBelong.size(); i++) {
+	String[] arrayNameListB = new String[userListBySameBelongSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelongSize; i++) {
 		nameListByBelongElement = userListBySameBelong.get(i).getName();	// 値を一つ一つ取ってきて代入していく
 		arrayNameListB[i] = nameListByBelongElement;		// 代入された値を配列に入れていく
 	}
@@ -421,8 +452,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 	
 	// -------------名前（同じ入社年月）---------------
 	String nameListByJoinElement = "";	// リストの要素を一つ一つ代入するための変数
-	String[] arrayNameListJ = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+	String[] arrayNameListJ = new String[userListBySameJoiningDateSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDateSize; i++) {
 		nameListByJoinElement = userListBySameJoiningDate.get(i).getName();	// 値を一つ一つ取ってきて代入していく
 		arrayNameListJ[i] = nameListByJoinElement;		// 代入された値を配列に入れていく
 	}
@@ -430,8 +461,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 	
 	// -------------社員画像（同じ所属）---------------
 	String imgListByBelongElement = "";	// リストを一つ一つ代入するための変数
-	String[] arrayImgListB = new String[userListBySameBelong.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameBelong.size(); i++) {
+	String[] arrayImgListB = new String[userListBySameBelongSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelongSize; i++) {
 		imgListByBelongElement = sameBelong_imgList[i];	// 値を一つ一つ取ってきて代入していく
 		arrayImgListB[i] = imgListByBelongElement;		// 代入された値を配列に入れていく
 	}
@@ -439,8 +470,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 	
 	// -------------社員画像（同じ入社年月）---------------
 	String imgListByJoinElement = "";	// リストを一つ一つ代入するための変数
-	String[] arrayImgListJ = new String[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+	String[] arrayImgListJ = new String[userListBySameJoiningDateSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDateSize; i++) {
 		imgListByJoinElement = sameJoinTiming_imgList[i];	// 値を一つ一つ取ってきて代入していく
 		arrayImgListJ[i] = imgListByJoinElement;		// 代入された値を配列に入れていく
 	}
@@ -448,8 +479,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 	
 	// -------------入社年月---------------
 	String joiningDateListElement = "";	// リストを一つ一つ代入するための変数
-	String[] arrayJoiningDateList = new String[userListBySameBelong.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameBelong.size(); i++) {
+	String[] arrayJoiningDateList = new String[userListBySameBelongSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameBelongSize; i++) {
 		joiningDateListElement = joiningDatesBySameBelong[i];	// 値を一つ一つ取ってきて代入していく
 		arrayJoiningDateList[i] = joiningDateListElement;		// 代入された値を配列に入れていく
 	}
@@ -457,8 +488,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 
 	// -------------部・グループ（部）---------------
 	int departmentListElement = 0;	// リストを一つ一つ代入するための変数
-	int[] arrayDepartmentList = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+	int[] arrayDepartmentList = new int[userListBySameJoiningDateSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDateSize; i++) {
 		departmentListElement = userListBySameJoiningDate.get(i).getDepartmentId();	// 値を一つ一つ取ってきて代入していく
 		arrayDepartmentList[i] = departmentListElement;		// 代入された値を配列に入れていく
 	}
@@ -466,8 +497,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 
 	// -------------部・グループ（グループ）---------------
 	int teamListElement = 0;	// リストを一つ一つ代入するための変数
-	int[] arrayTeamList = new int[userListBySameJoiningDate.size()];	// リストの要素分の配列を宣言
-	for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
+	int[] arrayTeamList = new int[userListBySameJoiningDateSize];	// リストの要素分の配列を宣言
+	for (int i = 0; i < userListBySameJoiningDateSize; i++) {
 		teamListElement = userListBySameJoiningDate.get(i).getGroupId();	// 値を一つ一つ取ってきて代入していく
 		arrayTeamList[i] = teamListElement;		// 代入された値を配列に入れていく
 	}
@@ -553,9 +584,9 @@ String group = commonTable.selectGroup(user.getGroupId());
 
 	// ページが読み込まれたときに最初の情報を表示
 	document.addEventListener('DOMContentLoaded', () => {
-		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexLeft_0];
-		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexCenter_0];
-		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexRight_0];
+		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexLeft_0];
+		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexCenter_0];
+		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexRight_0];
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -565,9 +596,9 @@ String group = commonTable.selectGroup(user.getGroupId());
 		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter_0] + "入社";
 		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight_0] + "入社";
 		
-		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexLeft_1];
-		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexCenter_1];
-		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexRight_1];
+		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexLeft_1];
+		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexCenter_1];
+		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
@@ -597,9 +628,9 @@ String group = commonTable.selectGroup(user.getGroupId());
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexLeft_0];
-		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexCenter_0];
-		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexRight_0];
+		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexLeft_0];
+		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexCenter_0];
+		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexRight_0];
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -629,9 +660,9 @@ String group = commonTable.selectGroup(user.getGroupId());
 		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
 		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexLeft_1];
-		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexCenter_1];
-		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexRight_1];
+		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexLeft_1];
+		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexCenter_1];
+		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
@@ -661,9 +692,9 @@ String group = commonTable.selectGroup(user.getGroupId());
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexLeft_0];
-		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexCenter_0];
-		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameBelong_imgList[indexRight_0];
+		sameBelong_imgs[0].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexLeft_0];
+		sameBelong_imgs[1].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexCenter_0];
+		sameBelong_imgs[2].src = "<%= request.getContextPath() %>/file/" + sameBelong_imgList[indexRight_0];
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -693,9 +724,9 @@ String group = commonTable.selectGroup(user.getGroupId());
 		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
 		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexLeft_1];
-		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexCenter_1];
-		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/img/" + sameJoinTiming_imgList[indexRight_1];
+		sameJoinTiming_imgs[0].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexLeft_1];
+		sameJoinTiming_imgs[1].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexCenter_1];
+		sameJoinTiming_imgs[2].src = "<%= request.getContextPath() %>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];

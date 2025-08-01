@@ -1,3 +1,6 @@
+//<!-- 社員紹介DAO（作：石井） -->
+//<!-- 作成日：　最終更新日：8/1 12:00 -->
+
 package dao;
 
 import java.sql.Connection;
@@ -11,6 +14,8 @@ import bean.Employee;
 import util.DAOconnection;
 
 public class EmployeeDAO {
+	
+		LocalDateTime nowDate = LocalDateTime.now();
 	 	
 	 	/**
 	 	 * 社員情報を全件取得するメソッド（SELECT）
@@ -204,7 +209,7 @@ public class EmployeeDAO {
 			// 変数宣言
 			Connection con = null;
 			Statement smt = null;
-
+			
 			String sql = "INSERT INTO employee_info(employee_id, user_id,"
 					+ " devloper, lang_skill, middle_skill, hobby, talent,"
 					+ " intro, position, regist_date, update_date, photo) "
@@ -212,7 +217,7 @@ public class EmployeeDAO {
 					+ employee.getLangSkill() + "', '" + employee.getMiddleSkill() + "', '"
 					+ employee.getHobby() + "', '" + employee.getTalent() + "', '"
 					+ employee.getIntro() + "', '" + employee.getPosition() + "', '"
-					+ employee.getRegistDate() + "', '" + employee.getUpdateDate() + "', '"
+					+ nowDate + "', '" + nowDate + "', '"
 					+ employee.getPhoto() + "');";
 
 			try {
@@ -252,13 +257,11 @@ public class EmployeeDAO {
 			Connection con = null;
 			Statement smt = null;
 			
-			LocalDateTime nowDate = LocalDateTime.now();
-			
 			String sql = "UPDATE employee_info SET devloper = " + employee.getDevloper() + ", "
-					+ "lang_skill = '" + employee.getLangSkill() + "', middle_skill = " + employee.getMiddleSkill() + "', "
+					+ "lang_skill = '" + employee.getLangSkill() + "', middle_skill = '" + employee.getMiddleSkill() + "', "
 					+ "hobby = '" + employee.getHobby() + "', talent = '" + employee.getTalent() + "', "
 					+ "intro = '" + employee.getIntro() + "', position = '" + employee.getPosition() + "', "
-					+ "regist_date = '" + employee.getRegistDate() + "', update_date = '" + nowDate + "', "
+					+ "update_date = '" + nowDate + "', "
 					+ "photo = '" + employee.getPhoto() + "' WHERE user_id = " + userId + ";";
 			
 			try {
