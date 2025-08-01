@@ -57,6 +57,8 @@ if (goal != null) {
 <title>個人目標確認</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 </head>
 <style>
 /* 個人目標のCSS */
@@ -297,11 +299,6 @@ keyframes fadeIn { 0% {
 }
 
 }
-/* 以下の記述は不要です */
-body {
-	margin: 20px;
-}
-
 .tab-4 {
 	display: flex;
 	margin: 0 auto;
@@ -392,14 +389,14 @@ body {
 				<div id="quarterGoal" class="container">
 					<h1>目標を達成するためのステップ</h1>
 					<div id="quarterTitle" class="container">
-						<div class="tab-4">
+						<div class="tab-4" active>
 							<!--Java処理-->
 							<%
 							if (quarterGoalList != null) {
 								for (int i = 0; i < quarterGoalList.size(); i++) {
 							%>
 
-							<label> <input type="radio" name="tab-4"> 第<%=i + 1%>四半期
+							<label><input type="radio" name="tab-4" active> 第<%=i + 1%>四半期
 							</label>
 							<div class="goalpadding">
 								<div class="contents">

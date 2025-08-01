@@ -25,7 +25,6 @@
     if (userList != null) {
         for (User user : userList) {
             teamMap.put(user.getDepartmentId(), "第" + user.getDepartmentId() + "事業部");
-            team<ap.put(user.getGroupId(), "第" + user.getGroupId() + "グループ");
         }
     }
     pageContext.setAttribute("teamMap", teamMap);
@@ -202,7 +201,6 @@ window.onload = function() {
 							<table>
 								<c:forEach items="${userList}" var="user">
 									<c:if test="${user.departmentId == teamEntry.key}">
-										<c: if test=""
 										<tr>
 										<div class="br">
 											<a href="${pageContext.request.contextPath}/goalUser?user_id=${user.userId}">${user.name}</a>
