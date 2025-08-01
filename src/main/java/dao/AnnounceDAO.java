@@ -8,13 +8,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import bean.Announce;
+import bean.CategoryMap;
 import util.DAOconnection;
 
 public class AnnounceDAO {
 
 	//ホーム画面で取得する記事数
 	private static final int numArticles = 3;
-	
+
 	/**
 	 * DBにあるお知らせ情報を全件取得するメソッド
 	 * @return ArrayList<Announce> list
@@ -375,47 +376,106 @@ public class AnnounceDAO {
 	//		return imageList;
 	//	}
 
-//	public String selectByCategory(int categoryId) {
-//
-//		// 変数宣言
-//		Connection con = null;
-//		Statement smt = null;
-//
-//		String category = "";
-//
-//		String sql = "SELECT * FROM announce_category_info WHERE announce_category_id = '" + categoryId + "'";
-//
-//		try {
-//			// DBに接続
-//			con = AnnounceDAO.getConnection();
-//			smt = con.createStatement();
-//
-//			// SQL文発行
-//			ResultSet rs = smt.executeQuery(sql);
-//
-//			if (rs.next()) {
-//				category = rs.getString("category");
-//			}
-//
-//		} catch (Exception e) {
-//			throw new IllegalStateException(e);
-//		} finally {
-//			// リソースの解放
-//			if (smt != null) {
-//				try {
-//					smt.close();
-//				} catch (SQLException ignore) {
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (SQLException ignore) {
-//				}
-//			}
-//		}
-//		return category;
-//	}
+	/**
+	 * お知らせのカテゴリーとして登録されているカテゴリー名を
+	 * 全検索するメソッド
+	 * @return
+	 */
+	public ArrayList<CategoryMap> selectCategoryAll() {
+
+		// 変数宣言
+		Connection con = null;
+		Statement smt = null;
+
+		ArrayList<CategoryMap> list = new ArrayList<CategoryMap>();
+
+		String sql = "SELECT "
+				+ "announce_category_id, "
+				+ "category, "
+				+ "category_code "
+				+ "FROM announce_category_info";
+
+		try {
+			// DBに接続
+			con = DAOconnection.getConnection();
+			smt = con.createStatement();
+
+			// SQL文発行
+			ResultSet rs = smt.executeQuery(sql);
+
+			while (rs.next()) {
+				CategoryMap map = new CategoryMap();
+				map.setId(rs.getInt("announce_category_id"));
+				map.setName(rs.getString("category"));
+				map.setCode(rs.getString("category_code"));
+				list.add(map);
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * カテゴリナンバーからカテゴリ名を戻り値として返すメソッド
+	 * @param categoryId
+	 * @return
+	 */
+	public String selectByCategory(int categoryCode) {
+
+		// 変数宣言
+		Connection con = null;
+		Statement smt = null;
+
+		String category = "";
+
+		String sql = "SELECT * FROM announce_category_info WHERE announce_category_code = '" + categoryCode + "'";
+
+		try {
+			// DBに接続
+			con = DAOconnection.getConnection();
+			smt = con.createStatement();
+
+			// SQL文発行
+			ResultSet rs = smt.executeQuery(sql);
+
+			if (rs.next()) {
+				category = rs.getString("category");
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return category;
+	}
 
 	/**
 	 * 新規投稿をDBに登録するメソッド
@@ -631,7 +691,7 @@ public class AnnounceDAO {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * 投稿を削除するメソッド
 	 * @param announceId
@@ -642,13 +702,13 @@ public class AnnounceDAO {
 		Connection con = null;
 		Statement smt = null;
 
-		String sql = "DELETE FROM announce_info WHERE announce_id = "+ announceId;
+		String sql = "DELETE FROM announce_info WHERE announce_id = " + announceId;
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
-			
+
 			// SQL文発行
 			smt.executeUpdate(sql);
 
