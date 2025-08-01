@@ -13,6 +13,7 @@
 	java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date"%>
 
 <%
+String cmd = (String) request.getAttribute("cmd");
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
 ArrayList<AnnounceCategory> categoryList = (ArrayList<AnnounceCategory>) request.getAttribute("categoryList");
 MyFormat myFormat = new MyFormat();
@@ -328,13 +329,15 @@ a {
 										</div>
 										<div>
 											<label for="category_select">カテゴリ</label> 
-											<select id="category_select" name="category_code">
+											<select id="category_select" name="category_id">
 												<option value="">全カテゴリ</option>
 												<%
 												for (int i = 0; i < categoryList.size(); i++) {
 													AnnounceCategory announceCategory = categoryList.get(i);
 												%>
-												<option value="1"><%= announceCategory.getCategory() %></option>
+												<option value="<%= announceCategory.getAnnounceCategoryId() %>">
+													<%= announceCategory.getCategory() %>
+												</option>
 												<%
 												}
 												%>
@@ -359,6 +362,18 @@ a {
 
 				<!-- タブの中身 -->
 				<div class="container main_box">
+					<%
+					if (cmd != null) {
+						if (cmd.equals("keyword")) {
+						String keyword = (String) request.getAttribute("keyword");
+					%>
+					<div>
+						<p>"<%= keyword %>"の検索結果</p>
+					</div>
+					<%
+						}
+					}
+					%>
 					<%
 					if (announceList != null) {
 						for (int i = 0; i < announceList.size(); i++) {
