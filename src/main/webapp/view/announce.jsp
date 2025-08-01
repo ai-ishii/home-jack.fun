@@ -4,16 +4,17 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/07/31
+更新日 : 2025/08/01
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page
-	import="java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, bean.Announce, util.MyFormat"%>
+<%@ page import="bean.Announce, bean.CategoryMap, util.MyFormat,
+	 java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date"%>
 
 <%
 String cmd = (String) request.getAttribute("cmd");
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
+ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("categoryList");
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
@@ -331,10 +332,10 @@ a {
 												<option value="">全カテゴリ</option>
 												<%
 												for (int i = 0; i < categoryList.size(); i++) {
-													AnnounceCategory announceCategory = categoryList.get(i);
+													CategoryMap categoryMap = categoryList.get(i);
 												%>
-												<option value="<%= announceCategory.getAnnounceCategoryId() %>">
-													<%= announceCategory.getCategory() %>
+												<option value="<%= categoryMap.getId() %>">
+													<%= categoryMap.getName() %>
 												</option>
 												<%
 												}

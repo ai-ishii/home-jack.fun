@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/07/30
+ * 更新日 : 2025/08/01
  */
 package servlet;
 
@@ -18,7 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import bean.Announce;
-import bean.AnnounceCategory;
+import bean.CategoryMap;
 import dao.AnnounceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -47,7 +47,7 @@ public class AnnounceSearchServlet extends HttpServlet {
 		// オブジェクト生成
 		AnnounceDAO announceDAO = new AnnounceDAO();
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
-		ArrayList<AnnounceCategory> categoryList = new ArrayList<AnnounceCategory>();
+		ArrayList<CategoryMap> categoryList = new ArrayList<CategoryMap>();
 		LocalDateTime localDateTimeStart = null;
 		LocalDateTime localDateTimeEnd = null;
 
