@@ -2,7 +2,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,13 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.LicenseRequestExclusive;
+import util.DAOconnection;
 
 public class RequestDAO {
-	//接続用の情報をフィールドに定数として定義
-	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
-	private static final String URL = "jdbc:mariadb://localhost/jackdb";
-	private static final String USER = "root";
-	private static final String PASSWD = "root123";
+	
 	
 	
 	
@@ -70,7 +66,7 @@ public class RequestDAO {
 		ArrayList<LicenseRequestExclusive> licenseRequestExclusiveList = new ArrayList<LicenseRequestExclusive>();
 
 		try {
-			con = getConnection();
+			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
 			//SQL文(request_infoとlicense_request_infoとgroup_infoとdepartment_infoとlicense_info)
@@ -151,7 +147,7 @@ public class RequestDAO {
 		LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
 
 		try {
-			con = getConnection();
+			con = DAOconnection.getConnection();
 
 			//SQL文
 			String sql = licenseRequestSql +"WHERE r.request_id = ? "
@@ -214,19 +210,4 @@ public class RequestDAO {
 		return licenseRequestExclusive;
 	}
 
-	/**
-	 * データベース接続を行うメソッド
-	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
-	 * @return con
-	 */
-
-	private static Connection getConnection() {
-		try {
-			Class.forName(RDB_DRIVE);
-			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
-			return con;
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		}
-	}
 }

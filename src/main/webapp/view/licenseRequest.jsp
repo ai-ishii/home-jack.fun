@@ -174,9 +174,45 @@ MyFormat myFormat = new MyFormat();
 
 			<h1 style="text-align: center">-資格申請一覧-</h1>
 
+<<<<<<< HEAD
 			<table class="list">
 				<thead>
 					<tr>
+=======
+			<table class="license">
+				<tr>
+					<td class="item">項目</td>
+					<td class="request">申請内容</td>
+				</tr>
+				<tr>
+					<td class="licensename">資格名</td>
+					<td class="name"><%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%></td>
+				</tr>
+				<tr>
+					<td class="username">氏名</td>
+					<td class="user"><%=requestLicenseRequestUser.getRequest().getName()%></td>
+				</tr>
+				<td class="affiliationdepartment">部</td>
+				<td class="department"><%=requestLicenseRequestUser.getUser().getDepartmentId()%>部</td>
+				</tr>
+				<tr>
+					<td class="affiliationteam">グループ</td>
+					<td class="team"><%=requestLicenseRequestUser.getUser().getGroupId()%>グループ</td>
+				</tr>
+				<tr>
+					<td class="licenseexamdate">受験日</td>
+					<td class="examdate"><%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%></td>
+				</tr>
+				<tr>
+					<td class="licenseexamtime">受験回数</td>
+					<td class="examtime"><%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>回</td>
+				</tr>
+			</table>
+			<table class="button">
+				<tr>
+					<td><a href="<%=request.getContextPath()%>/#?#%>"
+						onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
+>>>>>>> refs/heads/test2
 
 						<th class="time">申請日時</th>
 						<th class="groupName">所属</th>
