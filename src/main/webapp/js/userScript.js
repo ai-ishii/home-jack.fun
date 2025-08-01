@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			const groupNumber = parseInt(numbers[1], 10); 
 
 			//遷移先の設定
-			URL = `${CONTEXT_PATH}/userList?part=${partNumber}&group=${groupNumber}word=${encodeURIComponent(inputText)}&cmd=search`;
+			URL = `${CONTEXT_PATH}/userList?part=${partNumber}&group=${groupNumber}&cmd=search`;
 		
 		//数字が一つしか見つからなかった場合の処理
 		}else if(numbers && numbers.length === 1) {
