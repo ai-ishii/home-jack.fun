@@ -4,15 +4,17 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/07/31
+更新日 : 2025/08/01
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page
-	import="java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, bean.Announce, util.MyFormat"%>
+<%@ page import="bean.Announce, bean.CategoryMap, util.MyFormat,
+	 java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date"%>
 
 <%
+String cmd = (String) request.getAttribute("cmd");
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
+ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("categoryList");
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
@@ -328,10 +330,16 @@ a {
 											<label for="category_select">カテゴリ</label> 
 											<select id="category_select" name="category_id">
 												<option value="">全カテゴリ</option>
-												<option value="1">お知らせ</option>
-												<option value="2">チーム活動</option>
-												<option value="3">ナレッジベース</option>
-												<option value="9">その他</option>
+												<%
+												for (int i = 0; i < categoryList.size(); i++) {
+													CategoryMap categoryMap = categoryList.get(i);
+												%>
+												<option value="<%= categoryMap.getId() %>">
+													<%= categoryMap.getName() %>
+												</option>
+												<%
+												}
+												%>
 											</select>
 										</div>
 										<div>
@@ -353,6 +361,18 @@ a {
 
 				<!-- タブの中身 -->
 				<div class="container main_box">
+					<%
+					if (cmd != null) {
+						if (cmd.equals("keyword")) {
+						String keyword = (String) request.getAttribute("keyword");
+					%>
+					<div>
+						<p>"<%= keyword %>"の検索結果</p>
+					</div>
+					<%
+						}
+					}
+					%>
 					<%
 					if (announceList != null) {
 						for (int i = 0; i < announceList.size(); i++) {

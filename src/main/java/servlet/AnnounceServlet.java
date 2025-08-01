@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/07/30
+ * 更新日 : 2025/08/01
  */
 package servlet;
 
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.Announce;
+import bean.CategoryMap;
 import dao.AnnounceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -40,15 +41,21 @@ public class AnnounceServlet extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// 変数宣言
 		String error = "";
 		String cmd = "";
 
+		// オブジェクト生成
+		AnnounceDAO announceDAO = new AnnounceDAO();
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
+		ArrayList<CategoryMap> categoryList = new ArrayList<CategoryMap>();
 
 		try {
-			AnnounceDAO announceDAO = new AnnounceDAO();
 
+			// メソッドを呼び出してSQL文実行
 			announceList = announceDAO.selectAll();
+			categoryList = announceDAO.selectCategoryAll();
+			
 		} catch (Exception e) {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
@@ -59,6 +66,7 @@ public class AnnounceServlet extends HttpServlet {
 				request.getRequestDispatcher("").forward(request, response);
 			} else {
 				request.setAttribute("announceList", announceList);
+				request.setAttribute("categoryList", categoryList);
 				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
 			}
 		}
