@@ -71,7 +71,7 @@ public class GoalConfirmServlet1 extends HttpServlet {
 			cmd = request.getParameter("cmd");
 
 			//セッション登録がまだなため、仮で登録してます
-			UserId = 4;
+			userId = 4;
 			//※ここは後で絶対に変える文章なので覚えておいてください
 			if (cmd == null) {
 				cmd = ""; 
