@@ -186,6 +186,7 @@ text-align: center;
 					if(updateDate != ""){
 					%>
 					<tr class="table-single">
+<<<<<<< HEAD
 						<td class="table-double">更新日時</td>
 						<td><%=updateDate %></td>
 					</tr>
@@ -194,6 +195,16 @@ text-align: center;
 					%>
 					<tr>
 						<td class="table-double">登録日時</td>
+=======
+						<td class="table-double">更新日</td>
+						<td><%=updateDate %></td>
+					</tr>
+					<%
+					}else{
+					%>
+					<tr>
+						<td class="table-double">登録日</td>
+>>>>>>> branch 'master' of https://github.com/ai-ishii/home-jack.fun.git
 						<td><%=registDate %></td>
 					</tr>
 					<%

@@ -1,15 +1,36 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.Jackworks;
-import util.DAOconnection;
 
 public class JackworksDAO {
+
+	//接続用の情報をフィールドに定数として定義
+	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
+	private static final String URL = "jdbc:mariadb://localhost/jackdb";
+	private static final String USER = "root";
+	private static final String PASSWD = "root123";
+
+	/**
+	 * データベース接続を行うメソッド
+	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 * @return con
+	 */
+	private static Connection getConnection() {
+		try {
+			Class.forName(RDB_DRIVE);
+			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
+			return con;
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+	}
 
 	/**
 	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
@@ -23,7 +44,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "SELECT * FROM jackworks_info ORDER BY points_get_date DESC";
@@ -88,7 +109,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "DELETE FROM jackworks_info WHERE jackworks_id=" + jackworksId;
@@ -123,7 +144,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "INSERT INTO jackworks_info VALUES (NULL, NULL, '" + jack.getName() + "', '"
@@ -168,7 +189,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "UPDATE jackworks_info SET project =  '" + jack.getProject() + "' , work_season = '"
@@ -207,6 +228,7 @@ public class JackworksDAO {
 	/**
 	 * 引数の入力された文字から該当データの絞込み検索処理を行うメソッド
 	 * 戻り値として該当しているJackWorksの全情報を返す
+	 * @param 検索された文字列
 	 * @return jackList
 	 */
 
@@ -218,7 +240,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			//検索内容と同じ文字のみ検索をおこなうsql
@@ -289,6 +311,7 @@ public class JackworksDAO {
 	/**
 	 * 引数の選択された年月の該当データの絞込み検索処理を行うメソッド
 	 * 戻り値として該当しているJackWorksの全情報を返す
+	 * @param　検索された年月
 	 * @return jackList
 	 */
 
@@ -300,7 +323,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "SELECT * FROM jackworks_info "
@@ -344,6 +367,7 @@ public class JackworksDAO {
 	/**
 	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
 	 * 戻り値としてJackWorks全情報を返す
+	 * @param　jackworksId
 	 * @return jackList
 	 */
 	public ArrayList<Jackworks> selectByJackworksId(int jackworksId) {
@@ -353,7 +377,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "SELECT * FROM jackworks_info WHERE jackworks_id = '" + jackworksId + "'";
@@ -418,7 +442,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "UPDATE jackworks_info SET admin_flag = ' 1 '"
@@ -445,47 +469,40 @@ public class JackworksDAO {
 	}
 
 	/**
-	 * 管理者が未承認のJackWorksIdを取得するメソッド
+	 * 管理者が申請を拒否したJackWorksIdを取得するメソッド
 	 * 
-	 * @param なし
-	 * @return 登録したいJackworksId
+	 * @param  申請拒否したいJackworksId
 	 */
 
-	//	public int selectByAdminFlag() {
-	//
-	//		Connection con = null;
-	//		Statement smt = null;
-	//
-	//		int JackworksId = 0;
-	//
-	//		try {
-	//			con = getConnection();
-	//			smt = con.createStatement();
-	//
-	//			String sql = "SELECT * FROM jackworks_info WHERE admin_flag = '0' ";
-	//
-	//			ResultSet rs = smt.executeQuery(sql);
-	//
-	//			if (rs.next()) {
-	//				JackworksId = rs.getInt("jackworks_id");
-	//			}
-	//
-	//		} catch (Exception e) {
-	//			throw new IllegalStateException(e);
-	//		} finally {
-	//			if (smt != null) {
-	//				try {
-	//					smt.close();
-	//				} catch (SQLException ignore) {
-	//				}
-	//			}
-	//			if (con != null) {
-	//				try {
-	//					con.close();
-	//				} catch (SQLException ignore) {
-	//				}
-	//			}
-	//		}
-	//		return JackworksId;
-	//	}
+	public void denial(int jackworksId) {
+
+		Connection con = null;
+		Statement smt = null;
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			String sql = "UPDATE jackworks_info SET admin_flag = ' 2 '"
+					+ "WHERE jackworks_id = '" + jackworksId + "'";
+
+			ResultSet rs = smt.executeQuery(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
 }

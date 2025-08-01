@@ -8,6 +8,11 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Monthjack"%>
 
+<%
+//今月のJackWorksの全情報が格納されたmonthJackを受け取る
+Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
+%>
+
 <html>
 <head>
 <!-- タイトル -->
@@ -190,17 +195,17 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="file" name="image" size="35" required></td>
+				<td><input type="file" name="image" size="35" value="" required></td>
 				<tr>
 					<td style="display: flex">今月のテーマ
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="" size="35" required></td>
+				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" size="35" required></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
-				<td><textarea name="note" rows="" cols=""></textarea></td>
+				<td><textarea name="note" rows="" cols="" ><%=monthJack.getNote()%></textarea></td>
 			</table>
 			
 			<!-- 登録ボタン -->
@@ -211,7 +216,6 @@ button.btn-border:active:before {
 			</div>
 		</div>
 		</form>
-		
 		</div>
 	</div>
 </body>

@@ -5,19 +5,14 @@
 <body>
 	<header class="container">
 
-
 		<div id="menu" class="container">
 			<nav id="navi">
 				<ul id="header-menu">
 					<li>
-						<p class="cheese">お知らせ</p>
-						<ul class="cheese-detail">
-							<li>waa</li>
-							<li>wii</li>
-						</ul>
+						<a href="<%= request.getContextPath() %>/announce"><p class="cheese">お知らせ</p></a>
 					</li>
 					<li>
-						<p class="tomato">社員紹介</p>
+						<a href="<%= request.getContextPath() %>/employee"><p class="tomato">社員紹介</p></a>
 						<ul class="tomato-detail">
 							<li>wuu</li>
 							<li>wii</li>
@@ -52,8 +47,14 @@
 						</ul>
 					</li>
 				</ul>
-			</nav>
+				
 
+			</nav>
+			<div class="navi-close">
+			</div>
+			<div id="hamburger" class="hamburger">
+				<span></span><span></span><span></span>
+			</div>
 			
 			<div id="page-title">
 				
@@ -68,9 +69,7 @@
 				
 			</div>
 			
-			<div id="hamburger" class="hamburger">
-				<span></span><span></span><span></span>
-			</div>
+
 
 			<div id="top-link" class="container">
 				<ul>

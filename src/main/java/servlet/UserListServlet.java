@@ -32,7 +32,7 @@ public class UserListServlet extends HttpServlet {
 		String path = "/view/userList.jsp";
 		
 		try {
-			//UserDAOをインスタンス化する。
+			//UserDAOをインスタンス化する
 			UserDAO userDAO = new UserDAO();
 			
 			//ユーザー情報格納用の配列の宣言
@@ -51,6 +51,11 @@ public class UserListServlet extends HttpServlet {
 			String inputGroup = (String)request.getParameter("group");
 			String employeeNum = (String)request.getParameter("employeeNum");
 			String text = (String)request.getParameter("text");
+			String keyword = (String)request.getParameter("keyword");
+			
+			if(keyword == null) {
+				keyword = "";
+			}
 			
 			//所属で検索するの場合の処理
 			if(cmd.equals("search") && inputPart != null) {
@@ -60,12 +65,12 @@ public class UserListServlet extends HttpServlet {
 				
 				//検索メソッドの実行
 				userList = userDAO.searchAffiliation(part,group);
-			
+				
 			//社員番号で検索する場合の処理
 			}else if(cmd.equals("search") && employeeNum != null){
 				// 検索メソッドの実行
 				userList = userDAO.search(employeeNum);
-			
+
 			//名前で検索する場合の処理
 			}else if(cmd.equals("search") && text != null && !text.isEmpty()){	
 				// 検索メソッドの実行
@@ -79,6 +84,9 @@ public class UserListServlet extends HttpServlet {
 			
 			//取得したリストをuserListという名前でリクエストスコープに登録
 			request.setAttribute("userList", userList);
+			
+			//キーワードをリクエストスコープに登録
+			request.setAttribute("keyword", keyword);
 			
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、個人情報一覧は表示出来ませんでした。";

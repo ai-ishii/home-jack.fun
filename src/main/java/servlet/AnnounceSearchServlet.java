@@ -1,3 +1,11 @@
+/**
+ * お知らせを検索して一覧表示するサーブレット
+ * 
+ * 作成者 : 大北直弥
+ * 
+ * 作成日 : 2025/07/14
+ * 更新日 : 2025/07/30
+ */
 package servlet;
 
 import java.io.IOException;
@@ -20,7 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/announceSearch")
 public class AnnounceSearchServlet extends HttpServlet {
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// 変数宣言
@@ -42,17 +50,23 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 		try {
 			if (cmd.equals("keyword")) {
+				// フォームからパラメータを受け取る
 				String keyword = request.getParameter("keyword");
 
+				// メソッドを呼び出してSQL文実行
 				announceList = announceDAO.selectByKeyword(keyword);
+				
+				// 検索キーワードをリクエストスコープに登録する
+				request.setAttribute("keyword", keyword);
 			}
 
 			if (cmd.equals("filter")) {
-				String announceFlag = request.getParameter("announceFlag");
-				String categoryId = request.getParameter("categoryId");
+				// フォームからパラメータを受け取る
+				String announceFlag = request.getParameter("announce_flag");
+				String categoryId = request.getParameter("category_id");
 
-				String start = request.getParameter("startDate");
-				String end = request.getParameter("endDate");
+				String start = request.getParameter("start_date");
+				String end = request.getParameter("end_date");
 
 				ZoneId zoneId = ZoneId.of("Asia/Tokyo");
 

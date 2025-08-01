@@ -13,6 +13,9 @@
 <%
 //個人情報を格納したListを受け取る
 ArrayList<User> list = (ArrayList<User>) request.getAttribute("userList");
+
+//リクエストスコープからキーワードを受け取る
+String keyword = (String)request.getAttribute("keyword");
 %>
 
 <html>
@@ -72,8 +75,9 @@ table th, table td {
     padding: .20em 1em;
 }
 
-table td {
-	cursor : pointer;
+.case-link:hover{
+cursor : pointer;
+background-color:#c0c0c0;
 }
 
 table thead th {
@@ -256,85 +260,9 @@ button {
 	border: none;
 }
 
-/* ボタンのスタイル */
-.select-button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 70px;
-	aspect-ratio: 200/100;
-	color: #222;
-	background-color: #f5f5f5;
-	border-radius: 50%;
-	box-shadow: -2px -2px 4px #fff, 2px 2px 4px rgb(0 0 0/ 24%);
-	color: #737373;
-}
-
-@media ( any-hover : hover) {
-	.select-button {
-		transition: box-shadow 0.2s;
-	}
-	.select-button:hover {
-		box-shadow: -2px -2px 4px #fff, 2px 2px 4px rgb(0 0 0/ 24%);
-	}
-	.select-button:active {
-		background-color: #ebebeb;
-		box-shadow: inset 4px 4px 8px rgb(0 0 0/ 16%);
-	}
-	option {
-		color: #000;
-	}
-}
-
 </style>
 
-<script type="text/javascript">
-//テーブルリンクにする処理
-document.addEventListener("DOMContentLoaded", function() {
-	// .user-link がついてるタグを全部探す
-	const linkCells = document.querySelectorAll(`.user-link`);
-            
-	// クラスが記述されたタグにクリックしたときの処理を追加
-	linkCells.forEach(function(cell) {
-		cell.addEventListener("click", function(event) {
-			//ボタンを押した場合を省く
-			if(event.target.closest('.btn')){
-				return;
-				}
 
-			//対象に設定されたdatasetを取り出す
-			const url = cell.dataset.href; 
-			
-			if (url) {
-				//設定したURLに遷移する
-				window.location.href = url;
-			}
-		});
-	});
-
-	const btn = document.querySelectorAll(".btn--delete");
-
-	// 削除ボタンをクリックしたときの処理を追加
-	btn.forEach(function(button) {
-		button.addEventListener("click", function(event) {
-			//イベントの伝播を止める処理
-			event.stopPropagation();
-			//イベントのデフォルトの動作を止める処理
-			event.preventDefault();
-			const jackDelete = button.dataset.href;
-
-			if(confirm("本当に削除しますか？")){
-				alert("削除しました。");
-				window.location.href= jackDelete;
-			}else{
-				alert("キャンセルしました。");
-			}
-		});
-	});
-	
-});
-
-</script>
 </head>
 
 <body>
@@ -357,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	<td class="search-box">
 		<!-- 検索を行うフォーム -->
 		<form class="search-form">
-		<label><input type="text" id="searchInput" placeholder="キーワードを入力"></label>
+		<label><input type="text" id="searchInput" placeholder="キーワードを入力" value=<%=keyword %>></label>
 		<button id="searchButton" type="button" aria-label="検索"></button>
 		</form>
 	</td>
@@ -383,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				if(user.getDisplayFlag() != 1){
 %>
 
-		<tr class="user-link" data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>">
+		<tr class="user-link case-link" data-href="<%=request.getContextPath()%>/userDetail?userId=<%=user.getUserId() %>">
 			<td class="box-user" data-label="社員番号">
 			<%=user.getEmployeeNumber() %>
 			</td>
@@ -413,6 +341,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	</div>
 	
 	<script>
+	//javascriptで使用するためのコンテキストパスを準備
     const CONTEXT_PATH = "<%= request.getContextPath() %>";
 	</script>
 	<script src="<%= request.getContextPath() %>/js/userScript.js"></script>
