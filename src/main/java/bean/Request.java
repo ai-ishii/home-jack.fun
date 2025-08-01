@@ -1,3 +1,12 @@
+/*
+ * 機能：申請DTO
+ * 
+ * 作成者：桑原岳
+ * 
+ * 最終更新日：2025/08/01
+ * 
+ * */
+
 package bean;
 
 import java.sql.Timestamp;

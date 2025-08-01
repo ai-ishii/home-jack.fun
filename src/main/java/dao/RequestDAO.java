@@ -1,4 +1,11 @@
-/*RequestDAO.java */
+/*
+ * 機能：資格、氏名、住所、(副業)申請に関するDAO
+ * 
+ * 作成者：桑原岳
+ *  
+ * 最終更新日：2025/08/01
+ *  
+ */
 package dao;
 
 import java.sql.Connection;
