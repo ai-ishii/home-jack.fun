@@ -1,8 +1,19 @@
+<!-- 
+　個人目標確認機能
+
+　作成者：月向亮太
+
+　作成日：7月23日
+
+　最終更新日：8月1日
+
+　第〇事業部第〇グループと表示させなければならないのですが、
+"第〇グループ"を表示する機能を作り忘れてました。
+ごめんなさい。
+ -->
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList,java.util.Map,java.util.LinkedHashMap,bean.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
 
 <%
     // サーブレットから渡されたuserListを取得
@@ -13,7 +24,7 @@
     Map<Integer, String> teamMap = new LinkedHashMap<>();
     if (userList != null) {
         for (User user : userList) {
-            teamMap.put(user.getDepartmentId(), "tst" + user.getDepartmentId());
+            teamMap.put(user.getDepartmentId(), "第" + user.getDepartmentId() + "事業部");
         }
     }
     pageContext.setAttribute("teamMap", teamMap);
@@ -186,7 +197,7 @@ window.onload = function() {
 					<c:forEach items="${teamMap}" var="teamEntry">
 						<div id="panel_${teamEntry.key}" class="nonee" >
 							<%-- idはMapのキー（チームID） --%>
-							<h3>${teamEntry.value}チーム一覧</h3>
+							<h3>${teamEntry.value}</h3>
 							<table>
 								<c:forEach items="${userList}" var="user">
 									<c:if test="${user.departmentId == teamEntry.key}">

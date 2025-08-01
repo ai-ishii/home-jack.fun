@@ -27,8 +27,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
-@WebServlet("/goalConfirm")
-public class GoalConfirmServlet extends HttpServlet {
+@WebServlet("/goalConfirm1")
+public class GoalConfirmServlet1 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		commonProcess(request, response);
@@ -71,15 +71,12 @@ public class GoalConfirmServlet extends HttpServlet {
 			cmd = request.getParameter("cmd");
 
 			//セッション登録がまだなため、仮で登録してます
-			strUserId = "4";
+			userId = 4;
 			//※ここは後で絶対に変える文章なので覚えておいてください
 			if (cmd == null) {
 				cmd = ""; 
 			}
 			
-			//userIdをStringからintへキャスト
-			userId = Integer.parseInt(strUserId);
-
 			//部目標を呼び出す
 			teamGoal = teamGoalDAO.selectByUserId(userId);
 			
@@ -97,11 +94,10 @@ public class GoalConfirmServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-		//	session.setAttribute("userId",userId);
-			request.setAttribute("teamGoal", teamGoal);
+			request.setAttribute("team_goal", teamGoal);
 			request.setAttribute("goal", goal);
 			request.setAttribute("quarter_goal_list", quarterGoalList);
-			request.getRequestDispatcher("/view/goalConfirm.jsp").forward(request, response);
+			request.getRequestDispatcher("/freedom/NewFile.jsp").forward(request, response);
 		}
 	}
 }

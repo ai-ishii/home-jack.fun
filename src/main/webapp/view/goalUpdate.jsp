@@ -34,7 +34,7 @@ String resultCommentReviewer = "";
 
 //teamGoalの値がnullでなければ
 if (teamGoal != null) {
-	
+
 	//ゲッターメソッドを使って値を取得する
 	departmentGoal = teamGoal.getDepartmentGoal();
 	groupGoal = teamGoal.getGroupGoal();
@@ -42,7 +42,7 @@ if (teamGoal != null) {
 
 //goalの値がnullでなければ
 if (goal != null) {
-	
+
 	//ゲッターメソッドを使って値を取得する
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
@@ -59,10 +59,8 @@ if (goal != null) {
 <title>個人目標登録</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
-<script src="${pageContext.request.contextPath}/js/script.js "></script>
-<script src="${pageContext.request.contextPath}/js/accordion.js "></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
+
 /* 個人目標のCSS */
 #goalTitle {
 	position: relative;
@@ -70,14 +68,14 @@ if (goal != null) {
 	margin-bottom: 10px;
 	width: 80%;
 	border-radius: 30px;
-	background-color: #fffadd;
+	background-color: #ffffff;
 	box-shadow: 1px 2px 5px #CCCCEE;
-	text-align: center;
 	font-size: 20px;
 }
 
-#quaterGoal {
+#quarterGoal {
 	position: relative;
+	padding-bottom: 10%;
 	margin-top: 100px;
 	margin-bottom: 10px;
 	width: 80%;
@@ -94,7 +92,7 @@ if (goal != null) {
 	margin-bottom: 10px;
 	width: 80%;
 	border-radius: 30px;
-	background-color: #fffadd;
+	background-color: #ffffff;
 	box-shadow: 1px 2px 5px #CCCCEE;
 	text-align: center;
 	font-size: 20px;
@@ -109,6 +107,13 @@ if (goal != null) {
 	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: center;
+}
+
+.edit { /*編集ボタン*/
+	position: absolute;
+	top: 0;
+	right: 45px;
+	min-width: 10%;
 }
 
 .goalpadding {
@@ -129,27 +134,28 @@ if (goal != null) {
 
 .chatGoal {
 	position: relative;
-	right: 350px;
+	right: 370px;
 	font-size: 30px;
 }
 
 #goalTitle textarea {
+	padding: 0;
 	resize: none;
 	width: 100%;
-	height: 100px;
+	height: 150px;
 	overflow: auto; /* 縦方向にスクロールが行える！*/
 	border: none;
 	outline: none;
+	text-align: left;
 	font-size: 24px;
 	font-family: kokoro;
-	text-align: left;
-	padding: 0;
 }
 
-#quaterTitle textarea {
-	resize: none;
+#quarterTitle textarea {
+	padding: 0;
 	width: 80%;
 	height: 100px;
+	resize: none;
 	border: none;
 	border-right: 2px solid #bee1de; ! important;
 	overflow: auto; /* 縦方向にスクロールが行える！*/
@@ -157,18 +163,18 @@ if (goal != null) {
 	font-size: 24px;
 	font-family: kokoro;
 	text-align: left;
-	padding: 0;
-	overflow: auto;
 }
 
-#goalTitle .quater .smallGoal {
-	resize: none;
+#goalTitle .quarter .smallGoal {
 	width: 100%;
 	height: 100px;
+	resize: none;
 	overflow: auto; /* 縦方向にスクロールが行える！*/
 }
 
-#quaterTitle .goalpadding {
+#quarterTitle .goalpadding {
+	padding-bottom: 30px;
+	background-color: #fff7de;
 	text-align: center;
 }
 
@@ -180,7 +186,9 @@ if (goal != null) {
 	left: 20px;
 }
 
-#quaterTitle h3 {
+#quarterTitle h3 {
+	padding-left: 90px;
+	padding-top: 20px;
 	margin: 0 auto;
 	width: 100%;
 	text-align: left;
@@ -192,17 +200,12 @@ if (goal != null) {
 	text-align: left;
 }
 
-.quaterGoal {
+.quarterGoal {
 	margin: 0 auto;
 	width: 80.5%;
 	background-color: #ffd700;
 	text-align: left;
 	left: 350px;
-}
-
-#goalTitle .quater {
-	margin: 0 auto;
-	width: 80%;
 }
 
 .subTitle {
@@ -241,12 +244,12 @@ if (goal != null) {
 
 .details {
 	width: 90%;
+	height: 100%;
 	transition: all ease-in .3s;
 	border-left: 2px solid #00a5a0;
 	border-right: 2px solid #00a5a0;
 	border-bottom: 1px solid #00a5a0;
 	box-sizing: border-box;
-	height: 100%;
 	&:
 	last-of-type
 	{
@@ -265,12 +268,11 @@ if (goal != null) {
 
 .details-summary {
 	display: block;
-	padding: 30px;
 	border-top: 1px solid #00a5a0;
-	font-size: 20px;
-	font-weight: bold;
 	transition: all ease-in-out .3s; &: hover { cursor : pointer;
 	background-color: #bee1de;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 }
@@ -279,11 +281,11 @@ if (goal != null) {
 }
 
 .details-content {
+	padding: 20px;
 	height: 70px;
 	overflow: hidden;
 	overflow-y: auto;
 	background-color: #fff;
-	padding: 20px;
 }
 
 .details[open] .details-content {
@@ -302,11 +304,51 @@ body {
 	margin: 20px;
 }
 
-.accordion {
+.tab-4 {
 	display: flex;
-	flex-direction: column;
 	margin: 0 auto;
-	align-items: center;
+	max-width: 900px;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.tab-4>label {
+	flex-grow: 1;
+	flex-shrink: 1;
+	padding: .7em 1em .5em;
+	order: -2;
+	min-width: 70px;
+	background-color: #f2f2f2;
+	color: #999;
+	font-weight: 600;
+	font-size: .9em;
+	text-align: center;
+	cursor: pointer;
+	padding: .7em 1em .5em;
+}
+
+.tab-4>label:hover {
+	opacity: .8;
+}
+
+.tab-4 input {
+	display: none;
+}
+
+.tab-4>div {
+	display: none;
+	padding: 1.5em 1em;
+	width: 100%;
+	background-color: #fff;
+}
+
+.tab-4 label:has(:checked) {
+	border-bottom: 4px solid #ffdd00;
+	color: #ffdd00;
+}
+
+.tab-4 label:has(:checked)+div {
+	display: block;
 }
 
 .goalButton {
@@ -343,7 +385,7 @@ body {
 
 
 				<div id="goalTitle" class="container">
-					<h1>個人目標</h1>
+					<h1 style="text-align: center">個人目標</h1>
 
 					<div class="departpadding">
 						<h3>部目標</h3>
@@ -360,21 +402,20 @@ body {
 					<div class="goalpadding">
 						<h3>年間目標</h3>
 						<input type="hidden" name="goal_id" value="<%=goal.getGoalId()%>">
-						<textarea name="annual_goal" rows="5" cols="80" placeholder="例　〇〇に合格する、制作する"><%=annualGoal%></textarea>
+						<textarea name="annual_goal" rows="5" cols="80"
+							placeholder="例　〇〇に合格する、制作する"><%=annualGoal%></textarea>
 					</div>
 					<div class="goalpadding">
 						<h3>現状と課題</h3>
-						<textarea name="situation_challenge" rows="5" cols="80" placeholder="例　〇〇について知識不足"><%=situationChallenge%></textarea>
+						<textarea name="situation_challenge" rows="5" cols="80"
+							placeholder="例　〇〇について知識不足"><%=situationChallenge%></textarea>
 					</div>
 				</div>
 
-				<div id="quaterGoal" class="container">
+				<div id="quarterGoal" class="container">
 					<h1>目標を達成するためのステップ</h1>
-
-
-					<div id="quaterTitle" class="container">
-
-						<div class="accordion">
+					<div id="quarterTitle" class="container">
+						<div class="tab-4">
 
 							<!--Java処理-->
 							<%
@@ -382,61 +423,57 @@ body {
 								for (int i = 0; i < quarterGoalList.size(); i++) {
 							%>
 
-							<details class="details">
-								<summary class="details-summary">
-									<h4>
-										第<%=i + 1%>四半期
-									</h4>
-								</summary>
+							<label> <input type="radio" name="tab-4"> 第<%=i + 1%>四半期
+							</label>
 								<div class="goalpadding">
 									<div class="contents">
 										<h3>小目標</h3>
 										<input type="hidden" name="quarter_goal_id<%=i + 1%>"
 											value="<%=quarterGoalList.get(i).getQuarterGoalId()%>">
-										<textarea  class="details-content"
-											name="small_goal<%=i + 1%>" rows="5" cols="30" placeholder="例　〇〇について勉強し、レポートにまとめる"><%=quarterGoalList.get(i).getSmallGoal()%></textarea>
+										<textarea class="details-content" name="small_goal<%=i + 1%>"
+											rows="5" cols="30" placeholder="例　〇〇について勉強し、レポートにまとめる"><%=quarterGoalList.get(i).getSmallGoal()%></textarea>
 									</div>
 									<div class="contents">
 										<h3>評価基準・材料</h3>
-										<textarea  class="details-content"
-											name="judge_material<%=i + 1%>" rows="5" cols="30" placeholder="例　レポートの発表"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
+										<textarea class="details-content"
+											name="judge_material<%=i + 1%>" rows="5" cols="30"
+											placeholder="例　レポートの発表"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
 									</div>
-									<div class="contents">
-										<h3>達成率 報告内容</h3>
+									<div class="flex">
+									<h3 style="flex-shrink: 3;">達成率</h3>
+									<h3 style="">報告内容</h3>
+								</div>
 										<div style="width: 80%; margin: 0 auto;">
 											<div class="flex">
-												<textarea  class="details-content"
-													name="achieve_rate<%=i + 1%>" rows="10" style="flex: 1" placeholder="例　80%"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
-												<textarea  class="details-content" name="report<%=i + 1%>"
-													rows="10" style="flex: 3"  placeholder="例　〇〇することができました。"><%=quarterGoalList.get(i).getReport()%></textarea>
+												<textarea class="details-content"
+													name="achieve_rate<%=i + 1%>" rows="10" style="flex: 1"
+													placeholder="例　80%"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
+												<textarea class="details-content" name="report<%=i + 1%>"
+													rows="10" style="flex: 3" placeholder="例　〇〇することができました。"><%=quarterGoalList.get(i).getReport()%></textarea>
 											</div>
 										</div>
-									</div>
 									<div class="contents">
 										<h3>達成率 報告を受けての評価</h3>
 										<div style="width: 80%; margin: 0 auto;">
 											<div class="flex">
-												<textarea  class="details-content"
-													name="achieve_rate_reviewer<%=i + 1%>" rows="10" style="flex: 1" placeholder="例　80"><%=quarterGoalList.get(i).getAchieveRateReviewer()%></textarea>
-												<textarea  class="details-content" name="evaluation<%=i + 1%>"
-													rows="10" style="flex: 3" placeholder="例　上出来です。"><%=quarterGoalList.get(i).getEvaluation()%></textarea>
-													<input type="hidden" name="quarterly_flag<%=i + 1%>"
-											value="<%=quarterGoalList.get(i).getQuarterlyFlag()%>">
+												<textarea class="details-content"
+													name="achieve_rate_reviewer<%=i + 1%>" rows="10"
+													style="flex: 1" placeholder="例　80"><%=quarterGoalList.get(i).getAchieveRateReviewer()%></textarea>
+												<textarea class="details-content"
+													name="evaluation<%=i + 1%>" rows="10" style="flex: 3"
+													placeholder="例　上出来です。"><%=quarterGoalList.get(i).getEvaluation()%></textarea>
+												<input type="hidden" name="quarterly_flag<%=i + 1%>"
+													value="<%=quarterGoalList.get(i).getQuarterlyFlag()%>">
 											</div>
 										</div>
 									</div>
-							</details>
+								</div>
+							
 							<!--Java処理-->
 							<%
 							}
 							}
 							%>
-						</div>
-
-						<div class="departpadding">
-							<h3>チャット</h3>
-							<textarea style="border-radius: 30px" ; name="chatGoal" rows="5"
-								cols="100">　</textarea>
 						</div>
 					</div>
 				</div>
@@ -452,10 +489,11 @@ body {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea  name="result" rows="10" cols="80" placeholder="例　100"><%=result%></textarea>
+								<textarea name="result" rows="10" cols="80" placeholder="例　100"><%=result%></textarea>
 							</div>
 							<div style="width: 80%">
-								<textarea  name="result_comment" rows="10" cols="80" placeholder="例　〇〇を達成できました。"><%=resultComment%></textarea>
+								<textarea name="result_comment" rows="10" cols="80"
+									placeholder="例　〇〇を達成できました。"><%=resultComment%></textarea>
 							</div>
 						</div>
 					</div>
@@ -468,23 +506,25 @@ body {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea  name="result_reviewer" rows="10" cols="80" placeholder="例　100"><%=resultReviewer%></textarea>
+								<textarea name="result_reviewer" rows="10" cols="80"
+									placeholder="例　100"><%=resultReviewer%></textarea>
 							</div>
 							<div style="width: 80%">
-								<textarea  name="result_comment_reviewer" rows="10" cols="80"  placeholder="例　これからも期待してます。"><%=resultCommentReviewer%></textarea>
+								<textarea name="result_comment_reviewer" rows="10" cols="80"
+									placeholder="例　これからも期待してます。"><%=resultCommentReviewer%></textarea>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div  class="goalButton">
-				<input type="submit" value="更新">
+				<div class="goalButton">
+					<input type="submit" value="更新">
 				</div>
 			</form>
 		</div>
 	</div>
 	
-
-
+	<!-- チャット機能についてなんですが、実装するかしないかはお任せします -->
+	
 
 
 

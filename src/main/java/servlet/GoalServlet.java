@@ -1,3 +1,13 @@
+/**
+ * 個人目標詳細機能
+ * 
+ * 作成者：月向亮太
+ * 
+ * 作成日：7月18日
+ * 
+ * 最終更新日：7月27日
+ * 
+ */
 package servlet;
 
 import java.io.IOException;
@@ -20,8 +30,6 @@ public class GoalServlet extends HttpServlet {
 		String strUserId = "";
 		String cmd = "";
 		
-		//オブジェクト宣言
-		User user = new User();
 		//DAO宣言
 		UserDAO userDAO = new UserDAO();
 		
