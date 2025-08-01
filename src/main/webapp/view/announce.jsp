@@ -9,10 +9,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page
-	import="java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, bean.Announce, util.MyFormat"%>
+	import="bean.Announce, bean.AnnounceCategory, util.MyFormat, 
+	java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date"%>
 
 <%
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
+ArrayList<AnnounceCategory> categoryList = (ArrayList<AnnounceCategory>) request.getAttribute("categoryList");
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
@@ -326,12 +328,16 @@ a {
 										</div>
 										<div>
 											<label for="category_select">カテゴリ</label> 
-											<select id="category_select" name="category_id">
+											<select id="category_select" name="category_code">
 												<option value="">全カテゴリ</option>
-												<option value="1">お知らせ</option>
-												<option value="2">チーム活動</option>
-												<option value="3">ナレッジベース</option>
-												<option value="9">その他</option>
+												<%
+												for (int i = 0; i < categoryList.size(); i++) {
+													AnnounceCategory announceCategory = categoryList.get(i);
+												%>
+												<option value="1"><%= announceCategory.getCategory() %></option>
+												<%
+												}
+												%>
 											</select>
 										</div>
 										<div>
