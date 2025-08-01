@@ -148,50 +148,52 @@ public class UserDAO {
 	}
 
 	/**
-	 * 疑似削除を行うメソッド
-	 * 
-	 * @param 疑似削除したいユーザーのid
-	 * @throws IllegalStateException メソッド内部で例外が発生した場合
-	 */
-	public void delete(int userId) {
-		Connection con = null;
-		Statement smt = null;
-
-		LocalDateTime nowDate = LocalDateTime.now();
-
-		//SQL文の作成
-		String sql = "update userinfo set birthday = NULL, address = NULL, "
-				+ "post = NULL, phone = NULL, nearest_station = NULL, transportation = NULL, sex = NULL, "
-				+ "employee_number = 'NULL, department_id = NULL, group_id = NULL, joiningdate = NULL, "
-				+ "children = NULL, qualification = NULL, work_history = NULL, regist_date = NULL, "
-				+ "update_date = '" + nowDate + "' WHERE user_id = '" + userId + "'";
-
-		try {
-			//DB接続
-			con = DAOconnection.getConnection();
-			smt = con.createStatement();
-
-			//更新の処理
-			smt.executeUpdate(sql);
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException ignore) {
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
-
-	}
+     * 疑似削除を行うメソッド
+     * 
+     * @param 疑似削除したいユーザーのid
+     * @throws IllegalStateException メソッド内部で例外が発生した場合
+     */
+    public void delete(int userId) {
+        Connection con = null;
+        Statement smt = null;
+        
+        //現在の日時を取得
+        LocalDateTime nowDate = LocalDateTime.now();
+        
+        //SQL文の作成
+        String sql = "update user_info set birthday = NULL, address = NULL, "
+                + "post = NULL, phone = NULL, nearest_station = NULL, transportation = NULL, sex = NULL, "
+                + "employee_number = NULL, department_id = NULL, group_id = NULL, joining_date = NULL, "
+                + "children = NULL, qualification = NULL, work_history = NULL, display_flag = '1', regist_date = NULL, "
+                + "update_date = '"+ nowDate +"' WHERE user_id = '"+userId+"'";
+        
+        try {
+            //DB接続
+            con = DAOconnection.getConnection();
+            smt = con.createStatement();
+            
+            //更新の処理
+            smt.executeUpdate(sql);
+            
+            
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if (smt != null) {
+                try {
+                    smt.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+        
+    }
 
 	/**
 	 * 更新処理を行うメソッド
@@ -572,88 +574,14 @@ public class UserDAO {
 		}
 	}
 
-	/**
-	 * 検索を行うメソッド ※オプション
-	 * 
-	 * @param 検索したいキーワード
-	 * @throws IllegalStateException メソッド内部で例外が発生した場合
-	 * @return 検索された情報
-	 */
-	public ArrayList<User> search(String input) {
-		Connection con = null;
-		Statement smt = null;
-
-		//戻り値用のArrayListを作成
-		ArrayList<User> userList = new ArrayList<User>();
-
-		//SQL文の作成
-		String sql = "SELECT isbn,title,price FROM user_info " +
-				"WHERE employee_number LIKE '%" + input + "%'"
-				+ " OR name LIKE '%" + input + "%'";
-
-		try {
-			//DB接続
-			con = DAOconnection.getConnection();
-			smt = con.createStatement();
-
-			ResultSet rs = smt.executeQuery(sql);
-
-			while (rs.next()) {
-				User user = new User();
-				user.setUserId(rs.getInt("user_id"));
-				user.setAccountId(rs.getString("account_id"));
-				user.setName(rs.getString("name"));
-				user.setNameKana(rs.getString("name_kana"));
-				user.setBirthday(rs.getDate("birthday"));
-				user.setAddress(rs.getString("address"));
-				user.setPhone(rs.getString("phone"));
-				user.setNearestStation(rs.getString("nearest_station"));
-				user.setTransportation(rs.getString("transportation"));
-				user.setSex(rs.getString("sex"));
-				user.setEmployeeNumber(rs.getString("employee_number"));
-				user.setDepartmentId(rs.getInt("department_id"));
-				user.setGroupId(rs.getInt("group_id"));
-				user.setJoiningDate(rs.getTimestamp("joining_date"));
-				user.setWorkHistory(rs.getInt("work_history"));
-				user.setMarriageFlag(rs.getInt("marriage_flag"));
-				user.setChildren(rs.getInt("children"));
-				user.setQualification(rs.getString("qualification"));
-				user.setDisplayFlag(rs.getInt("display_flag"));
-				user.setRestFlag(rs.getInt("rest_flag"));
-				user.setRegistDate(rs.getTimestamp("regist_date"));
-				user.setUpdateDate(rs.getTimestamp("update_date"));
-				userList.add(user);
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException ignore) {
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
-		return userList;
-	}
-
-
-    
-    /**
-     * 検索を行うメソッド ※オプション
+	 /**
+     * 社員番号と名前で検索を行うメソッド
      * 
-     * @param 検索したい部とグループの番号
+     * @param 検索したいキーワード
      * @throws IllegalStateException メソッド内部で例外が発生した場合
      * @return 検索された情報
      */
-    public ArrayList<User> searchAffiliation(int part, int group){
+    public ArrayList<User> search(String input){
         Connection con = null;
         Statement smt = null;
         
@@ -661,17 +589,21 @@ public class UserDAO {
         ArrayList<User> userList = new ArrayList<User>();
         
         //SQL文の作成
-        String sql = "SELECT isbn,title,price FROM user_info " +
-                "WHERE department_id LIKE '%" + part + "%'"
-                + " AND group_id LIKE '%" + group  + "%'";
+        String sql = "SELECT * FROM user_info " +
+                "WHERE employee_number LIKE '%" + input + "%'"
+                + "OR name LIKE '%" + input + "%'"
+                + "OR group_id LIKE '%" + input + "%'"
+                + "OR department_id LIKE '%" + input + "%'";
         
         try {
             //DB接続
             con = DAOconnection.getConnection();
             smt = con.createStatement();
             
+            //SQLの実行
             ResultSet rs = smt.executeQuery(sql);
             
+            //値の登録
             while (rs.next()) {
                 User user = new User();
                 user.setUserId(rs.getInt("user_id"));
@@ -696,6 +628,82 @@ public class UserDAO {
                 user.setRestFlag(rs.getInt("rest_flag"));
                 user.setRegistDate(rs.getTimestamp("regist_date"));
                 user.setUpdateDate(rs.getTimestamp("update_date"));
+               //配列に格納
+                userList.add(user);
+            }
+            
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if (smt != null) {
+                try {
+                    smt.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+        return userList;
+    }
+    
+    /**
+     * 所属で検索を行うメソッド
+     * 
+     * @param 検索したい部とグループの番号
+     * @throws IllegalStateException メソッド内部で例外が発生した場合
+     * @return 検索された情報
+     */
+    public ArrayList<User> searchAffiliation(int part, int group){
+        Connection con = null;
+        Statement smt = null;
+        
+        //戻り値用のArrayListを作成
+        ArrayList<User> userList = new ArrayList<User>();
+        
+        //SQL文の作成
+        String sql = "SELECT * FROM user_info " +
+                "WHERE department_id = '" + part + "'"
+                + " AND group_id = '" + group  + "'";
+        
+        try {
+            //DB接続
+            con = DAOconnection.getConnection();
+            smt = con.createStatement();
+            
+            //SQLの実行
+            ResultSet rs = smt.executeQuery(sql);
+            
+            //値を登録
+            while (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("user_id"));
+                user.setAccountId(rs.getString("account_id"));
+                user.setName(rs.getString("name"));
+                user.setNameKana(rs.getString("name_kana"));
+                user.setBirthday(rs.getDate("birthday"));
+                user.setAddress(rs.getString("address"));
+                user.setPhone(rs.getString("phone"));
+                user.setNearestStation(rs.getString("nearest_station"));
+                user.setTransportation(rs.getString("transportation"));
+                user.setSex(rs.getString("sex"));
+                user.setEmployeeNumber(rs.getString("employee_number"));
+                user.setDepartmentId(rs.getInt("department_id"));
+                user.setGroupId(rs.getInt("group_id"));
+                user.setJoiningDate(rs.getTimestamp("joining_date"));
+                user.setWorkHistory(rs.getInt("work_history"));
+                user.setMarriageFlag(rs.getInt("marriage_flag"));
+                user.setChildren(rs.getInt("children"));
+                user.setQualification(rs.getString("qualification"));
+                user.setDisplayFlag(rs.getInt("display_flag"));
+                user.setRestFlag(rs.getInt("rest_flag"));
+                user.setRegistDate(rs.getTimestamp("regist_date"));
+                user.setUpdateDate(rs.getTimestamp("update_date"));
+                //配列に格納
                 userList.add(user);
             }
             
