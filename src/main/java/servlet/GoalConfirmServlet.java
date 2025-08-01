@@ -24,7 +24,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 
 @WebServlet("/goalConfirm")
@@ -47,7 +46,6 @@ public class GoalConfirmServlet extends HttpServlet {
 		String error = "";
 		String strUserId = "";
 		String cmd = "";
-		Integer userId = 0;
 
 		//オブジェクト宣言
 		Goal goal = new Goal();
@@ -61,24 +59,21 @@ public class GoalConfirmServlet extends HttpServlet {
 		//配列宣言
 		ArrayList<QuarterGoal> quarterGoalList = new ArrayList<QuarterGoal>();
 
-		//セッションオブジェクトの生成
-		HttpSession session = request.getSession();
-
-
 		try {
 			//getParameterメソッドを使い、取得した値を代入する
-		//	userId = (Integer)session.getAttribute("user_id");
+			strUserId = request.getParameter("user_id");
 			cmd = request.getParameter("cmd");
 
-			//セッション登録がまだなため、仮で登録してます
+			//セッション登録がまだなため、仮で登録
 			strUserId = "4";
+			
 			//※ここは後で絶対に変える文章なので覚えておいてください
 			if (cmd == null) {
 				cmd = ""; 
 			}
 			
 			//userIdをStringからintへキャスト
-			userId = Integer.parseInt(strUserId);
+			int userId = Integer.parseInt(strUserId);
 
 			//部目標を呼び出す
 			teamGoal = teamGoalDAO.selectByUserId(userId);
@@ -97,7 +92,6 @@ public class GoalConfirmServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-		//	session.setAttribute("userId",userId);
 			request.setAttribute("teamGoal", teamGoal);
 			request.setAttribute("goal", goal);
 			request.setAttribute("quarter_goal_list", quarterGoalList);
