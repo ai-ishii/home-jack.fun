@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.Announce;
-import bean.AnnounceCategory;
 import dao.AnnounceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,13 +44,11 @@ public class AnnounceServlet extends HttpServlet {
 		String cmd = "";
 
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
-		ArrayList<AnnounceCategory> categoryList = new ArrayList<AnnounceCategory>();
 
 		try {
 			AnnounceDAO announceDAO = new AnnounceDAO();
 
 			announceList = announceDAO.selectAll();
-			categoryList = announceDAO.selectCategoryAll();
 		} catch (Exception e) {
 			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
@@ -62,7 +59,6 @@ public class AnnounceServlet extends HttpServlet {
 				request.getRequestDispatcher("").forward(request, response);
 			} else {
 				request.setAttribute("announceList", announceList);
-				request.setAttribute("categoryList", categoryList);
 				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
 			}
 		}

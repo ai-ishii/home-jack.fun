@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import bean.Announce;
-import bean.AnnounceCategory;
+import bean.CategoryMap;
 import util.DAOconnection;
 
 public class AnnounceDAO {
@@ -381,13 +381,13 @@ public class AnnounceDAO {
 	 * 全検索するメソッド
 	 * @return
 	 */
-	public ArrayList<AnnounceCategory> selectCategoryAll() {
+	public ArrayList<CategoryMap> selectCategoryAll() {
 
 		// 変数宣言
 		Connection con = null;
 		Statement smt = null;
 
-		ArrayList<AnnounceCategory> list = new ArrayList<AnnounceCategory>();
+		ArrayList<CategoryMap> list = new ArrayList<CategoryMap>();
 
 		String sql = "SELECT "
 				+ "announce_category_id, "
@@ -404,13 +404,12 @@ public class AnnounceDAO {
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
-				AnnounceCategory announceCategory = new AnnounceCategory();
-				announceCategory.setAnnounceCategoryId(rs.getInt("announce_category_id"));
-				announceCategory.setCategory(rs.getString("category"));
-				announceCategory.setCategoryCode(rs.getString("category_code"));
-				list.add(announceCategory);
+				CategoryMap map = new CategoryMap();
+				map.setId(rs.getInt("announce_category_id"));
+				map.setName(rs.getString("category"));
+				map.setCode(rs.getString("category_code"));
+				list.add(map);
 			}
-
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		} finally {
