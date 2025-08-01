@@ -470,4 +470,78 @@ public class JackworksDAO {
 		}
 		return jackList;
 	}
+
+	/**
+	 * JackWorksIdを引数にフラグを変更するメソッド
+	 * 
+	 * @param 申請許可したい情報
+	 */
+	public void updateAdminFlag(int jackworksId) {
+		Connection con = null;
+		Statement smt = null;
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			String sql = "UPDATE jackworks_info SET admin_flag = ' 1 '"
+					+ "WHERE jackworks_id = '" + jackworksId + "'";
+
+			smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
+
+	/**
+	 * 管理者が申請を拒否したJackWorksIdを取得するメソッド
+	 * 
+	 * @param  申請拒否したいJackworksId
+	 */
+
+	public void denial(int jackworksId) {
+
+		Connection con = null;
+		Statement smt = null;
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			String sql = "UPDATE jackworks_info SET admin_flag = ' 2 '"
+					+ "WHERE jackworks_id = '" + jackworksId + "'";
+
+			ResultSet rs = smt.executeQuery(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
 }

@@ -7,6 +7,11 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Monthjack"%>
 
+<%
+//今月のJackWorksの全情報が格納されたmonthJackを受け取る
+Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
+%>
+
 <html>
 <head>
 <title>JackWorks</title>
@@ -15,7 +20,6 @@
 
 <!-- 以下CSS記述 -->
 <style type="text/css">
-
 #contents {
 	width: 90%;
 	margin-right: auto;
@@ -168,9 +172,10 @@ button.btn-border:active:before {
 		<div id="link-title">
 			<h1 id="link-line">今月のJackWorks内容登録</h1>
 		</div>
-		
+
 		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
-		<form action="<%=request.getContextPath()%>/monthJackworks" enctype="multipart/form-data" method="post">
+		<form action="<%=request.getContextPath()%>/monthJackworks"
+			enctype="multipart/form-data" method="post">
 
 			<!-- 入力フォーム -->
 			<table id="box-mar">
@@ -179,17 +184,18 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="file" name="image" size="35" required></td>
+				<td><input type="file" name="image" size="35" value="" required></td>
 				<tr>
 					<td style="display: flex">今月のテーマ
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="" size="35" required></td>
+				<td><input type="text" name="theme"
+					value="<%=monthJack.getTheme()%>" size="35" required></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
-				<td><textarea name="note" rows="" cols=""></textarea></td>
+				<td><textarea name="note" rows="" cols=""><%=monthJack.getNote()%></textarea></td>
 			</table>
 
 			<br>
@@ -197,10 +203,12 @@ button.btn-border:active:before {
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
-					<span>登録</span>
+					<span>更新</span>
 				</button>
 			</div>
-		</div>
+	</div>
 	</form>
+	</div>
+	</div>
 </body>
 </html>

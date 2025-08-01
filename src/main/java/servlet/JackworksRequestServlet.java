@@ -1,9 +1,9 @@
 /**
- * JackWorks検索機能
+ * JackWorks申請機能
  * 
  * 作成者：青木美波
  * 
- * 作成日 2025/07/15
+ * 作成日 2025/07/29
  */
 
 package servlet;
@@ -19,8 +19,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/jackworksSearch")
-public class JackworksSearchServlet extends HttpServlet {
+@WebServlet("/jackworksRequest")
+public class JackworksRequestServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
@@ -28,41 +28,42 @@ public class JackworksSearchServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = null;
 		// 遷移先のパス
-		String path = "/monthJackworks";
+		String path = "/view/jackworksRequest.jsp";
 
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
-		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
-			//検索された値をnameで受け取る
-			String name = request.getParameter("name");
 
-			//選択された年月を受け取る
-			String monthSearch = request.getParameter("month-search");
-			String yearSearch = request.getParameter("year-search");
+			//jackworks.jspからcmd=agreeもしくはcmd=denialを受け取る
+			cmd = request.getParameter("cmd");
 
-			if (name == null) {
-				String selectSearch = yearSearch + "-" + monthSearch;
-				//選択された年月に該当する情報を検索するメソッド
-				jackList = jackworksDAO.selectSearch(selectSearch);
-			} else {
-				//入力された文字に該当する情報を検索するメソッド
-				jackList = jackworksDAO.search(name);
+			if (cmd == null) {
+				cmd = "";
 			}
 
-			//検索表示させるためのcmd
-			cmd = "search";
+			if (cmd.equals("agree")) {
+				//JackWorksのJackWorksIDを取得する
+				String jackworksId = request.getParameter("jackworksId");
+				//AdminFlagを申請許可に変更するメソッドの実行
+				jackworksDAO.updateAdminFlag(Integer.parseInt(jackworksId));
+			}
+
+			if (cmd.equals("denial")) {
+				//JackWorksのJackWorksIDを取得する
+				String jackworksId = request.getParameter("jackworksId");
+				//AdminFlagを申請却下に変更するメソッドの実行
+				jackworksDAO.denial(Integer.parseInt(jackworksId));
+			}
+
+			// JackWorksの全情報を取得するメソッドの実行
+			ArrayList<Jackworks> jackList = jackworksDAO.selectAll();
 
 			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
-			request.setAttribute("name", name);
-			
-			request.setAttribute("monthSearch", monthSearch);
-			request.setAttribute("yearSearch", yearSearch);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
+			error = "DB接続エラーのため、JackWorksの登録は表示できませんでした。";
 			cmd = "";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
@@ -76,11 +77,9 @@ public class JackworksSearchServlet extends HttpServlet {
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// cmdをリクエストスコープに"cmd"という名前で格納する
-			request.setAttribute("cmd", cmd);
 			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
-	}
 
+	}
 }

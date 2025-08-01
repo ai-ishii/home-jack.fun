@@ -10,6 +10,14 @@ JackWorks詳細画面
 <%
 //JackWorksの全情報が格納されたjack_listを受け取る
 ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+
+//戻るボタン後の画面遷移先を分けるためのcmdを受け取る
+String cmd = (String) request.getAttribute("cmd");
+
+if(cmd == null){
+	cmd="";
+}
+
 %>
 
 <html>
@@ -20,6 +28,8 @@ ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jac
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
+
+<!-- 以下CSS -->
 <style>
 
 #contents {
@@ -147,6 +157,10 @@ height:40px;
 text-align:center;
 }
 
+.mag {
+margin-top: 3%;
+}
+
 </style>
 
 <body>
@@ -162,7 +176,10 @@ text-align:center;
 		<!-- タイトル部分 -->
 		<div id="link-title">
 			<h1 id="link-line">案件情報収集の詳細</h1>
-		</div><br>
+		</div>
+		
+		<div class="mag"></div>
+		
 		<%
 				for(int i=0; i < jackList.size(); i++){
 					
@@ -170,10 +187,10 @@ text-align:center;
 					String date = myformat.breakDateFormat(jackList.get(i).getPointsGetDate());
 				%>
 				
-				<div><strong>
+				<strong>
 				<p class="cap">名前：<%=jackList.get(i).getName()%></p>
 				<p class="cap">取得日：<%= date %></p>
-				</strong></div>
+				</strong>
 
 				<div style="margin-bottom:1%"></div>
 				
@@ -247,9 +264,18 @@ text-align:center;
 				
 				<%} %>
 			</table>
+			
+			<% if (cmd.equals("request")) { %>
 			<div class="jack-return">
-			<a href="<%=request.getContextPath()%>/monthJackworks"  class="btn btn--delete">戻る</a>
+			<a href="<%=request.getContextPath()%>/jackworksRequest" class="btn btn--delete">戻る</a>
 			</div>
+			
+			<%}else{ %>
+			<div class="jack-return">
+				<a href="<%=request.getContextPath()%>/monthJackworks" class="btn btn--delete">戻る</a>
+			</div>
+			<%} %>
+			
 		</div>
 	</div>
 </body>

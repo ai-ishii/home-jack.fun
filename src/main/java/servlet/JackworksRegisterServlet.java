@@ -40,6 +40,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 
 		try {
 
+			//jackworksRegister.jspからcmd=nextを受け取る
 			cmd = request.getParameter("cmd");
 
 			String category = request.getParameter("category");
@@ -60,26 +61,18 @@ public class JackworksRegisterServlet extends HttpServlet {
 
 				session.setAttribute("jack", jack);
 
+				//案件情報収集以外の場合、登録処理を行う
 				if (!category.equals("案件情報収集")) {
-					//jack.setTemporaryFlag(1);
 					jackworksDAO.insert(jack);
 					return;
 				}
+
+				//案件情報収集の場合、jackworksRegister.jspへフォワード
 				path = "/view/jackworksRegister.jsp";
 				return;
 			}
 
-			//仮登録のJackWorksIDを取得する
-			//				int jackworksId = jackworksDAO.selectByTemporaryFlag();
-			//
-			//				if (jackworksId == 0) {
-			//					error = "仮登録の情報が見つからないため、登録が出来ません。";
-			//					cmd = "JackworksList";
-			//					return;
-			//				}
-			//
-			//				jack.setJackworksId(jackworksId);
-
+			//next間でセッション登録されたデータを受け取る
 			jack = (Jackworks) session.getAttribute("jack");
 
 			//registerJackworks.jspから各値を受け取り、オブジェクトに格納
@@ -105,12 +98,15 @@ public class JackworksRegisterServlet extends HttpServlet {
 
 			jackworksDAO.insert(jack);
 
+			//セッションデータ破棄
+			session.invalidate();
+
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、JackWorksの登録は表示できませんでした。";
-			cmd = "home";
+			cmd = "";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			cmd = "";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
@@ -118,11 +114,16 @@ public class JackworksRegisterServlet extends HttpServlet {
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+			// ページ数を判断するためのcmdを格納
 			request.setAttribute("cmd", cmd);
-			// jackWorks.jspにフォワード
-			request.getRequestDispatcher(path).forward(request, response);
+			if (path.equals("/homejack_renewal/monthJackworks")) {
+				//ページ再読み込み防止のためにリダイレクト
+				response.sendRedirect(path);
+			} else {
+				// pathにフォワード
+				request.getRequestDispatcher(path).forward(request, response);
+			}
 		}
-	}
 
+	}
 }

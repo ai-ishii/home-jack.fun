@@ -55,12 +55,12 @@ public class JackworksDetailServlet extends HttpServlet {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
 				request.setAttribute("error", error);
-				// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", cmd);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// jackWorks.jspにフォワード
+			// 画面遷移分けのcmdを格納する
+			request.setAttribute("cmd", cmd);
+			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
