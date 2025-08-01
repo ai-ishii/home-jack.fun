@@ -9,13 +9,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page
-	import="bean.Announce, bean.AnnounceCategory, util.MyFormat, 
-	java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date"%>
+	import="java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, bean.Announce, util.MyFormat"%>
 
 <%
 String cmd = (String) request.getAttribute("cmd");
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
-ArrayList<AnnounceCategory> categoryList = (ArrayList<AnnounceCategory>) request.getAttribute("categoryList");
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);

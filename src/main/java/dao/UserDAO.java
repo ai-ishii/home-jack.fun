@@ -644,77 +644,7 @@ public class UserDAO {
 		return userList;
 	}
 
-	   /**
-     * 検索を行うメソッド ※オプション
-     * 
-     * @param 検索したいキーワード
-     * @throws IllegalStateException メソッド内部で例外が発生した場合
-     * @return 検索された情報
-     */
-    public ArrayList<User> search(String input){
-        Connection con = null;
-        Statement smt = null;
-        
-        //戻り値用のArrayListを作成
-        ArrayList<User> userList = new ArrayList<User>();
-        
-        //SQL文の作成
-        String sql = "SELECT isbn,title,price FROM user_info " +
-                "WHERE employee_number LIKE '%" + input + "%'"
-                + " OR name LIKE '%" + input + "%'";
-        
-        try {
-            //DB接続
-            con = getConnection();
-            smt = con.createStatement();
-            
-            ResultSet rs = smt.executeQuery(sql);
-            
-            while (rs.next()) {
-                User user = new User();
-                user.setUserId(rs.getInt("user_id"));
-                user.setAccountId(rs.getString("account_id"));
-                user.setName(rs.getString("name"));
-                user.setNameKana(rs.getString("name_kana"));
-                user.setBirthday(rs.getDate("birthday"));
-                user.setAddress(rs.getString("address"));
-                user.setPhone(rs.getString("phone"));
-                user.setNearestStation(rs.getString("nearest_station"));
-                user.setTransportation(rs.getString("transportation"));
-                user.setSex(rs.getString("sex"));
-                user.setEmployeeNumber(rs.getString("employee_number"));
-                user.setDepartmentId(rs.getInt("department_id"));
-                user.setGroupId(rs.getInt("group_id"));
-                user.setJoiningDate(rs.getTimestamp("joining_date"));
-                user.setWorkHistory(rs.getInt("work_history"));
-                user.setMarriageFlag(rs.getInt("marriage_flag"));
-                user.setChildren(rs.getInt("children"));
-                user.setQualification(rs.getString("qualification"));
-                user.setDisplayFlag(rs.getInt("display_flag"));
-                user.setRestFlag(rs.getInt("rest_flag"));
-                user.setRegistDate(rs.getTimestamp("regist_date"));
-                user.setUpdateDate(rs.getTimestamp("update_date"));
-                userList.add(user);
-            }
-            
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        } finally {
-            if (smt != null) {
-                try {
-                    smt.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException ignore) {
-                }
-            }
-        }
-        return userList;
-    }
+
     
     /**
      * 検索を行うメソッド ※オプション
@@ -737,7 +667,7 @@ public class UserDAO {
         
         try {
             //DB接続
-            con = getConnection();
+            con = DAOconnection.getConnection();
             smt = con.createStatement();
             
             ResultSet rs = smt.executeQuery(sql);

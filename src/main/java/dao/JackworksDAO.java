@@ -207,6 +207,7 @@ public class JackworksDAO {
 	/**
 	 * 引数の入力された文字から該当データの絞込み検索処理を行うメソッド
 	 * 戻り値として該当しているJackWorksの全情報を返す
+	 * @param 検索された文字列
 	 * @return jackList
 	 */
 
@@ -289,6 +290,7 @@ public class JackworksDAO {
 	/**
 	 * 引数の選択された年月の該当データの絞込み検索処理を行うメソッド
 	 * 戻り値として該当しているJackWorksの全情報を返す
+	 * @param　検索された年月
 	 * @return jackList
 	 */
 
@@ -344,6 +346,7 @@ public class JackworksDAO {
 	/**
 	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
 	 * 戻り値としてJackWorks全情報を返す
+	 * @param　jackworksId
 	 * @return jackList
 	 */
 	public ArrayList<Jackworks> selectByJackworksId(int jackworksId) {
@@ -445,47 +448,40 @@ public class JackworksDAO {
 	}
 
 	/**
-	 * 管理者が未承認のJackWorksIdを取得するメソッド
+	 * 管理者が申請を拒否したJackWorksIdを取得するメソッド
 	 * 
-	 * @param なし
-	 * @return 登録したいJackworksId
+	 * @param  申請拒否したいJackworksId
 	 */
 
-	//	public int selectByAdminFlag() {
-	//
-	//		Connection con = null;
-	//		Statement smt = null;
-	//
-	//		int JackworksId = 0;
-	//
-	//		try {
-	//			con = getConnection();
-	//			smt = con.createStatement();
-	//
-	//			String sql = "SELECT * FROM jackworks_info WHERE admin_flag = '0' ";
-	//
-	//			ResultSet rs = smt.executeQuery(sql);
-	//
-	//			if (rs.next()) {
-	//				JackworksId = rs.getInt("jackworks_id");
-	//			}
-	//
-	//		} catch (Exception e) {
-	//			throw new IllegalStateException(e);
-	//		} finally {
-	//			if (smt != null) {
-	//				try {
-	//					smt.close();
-	//				} catch (SQLException ignore) {
-	//				}
-	//			}
-	//			if (con != null) {
-	//				try {
-	//					con.close();
-	//				} catch (SQLException ignore) {
-	//				}
-	//			}
-	//		}
-	//		return JackworksId;
-	//	}
+	public void denial(int jackworksId) {
+
+		Connection con = null;
+		Statement smt = null;
+
+		try {
+			con = DAOconnection.getConnection();
+			smt = con.createStatement();
+
+			String sql = "UPDATE jackworks_info SET admin_flag = ' 2 '"
+					+ "WHERE jackworks_id = '" + jackworksId + "'";
+
+			smt.executeUpdate(sql);
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
 }
