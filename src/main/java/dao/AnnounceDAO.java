@@ -410,7 +410,6 @@ public class AnnounceDAO {
 				map.setCode(rs.getString("category_code"));
 				list.add(map);
 			}
-
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		} finally {
