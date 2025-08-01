@@ -15,7 +15,7 @@
 <%@page import="util.MyFormat"%>
 <%@page import="bean.Announce"%>
 <%@page import="java.util.ArrayList"%>
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8"%>
 
 <%
 ArrayList<Announce> importantList = (ArrayList<Announce>)request.getAttribute("important_list");
@@ -47,9 +47,6 @@ MyFormat myformat = new MyFormat();
 	flex: 3;
 }
 
-.overflow {
-	overflow: hidden;
-}
 
 /*テーブル表示*/
 .announce-list {
@@ -136,8 +133,6 @@ MyFormat myformat = new MyFormat();
 	color: #0000ff;
 }
 
-.announce
-
 @media screen and (max-width: 767px) {
 	.announce-list .item a {
 		flex-wrap: wrap;
@@ -159,7 +154,7 @@ MyFormat myformat = new MyFormat();
 		<%@ include file="../common/header.jsp"%>
 
 		<div id="main" class="container">
-			<div class="flex overflow">
+			<div class="flex">
 				<div id="sidebar" class="container">
 					<div class="calendar">
 						<p>カレンダー</p>
@@ -168,7 +163,7 @@ MyFormat myformat = new MyFormat();
 				</div>
 
 				<div id="announce" class="container">
-					<h2>重要なお知らせ</h2>
+					<h2>重要なお知らせ</h2><span>もっと見る</span>
 					<div class="announce-list">
 						<ul>
 							<%
@@ -182,7 +177,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= importantList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= importantList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(importantList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= CommonTable.selectCategory(importantList.get(i).getAnnounceCategoryId(), categoryList) %></span>
@@ -200,8 +195,8 @@ MyFormat myformat = new MyFormat();
 							%>
 						</ul>
 						<a href="<%= request.getContextPath() %>/announce">
-							<p class="list-link">一覧へ</p>
-						</a>
+								<p >一覧へ</p>
+							</a>
 					</div>
 					
 					<h2>最新のお知らせ</h2>
@@ -218,7 +213,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= announceList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= announceList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(announceList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= CommonTable.selectCategory(announceList.get(i).getAnnounceCategoryId(), categoryList) %></span>
@@ -235,9 +230,6 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
-						<a href="<%= request.getContextPath() %>/announce">
-							<p class="list-link">一覧へ</p>
-						</a>
 					</div>
 					
 					<h2>最新のチーム活動</h2>
@@ -254,7 +246,7 @@ MyFormat myformat = new MyFormat();
 							%>
 						
 							<li class="item">
-								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= activityList.get(i).getAnnounceId() %>">
+								<a href="<%= request.getContextPath() %>/detailAnnounce?cmd=detail&announceId=<%= activityList.get(i).getAnnounceId() %>">
 									<p class="date"><%= myformat.dateFormat(activityList.get(i).getRegistDate()) %></p>
 									<p class="tag">
 										<span><%= CommonTable.selectCategory(importantList.get(i).getAnnounceCategoryId(), categoryList) %></span>
@@ -270,9 +262,6 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
-						<a href="<%= request.getContextPath() %>/announce">
-							<p class="list-link">一覧へ</p>
-						</a>
 					</div>
 				</div>
 			</div>
