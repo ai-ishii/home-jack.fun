@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/jackworks")
-@SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked") //コンパイルエラーがでなくなっているので注意
 public class JackworksServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
