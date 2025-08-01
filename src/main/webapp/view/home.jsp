@@ -1,4 +1,4 @@
-<!--
+<%--
 /**
  * ホーム画面
  * 
@@ -7,7 +7,7 @@
  * 作成日：2025/07/04
  * 最終更新日：2025/07/29
  */
--->
+--%>
 
 <%@page import="util.CommonTable"%>
 <%@page import="dao.AnnounceDAO"%>
@@ -46,6 +46,9 @@ CommonTable commonTable = new CommonTable();
 	flex: 3;
 }
 
+.overflow {
+	overflow: hidden;
+}
 
 /*テーブル表示*/
 .announce-list {
@@ -155,7 +158,7 @@ CommonTable commonTable = new CommonTable();
 		<%@ include file="../common/header.jsp"%>
 
 		<div id="main" class="container">
-			<div class="flex">
+			<div class="flex overflow">
 				<div id="sidebar" class="container">
 					<div class="calendar">
 						<p>カレンダー</p>

@@ -6,6 +6,8 @@
 <%@page
 	import="bean.Account, bean.User, dao.UserDAO, util.CommonTable, util.MyFormat, java.sql.Timestamp, java.util.Date, java.text.SimpleDateFormat"%>
 
+<!-- cmdで確認画面と登録画面分ける -->
+
 <%
 // オブジェクトの生成
 Account account = new Account();
@@ -50,7 +52,7 @@ String talent = "";
 String intro = "";
 String position = "";
 
-// 確認画面の場合
+// 確認画面の場合と登録画面に戻った場合
 if (cmd.equals("confirm") || cmd.equals("reRegister")) {
 	// 入力された情報をJSPから取得
 	photo = request.getParameter("photo");
@@ -207,20 +209,7 @@ a {
 				%>
 
 				<!-- 入力部分 -->
-				<%
-				if (cmd.equals("register") || cmd.equals("reRegister")) {
-				%>
-				<form action="<%=request.getContextPath()%>/view/employeeRegister.jsp" method="post">
-					<input type="hidden" name="cmd" value="confirm">
-					<%
-					} else if (cmd.equals("confirm")) {
-					%>
-					<form action="<%=request.getContextPath()%>/employeeRegister" method="post">
-						<input type="hidden" name="cmd" value="reRegister">
-						<%
-						}
-						%>
-
+				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post">
 						<table id="inputArea">
 							<tr id="inputRow">
 								<td id="item"><label for="photo">写真</label></td>
@@ -296,24 +285,22 @@ a {
 						<%
 						if (cmd.equals("register") || cmd.equals("reRegister")) {
 						%>
-						<a href="<%=request.getContextPath()%>/employee">
+						<a href="<%= request.getContextPath() %>/employee">
 							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
 						</a>
 						<%
 						} else if (cmd.equals("confirm")) {
 						%>
-						<a href="<%=request.getContextPath()%>/view/employeeRegister.jsp?cmd=register">
-							<input type="button" value="戻る" style="width: 120px; height: 50px; font-size: large;">
-						</a>
+							<input type="submit" name="submit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
 						<%
 						}
 						if (cmd.equals("register") || cmd.equals("reRegister")) {
 						%>
-						<input type="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+							<input type="submit" name="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
 						<%
 						} else if (cmd.equals("confirm")) {
 						%>
-						<input type="submit" value="完了" style="width: 120px; height: 50px; font-size: large;">
+							<input type="submit"  name="submit" value="完了" style="width: 120px; height: 50px; font-size: large;">
 						<%
 						}
 						%>
@@ -328,6 +315,8 @@ a {
 
 		// 必要な要素を取得
 		const readonlyInput = document.querySelectorAll("#readonlyInput");
+		const confirmButton = document.querySelectorAll("#confirmButton");
+		const hidden = document.querySelector("#hidden");
 
 		if (cmd == "confirm") {
 			for (let i = 0; i < readonlyInput.length; i++) {

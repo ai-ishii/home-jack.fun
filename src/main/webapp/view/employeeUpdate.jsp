@@ -1,5 +1,5 @@
 <!-- 社員紹介 変更機能（作：石井） -->
-<!-- 作成日：7/18　最終更新日：7/29 11:45 -->
+<!-- 作成日：7/18　最終更新日：7/30 15:20 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -42,7 +42,7 @@ String group = commonTable.selectGroup(groupId);
 // cmdを取得
 String cmd = request.getParameter("cmd");
 // JSPから送られてきたユーザーIDを取得
-int userId = request.getParameter("user_id");
+int userId = Integer.parseInt(request.getParameter("userId"));
 
 // 変数宣言
 String photo = "";
@@ -54,7 +54,7 @@ String talent = "";
 String intro = "";
 String position = "";
 
-// 確認画面の場合
+// 確認画面の場合と戻るボタンを押して再度変更画面に戻った場合
 if (cmd.equals("confirm") || cmd.equals("reUpdate")) {
 	// 入力された情報をJSPから取得
 	photo = request.getParameter("photo");
@@ -72,7 +72,7 @@ if (cmd.equals("confirm") || cmd.equals("reUpdate")) {
 <head>
 <!-- タイトル -->
 <%
-if (cmd.equals("update")) {
+if (cmd.equals("update") || cmd.equals("reUpdate")) {
 %>
 <title>編集 - 社員紹介</title>
 <%
@@ -183,21 +183,7 @@ a {
 				%>
 
 				<!-- 入力部分 -->
-				<%
-				if (cmd.equals("update") || cmd.equals("reUpdate")) {
-				%>
-				<form action="<%=request.getContextPath()%>/view/employeeUpdate.jsp" method="post">
-					<input type="hidden" name="cmd" value="confirm">
-					<input type="hidden" name="userId" value="<%= userId %>">
-				<%
-				} else if (cmd.equals("confirm")) {
-				%>
-				<form action="<%=request.getContextPath()%>/employeeUpdate" method="post">
-					<input type="hidden" name="cmd" value="reUpdate">
-				<%
-				}
-				%>
-
+				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post">
 						<table id="inputArea">
 							<tr id="inputRow">
 								<td id="item"><label for="photo">写真</label></td>
@@ -276,21 +262,23 @@ a {
 						<%
 						} else if (cmd.equals("confirm")) {
 						%>
-						<a href="<%=request.getContextPath()%>/view/employeeUpdate.jsp?cmd=update&userId=<%= userId %>">
-							<input type="button" value="戻る" style="width: 120px; height: 50px; font-size: large;">
-						</a>
+							<input type="submit" name="submit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
+							<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						}
 						if (cmd.equals("update") || cmd.equals("reUpdate")) {
 						%>
-						<input type="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+						<input type="submit" name="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+						<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						} else if (cmd.equals("confirm")) {
 						%>
-						<input type="submit" value="完了" style="width: 120px; height: 50px; font-size: large;">
+						<input type="submit" name="submit" value="完了" style="width: 120px; height: 50px; font-size: large;">
+						<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						}
 						%>
+					</form>
 					</form>
 			</div>
 
