@@ -389,7 +389,11 @@ public class AnnounceDAO {
 
 		ArrayList<AnnounceCategory> list = new ArrayList<AnnounceCategory>();
 
-		String sql = "SELECT category, category_code FROM announce_category_info";
+		String sql = "SELECT "
+				+ "announce_category_id, "
+				+ "category, "
+				+ "category_code "
+				+ "FROM announce_category_info";
 
 		try {
 			// DBに接続
@@ -399,8 +403,9 @@ public class AnnounceDAO {
 			// SQL文発行
 			ResultSet rs = smt.executeQuery(sql);
 
-			if (rs.next()) {
+			while (rs.next()) {
 				AnnounceCategory announceCategory = new AnnounceCategory();
+				announceCategory.setAnnounceCategoryId(rs.getInt("announce_category_id"));
 				announceCategory.setCategory(rs.getString("category"));
 				announceCategory.setCategoryCode(rs.getString("category_code"));
 				list.add(announceCategory);
