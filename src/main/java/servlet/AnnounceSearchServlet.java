@@ -1,3 +1,11 @@
+/**
+ * お知らせを検索して一覧表示するサーブレット
+ * 
+ * 作成者 : 大北直弥
+ * 
+ * 作成日 : 2025/07/14
+ * 更新日 : 2025/08/01
+ */
 package servlet;
 
 import java.io.IOException;
@@ -10,6 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import bean.Announce;
+import bean.CategoryMap;
 import dao.AnnounceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,14 +35,24 @@ public class AnnounceSearchServlet extends HttpServlet {
 		// 変数宣言
 		String error = "";
 		String cmd = "";
+		
+		// 日付検索の初期値の設定
+		int year = 2012;
+		Month month = Month.APRIL;
+		int day = 17;
+		int hour = 0;
+		int minute = 0;
+		int second = 0;
 
+		// オブジェクト生成
 		AnnounceDAO announceDAO = new AnnounceDAO();
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
+		ArrayList<CategoryMap> categoryList = new ArrayList<CategoryMap>();
 		LocalDateTime localDateTimeStart = null;
 		LocalDateTime localDateTimeEnd = null;
 		
 		// 時系列検索の際の初期値
-		LocalDateTime defaultStart = LocalDateTime.of(2012, Month.APRIL, 17, 0, 0, 0);
+		LocalDateTime defaultStart = LocalDateTime.of(year, month, day, hour, minute, second);
 		Timestamp startDate = Timestamp.valueOf(defaultStart);
 		Timestamp endDate = new Timestamp(System.currentTimeMillis());
 		
@@ -78,6 +97,8 @@ public class AnnounceSearchServlet extends HttpServlet {
 				announceList = announceDAO.selectByFilter(announceFlag, categoryId, startDate, endDate);
 
 			}
+			
+			categoryList = announceDAO.selectCategoryAll();
 
 		} catch (Exception e) {
 			cmd = "";
@@ -89,15 +110,10 @@ public class AnnounceSearchServlet extends HttpServlet {
 				request.getRequestDispatcher("").forward(request, response);
 			}
 
-			if (cmd.equals("keyword")) {
-				request.setAttribute("announceList", announceList);
-				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
-			} else if (cmd.equals("filter")) {
-				request.setAttribute("announceList", announceList);
-				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
-			}
-			
-			
+			request.setAttribute("cmd", cmd);
+			request.setAttribute("announceList", announceList);
+			request.setAttribute("categoryList", categoryList);
+			request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
 		}
 	}
 

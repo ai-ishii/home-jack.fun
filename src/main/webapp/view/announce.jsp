@@ -1,10 +1,21 @@
+
+<!-- 
+お知らせを一覧表示するjsp
+
+作成者 : 大北直弥
+
+作成日 : 2025/07/14
+更新日 : 2025/08/01
+ -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page
-	import="java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, bean.Announce, util.MyFormat"%>
+<%@ page import="bean.Announce, bean.CategoryMap, util.MyFormat,
+	 java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date"%>
 
 <%
+String cmd = (String) request.getAttribute("cmd");
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
+ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("categoryList");
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
@@ -159,13 +170,56 @@ a {
 						</div>
 					</form>
 
-
 					<form action="<%=request.getContextPath()%>/announceSearch"
 						method="GET">
 						<div>
-							<input type="hidden" name="announceFlag" value=""> <input
-								type="checkbox" id="important" value="1" name="announceFlag">
+							<input type="checkbox" id="important" value="1" name="announceFlag">
 							<label for="important">重要記事</label>
+              <input type="hidden" name="announceFlag" value="">
+              
+					<div class="filter_box">
+						<button type="button" class="modal_open js_modal_open">絞り込み</button>
+						<div class="modal js_modal">
+							<div class="modal_container">
+								<div class="modal_close js_modal_close">×</div>
+								<div class="modal_content js_modal_content">
+									<form action="<%=request.getContextPath()%>/announceSearch"
+										method="POST">
+										<div>
+											<input type="checkbox" id="important" value="1"
+												name="announce_flag"> 
+												<label for="important">重要記事</label>
+											<input type="hidden" name="announce_flag" value="">
+										</div>
+										<div>
+											<label for="category_select">カテゴリ</label> 
+											<select id="category_select" name="category_id">
+												<option value="">全カテゴリ</option>
+												<%
+												for (int i = 0; i < categoryList.size(); i++) {
+													CategoryMap categoryMap = categoryList.get(i);
+												%>
+												<option value="<%= categoryMap.getId() %>">
+													<%= categoryMap.getName() %>
+												</option>
+												<%
+												}
+												%>
+											</select>
+										</div>
+										<div>
+											<label for="start_date">開始日</label> 
+											<input type="datetime-local" id="start_date" name="start_date">
+										</div>
+										<div>
+											<label for="end_date">終了日</label> 
+											<input type="datetime-local" id="end_date" name="end_date">
+										</div>
+										<input type="hidden" name="cmd" value="filter">
+										<button type="submit">検索</button>
+									</form>
+								</div>
+							</div>
 						</div>
 						<div>
 							<label for="categorySelect">重要記事</label> <select
@@ -191,13 +245,25 @@ a {
 				<!-- タブの中身 -->
 				<div class="container main_box">
 					<%
+					if (cmd != null) {
+						if (cmd.equals("keyword")) {
+						String keyword = (String) request.getAttribute("keyword");
+					%>
+					<div>
+						<p>"<%= keyword %>"の検索結果</p>
+					</div>
+					<%
+						}
+					}
+					%>
+					<%
 					if (announceList != null) {
 						for (int i = 0; i < announceList.size(); i++) {
 					%>
 					<div class="content_box">
 						<div class="announce_box">
-							<a
-								href="<%=request.getContextPath()%>/detailAnnounce?announceId=<%=announceList.get(i).getAnnounceId()%>&cmd=detail"
+							<a href="<%=request.getContextPath()%>/detailAnnounce?announceId=
+                       <%=announceList.get(i).getAnnounceId()%>&cmd=detail"
 								class="box_link">
 								<div class="date_box">
 									<p>
