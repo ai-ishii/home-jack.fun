@@ -11,8 +11,7 @@ public class Request {
 		private String approver;           //承認者名
 		private Timestamp requestDate;  	//申請日時
 		private Timestamp approvalDate;    //承認日時
-		private int requestTypeFlag;		//申請種類フラグ(0,住所 1,氏名 2,勤務状況 3,資格)
-		private int requestFlag; 			//申請フラグ(0,申請中 1,承認済み 2,申請拒否)
+		private int requestFlag; 			//申請フラグ(0,申請中 1,承認済み 2,差し戻し)
 		
 		
 		public int getRequestId() {
@@ -57,12 +56,7 @@ public class Request {
 		public void setApprovalDate(Timestamp approvalDate) {
 			this.approvalDate = approvalDate;
 		}
-		public int getRequestTypeFlag() {
-			return requestTypeFlag;
-		}
-		public void setRequestTypeFlag(int requestTypeFlag) {
-			this.requestTypeFlag = requestTypeFlag;
-		}
+		
 		public int getRequestFlag() {
 			return requestFlag;
 		}
