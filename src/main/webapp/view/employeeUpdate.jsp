@@ -1,5 +1,5 @@
 <!-- 社員紹介 変更機能（作：石井） -->
-<!-- 作成日：7/18　最終更新日：7/30 15:20 -->
+<!-- 作成日：7/18　最終更新日：8/1 12:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -55,7 +55,7 @@ String intro = "";
 String position = "";
 
 // 確認画面の場合と戻るボタンを押して再度変更画面に戻った場合
-if (cmd.equals("confirm") || cmd.equals("reUpdate")) {
+if (cmd.equals("updateConfirm") || cmd.equals("reUpdate")) {
 	// 入力された情報をJSPから取得
 	photo = request.getParameter("photo");
 	devloper = Integer.parseInt(request.getParameter("devloper"));
@@ -76,7 +76,7 @@ if (cmd.equals("update") || cmd.equals("reUpdate")) {
 %>
 <title>編集 - 社員紹介</title>
 <%
-} else if (cmd.equals("confirm")) {
+} else if (cmd.equals("updateConfirm")) {
 %>
 <title>確認画面 - 社員紹介</title>
 <%
@@ -175,12 +175,14 @@ a {
 			<div id="employeeUpdate">
 
 				<%
-				if (cmd.equals("confirm")) {
+				if (cmd.equals("updateConfirm")) {
 				%>
 				<h3>以下の内容で変更します</h3>
 				<%
 				}
 				%>
+
+				<!--  enctype="multipart/form-data" -->
 
 				<!-- 入力部分 -->
 				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post">
@@ -192,9 +194,9 @@ a {
 								%>
 								<td id="value"><input type="file" name="photo"></td>
 								<%
-								} else if (cmd.equals("confirm")) {
+								} else if (cmd.equals("updateConfirm")) {
 								%>
-								<td id="value"><img src="<%=request.getContextPath()%>/img/<%=photo%>" alt="アップロードした写真"></td>
+								<td id="value"><img src="<%=request.getContextPath()%>/file/<%=photo%>" alt="アップロードした写真"></td>
 								<%
 								}
 								%>
@@ -260,25 +262,24 @@ a {
 							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
 						</a>
 						<%
-						} else if (cmd.equals("confirm")) {
+						} else if (cmd.equals("updateConfirm")) {
 						%>
-							<input type="submit" name="submit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
+							<input type="submit" name="updateSubmit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
 							<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						}
 						if (cmd.equals("update") || cmd.equals("reUpdate")) {
 						%>
-						<input type="submit" name="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+						<input type="submit" name="updateSubmit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
 						<input type="hidden" name="userId" value="<%= userId %>">
 						<%
-						} else if (cmd.equals("confirm")) {
+						} else if (cmd.equals("updateConfirm")) {
 						%>
-						<input type="submit" name="submit" value="完了" style="width: 120px; height: 50px; font-size: large;">
+						<input type="submit" name="updateSubmit" value="完了" style="width: 120px; height: 50px; font-size: large;">
 						<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						}
 						%>
-					</form>
 					</form>
 			</div>
 
@@ -291,11 +292,15 @@ a {
 
 		// 必要な要素を取得
 		const readonlyInput = document.querySelectorAll("#readonlyInput");
+		const form = document.querySelector("form");
 
-		if (cmd == "confirm") {
+		if (cmd == "updateConfirm") {
 			for (let i = 0; i < readonlyInput.length; i++) {
 				readonlyInput[i].readOnly = true;
 			}
+
+			// formに画像データ送信のためのエンコード設定
+			form.enctype = "multipart/form-data";
 		}
 	</script>
 </body>

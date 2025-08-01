@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：石井） -->
-<!-- 作成日：7/17　最終更新日：7/29 11:45 -->
+<!-- 作成日：7/17　最終更新日：8/1 12:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -53,7 +53,7 @@ String intro = "";
 String position = "";
 
 // 確認画面の場合と登録画面に戻った場合
-if (cmd.equals("confirm") || cmd.equals("reRegister")) {
+if (cmd.equals("registerConfirm") || cmd.equals("reRegister")) {
 	// 入力された情報をJSPから取得
 	photo = request.getParameter("photo");
 	devloper = Integer.parseInt(request.getParameter("devloper"));
@@ -75,7 +75,7 @@ if (cmd.equals("register") || cmd.equals("reRegister")) {
 %>
 <title>登録 - 社員紹介</title>
 <%
-} else if (cmd.equals("confirm")) {
+} else if (cmd.equals("registerConfirm")) {
 %>
 <title>確認画面 - 社員紹介</title>
 <%
@@ -201,7 +201,7 @@ a {
 				</table>
 
 				<%
-				if (cmd.equals("confirm")) {
+				if (cmd.equals("registerConfirm")) {
 				%>
 				<h3>以下の内容で登録します</h3>
 				<%
@@ -218,7 +218,7 @@ a {
 								%>
 								<td id="value"><input type="file" name="photo"></td>
 								<%
-								} else if (cmd.equals("confirm")) {
+								} else if (cmd.equals("registerConfirm")) {
 								%>
 								<td id="value">
 									<img src="<%=request.getContextPath()%>/img/<%=photo%>" alt="アップロードした写真">
@@ -289,18 +289,18 @@ a {
 							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
 						</a>
 						<%
-						} else if (cmd.equals("confirm")) {
+						} else if (cmd.equals("registerConfirm")) {
 						%>
-							<input type="submit" name="submit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
+							<input type="submit" name="registerSubmit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
 						<%
 						}
 						if (cmd.equals("register") || cmd.equals("reRegister")) {
 						%>
-							<input type="submit" name="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+							<input type="submit" name="registerSubmit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
 						<%
-						} else if (cmd.equals("confirm")) {
+						} else if (cmd.equals("registerConfirm")) {
 						%>
-							<input type="submit"  name="submit" value="完了" style="width: 120px; height: 50px; font-size: large;">
+							<input type="submit"  name="registerSubmit" value="完了" style="width: 120px; height: 50px; font-size: large;">
 						<%
 						}
 						%>
@@ -318,7 +318,7 @@ a {
 		const confirmButton = document.querySelectorAll("#confirmButton");
 		const hidden = document.querySelector("#hidden");
 
-		if (cmd == "confirm") {
+		if (cmd == "registerConfirm") {
 			for (let i = 0; i < readonlyInput.length; i++) {
 				readonlyInput[i].readOnly = true;
 			}

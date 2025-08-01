@@ -1,5 +1,5 @@
 //<!-- 社員紹介 一覧機能（作：石井） -->
-//<!-- 作成日：7/2　最終更新日：7/29 11:45 -->
+//<!-- 作成日：7/2　最終更新日：8/1 12:00 -->
 
 package servlet;
 
@@ -20,7 +20,17 @@ public class EmployeeServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
+		commonProcess(request, response);
+	}
+	
+	public void doPost (HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		commonProcess(request, response);
+	}
 		
+	private void commonProcess (HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+
 		// 変数宣言
 		String error = "";
 		String cmd = "";
