@@ -41,9 +41,9 @@ public class DetailEmployeeServlet extends HttpServlet {
 		user = userDAO.selectByUserId(userId);
 		
 		// 選択された社員の部・グループを取得し、メソッド実行
-		int department = user.getDepartmentId();
-		int group = user.getGroupId();
-		userListBySameBelong = userDAO.selectByDepartmentGroup(department, group);
+		String department = user.getDepartment();
+		String team = user.getTeam();
+		userListBySameBelong = userDAO.selectByDepartmentTeam(department, team);
 		
 		// 選択された社員の入社年月を取得し、メソッド実行
 		Timestamp joiningDate = user.getJoiningDate();

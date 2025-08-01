@@ -1,15 +1,6 @@
-/**
- * お知らせの詳細情報を表示するサーブレット
- * 
- * 作成者 : 大北直弥
- * 
- * 作成日 : 2025/07/14
- * 更新日 : 2025/07/30
- */
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import bean.Announce;
 import dao.AnnounceDAO;
@@ -19,7 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/announceDetail")
+@WebServlet("/detailAnnounce")
 public class AnnounceDetailServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request,
@@ -33,7 +24,6 @@ public class AnnounceDetailServlet extends HttpServlet {
 		// オブジェクト生成
 		Announce announce = new Announce();
 		AnnounceDAO announceDAO = new AnnounceDAO();
-		ArrayList<Announce> announceList = new ArrayList<Announce>();
 
 		// jspファイルからパラメータ取得
 		int announceId = Integer.parseInt(request.getParameter("announceId"));
@@ -42,13 +32,6 @@ public class AnnounceDetailServlet extends HttpServlet {
 		try {
 			// メソッドからSQL実行
 			announce = announceDAO.selectByAnnounceId(announceId);
-			
-			if (cmd.equals("detail")) {
-
-				// メソッドからSQL実行
-				announceList = announceDAO.selectAll();
-
-			}
 			
 		} catch (Exception e) {
 
@@ -61,7 +44,6 @@ public class AnnounceDetailServlet extends HttpServlet {
 			// お知らせ詳細画面に遷移する条件式
 			if (cmd.equals("detail")) {
 				request.setAttribute("announce", announce);
-				request.setAttribute("announceList", announceList);
 				request.getRequestDispatcher("/view/announceDetail.jsp").forward(request, response);
 			}
 			// お知らせ更新画面に遷移する条件式

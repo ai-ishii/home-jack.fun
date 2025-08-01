@@ -228,7 +228,6 @@ public class JackworksDAO {
 	/**
 	 * 引数の入力された文字から該当データの絞込み検索処理を行うメソッド
 	 * 戻り値として該当しているJackWorksの全情報を返す
-	 * @param 検索された文字列
 	 * @return jackList
 	 */
 
@@ -260,7 +259,6 @@ public class JackworksDAO {
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
 				jack.setNote(rs.getString("note"));
-				jack.setAdminFlag(rs.getInt("admin_flag"));
 				jackList.add(jack);
 			}
 
@@ -284,7 +282,6 @@ public class JackworksDAO {
 					jack.setCategory(rs.getString("category"));
 					jack.setAssessment(rs.getString("assessment"));
 					jack.setNote(rs.getString("note"));
-					jack.setAdminFlag(rs.getInt("admin_flag"));
 					jackList.add(jack);
 				}
 			}
@@ -311,7 +308,6 @@ public class JackworksDAO {
 	/**
 	 * 引数の選択された年月の該当データの絞込み検索処理を行うメソッド
 	 * 戻り値として該当しているJackWorksの全情報を返す
-	 * @param　検索された年月
 	 * @return jackList
 	 */
 
@@ -341,7 +337,6 @@ public class JackworksDAO {
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
 				jack.setNote(rs.getString("note"));
-				jack.setAdminFlag(rs.getInt("admin_flag"));
 				jackList.add(jack);
 			}
 
@@ -365,9 +360,53 @@ public class JackworksDAO {
 	}
 
 	/**
+	 * 仮登録フラグを引数にJackWorksIdを取得するメソッド
+	 * 
+	 * @param 仮登録フラグ
+	 * @return 登録したいJackworksId
+	 */
+
+	public int selectByTemporaryFlag() {
+
+		Connection con = null;
+		Statement smt = null;
+
+		int JackworksId = 0;
+
+		try {
+			con = getConnection();
+			smt = con.createStatement();
+
+			String sql = "SELECT * FROM jackworks_info WHERE temporary_flag = '0' ";
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			if (rs.next()) {
+				JackworksId = rs.getInt("jackworks_id");
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return JackworksId;
+	}
+
+	/**
 	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
 	 * 戻り値としてJackWorks全情報を返す
-	 * @param　jackworksId
 	 * @return jackList
 	 */
 	public ArrayList<Jackworks> selectByJackworksId(int jackworksId) {

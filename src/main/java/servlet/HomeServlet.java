@@ -1,19 +1,9 @@
-/**
- * ホーム画面を表示するためのサーブレット
- * 
- * 作成者：石田允彦
- * 
- * 作成日：2025/07/18
- * 最終更新日：2025/07/29
- */
-
 package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.Announce;
-import bean.CategoryMap;
 import dao.AnnounceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,7 +24,6 @@ public class HomeServlet extends HttpServlet {
 		ArrayList<Announce> importantList = new ArrayList<Announce>();
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
 		ArrayList<Announce> activityList = new ArrayList<Announce>();
-		ArrayList<CategoryMap> categoryList = new ArrayList<CategoryMap>();
 		
 		// DAOの宣言
 		AnnounceDAO announceDAO = new AnnounceDAO();
@@ -49,9 +38,6 @@ public class HomeServlet extends HttpServlet {
 			//最新のチーム活動
 			activityList = announceDAO.selectActivity();
 			
-			//カテゴリID対照表
-			categoryList = announceDAO.selectCategoryAll();
-			
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は行えませんでした。";
 			cmd = "menu";
@@ -64,11 +50,10 @@ public class HomeServlet extends HttpServlet {
 				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			
-			} else {					// エラーがない場合 home.jspにフォワード
+			} else {				// エラーがない場合 home.jspにフォワード
 				request.setAttribute("important_list", importantList);
 				request.setAttribute("announce_list", announceList);
 				request.setAttribute("activity_list", activityList);
-				request.setAttribute("category_list", categoryList);
 				request.getRequestDispatcher("/view/home.jsp").forward(request, response);
 			}
 		}

@@ -198,22 +198,4 @@ public class MyFormat {
 
 		return formatDate;
 	}
-	
-	/**
-	 * 引数のTimestampをHH:mm yyyy/M/dnの形式に変換するメソッド
-	 * @param timestamp
-	 * @return 変換された日付データ(String型)
-	 */
-	public String dateTimeFormat(Timestamp timestamp) {
-		//TimestampをDate型に変換する
-		Date condate = new Date(timestamp.getTime());
-
-		//SimpleDateFormatをオブジェクト化し、フォーマット指定
-		SimpleDateFormat dateFormat = new SimpleDateFormat("H:mm　yyyy/M/d");
-
-		//フォーマット使用
-		String date = dateFormat.format(condate);
-
-		return date;
-	}
 }

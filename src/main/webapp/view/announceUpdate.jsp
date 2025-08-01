@@ -1,11 +1,3 @@
-<!-- 
-お知らせを編集するjsp
-
-作成者 : 大北直弥
-
-作成日 : 2025/07/14
-更新日 : 2025/07/31
- -->
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Announce"%>
 
@@ -100,14 +92,14 @@ input[type="submit"], input[type="button"] {
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="update_date" class="control_label">編集日時</label> 
-						<input type="datetime-local" id="update_date" name="update_date"
+						<label for="updateDate" class="control_label">編集日時</label> <input
+							type="datetime-local" id="updateDate" name="updateDate"
 							value="<%=announce.getRegistDate()%>" />
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="category" class="control_label">カテゴリ</label> 
-						<select id="category" name="category_id">
+						<label for="category" class="control_label">カテゴリ</label> <select
+							id="category" name="categoryId">
 
 							<option value="1" <%if (categoryId == 1) {%> selected <%}%>>
 								お知らせ</option>
@@ -125,9 +117,8 @@ input[type="submit"], input[type="button"] {
 					</div>
 
 					<div class="form_box">
-						<label for="announce_flag" class="control_label">重要記事</label> 
-						<input type="checkbox" name="announce_flag" value="1">
-						<input type="hidden" name="announce_flag" value="0">
+						<label for="announce_flag" class="control_label">重要記事</label> <input
+							type="checkbox" name="announce_flag" value="2">
 					</div>
 
 					<div class="form_box">
@@ -140,23 +131,17 @@ input[type="submit"], input[type="button"] {
 							type="text" id="title" name="tag">
 					</div>
 
-					<input type="hidden" name="announce_id"
+					<input type="hidden" name="announceId"
 						value="<%=announce.getAnnounceId()%>">
 
 					<div class="btm_box">
-						<input onclick="location.href='<%=request.getContextPath()%>
-							/announceDetail?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
-							type="button" value="キャンセル"> 
-						<input type="submit" value="一時保存"> 
-						<input type="submit" value="編集確定">
+						<input
+							onclick="location.href='<%=request.getContextPath()%>/detailAnnounce?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
+							type="button" value="キャンセル"> <input type="submit"
+							value="一時保存"> <input type="submit" value="編集確定">
 					</div>
-					
-					<a href="<%=request.getContextPath()%>/announceDelete
-					?announceId=<%=announce.getAnnounceId()%>"
-					onclick="return confirm('本当に削除しますか？')">削除</a>
-					
 				</div>
 			</form>
 		</div>
-</div>
+	</div>
 </body>

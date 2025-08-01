@@ -26,7 +26,7 @@ public class JackworksDetailServlet extends HttpServlet {
 		// エラー文を格納用
 		String error = null;
 		// 例外判定用
-		String cmd = "";
+		String cmd = null;
 		// 遷移先のパス
 		String path = "/view/jackworksDetail.jsp";
 
@@ -35,9 +35,6 @@ public class JackworksDetailServlet extends HttpServlet {
 		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
-			
-			//jackworksRequest.jspからcmd=requestを受け取る
-			cmd = request.getParameter("cmd");
 			
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");

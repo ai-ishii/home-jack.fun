@@ -1,11 +1,3 @@
-/**
- * お知らせを編集するサーブレット
- * 
- * 作成者 : 大北直弥
- * 
- * 作成日 : 2025/07/14
- * 更新日 : 2025/07/31
- */
 package servlet;
 
 import java.io.IOException;
@@ -42,14 +34,13 @@ public class AnnounceUpdateServlet extends HttpServlet {
 		try {
 
 			// jspファイルからパラメータ取得
-			int announceId = Integer.parseInt(request.getParameter("announce_id"));
+			int announceId = Integer.parseInt(request.getParameter("announceId"));
 			String title = request.getParameter("title");
 			String text = request.getParameter("text");
-			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
-			int categoryId = Integer.parseInt(request.getParameter("category_id"));
+			int categoryId = Integer.parseInt(request.getParameter("categoryId"));
 
 			// フォームから受け取った登録日時(String型)をLocalDateTimeに変換する
-			String update = request.getParameter("update_date");
+			String update = request.getParameter("updateDate");
 			localDateTime = LocalDateTime.parse(update);
 
 			// LocalDateTimeをTimestampに変換する(タイムゾーンを考慮)
@@ -63,7 +54,6 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			announce.setTitle(title);
 			announce.setUpdateDate(updateDate);
 			announce.setText(text);
-			announce.setAnnounceFlag(announceFlag);
 			announce.setAnnounceCategoryId(categoryId);
 
 			// メソッドを呼び出してSQL文実行

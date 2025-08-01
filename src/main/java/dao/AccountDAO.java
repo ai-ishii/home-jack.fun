@@ -1,15 +1,34 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import bean.Account;
-import util.DAOconnection;
 
 public class AccountDAO {
 
+	//接続用の情報をフィールドに定数として定義
+		private static final String RDB_DRIVE="org.mariadb.jdbc.Driver";
+	 	private static final String URL="jdbc:mariadb://localhost/jackdb";
+	 	private static final String USER="root";
+	 	private static final String PASSWD="root123";
+	 
+	 	/**
+	 	 * データベース接続を行うメソッド
+	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 	 * @return con
+	 	 */private static Connection getConnection(){
+	 		try{
+	 			Class.forName(RDB_DRIVE);
+	 			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
+	 			return con;
+	 		}catch(Exception e){
+	 			throw new IllegalStateException(e);
+	 		}
+	 	}
 		/**
 		 * メールアドレスでアカウント情報を検索し取り出すメソッド
 		 * @param email
@@ -22,11 +41,11 @@ public class AccountDAO {
 			
 			Account account = new Account();
 			
-			String sql = "SELECT account_id, email, admin_flag, manager_flag FROM account_info WHERE email = '" + email + "'";
+			String sql = "SELECT * FROM account_info WHERE email = '" + email + "'";
 			
 			try {
 				// DBに接続
-				con = DAOconnection.getConnection();
+				con = getConnection();
 				smt = con.createStatement();
 				
 				ResultSet rs = smt.executeQuery(sql);
@@ -68,11 +87,11 @@ public class AccountDAO {
 			
 			Account account = new Account();
 			
-			String sql = "SELECT account_id, email, admin_flag, manager_flag FROM account_info WHERE account_id = '" + accountId + "'";
+			String sql = "SELECT * FROM account_info WHERE account_id = '" + accountId + "'";
 			
 			try {
 				// DBに接続
-				con = DAOconnection.getConnection();
+				con = getConnection();
 				smt = con.createStatement();
 				
 				ResultSet rs = smt.executeQuery(sql);
@@ -114,7 +133,7 @@ public class AccountDAO {
 			
 			try {
 				// DBに接続
-				con = DAOconnection.getConnection();
+				con = getConnection();
 				smt = con.createStatement();
 				
 				count = smt.executeUpdate(sql);

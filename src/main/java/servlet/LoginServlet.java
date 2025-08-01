@@ -1,12 +1,3 @@
-/**
- * Googleログイン後アカウント情報やユーザー情報をセッション登録するサーブレット
- * 
- * 作成者：石田允彦
- * 
- * 作成日：2025/07/18
- * 最終更新日：2025/07/29
- */
-
 package servlet;
 
 import java.io.IOException;
@@ -46,75 +37,56 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/plain; charset=UTF-8");
 		
-		//セッション登録準備
-		HttpSession session = request.getSession(true);
-		
 		String idTokenString = request.getParameter("idtoken");
 		
 		//DAO宣言
 		AccountDAO accountDAO = new AccountDAO();
 		UserDAO userDAO = new UserDAO();
-		
-		//DTO宣言
-		Account account = new Account();
-		
-		int userId = -1;
-		String name = "";
 
 		try {
-			//idTokenが正しいものか検証するルールの設定
 			GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
 					.setAudience(Collections.singletonList(CLIENT_ID))
 					.build();
 
-			//検証の実行
 			GoogleIdToken idToken = verifier.verify(idTokenString);
-			
-			//検証成功の場合
 			if (idToken != null) {
-				//googleユーザー情報の取得
+				// 成功した場合、成功したこととリダイレクト先のURLをJSONで返す
 				GoogleIdToken.Payload payload = idToken.getPayload();
+				// (セッションにユーザー情報を保存するなどの処理をここに追加できる)
+				HttpSession session = request.getSession(true);
 				
 				
-				//ユーザー情報からID、メールアドレスを取得
 				String accountId = payload.getSubject();
 				String email = payload.getEmail();
-				account = accountDAO.selectByAccountId(accountId);
+				Account account = accountDAO.selectByAccountId(accountId);
 				
-				//アカウントが存在しない場合登録を行う
 				if(account.getAccountId() == null) {
-					//account_infoに登録
-					accountDAO.insert(accountId, email);
-					//user.infoに登録
+					int count = accountDAO.insert(accountId, email);
 					userDAO.insert(accountId);
-					//登録したアカウント情報を取得
 					account = accountDAO.selectByAccountId(accountId);
 				}
-				//ユーザーIDの取得
-				userId = userDAO.selectByAccountId(accountId).getUserId();
-				//名前の取得
-				name = (String)payload.get("name");
+				int userId = userDAO.selectByAccountId(accountId).getUserId();
 				
 				session.setAttribute("account", account);
 				session.setAttribute("user_id", userId);
-				session.setAttribute("user_name", name);
+				session.setAttribute("user_name", payload.get("name"));
+				
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";
 				response.getWriter().write(jsonResponse);
-				
 			} else {
-				request.setAttribute("error", "アカウントが認証できませんでした");
-				request.setAttribute("cmd", "login");
-				//ステータスコード(404とか)の取得
+				// 失敗した場合、失敗したことをJSONで返す
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				//リダイレクト先の設定
-				String jsonResponse = "{\"success\": false, \"error\": \"アカウントが認証できませんでした。\nもう一度やり直してください！\"}";
+				String jsonResponse = "{\"success\": false, \"redirectUrl\": \"view/error.jsp\"}";
 				response.getWriter().write(jsonResponse);
 			}
 		} catch (Exception e) {
-			String jsonResponse = "{\"success\": false, \"error\": \"接続エラーです。\nもう一度やり直してください！\"}";
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			String jsonResponse = "{\"success\": false, \"redirectUrl\": \"view/error.jsp\"}";
 			response.getWriter().write(jsonResponse);
 			e.printStackTrace();
 
 		}
+		
 	}
+
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,9 +9,29 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import bean.Employee;
-import util.DAOconnection;
 
 public class EmployeeDAO {
+
+	//接続用の情報をフィールドに定数として定義
+		private static final String RDB_DRIVE="org.mariadb.jdbc.Driver";
+	 	private static final String URL="jdbc:mariadb://localhost/jackdb";
+	 	private static final String USER="root";
+	 	private static final String PASSWD="root123";
+	 
+	 	/**
+	 	 * データベース接続を行うメソッド
+	 	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 	 * @return con
+	 	 */
+	 	private static Connection getConnection(){
+	 		try{
+	 			Class.forName(RDB_DRIVE);
+	 			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
+	 			return con;
+	 		}catch(Exception e){
+	 			throw new IllegalStateException(e);
+	 		}
+	 	}
 	 	
 	 	/**
 	 	 * 社員情報を全件取得するメソッド（SELECT）
@@ -30,7 +51,7 @@ public class EmployeeDAO {
 	 		
 	 		try {
 	 			// DBに接続
-	 			con = DAOconnection.getConnection();
+	 			con = EmployeeDAO.getConnection();
 	 			smt = con.createStatement();
 	 			
 	 			// SQL文発行
@@ -97,7 +118,7 @@ public class EmployeeDAO {
 	 		
 	 		try {
 	 			// DBに接続
-	 			con = DAOconnection.getConnection();
+	 			con = EmployeeDAO.getConnection();
 	 			smt = con.createStatement();
 	 			
 	 			// SQL文発行
@@ -152,7 +173,7 @@ public class EmployeeDAO {
 	 		
 	 		try {
 	 			// DBに接続
-	 			con = DAOconnection.getConnection();
+	 			con = EmployeeDAO.getConnection();
 	 			smt = con.createStatement();
 	 			
 	 			// SQL文発行
@@ -199,7 +220,7 @@ public class EmployeeDAO {
 	 	 * 社員情報をDBに登録するメソッド（INSERT）
 	 	 * @param employee
 	 	 */
-		public void regist(Employee employee, int userId) {
+		public void regist(Employee employee) {
 
 			// 変数宣言
 			Connection con = null;
@@ -208,7 +229,7 @@ public class EmployeeDAO {
 			String sql = "INSERT INTO employee_info(employee_id, user_id,"
 					+ " devloper, lang_skill, middle_skill, hobby, talent,"
 					+ " intro, position, regist_date, update_date, photo) "
-					+ "VALUES (null, " + userId + ", " + employee.getDevloper() + ", '"
+					+ "VALUES (null, null, " + employee.getDevloper() + ", '"
 					+ employee.getLangSkill() + "', '" + employee.getMiddleSkill() + "', '"
 					+ employee.getHobby() + "', '" + employee.getTalent() + "', '"
 					+ employee.getIntro() + "', '" + employee.getPosition() + "', '"
@@ -217,7 +238,7 @@ public class EmployeeDAO {
 
 			try {
 				// DBに接続
-				con = DAOconnection.getConnection();
+				con = EmployeeDAO.getConnection();
 				smt = con.createStatement();
 
 				// SQL文発行
@@ -246,7 +267,7 @@ public class EmployeeDAO {
 		 * 更新処理を行うメソッド（UPDATE）
 		 * @param employee
 		 */
-		public void update(Employee employee, int userId) {
+		public void update(Employee employee) {
 			
 			// 変数宣言
 			Connection con = null;
@@ -259,11 +280,11 @@ public class EmployeeDAO {
 					+ "hobby = '" + employee.getHobby() + "', talent = '" + employee.getTalent() + "', "
 					+ "intro = '" + employee.getIntro() + "', position = '" + employee.getPosition() + "', "
 					+ "regist_date = '" + employee.getRegistDate() + "', update_date = '" + nowDate + "', "
-					+ "photo = '" + employee.getPhoto() + "' WHERE user_id = " + userId + ";";
+					+ "photo = '" + employee.getPhoto() + "' WHERE user_id = " + employee.getUserId() + ";";
 			
 			try {
 				// DBに接続
-				con = DAOconnection.getConnection();
+				con = EmployeeDAO.getConnection();
 				smt = con.createStatement();
 				
 				// SQL文発行
@@ -287,46 +308,6 @@ public class EmployeeDAO {
 				}
 			}
 		}
-		
-		/**
-		 * 削除処理を行うメソッド（DELETE）
-		 * @param employee
-		 */
-		public void delete(int userId) {
-			
-			// 変数宣言
-			Connection con = null;
-			Statement smt = null;
-			
-			String sql = "DELETE FROM employee_info WHERE user_id = " + userId + ";";
-			
-			try {
-				// DBに接続
-				con = DAOconnection.getConnection();
-				smt = con.createStatement();
-				
-				// SQL文発行
-				smt.executeUpdate(sql);
-				
-			} catch (Exception e) {
-				throw new IllegalStateException(e);
-			} finally {
-				// リソースの解放
-				if (smt != null) {
-					try {
-						smt.close();
-					} catch (SQLException ignore) {
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (SQLException ignore) {
-					}
-				}
-			}
-		}
-
 
 
 }

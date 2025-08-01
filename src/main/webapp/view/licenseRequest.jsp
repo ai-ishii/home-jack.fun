@@ -1,16 +1,17 @@
 <%@page import="util.MyFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@ page import="bean.RequestLicenseRequestUser"%>
+<%@ page
+	import="bean. LicenseRequestExclusive,bean.Request,java.util.ArrayList"%>
 <%
-RequestLicenseRequestUser requestLicenseRequestUser = (RequestLicenseRequestUser) request
-		.getAttribute("requestLicenseRequestUser");
+ArrayList<LicenseRequestExclusive> licenseRequestExclusiveList = (ArrayList<LicenseRequestExclusive>) request
+		.getAttribute("licenseRequestExclusiveList");
 MyFormat myFormat = new MyFormat();
 %>
 
 <html>
 <head>
 <!-- タイトル -->
-<title></title>
+<title>資格申請一覧</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -24,164 +25,143 @@ MyFormat myFormat = new MyFormat();
 	flex-direction: row;
 	z-index: 10;
 }
-h1 {
-	padding: 30px 0;
-	display: block;
-	font-size: 2.5em;
-	margin-block-start: 0.67em;
-	margin-block-end: 0.67em;
-	margin-inline-start: 0px;
-	margin-inline-end: 0px;
-	font-weight: bold;
-	unicode-bidi: isolate;
-}
 
-
-.license {
-	width: 70%;
-	height: 80%;
+.list {
+	width: 90%;
 	margin: 0 auto;
 }
 
-.license td {
-	border: solid 3px #000000;
-}
-
-.item {
-	text-align: center;
+.list th {
+	border: 1px solid;
 	background-color: #afd5e6;
-}
-
-.request {
 	text-align: center;
-	background-color: #afd5e6;
 }
 
-.licensename {
-	background-color: #e6ffcc;
+.time {
+	width: 9%;
 }
 
-.name {
-	background-color: #fff7cc;
+.groupName {
+	width: 12%;
 }
 
-.licenseexamdate {
-	background-color: #e6ffcc;
+.applicant {
+	width: 7%;
 }
 
-.examdate {
-	background-color: #fff7cc;
+.licenseName {
+	width: 14%;
 }
 
-.username {
-	background-color: #e6ffcc;
+.examDate {
+	width: 9%;
 }
 
-.user {
-	background-color: #fff7cc;
+.examTime {
+	width: 5%;
 }
 
-.affiliationdepartment {
-	background-color: #e6ffcc;
+.receipt {
+	width: 11%;
 }
 
-.department {
-	background-color: #fff7cc;
+.passing {
+	width: 11%;
 }
 
-.affiliationteam {
-	background-color: #e6ffcc;
+.approver {
+	width: 7%;
 }
 
-.team {
-	background-color: #fff7cc;
+.approvalDate {
+	width: 9%;
 }
 
-.licenseexamdate {
-	background-color: #e6ffcc;
+.requestFlag {
+	width: 7%;
 }
 
-.examdate {
-	background-color: #fff7cc;
-}
-
-.licenseexamtime {
-	background-color: #e6ffcc;
-}
-
-.examtime {
-	background-color: #fff7cc;
-}
-
-.button {
-	width: 80%;
+.display {
+	width: 90%;
 	margin: 0 auto;
+}
+
+.display tr:nth-child(even) {
+	background-color: white;
+}
+
+.display tr:nth-child(odd) {
+	background-color: #f0f0e6;
+}
+
+.display td {
 	text-align: center;
-	padding: 50px 10px 10px 10px;
+	font-size: 12px;
+	height: 60px;
 }
 
-html {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 62.5%;
+.time td {
+	width: 10%;
+	height: 60px;
 }
 
-.btn, a.btn, button.btn {
-	margin: 0 auto;
-	width: 15%;
-	font-size: 1.6rem;
-	font-weight: 700;
-	line-height: 1.5;
-	position: relative;
-	display: inline-block;
-	padding: 0.5rem 1.5rem;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-transition: all 0.3s;
-	transition: all 0.3s;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	letter-spacing: 0.1em;
-	border-radius: 8.5rem;
-	font-size: 1.6rem;
+.groupName td {
+	width: 10%;
+	height: 60px;
 }
 
-a.btn--notApproved {
-	color: #000;
-	background-color: #bbc8e6;
-	border-bottom: 2px solid #8491c3 transparent;
+.applicant td {
+	width: 8%;
+	height: 60px;
 }
 
-a.btn--notApproved:hover {
-	margin-top: 3px;
-	color: #000;
-	background: #9192b3;
-	border-bottom: 2px solid #4a488e;
-	background: #9192b3;
+.licenseName td {
+	width: 10%;
+	height: 60px;
 }
 
-.button tr {
-	height: 40px
+.examDate td {
+	width: 10%;
+	height: 60px;
 }
 
-.return {
-	width: 80%;
-	margin: 0 auto;
-	text-align: center;
+.examTime td {
+	width: 5%;
+	height: 60px;
 }
 
-.return .returnlist {
-	width: 150px;
-	height: 40px;
-	border-radius: 4px 4px 4px 4px;
+.receipt td {
+	width: 10%;
+	height: 60px;
 }
 
-.return .returnlist:hover {
-	transition: all 0.3s;
+.passing td {
+	width: 10%;
+	height: 60px;
+}
+
+.approver td {
+	width: 10%;
+	height: 60px;
+}
+
+.approvalDate td {
+	width: 10%;
+	height: 60px;
+}
+
+.requestFlag td {
+	width: 7%;
+	height: 60px;
+}
+/* 行全体ホバーで色だけ変える（リンク風ではない） */
+.row-hover:hover {
+	background-color: #eef;
+}
+
+.display tbody tr:hover {
+	background-color: #f2f2f2; /* マウスオーバー時の背景色 */
+	cursor: pointer; /* カーソルを指の形に変更 */
 }
 </style>
 <body>
@@ -192,56 +172,82 @@ a.btn--notApproved:hover {
 		<!-- メイン部分 -->
 		<div id="main2" class="container">
 
-			<h1 style="text-align: center">-資格申請詳細-</h1>
+			<h1 style="text-align: center">-資格申請一覧-</h1>
 
-			<table class="license">
-				<tr>
-					<td class="item">項目</td>
-					<td class="request">申請内容</td>
-				</tr>
-				<tr>
-					<td class="licensename">資格名</td>
-					<td class="name"><%=requestLicenseRequestUser.getLicenseRequest().getLicenseName()%></td>
-				</tr>
-				<tr>
-					<td class="username">氏名</td>
-					<td class="user"><%=requestLicenseRequestUser.getRequest().getName()%></td>
-				</tr>
-				<td class="affiliationdepartment">部</td>
-				<td class="department"><%=requestLicenseRequestUser.getUser().getDepartmentId()%>部</td>
-				</tr>
-				<tr>
-					<td class="affiliationteam">グループ</td>
-					<td class="team"><%=requestLicenseRequestUser.getUser().getGroupId()%>グループ</td>
-				</tr>
-				<tr>
-					<td class="licenseexamdate">受験日</td>
-					<td class="examdate"><%=myFormat.dateFormat(requestLicenseRequestUser.getLicenseRequest().getExamDate())%></td>
-				</tr>
-				<tr>
-					<td class="licenseexamtime">受験回数</td>
-					<td class="examtime"><%=requestLicenseRequestUser.getLicenseRequest().getExamTime()%>回</td>
-				</tr>
-			</table>
-			<table class="button">
-				<tr>
-					<td><a href="<%=request.getContextPath()%>/#?#%>"
-						onclick="return confirm('承認しますか?')" class="btn btn--notApproved">承認</a></td>
+			<table class="list">
+				<thead>
+					<tr>
 
-				</tr>
-				<tr>
-					<th class="space"></th>
-				</tr>
+
+						<th class="time">申請日時</th>
+						<th class="groupName">所属</th>
+						<th class="applicant">申請者</th>
+						<th class="licenseName">資格</th>
+						<th class="examDate">受験日</th>
+						<th class="examTime">受験回数</th>
+						<th class="receipt">領収書</th>
+						<th class="passing">合格証</th>
+						<th class="approver">承認者</th>
+						<th class="approvalDate">承認日時</th>
+						<th class="requestFlag">申請状況</th>
+
+					</tr>
+				</thead>
 			</table>
-			<table class="return">
-				<tr>
-					<td><a href="<%=request.getContextPath()%>/requestList"
-						class="returnlist">申請一覧に戻る</a></td>
-				</tr>
+			<table class="display">
+
+				<tbody>
+					<%
+					for (int i = 0; i < licenseRequestExclusiveList.size(); i++) {
+					%>
+					<tr
+						onclick="location.href='<%=request.getContextPath()%>/licenseRequestDetail?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&flag=<%=licenseRequestExclusiveList.get(i).getRequestFlag()%>'">
+
+						<td class="time"><%=myFormat.dateFormat(licenseRequestExclusiveList.get(i).getRequestDate())%></td>
+						<td class="groupName"><%=licenseRequestExclusiveList.get(i).getDepartmentName()%><%=licenseRequestExclusiveList.get(i).getGroupName()%></td>
+						<td class="applicant"><%=licenseRequestExclusiveList.get(i).getApplicant()%></td>
+						<td class="licenseName"><%=licenseRequestExclusiveList.get(i).getLicenseName()%></td>
+						<td class="examDate"><%=myFormat.dateFormat(licenseRequestExclusiveList.get(i).getExamDate())%></td>
+						<td class="examTime"><%=licenseRequestExclusiveList.get(i).getExamTime()%>回</td>
+						<td class="receipt"><%=licenseRequestExclusiveList.get(i).getReceipt()%></td>
+						<td class="passing"><%=licenseRequestExclusiveList.get(i).getPassing()%></td>
+						<%
+						if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {
+						%>
+						<td class="approver">――</td>
+						<%
+						} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {
+						%>
+						<td class="approver"><%=licenseRequestExclusiveList.get(i).getApprover()%></td>
+						<%
+						}
+						if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {
+						%>
+						<td class="approvalDate">――</td>
+						<%
+						} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {
+						%>
+						<td class="approvalDate"><%=myFormat.dateFormat(licenseRequestExclusiveList.get(i).getApprovalDate())%></td>
+						<%
+						}
+						if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {
+						%>
+						<td class="request_flag1">承認待ち</td>
+						<%
+						} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {
+						%>
+						<td class="request_flag2">承認済み</td>
+						<%
+						}
+						%>
+					</tr>
+					<%
+					}
+					%>
+				</tbody>
 			</table>
-			<br>
-			<br>
-			<br><br><br>
+
+			<br> <br> <br> <br> <br>
 		</div>
 	</div>
 </body>

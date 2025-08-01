@@ -1,21 +1,10 @@
-<!-- 
-お知らせの詳細情報を表示するjsp
-
-作成者 : 大北直弥
-
-作成日 : 2025/07/14
-更新日 : 2025/07/31
- -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page
-	import="bean.Announce, java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, util.MyFormat"%>
+	import="bean.Announce, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date, util.MyFormat"%>
 
 <%
 Announce announce = (Announce) request.getAttribute("announce");
-ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
-int announceId = announce.getAnnounceId();
-int announceNum = announceList.indexOf(announce);
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
@@ -37,10 +26,11 @@ String category = null;
 	align-items: center;
 	width: 80%;
 	margin: 0 auto;
+	width: 80%;
 	background-color: whitesmoke;
 }
 
-.title_box {
+#title_box {
 	display: flex;
 	align-items: center;
 	position: relative;
@@ -51,18 +41,44 @@ String category = null;
 	border-bottom: 3px solid #FFC465;
 	border-top-right-radius: 20px;
 	border-top-left-radius: 20px;
+	width: 100%;
 }
 
-.title_box p {
+.year {
+	width: 10%;
+	height: 150px;
+}
+
+.year p {
+	text-align: right;
+	font-size: 25px;
+}
+
+.date {
+	width: 20%;
+}
+
+.date p {
+	font-size: 60px;
+	text-align: center;
+	padding: 30px 0;
+	margin: 0;
+}
+
+.title {
+	width: 70%;
+}
+
+.title p {
 	text-align: left;
 	font-size: 30px;
-	padding: 50px;
+	padding: 50px 20px 50px 0;
 	margin: 0;
 }
 
 .category {
 	position: absolute;
-	top: -60px;
+	top: -80px;
 	right: 20px;
 	min-width: 20px;
 	height: 20px;
@@ -71,45 +87,30 @@ String category = null;
 
 .category p {
 	text-align: center;
-	font-size: 17px;
+	font-size: 18px;
 	padding: 30px 0 0 0;
 }
 
 #content_box {
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	width: 100%;
 	min-height: 500px;
-	background-color: #fff;
+	background-color: #ffffff;
 	margin: 0 auto 70px auto;
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
+	width: 100%;
 }
 
 .text_box {
 	width: 90%;
 	min-height: 500px;
-	padding: 10px 30px;
+	padding: 20px 0;
 }
 
 .text_box p {
-	font-size: 16px;
 	white-space: pre-line;
-}
-
-.info_box {
-	display: flex;
-	padding: 10px 30px;
-	border-bottom: 3px solid #FFC465;
-}
-.info_box p {
-	padding-right: 30px;
-}
-
-.like_box {
-	display: flex;
-	padding: 10px 30px;
 }
 </style>
 </head>
@@ -122,8 +123,26 @@ String category = null;
 		<!-- メイン部分 -->
 		<div id="main" class="container">
 			<div id="announce_box">
-				<div class="title_box">
-					<p><%=announce.getTitle()%></p>
+				<div id="title_box">
+					<div class="year">
+						<p>
+							<%
+							timestamp = announce.getRegistDate();
+							%>
+							<%=myFormat.yearFormat(timestamp)%>
+						</p>
+					</div>
+					<div class="date">
+						<p>
+							<%
+							timestamp = announce.getRegistDate();
+							%>
+							<%=myFormat.monthDayFormat(timestamp)%>
+						</p>
+					</div>
+					<div class="title">
+						<p><%=announce.getTitle()%></p>
+					</div>
 					<div class="category">
 						<p>
 							<%
@@ -144,57 +163,11 @@ String category = null;
 				<div id="content_box">
 					<div class="text_box">
 						<p><%=announce.getText()%></p>
-						<!-- できてないよ！ -->
-						<p>#チーム活動</p>
-					</div>
-
-					<div class="info_box">
-						<div>
-							<p>
-								<%
-								timestamp = announce.getRegistDate();
-								%>
-								<%=myFormat.dateTimeFormat(timestamp)%>
-							</p>
-						</div>
-						<div>
-							<p><%=announce.getName()%></p>
-						</div>
-					</div>
-					<div class="like_box">
-						<p>いいね！</p>
-						<!-- できてないよ！ -->
-						<p>10,000</p>
 					</div>
 				</div>
 
 				<a href="<%=request.getContextPath()%>/announce">一覧へ</a>
-
-				<a href="<%=request.getContextPath()%>/announceDetail
-					?announceId=<%=announce.getAnnounceId()%>&cmd=update">編集</a>
-
-				<%
-				if (announceNum > 0) {
-					Announce beforeAnnounce = announceList.get(announceNum - 1);
-					int beforeAnnounceId = beforeAnnounce.getAnnounceId();
-				%>
-
-				<a href="<%=request.getContextPath()%>/announceDetail
-					?announceId=<%=beforeAnnounceId%>&cmd=detail">前の記事</a>
-
-				<%
-				}
-				if (announceNum < announceList.size() - 1) {
-				Announce nextAnnounce = announceList.get(announceNum + 1);
-				int nextAnnounceId = nextAnnounce.getAnnounceId();
-				%>
-				
-				<a href="<%=request.getContextPath()%>/announceDetail
-					?announceId=<%=nextAnnounceId%>&cmd=detail">次の記事</a>
-
-				<%
-				}
-				%>
+				<a href="<%= request.getContextPath() %>/detailAnnounce?announceId=<%= announce.getAnnounceId() %>&cmd=update">編集</a>
 			</div>
 		</div>
 	</div>

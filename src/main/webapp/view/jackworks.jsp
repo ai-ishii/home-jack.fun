@@ -6,12 +6,15 @@ JackWorks画面
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList,bean.Jackworks,bean.Monthjack,bean.Account,util.MyFormat"%>
+<%@page import="java.util.ArrayList,bean.Jackworks,bean.Monthjack,util.MyFormat"%>
 
 <%
 //JackWorksの全情報が格納されたjack_listを受け取る
 ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
 //今月のJackWorksの全情報が格納されたmonthJackを受け取る
+<<<<<<< HEAD
+Monthjack monthJack = (Monthjack) request.getAttribute("monthJack");
+=======
 Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
 //ログインしたアカウントの情報が格納されたaccountを受け取る
 Account account = (Account)session.getAttribute("account");
@@ -31,6 +34,7 @@ int adminFlag = 1;
 int managerFlag = 0;
 // int adminFlag = account.getAdminFlag();
 // int adminFlag = account.getManagerFlag();
+>>>>>>> refs/heads/kuwabara_G
 %>
 
 <html>
@@ -107,13 +111,13 @@ table {
 	width: 100%;
 }
 
-table tbody tr {
+table tr {
 	background-color: #fff;
 	border-bottom: 2px solid #fff;
-	height: 70px;
+	height: 70px
 }
 
-table tbody tr:nth-child(even) {
+table tr:nth-child(even) {
 	background-color: #eee;
 }
 
@@ -121,17 +125,13 @@ table th, table td {
 	padding: .20em 1em;
 }
 
-table thead{
-background-color: #ffffff;
-}
-
-table thead th.jack-table{
+table thead th {
 	font-size: .85em;
 	padding: 1em;
 	width: 100px;
 }
 
-table thead tr.jack-table{
+table thead tr {
 	background-color: #f8b862;
 	color: #fff;
 }
@@ -231,7 +231,6 @@ li {
 	overflow: hidden;
 	border-radius: 25px;
 	background-color: #feffe0;
-	margin:0;
 }
 
 .search-form input {
@@ -477,6 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 	yearSelect.value = currentYear;
 });
+</script>
 
 document.addEventListener('DOMContentLoaded', function() {
 	const selectmonth = "<%= monthSearch %>";
@@ -602,6 +602,7 @@ document.addEventListener("DOMContentLoaded", function() {
 					<%
 						if(adminFlag == 1 && managerFlag == 0){
 					%>
+					
 					<!-- 今月のJackWorksを登録するボタン -->
 					<div class="jack-button">
 						<li><a href="<%=request.getContextPath()%>/view/monthJackworks.jsp"
@@ -652,7 +653,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							<!-- 検索を行うフォーム -->
 							<form action="<%=request.getContextPath()%>/jackworksSearch"
 									class="search-form">
-								<label><input type="text" name="name" placeholder="キーワードを入力" value="<%= name %>"></label>
+								<label><input type="text" name="name" placeholder="キーワードを入力"></label>
 								<button type="submit" aria-label="検索"></button>
 							</form>
 						</td>
@@ -680,6 +681,10 @@ document.addEventListener("DOMContentLoaded", function() {
 									<option value="10">10月</option>
 									<option value="11">11月</option>
 									<option value="12">12月</option>
+								</select></td>
+							</label>
+						<td><button type="submit" class="select-button">検索</button>
+						</form></td>
 								</select>
 						</td></label>
 						<td>
@@ -743,15 +748,12 @@ document.addEventListener("DOMContentLoaded", function() {
 						</td>
 					</tr>
 
-					<%
-						}
-					}
-					%>
-				</tbody>
-				</table>
 				<%
+					}
 				}
 				%>
+				</tbody>
+				</table>
 						
 				<!-- マネージャーのみ表示：マネージャー1 -->
 				<%
@@ -769,17 +771,18 @@ document.addEventListener("DOMContentLoaded", function() {
 				<!-- JackWork一覧表の表示 -->
 				<table style="width: 100%">
 					<thead style="margin: 0 auto">
-						<tr class="jack-table">
-							<th scope="col" class="jack-table">年月日</th>
-							<th scope="col" class="jack-table">社員No.</th>
-							<th scope="col" class="jack-table">氏名</th>
-							<th scope="col" class="jack-table">カテゴリ</th>
-							<th scope="col" class="jack-table">評価項目</th>
-							<th scope="col" class="jack-table">付与ポイント</th>
-							<th scope="col" class="jack-table">備考</th>
+						<tr>
+							<th scope="col">年月日</th>
+							<th scope="col">社員No.</th>
+							<th scope="col">氏名</th>
+							<th scope="col">カテゴリ</th>
+							<th scope="col">評価項目</th>
+							<th scope="col">付与ポイント</th>
+							<th scope="col">備考</th>
+							<th scope="col"></th>
 						</tr>
 					</thead>
-					<tbody>
+
 					<%
 					for (int i = 0; i < jackList.size(); i++) {
 						Jackworks jack = (Jackworks) jackList.get(i);
@@ -791,8 +794,6 @@ document.addEventListener("DOMContentLoaded", function() {
 						if (note == null) {
 							note = "";
 						}
-						if (jack.getAdminFlag() == 1) {
-				
 					%>
 					
 					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>">
@@ -855,13 +856,17 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
 						<td data-label="備考" class="text" name="note"><%=note%></td>
+						<td><div style="text-align: center">
+							<a href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>" onclick="return confirm('本当に削除しますか?')"
+								class="btn btn--delete">削除</a>
+								<a href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>" class="btn btn--delete">詳細</a>
+							</div>
+						</td>
 					</tr>
 
 					<%
-						}
 					}
 					%>
-				</tbody>
 				</table>
 				<%
 				}

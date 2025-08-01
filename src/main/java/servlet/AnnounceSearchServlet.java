@@ -29,7 +29,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/announceSearch")
 public class AnnounceSearchServlet extends HttpServlet {
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		// 変数宣言
@@ -50,34 +50,29 @@ public class AnnounceSearchServlet extends HttpServlet {
 		ArrayList<CategoryMap> categoryList = new ArrayList<CategoryMap>();
 		LocalDateTime localDateTimeStart = null;
 		LocalDateTime localDateTimeEnd = null;
-
+		
 		// 時系列検索の際の初期値
 		LocalDateTime defaultStart = LocalDateTime.of(year, month, day, hour, minute, second);
 		Timestamp startDate = Timestamp.valueOf(defaultStart);
 		Timestamp endDate = new Timestamp(System.currentTimeMillis());
+		
 
 		// フォームから送信した検索方法をを受け取る
 		cmd = request.getParameter("cmd");
 
 		try {
 			if (cmd.equals("keyword")) {
-				// フォームからパラメータを受け取る
 				String keyword = request.getParameter("keyword");
 
-				// メソッドを呼び出してSQL文実行
 				announceList = announceDAO.selectByKeyword(keyword);
-				
-				// 検索キーワードをリクエストスコープに登録する
-				request.setAttribute("keyword", keyword);
 			}
 
 			if (cmd.equals("filter")) {
-				// フォームからパラメータを受け取る
-				String announceFlag = request.getParameter("announce_flag");
-				String categoryId = request.getParameter("category_id");
-
-				String start = request.getParameter("start_date");
-				String end = request.getParameter("end_date");
+				String announceFlag = request.getParameter("announceFlag");
+				String categoryId = request.getParameter("categoryId");
+				
+				String start = request.getParameter("startDate");
+				String end = request.getParameter("endDate");
 
 				ZoneId zoneId = ZoneId.of("Asia/Tokyo");
 
@@ -98,7 +93,7 @@ public class AnnounceSearchServlet extends HttpServlet {
 					Instant instantEnd = zonedDateTimeEnd.toInstant();
 					endDate = Timestamp.from(instantEnd);
 				}
-
+				
 				announceList = announceDAO.selectByFilter(announceFlag, categoryId, startDate, endDate);
 
 			}

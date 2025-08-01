@@ -265,9 +265,9 @@ margin-top: 3%;
 				<%} %>
 			</table>
 			
-			<% if(cmd.equals("request")) {%>
+			<% if (cmd.equals("request")) { %>
 			<div class="jack-return">
-				<a href="<%=request.getContextPath()%>/jackworksRequest" class="btn btn--delete">戻る</a>
+			<a href="<%=request.getContextPath()%>/jackworksRequest" class="btn btn--delete">戻る</a>
 			</div>
 			
 			<%}else{ %>

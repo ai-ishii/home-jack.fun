@@ -5,14 +5,19 @@
 <body>
 	<header class="container">
 
+
 		<div id="menu" class="container">
 			<nav id="navi">
 				<ul id="header-menu">
 					<li>
-						<a href="<%= request.getContextPath() %>/announce"><p class="cheese">お知らせ</p></a>
+						<p class="cheese">お知らせ</p>
+						<ul class="cheese-detail">
+							<li>waa</li>
+							<li>wii</li>
+						</ul>
 					</li>
 					<li>
-						<a href="<%= request.getContextPath() %>/employee"><p class="tomato">社員紹介</p></a>
+						<p class="tomato">社員紹介</p>
 						<ul class="tomato-detail">
 							<li>wuu</li>
 							<li>wii</li>
@@ -47,18 +52,12 @@
 						</ul>
 					</li>
 				</ul>
-				
-
 			</nav>
-			<div class="navi-close">
-			</div>
-			<div id="hamburger" class="hamburger">
-				<span></span><span></span><span></span>
-			</div>
+
 			
 			<div id="page-title">
 				
-				 <div class="header-title">
+				 <div class="title">
 					 <a id="home-link" href="<%= request.getContextPath() %>/home">
 						<h6>
 							<small>満足を超える、感動を贈りたい</small>
@@ -69,7 +68,9 @@
 				
 			</div>
 			
-
+			<div id="hamburger" class="hamburger">
+				<span></span><span></span><span></span>
+			</div>
 
 			<div id="top-link" class="container">
 				<ul>

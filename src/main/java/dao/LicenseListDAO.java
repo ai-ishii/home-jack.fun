@@ -5,18 +5,40 @@
  * 
  */
 
+
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.LicenseList;
-import util.DAOconnection;
 
 public class LicenseListDAO {
+
+	//接続用の情報をフィールドに定数として定義
+	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
+	private static final String URL = "jdbc:mariadb://localhost/jackdb";
+	private static final String USER = "root";
+	private static final String PASSWD = "root123";
+
+	/**
+	 * データベース接続を行うメソッド
+	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 * @return con
+	 */
+	private static Connection getConnection() {
+		try {
+			Class.forName(RDB_DRIVE);
+			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
+			return con;
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+	}
 
 	/**
 	 * 全データ検索メソッド
@@ -32,10 +54,10 @@ public class LicenseListDAO {
 		ArrayList<LicenseList> list = new ArrayList<LicenseList>();
 
 		//SQL文
-		String sql = " SELECT license_list_id, user_id, regist_date, image FROM license_list_info";
+		String sql = " SELECT * FROM license_list_info";
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			//SQL文を発行
@@ -44,9 +66,9 @@ public class LicenseListDAO {
 			//検索結果を格納
 			while (rs.next()) {
 				LicenseList licenselist = new LicenseList();
-				licenselist.setLicenseListId(rs.getInt("license_list_id"));
-				licenselist.setUserId(rs.getInt("user_id"));
-				licenselist.setRegistDate(rs.getTimestamp("regist_date"));
+				licenselist.setLicenseListId(rs.getInt("licenselistid"));
+				licenselist.setUserId(rs.getInt("userid"));
+				licenselist.setRegistDate(rs.getTimestamp("registDate"));
 				licenselist.setImage(rs.getString("image"));
 				//listに格納
 				list.add(licenselist);
@@ -75,7 +97,10 @@ public class LicenseListDAO {
 
 	}
 
-	public ArrayList<LicenseList> selectByLicenseListId(int licenseListId) {
+
+
+ 
+	public ArrayList<LicenseList> selectByLicenseListID(int licenseListId) {
 		//変数の宣言
 		Connection con = null;
 		Statement smt = null;
@@ -85,11 +110,11 @@ public class LicenseListDAO {
 		try {
 
 			//SQL文
-			String sql = "SELECT license_list_id, user_id, regist_date, image FROM license_list_info "
-					+ "WHERE license_list_id = " + licenseListId + ";";
+			String sql = "SELECT license_list_id FROM license_list_info "
+	 				+ "WHERE license_list_id = " + licenseListId + ";";
 
 			// データベース接続の準備
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			// SQL文発行
@@ -129,7 +154,8 @@ public class LicenseListDAO {
 		return list;//return end
 	}
 
-	public ArrayList<LicenseList> selectByUserId(int userId) {
+	
+	public ArrayList<LicenseList> selectByUserID(int userId) {
 		//変数の宣言
 		Connection con = null;
 		Statement smt = null;
@@ -140,10 +166,11 @@ public class LicenseListDAO {
 
 			//SQL文
 			String sql = "SELECT user_id FROM license_list_info "
-					+ "WHERE user_id = " + userId + ";";
+	 				+ "WHERE user_id = " + userId + ";";
+
 
 			// データベース接続の準備
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			// SQL文発行
@@ -151,9 +178,9 @@ public class LicenseListDAO {
 
 			while (rs.next()) {
 				LicenseList licenselist = new LicenseList();
-				licenselist.setLicenseListId(rs.getInt("license_list_id"));
-				licenselist.setUserId(rs.getInt("user_id"));
-				licenselist.setRegistDate(rs.getTimestamp("regist_date"));
+				licenselist.setLicenseListId(rs.getInt("licenselistid"));
+				licenselist.setUserId(rs.getInt("userid"));
+				licenselist.setRegistDate(rs.getTimestamp("registDate"));
 				licenselist.setImage(rs.getString("image"));
 
 				//listに格納
@@ -181,7 +208,7 @@ public class LicenseListDAO {
 
 		}
 		return list;//return end
-
+		
 	}
 
 }

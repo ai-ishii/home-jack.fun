@@ -1,10 +1,7 @@
-<!-- 社員紹介 一覧機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：7/29 11:45 -->
-
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="java.util.ArrayList, util.MyFormat, util.CommonTable, bean.User, dao.UserDAO"%>
+	import="java.util.ArrayList, util.MyFormat, bean.User, dao.UserDAO"%>
 
 <%
 // サーブレットから送られてきた情報を取得
@@ -18,11 +15,6 @@ String[] joiningDates = new String[userList.size()];
 for (int i = 0; i < userList.size(); i++) {
 	joiningDates[i] = myFormat.yearMonthFormat(userList.get(i).getJoiningDate());
 }
-
-// オブジェクトの生成
-User user = new User();
-UserDAO userDAO = new UserDAO();
-CommonTable commonTable = new CommonTable();
 %>
 
 <html>
@@ -129,7 +121,6 @@ a:hover {
 	margin: 0;
 	background-color: rgba(255, 255, 255, 0.8);
 	color: black;
-	font-size: 14px;
 	cursor: pointer;
 }
 </style>
@@ -153,7 +144,7 @@ a:hover {
 							<h1>社員紹介</h1>
 						</td>
 						<td style="width: 20%;"><a
-							href="<%=request.getContextPath()%>/view/employeeRegister.jsp?cmd=register">
+							href="<%=request.getContextPath()%>/view/employeeRegister.jsp">
 								<input type="submit" value="登録"
 								style="width: 80px; height: 50px; font-size: large;">
 						</a></td>
@@ -166,9 +157,6 @@ a:hover {
 						<%
 						if (userList != null) {
 							for (int i = 0; i < userList.size(); i++) {
-								user = userDAO.selectByUserId(userList.get(i).getUserId());
-								String department = commonTable.selectDepartment(user.getDepartmentId());
-								String group = commonTable.selectGroup(user.getGroupId());
 						%>
 						<a
 							href="<%=request.getContextPath()%>/detailEmployee?userId=<%=userList.get(i).getUserId()%>">
@@ -177,10 +165,7 @@ a:hover {
 									alt="社員画像">
 								<p id="employee_name"><%=userList.get(i).getName()%></p>
 								<p id="employee_detail">
-									<%= department %>
-								</p>
-								<p id="employee_detail">
-									<%= group %>
+									第<%=userList.get(i).getDepartment()%>事業部 第<%=userList.get(i).getTeam()%>グループ
 								</p>
 								<p id="employee_detail"><%=joiningDates[i]%>入社
 								</p>

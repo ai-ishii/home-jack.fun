@@ -56,25 +56,8 @@ h1, h2 {
 	width: 100%;
 }
 
-.navi-close {
-	position: fixed;
-	visibility: hidden;
-	width: calc(100% - 300px);
-	left: 0;
-	height: 100%;
-	z-index: 29;
-	transition: visibility 0.3s ease-in-out;
-}
-
-.navi-close.open {
-	visibility: visible;
-}
-
 .layer {
-	z-index: 28;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 60%);
-	transition: background-color 0.3s ease-in-out;
+	z-index: 20;
 }
 
 #header-menu {
@@ -83,37 +66,27 @@ h1, h2 {
 	margin-left: auto;
 	padding: 30px;
 	width: 300px;
-	height: 90%;
-	background-color: rgba(240, 248, 252, 0.9);
+	background-color: rgba(240, 248, 252, 0.7);
 	clip-path: inset(0 0 0 100%);
 	transition: clip-path 0.4s ease-in-out;
+
 }
 
-#header-menu.open {
-	clip-path: inset(0 0 0 0);
-}
-
-#header-menu a {
-	text-decoration: none;
-}
-
-
-#header-menu p {
-	padding: 10px;
+.cheese,
+.tomato,
+.lettuce,
+.ketchup,
+.egg,
+.patty {
+	padding: 10px 10px 10px 10px;
 	margin: 30px 30px 0 0;
+	font-size: 24px;
 	color: #404040;
 	display: block;
 	text-align: right;
 	text-decoration: none;
-	font-size: 26px;
-	font-weight: 600;
 	cursor: pointer;
-}
 
-#header-menu p:hover {
-	padding: 6px 10px;
-	color: #e06319;
-	font-size: 32px;
 }
 
 
@@ -127,52 +100,44 @@ li li {
 }
 
 .hamburger {
-	position: fixed;
-	padding: 7px 7px;
+	position: absolute;
 	top: 32px;
 	right: 32px;
 	cursor: pointer;
 	width: 32px;
-	height: 32px;
-	background-color: #ffffff;
-	border-radius: 100%;
-	
+	height: 24px;
 	z-index: 30;
-}
-
-.hamburger:hover span {
-	background-color: #e06319;
 }
 
 .hamburger span {
 	/*3本の線を作る*/
 	transition: all 0.3s;
 	position: absolute;
-	height: 3px;
+	height: 2px;
 	background-color: #303030;
-	width: 70%;
+	width: 100%;
 	z-index: 30;
 }
 
 .hamburger span:nth-of-type(1) {
 	/*上の線の位置*/
-	top: 14px;
+	top: 4px;
 }
 
 .hamburger span:nth-of-type(2) {
 	/*真ん中の線の位置*/
-	top: 22px;
+	top: 12px;
 }
 
 .hamburger span:nth-of-type(3) {
 	/*下の線の位置*/
-	top: 30px;
+	top: 20px;
 }
 
 .hamburger.open span:nth-of-type(1) {
 	/*openのとき、上の線を右斜めにする*/
-	top: 14px;
-	transform: translateY(8px) rotate(-40deg);
+	top: 10px;
+	transform: translateY(6px) rotate(-33deg);
 }
 
 .hamburger.open span:nth-of-type(2) {
@@ -182,8 +147,12 @@ li li {
 
 .hamburger.open span:nth-of-type(3) {
 	/*下の線を左斜めにする*/
-	top: 30px;
-	transform: translateY(-8px) rotate(40deg);
+	top: 22px;
+	transform: translateY(-6px) rotate(33deg);
+}
+
+#header-menu.open {
+	clip-path: inset(0 0 0 0);
 }
 
 ul ul {
@@ -214,10 +183,9 @@ ul ul {
 	background-attachment: fixed;
 }
 
-.header-title {
+#pagetitle .title {
 	width: 300px;
 	text-align: center;
-	margin: 0 auto;
 }
 
 #page-title h6 {
@@ -265,25 +233,25 @@ ul ul {
 }
 
 /*ページ上部にリンクするボタン*/
-#menu .jump {
+.jump {
 	position: fixed;
 	right: 20px;
 	bottom: 20px;
-	z-index: 27;
+	z-index: 30;
 }
 
-#menu .jump a {
+.jump a {
 	text-decoration: none;
 	opacity: 0.3;
 	transition: 0.3s;
 }
 
-#menu .jump a:hover {
+.jump a:hover {
 	opacity: 1.0;
 	transition: 0.3s;
 }
 
-#menu .jump a p{
+.jump a p{
 	padding: 18px 0;
 	background-color: #ffcc55;
 	border-radius: 100%;

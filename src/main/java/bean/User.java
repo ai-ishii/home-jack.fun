@@ -29,8 +29,6 @@ public class User {
 	private int restFlag;				//休職フラグ
 	private Timestamp registDate;		//登録日時
 	private Timestamp updateDate;		//更新日時
-	
-	
 	public int getUserId() {
 		return userId;
 	}
@@ -113,7 +111,7 @@ public class User {
 		return groupId;
 	}
 	public void setGroupId(int groupId) {
-		this.groupId= groupId;
+		this.groupId = groupId;
 	}
 	public Timestamp getJoiningDate() {
 		return joiningDate;
@@ -169,7 +167,6 @@ public class User {
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
-	
 	
 
 		

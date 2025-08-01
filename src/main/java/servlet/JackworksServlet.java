@@ -47,39 +47,31 @@ public class JackworksServlet extends HttpServlet {
 		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
-			//SearchJackworksからcmd=search もしくはjackworksRequest.jspからcmd=requestを受け取る
+			//SearchJackworksからcmd=search もしくはmonthJackworks.jspからcmd=update受け取る
 			cmd = (String) request.getAttribute("cmd");
 
 			if (cmd == null) {
 				cmd = "";
 			}
 
-			//検索された文字(name)を受け取る
-			String name = (String) request.getAttribute("name");
-
-			if (cmd.equals("search") || cmd.equals("request")) {
+			if (cmd.equals("search")) {
 				//jackWorksの検索結果が格納されたjack_listを受け取る
 				jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
 			} else {
 				// JackWorksの全情報を取得するメソッド
 				jackList = jackworksDAO.selectAll();
 			}
-
-			if (cmd.equals("request")) {
-				path = "/view/jackworksRequest.jsp";
-			}
+			
 
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
-			// 取得したnameをリクエストスコープに"name"という名前で格納する
-			request.setAttribute("name", name);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、JackWorksは表示できませんでした。";
-			cmd = "";
+			cmd = "home";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			cmd = "logout";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
@@ -93,5 +85,4 @@ public class JackworksServlet extends HttpServlet {
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
-
 }

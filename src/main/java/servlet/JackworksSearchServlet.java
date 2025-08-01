@@ -26,9 +26,9 @@ public class JackworksSearchServlet extends HttpServlet {
 		// エラー文を格納用
 		String error = null;
 		// 例外判定用
-		String cmd = "";
+		String cmd = null;
 		// 遷移先のパス
-		String path = "/jackworks";
+		String path = "/monthJackworks";
 
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
@@ -37,23 +37,12 @@ public class JackworksSearchServlet extends HttpServlet {
 		try {
 			//検索された値をnameで受け取る
 			String name = request.getParameter("name");
-			
-			if(name == null) {
-				name="";
-			}
-			
-			//jackworksRequest.jspからcmd=requestを受け取る
-			cmd = request.getParameter("cmd");
-			
-			if(cmd == null) {
-				cmd = "";
-			}
 
 			//選択された年月を受け取る
 			String monthSearch = request.getParameter("month-search");
 			String yearSearch = request.getParameter("year-search");
 
-			if (name.equals("") && monthSearch != null) {
+			if (name == null) {
 				String selectSearch = yearSearch + "-" + monthSearch;
 				//選択された年月に該当する情報を検索するメソッド
 				jackList = jackworksDAO.selectSearch(selectSearch);
@@ -62,20 +51,15 @@ public class JackworksSearchServlet extends HttpServlet {
 				jackList = jackworksDAO.search(name);
 			}
 
-			if(!cmd.equals("request")) {
 			//検索表示させるためのcmd
 			cmd = "search";
-			
-			path = "/monthJackworks";
-			}
-			
+
 			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
 			request.setAttribute("name", name);
 			
 			request.setAttribute("monthSearch", monthSearch);
 			request.setAttribute("yearSearch", yearSearch);
-			
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";

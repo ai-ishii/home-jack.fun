@@ -3,8 +3,7 @@
 作成者：青木美波
 作成日 2025/07/11
  --%>
- 
- 
+
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Monthjack"%>
 
@@ -15,16 +14,12 @@ Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
 
 <html>
 <head>
-<!-- タイトル -->
 <title>JackWorks</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
-<script src="<%=request.getContextPath()%>/js/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-</head>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/style.css">
 
-<!-- 以下CSS -->
-<style>
-
+<!-- 以下CSS記述 -->
+<style type="text/css">
 #contents {
 	width: 90%;
 	margin-right: auto;
@@ -167,26 +162,20 @@ button.btn-border:active {
 button.btn-border:active:before {
 	bottom: -1px;
 }
-
 </style>
+</head>
 
 <body>
-	<div id="wrap">
-		<!-- ヘッダー部分 -->
-		<%@ include file="../common/header.jsp"%>
-
-		<!-- メイン部分 -->
-		<div id="main" class="container">
-		
-		<div id="contents">
+	<div id="contents">
 
 		<!-- タイトル部分 -->
 		<div id="link-title">
-			<h1 id="link-line">今月のJackWorks内容更新</h1>
+			<h1 id="link-line">今月のJackWorks内容登録</h1>
 		</div>
-		
+
 		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
-		<form action="<%=request.getContextPath()%>/monthJackworks" enctype="multipart/form-data" method="post">
+		<form action="<%=request.getContextPath()%>/monthJackworks"
+			enctype="multipart/form-data" method="post">
 
 			<!-- 入力フォーム -->
 			<table id="box-mar">
@@ -201,22 +190,25 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" size="35" required></td>
+				<td><input type="text" name="theme"
+					value="<%=monthJack.getTheme()%>" size="35" required></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
-				<td><textarea name="note" rows="" cols="" ><%=monthJack.getNote()%></textarea></td>
+				<td><textarea name="note" rows="" cols=""><%=monthJack.getNote()%></textarea></td>
 			</table>
-			
+
+			<br>
+
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
 					<span>更新</span>
 				</button>
 			</div>
-		</div>
-		</form>
-		</div>
+	</div>
+	</form>
+	</div>
 	</div>
 </body>
 </html>

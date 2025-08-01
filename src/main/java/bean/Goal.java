@@ -6,8 +6,10 @@ public class Goal {
 
 	
 	private int goalId;							//個人目標ID
-	private String teamId;							//グループ目標ID
 	private int userId;							//ユーザー情報ID
+	private String managementTheme;				//経営テーマ
+	private String departmentGoal;				//部目標
+	private String groupGoal;					//グループ目標
 	private String annualGoal;					//年間目標
 	private String situationChallenge;			//現状と課題
 	private String result;						//年間結果達成率
@@ -24,20 +26,30 @@ public class Goal {
 	public void setGoalId(int goalId) {
 		this.goalId = goalId;
 	}
-	
-	public String getTeamId() {
-		return teamId;
-	}
-	public void setTeamId(String teamId) {
-		this.teamId = teamId;
-	}
 	public int getUserId() {
 		return userId;
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
+	public String getManagementTheme() {
+		return managementTheme;
+	}
+	public void setManagementTheme(String managementTheme) {
+		this.managementTheme = managementTheme;
+	}
+	public String getDepartmentGoal() {
+		return departmentGoal;
+	}
+	public void setDepartmentGoal(String departmentGoal) {
+		this.departmentGoal = departmentGoal;
+	}
+	public String getGroupGoal() {
+		return groupGoal;
+	}
+	public void setGroupGoal(String groupGoal) {
+		this.groupGoal = groupGoal;
+	}
 	public String getAnnualGoal() {
 		return annualGoal;
 	}
@@ -86,6 +98,10 @@ public class Goal {
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	
+
+		
 }
 
 
