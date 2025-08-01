@@ -222,9 +222,9 @@ public class UserDAO {
 		LocalDateTime nowDate = LocalDateTime.now();
 		
 		//SQL文の作成
-		String sql = "update userinfo set name = '"+user.getName()+"', name_kana = '"+user.getNameKana()+"', birthday = '"+user.getBirthday()+"', address = '"+user.getAddress()+"', "
+		String sql = "update user_info set name = '"+user.getName()+"', name_kana = '"+user.getNameKana()+"', birthday = '"+user.getBirthday()+"', address = '"+user.getAddress()+"', "
 				+ "post = '"+user.getPost()+"', phone = '"+user.getPhone()+"', nearest_station = '"+user.getNearestStation()+"', transportation = '"+user.getTransportation()+"', sex = '"+user.getSex()+"',"
-				+ "employee_number = '"+user.getEmployeeNumber()+"', department = '"+user.getDepartment()+"', team = '"+user.getTeam()+"', joiningdate ='"+user.getJoiningDate()+"', "
+				+ "employee_number = '"+user.getEmployeeNumber()+"', department = '"+user.getDepartment()+"', team = '"+user.getTeam()+"', joining_date ='"+user.getJoiningDate()+"', "
 				+ "children = '"+user.getChildren()+"', qualification = '"+user.getQualification()+"', work_history = '"+user.getWorkHistory()+"', regist_date = '"+user.getRegistDate()+"', "
 				+ "update_date = '"+ nowDate +"' WHERE user_id = '"+user.getUserId()+"'";
 		
