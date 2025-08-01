@@ -12,7 +12,7 @@
 						<a href="<%= request.getContextPath() %>/announce"><p class="cheese">お知らせ</p></a>
 					</li>
 					<li>
-						<a href="<%= request.getContextPath() %>/"><p class="tomato">社員紹介</p>
+						<a href="<%= request.getContextPath() %>/employee"><p class="tomato">社員紹介</p></a>
 						<ul class="tomato-detail">
 							<li>wuu</li>
 							<li>wii</li>
