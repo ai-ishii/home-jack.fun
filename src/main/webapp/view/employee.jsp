@@ -1,5 +1,5 @@
 <!-- 社員紹介 一覧機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：7/29 11:45 -->
+<!-- 作成日：7/2　最終更新日：8/1 12:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -111,7 +111,7 @@ a:hover {
 #employee_name {
 	/*	画像の上に文字を重ねるため*/
 	position: relative;
-	top: -83px;
+	top: -96px;
 	margin: 0;
 	width: 200px;
 	background-color: rgba(255, 255, 255, 0.8);
@@ -125,7 +125,7 @@ a:hover {
 #employee_detail {
 	/*	画像の上に文字を重ねるため*/
 	position: relative;
-	top: -83px;
+	top: -96px;
 	margin: 0;
 	background-color: rgba(255, 255, 255, 0.8);
 	color: black;
@@ -173,7 +173,7 @@ a:hover {
 						<a
 							href="<%=request.getContextPath()%>/detailEmployee?userId=<%=userList.get(i).getUserId()%>">
 							<div id="employee_card">
-								<img src="<%=request.getContextPath()%>/img/<%=photos[i]%>"
+								<img src="<%=request.getContextPath()%>/file/<%=photos[i]%>"
 									alt="社員画像">
 								<p id="employee_name"><%=userList.get(i).getName()%></p>
 								<p id="employee_detail">
