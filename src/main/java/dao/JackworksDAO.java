@@ -1,15 +1,36 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.Jackworks;
-import util.DAOconnection;
 
 public class JackworksDAO {
+
+	//接続用の情報をフィールドに定数として定義
+	private static final String RDB_DRIVE = "org.mariadb.jdbc.Driver";
+	private static final String URL = "jdbc:mariadb://localhost/jackdb";
+	private static final String USER = "root";
+	private static final String PASSWD = "root123";
+
+	/**
+	 * データベース接続を行うメソッド
+	 * データベース接続用定義を基にデータベースへ接続し、戻り値としてコネクション情報を返す
+	 * @return con
+	 */
+	private static Connection getConnection() {
+		try {
+			Class.forName(RDB_DRIVE);
+			Connection con = DriverManager.getConnection(URL, USER, PASSWD);
+			return con;
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+	}
 
 	/**
 	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
@@ -23,7 +44,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "SELECT * FROM jackworks_info ORDER BY points_get_date DESC";
@@ -88,7 +109,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "DELETE FROM jackworks_info WHERE jackworks_id=" + jackworksId;
@@ -123,7 +144,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "INSERT INTO jackworks_info VALUES (NULL, NULL, '" + jack.getName() + "', '"
@@ -168,7 +189,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "UPDATE jackworks_info SET project =  '" + jack.getProject() + "' , work_season = '"
@@ -219,7 +240,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			//検索内容と同じ文字のみ検索をおこなうsql
@@ -302,7 +323,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "SELECT * FROM jackworks_info "
@@ -356,7 +377,7 @@ public class JackworksDAO {
 		ArrayList<Jackworks> jackList = new ArrayList<>();
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "SELECT * FROM jackworks_info WHERE jackworks_id = '" + jackworksId + "'";
@@ -421,7 +442,7 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "UPDATE jackworks_info SET admin_flag = ' 1 '"
@@ -459,13 +480,13 @@ public class JackworksDAO {
 		Statement smt = null;
 
 		try {
-			con = DAOconnection.getConnection();
+			con = getConnection();
 			smt = con.createStatement();
 
 			String sql = "UPDATE jackworks_info SET admin_flag = ' 2 '"
 					+ "WHERE jackworks_id = '" + jackworksId + "'";
 
-			smt.executeUpdate(sql);
+			ResultSet rs = smt.executeQuery(sql);
 
 		} catch (Exception e) {
 			throw new IllegalStateException(e);

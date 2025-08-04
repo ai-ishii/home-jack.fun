@@ -34,6 +34,17 @@ public class JackworksDeleteServlet extends HttpServlet {
 		try {
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
+			
+			//jackworksRequest.jspからcmd=denialを受け取る
+			cmd = request.getParameter("cmd");
+			
+			if(cmd == null) {
+				cmd="";
+			}
+			
+			if(cmd.equals("denial")) {
+				path="/jackworksRequest";
+			}
 
 			//取得したJackWorksの情報を削除するメソッド
 			jackworksDAO.delete(Integer.parseInt(jackworksId));
@@ -53,7 +64,7 @@ public class JackworksDeleteServlet extends HttpServlet {
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// jackWorks.jspにフォワード
+			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
