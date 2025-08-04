@@ -121,6 +121,11 @@ if (goal != null) {
 	text-align: left;
 }
 
+.quarterpadding{
+	text-decoration: underline;
+	
+}
+
 .goalflex {
 	display: fiex;
 	width: 80%;
@@ -179,9 +184,9 @@ if (goal != null) {
 }
 
 #goalTitle h3 {
+	padding-bottom: 20px;
 	margin: 0 auto;
 	width: 100%;
-	border-bottom: 1px solid #000000;
 	text-align: left;
 	left: 20px;
 }
@@ -411,7 +416,9 @@ keyframes fadeIn { 0% {
 									<textarea readonly class="details-content"
 										name="judge_material<%=i + 1%>" rows="5" cols="30"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
 								</div>
-
+								<div class="quarterpadding">
+									<h3>本人記入</h3>
+								</div>
 								<div class="flex">
 									<h3 style="flex-shrink: 3;">達成率</h3>
 									<h3>報告内容</h3>
@@ -423,6 +430,9 @@ keyframes fadeIn { 0% {
 										<textarea readonly class="details-content"
 											name="report<%= i + 1 %>" rows="10" style="flex: 3"><%=quarterGoalList.get(i).getReport()%></textarea>
 									</div>
+								</div>
+								<div class="quarterpadding">
+									<h3>評価者記入</h3>
 								</div>
 
 								<div class="flex">
@@ -450,12 +460,10 @@ keyframes fadeIn { 0% {
 				<div id="goalTitle" class="container">
 					<h1 style="text-align: center">年間結果</h1>
 					<div class="goalpadding">
-						<h3>本人記入</h3>
-					</div>
-					<div class="goalpadding">
+						<div class="quarterpadding">
+							<h3>本人記入</h3>
+						</div>
 						<h3>達成率 報告を受けての評価</h3>
-					</div>
-					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
 								<textarea readonly name="annualGoal" rows="10" cols="80"><%=result%></textarea>
@@ -466,12 +474,10 @@ keyframes fadeIn { 0% {
 						</div>
 					</div>
 					<div class="goalpadding">
-						<h3>評価者記入</h3>
-					</div>
-					<div class="goalpadding">
+						<div class="quarterpadding">
+							<h3>評価者記入</h3>
+						</div>
 						<h3>達成率 報告内容</h3>
-					</div>
-					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
 								<textarea readonly name="annualGoal" rows="10" cols="80"><%=resultReviewer%></textarea>
