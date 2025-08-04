@@ -1,17 +1,18 @@
 //<!-- 社員紹介 変更機能（作：石井） -->
-//<!-- 作成日：7/18　最終更新日：7/29 11:45 -->
+//<!-- 作成日：7/18　最終更新日：8/1 12:00 -->
+
+/*
+ * 更新を促す（開発経験年数）年一に更新
+ */
 
 package servlet;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
 
 import bean.Employee;
-import bean.User;
 import dao.EmployeeDAO;
-import dao.UserDAO;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/employeeUpdate")
+@MultipartConfig
 public class EmployeeUpdateServlet extends HttpServlet {
 	
 	public void doGet (HttpServletRequest request, HttpServletResponse response)
@@ -37,43 +39,21 @@ public class EmployeeUpdateServlet extends HttpServlet {
 		// 変数宣言
 		String error = "";
 		String cmd = "";
-
+		
 		try {
 			
 			// オブジェクト生成
-			UserDAO userDAO = new UserDAO();
 			EmployeeDAO employeeDAO = new EmployeeDAO();
-			User user = new User();
 			Employee employee = new Employee();
 			
-			// 入力された情報をJSPから取得
-			String photo = request.getParameter("photo");
-//			String employeeNumber = request.getParameter("employeeNumber");
-//			String name = request.getParameter("name");
-//			String nameKana = request.getParameter("nameKana");
-//			
-			// String→Dateに変換
-//			String dateString = request.getParameter("birthday");
-//			String pattern = "yyyy-MM-dd";
-//			SimpleDateFormat format = new SimpleDateFormat(pattern);
-//			Date birthdayUtil = null;
-//			birthdayUtil = format.parse(dateString);
-//			java.sql.Date birthday = new java.sql.Date(birthdayUtil.getTime());
-//			
-//			int department = Integer.parseInt(request.getParameter("department"));
-//			int group = Integer.parseInt(request.getParameter("group"));
-//			
-			// String→Timestampに変換
-//			String timeString = request.getParameter("joiningDate");
-//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
-//			Date parsedTime = dateFormat.parse(timeString);
-//			Timestamp joiningDate = new Timestamp(parsedTime.getTime());
+//			// 入力された情報をJSPから取得
+//			String photo = request.getParameter("photo");
+			// ファイル取得用の情報を受け取る
+//			Part filePart = request.getPart("photo");
 			
 			// セッションからユーザー情報を取得
 			HttpSession session = request.getSession();
 			int userId = (int)session.getAttribute("user_id");
-			
-			user = userDAO.selectByUserId(userId);
 			
 			int devloper = Integer.parseInt(request.getParameter("devloper"));
 			String langSkill = request.getParameter("langSkill");
@@ -83,14 +63,7 @@ public class EmployeeUpdateServlet extends HttpServlet {
 			String intro = request.getParameter("intro");
 			String position = request.getParameter("position");
 			
-			String employeeNumber = user.getEmployeeNumber();
-			String name = user.getName();
-			String nameKana = user.getNameKana();
-			Date birthday = user.getBirthday();
-			int department = user.getDepartmentId();
-			int group = user.getGroupId();
-			Timestamp joiningDate = user.getJoiningDate();
-			employee.setPhoto(photo);
+//			employee.setPhoto(photo);
 			employee.setDevloper(devloper);
 			employee.setLangSkill(langSkill);
 			employee.setMiddleSkill(middleSkill);
