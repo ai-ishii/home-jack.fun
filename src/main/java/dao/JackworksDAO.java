@@ -26,7 +26,10 @@ public class JackworksDAO {
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
-			String sql = "SELECT * FROM jackworks_info ORDER BY points_get_date DESC";
+			String sql = "SELECT jackworks_id, user_id, employee_number, name, category, assessment, point, points_get_date, "
+					+ "note, project, work_season, price, pay, work_place, work_content, phase, language, skill, need_people, "
+					+ "seller, contact, other, manager_flag, admin_flag, temporary_flag"
+					+ " FROM jackworks_info ORDER BY points_get_date DESC";
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -223,7 +226,8 @@ public class JackworksDAO {
 			smt = con.createStatement();
 
 			//検索内容と同じ文字のみ検索をおこなうsql
-			String sql = "SELECT * FROM jackworks_info "
+			String sql = "SELECT jackworks_id, employee_number, point, points_get_date, name, category, assessment, note, admin_flag "
+					+ "FROM jackworks_info "
 					+ "WHERE employee_number = '" + name + "'"
 					+ "OR point = '" + name + "'";
 
@@ -245,7 +249,8 @@ public class JackworksDAO {
 
 			//検索内容を含んだ文字の検索をおこなうsql(あいまい検索)
 			if (jackList.size() == 0) {
-				sql = "SELECT * FROM jackworks_info "
+				sql = "SELECT jackworks_id, employee_number, point, points_get_date, name, category, assessment, note, admin_flag "
+						+ "FROM jackworks_info "
 						+ "WHERE category LIKE '%" + name + "%' "
 						+ "OR assessment LIKE '%" + name + "%' "
 						+ "OR name LIKE '%" + name + "%' "
