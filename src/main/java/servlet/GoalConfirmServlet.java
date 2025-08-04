@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：7月25日
+ * 最終更新日：8月4日
  * 
  */
 package servlet;
@@ -93,7 +93,7 @@ public class GoalConfirmServlet extends HttpServlet {
 			error = "エラーです！";
 
 		} finally {
-			if (error != "") {
+			if (!error.isEmpty()) {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード

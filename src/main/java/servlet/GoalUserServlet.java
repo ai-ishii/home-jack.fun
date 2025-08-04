@@ -1,3 +1,13 @@
+/**
+ * 個人目標確認機能(マネージャー)
+ * 
+ * 作成者：月向亮太
+ * 
+ * 作成日：7月23日
+ * 
+ * 最終更新日：8月4日
+ * 
+ */
 package servlet;
 
 import java.io.IOException;
