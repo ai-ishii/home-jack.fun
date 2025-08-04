@@ -5,13 +5,12 @@
  * 
  * 作成日：7月14日
  * 
- * 最終更新日：7月25日
+ * 最終更新日：8月4日
  * 
  */
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import bean.Goal;
 import bean.QuarterGoal;
@@ -114,7 +113,7 @@ public class GoalUpdateServlet extends HttpServlet {
 		} catch (Exception e) {
 			error = "エラーです！";
 		} finally {
-			if (error != "" ) {
+			if (!error.isEmpty()) {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//フォワードする
