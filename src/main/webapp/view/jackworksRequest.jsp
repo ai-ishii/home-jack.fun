@@ -2,6 +2,7 @@
 JackWorks申請一覧画面
 作成者：青木美波
 作成日 2025/07/28
+更新日 2025/07/29
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -12,14 +13,24 @@ JackWorks申請一覧画面
 ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
 //今月のJackWorksの全情報が格納されたmonthJackを受け取る
 Monthjack monthJack = (Monthjack) request.getAttribute("monthJack");
-//権限分け
+//ログインしたアカウントの情報が格納されたaccountを受け取る
 Account account = (Account)session.getAttribute("account");
-
+//検索された文字列が格納されたnameを受け取る
 String name = (String) request.getAttribute("name");
+//検索された月が格納されたmonthSearchを受け取る
+String monthSearch = (String) request.getAttribute("monthSearch");
+//検索された年が格納されたyearSearchを受け取る
+String yearSearch = (String) request.getAttribute("yearSearch");
 
 if(name == null){
 	name = "";
 }
+
+//権限分け
+int adminFlag = 0;
+int managerFlag = 1;
+// int adminFlag = account.getAdminFlag();
+// int adminFlag = account.getManagerFlag();
 %>
 
 <html>
@@ -63,27 +74,9 @@ if(name == null){
 	text-align: center;
 }
 
-/* 画像の配置 */
-#point-img {
-	text-align: center;
-}
-
+/* 余白 */
 #mag {
 	margin-top: 6%;
-}
-
-.point-box {
-	width: 80%;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	word-break: break-all;
-	margin: 0 auto;
-}
-
-.point-text {
-	margin: 0 auto;
-	width: 80%;
 }
 
 table {
@@ -104,7 +97,7 @@ table tbody tr:nth-child(even) {
 }
 
 table th, table td {
-	padding: .20em 1em;
+	padding: .20em .5em;
 }
 
 table thead{
@@ -114,7 +107,7 @@ background-color: #ffffff;
 table thead th.jack-table{
 	font-size: .85em;
 	padding: 1em;
-	width: 1em;
+	width: 100px;
 }
 
 table thead tr.jack-table{
@@ -144,7 +137,7 @@ table thead tr.jack-table{
 	font-weight: bold;
 }
 
-/* 削除ボタン */
+/* ボタン関係 */
 html {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -172,6 +165,7 @@ html {
 	border-radius: 8.5rem;
 }
 
+/* 承認不承認ボタン */
 a.btn--delete {
 	color: #000;
 	background-color: #bbc8e6;
@@ -185,7 +179,7 @@ a.btn--delete:hover {
 	border-bottom: 2px solid #4a488e;
 }
 
-/*　登録ボタン */
+/* 一覧に戻るボタン */
 a.btn--insert {
 	color: #000;
 	background-color: #fef263;
@@ -301,6 +295,7 @@ td.search-box form {
 	cursor: pointer;
 }
 
+/* 検索窓のデザイン維持 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -319,7 +314,7 @@ button {
 	border: none;
 }
 
-/* ボタンのスタイル */
+/* 検索ボタン */
 .select-button {
 	display: flex;
 	align-items: center;
@@ -408,12 +403,21 @@ button {
     border-right: 1px solid #ffc342;
 }
 
+/* 案件情報収集用 */
 .case-link{
 cursor:pointer;
 }
 
 .case-link:hover{
 background-color:#c0c0c0;
+}
+
+.mag {
+margin-top: 3%;
+}
+
+.request{
+color:red;
 }
 
 </style>
@@ -438,6 +442,24 @@ document.addEventListener('DOMContentLoaded', function() {
 		yearSelect.appendChild(option); // セレクトボックスにオプションを追加
 	}
 	yearSelect.value = currentYear;
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	const selectmonth = "<%= monthSearch %>";
+
+	if(selectmonth && selectmonth != "null" && selectmonth != ""){
+	document.getElementById('monthSearch').value = selectmonth;
+	
+	}
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	const selectyear = "<%= yearSearch %>";
+
+	if(selectyear && selectyear != "null" && selectyear != ""){
+	document.getElementById('yearSelect').value = selectyear;
+	
+	}
 });
 
 //リンクにするjavascript
@@ -484,7 +506,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 	});
 
-	const btn = document.querySelectorAll(".btn--delete");
+	//承認確認アラート
+	const btn = document.querySelectorAll(".agree");
 
 	// それぞれの td にクリックしたときの処理を追加
 	btn.forEach(function(button) {
@@ -497,6 +520,29 @@ document.addEventListener("DOMContentLoaded", function() {
 			
 			if(confirm("申請を承認しますか？")){
 				alert("承認しました。");
+				
+				//設定したURLに遷移する
+				window.location.href = jackDelete;
+			}else{
+				alert("キャンセルしました。");
+			}
+		});
+	});
+
+	//承認拒否の確認アラート
+	const btnDenial = document.querySelectorAll(".denial");
+
+	// それぞれの td にクリックしたときの処理を追加
+	btnDenial.forEach(function(button) {
+		button.addEventListener("click", function(event) {
+			event.stopPropagation();
+			event.preventDefault();
+			
+			//対象に設定されたdatasetを取り出す
+			const jackDelete = button.dataset.href; 
+			
+			if(confirm("申請を拒否しますか？")){
+				alert("拒否しました。");
 				
 				//設定したURLに遷移する
 				window.location.href = jackDelete;
@@ -523,8 +569,10 @@ document.addEventListener("DOMContentLoaded", function() {
 				<div id="link-title">
 					<h1 id="link-line">JackWorks申請一覧</h1>
 				</div>
+				
+				<div class="mag"></div>
 
-				<!-- ポイント取得者一覧表示 -->
+				<!-- ポイント申請一覧表示 -->
 				<table class="mar">
 				<thead style="margin: 0 auto">
 					<tr>
@@ -541,15 +589,16 @@ document.addEventListener("DOMContentLoaded", function() {
 						<!-- 十年間の西暦検索を行うフォーム -->
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
 						<input type="hidden" name="cmd" value="request">
-						<td><label class="selectbox-4">
-								<select id="yearSelect" name="year-search">
+						<td>
+							<label class="selectbox-4">
+							<select id="yearSelect" name="year-search"></select>
 							</label>
-								</select>
 						</td>
 						
 						<!-- 月の検索を行うセレクトボックス -->
-						<td><label class="selectbox-4">
-								<select name="month-search">
+						<td>
+							<label class="selectbox-4">
+								<select id="monthSearch" name="month-search">
 									<option value="01">1月</option>
 									<option value="02">2月</option>
 									<option value="03">3月</option>
@@ -562,12 +611,15 @@ document.addEventListener("DOMContentLoaded", function() {
 									<option value="10">10月</option>
 									<option value="11">11月</option>
 									<option value="12">12月</option>
-								</select></td>
+								</select>
 							</label>
-						<td><button type="submit" class="select-button" >検索</button>
-						</form></td>
+						</td>
+						<td>
+						<button type="submit" class="select-button" >検索</button>
+						</form>
+						</td>
 
-					<!-- JackWorkの新規登録を行うボタン -->
+					<!-- JackWork一覧に戻るボタン -->
 					<td style="text-align: right">
 						<a href="<%=request.getContextPath()%>/monthJackworks"
 							class="btn btn--insert">一覧に戻る</a>
@@ -576,7 +628,11 @@ document.addEventListener("DOMContentLoaded", function() {
 				</thead>
 				</table>
 				
-				<!-- JackWork一覧表の表示 -->
+				<!-- 管理者のみ表示：管理者1 -->
+				<%
+				if(adminFlag == 1 && managerFlag == 0){
+				%>
+				<!-- JackWorks申請一覧表の表示 -->
 				<table style="width: 100%">
 					<thead style="margin: 0 auto">
 						<tr class="jack-table">
@@ -614,8 +670,8 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
 						<td data-label="備考" class="text" name="note"><%=note%></td>
 						<td><div style="text-align: center">
-							<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=agree" class="btn btn--delete">承認</a>
-							<a data-href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>&cmd=agree" class="btn btn--delete">不承認</a>
+							<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=agree" class="btn btn--delete agree">承認</a>
+							<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=denial" class="btn btn--delete denial">不承認</a>
 							</div>
 						</td>
 					</tr>
@@ -626,6 +682,71 @@ document.addEventListener("DOMContentLoaded", function() {
 					%>
 				</tbody>
 				</table>
+				
+				<%
+				}
+				%>
+				
+				<!-- 管理者のみ表示：ユーザー0 -->
+				<%
+				if(adminFlag == 0 && managerFlag == 1){
+				%>
+				<!-- JackWorks申請一覧表の表示 -->
+				<table style="width: 100%">
+					<thead style="margin: 0 auto">
+						<tr class="jack-table">
+							<th scope="col" class="jack-table">年月日</th>
+							<th scope="col" class="jack-table">社員No.</th>
+							<th scope="col" class="jack-table">氏名</th>
+							<th scope="col" class="jack-table">カテゴリ</th>
+							<th scope="col" class="jack-table">評価項目</th>
+							<th scope="col" class="jack-table">付与ポイント</th>
+							<th scope="col" class="jack-table">備考</th>
+							<th scope="col" class="jack-table"></th>
+						</tr>
+					</thead>
+					<tbody>
+					<%
+					for (int i = 0; i < jackList.size(); i++) {
+						Jackworks jack = (Jackworks) jackList.get(i);
+							String note = jack.getNote();
+						
+							MyFormat myformat = new MyFormat();
+							String date = myformat.breakDateFormat(jack.getPointsGetDate());
+						
+						if (note == null) {
+							note = "";
+						}
+						if((jack.getAdminFlag() == 0)||(jack.getAdminFlag() == 2)){
+					%>
+					
+					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>&cmd=request">
+						<td data-label="年月日" class="num" name="date"><%= date %></td>
+						<td data-label="社員No" class="num" name="employeeNumber"><%=jack.getEmployeeNumber() %></td>
+						<td data-label="氏名" class="text-point" name="name"><%=jack.getName()%></td>
+						<td data-label="カテゴリ" class="text-point" name="category"><%=jack.getCategory()%></td>
+						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
+						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
+						<td data-label="備考" class="text" name="note"><%=note%></td>					
+					
+						<% if(jack.getAdminFlag() == 0){ %><td data-label="備考" class="" name="note"><strong>申請中</strong></td><%} %>
+						<% if(jack.getAdminFlag() == 2){ %>
+						<td data-label="備考" class="request" name="note">
+						<a href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>&cmd=denial" onclick="return confirm('本当に削除しますか?')">
+						<strong>申請が拒否されました</strong></a>
+						</td>
+						<%} %>
+					</tr>
+					<%
+						}
+					}
+					%>
+				</tbody>
+				</table>
+				
+				<%
+				}
+				%>
 
 				<!-- ページネーション -->
 				<ol class="pagination">
