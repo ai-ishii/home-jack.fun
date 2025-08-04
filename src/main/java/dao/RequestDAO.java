@@ -1,56 +1,121 @@
-/*RequestDAO.java */
+/*
+ * 機能：資格、氏名、住所、(副業)申請に関するDAO
+ * 
+ * 作成者：桑原岳
+ *  
+ * 最終更新日：2025/08/01
+ *  
+ */
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import bean.AddressRequest;
-import bean.LicenseRequest;
-import bean.NameRequest;
-import bean.Request;
-import bean.RequestLicenseRequestUser;
-import bean.User;
-import bean.WorkRequest;
+import bean.LicenseRequestExclusive;
 import util.DAOconnection;
 
 public class RequestDAO {
+	
+	
+	
+	
+	private static final String licenseRequestSql =
+			
+			//R(request_info),LR(license_request_info),G(group_info),D(department_info),LI(license_info)
+			"SELECT "
+			+ "R.request_id, "
+			+ "R.applicant_id, "
+			+ "R.approver_id, "
+			+ "R.applicant, "
+			+ "R.approver, "
+			+ "R.request_date, "
+			+ "R.approval_date, "
+			+ "R.request_flag, "
+			+ "LR.license_request_id,"
+			+ "LR.group_id,"
+			+ "LR.department_id, "
+			+ "LR.exam_date, "
+			+ "LR.exam_time, "
+			+ "LR.receipt,"
+			+ "LR.license_id, "
+			+ "LR.passing, "
+			+ "G.group_name, "
+			+ "D.department_name, "
+			+ "LI.license_name "
+			+ "FROM license_request_info as LR "
+			+ "INNER JOIN request_info as R "
+			+ "ON LR.request_id = R.request_id "
+			+ "INNER JOIN group_info as G "  
+			+ "ON LR.group_id = G.group_id "
+			+ "INNER JOIN department_info as D "
+			+ "ON LR.department_id = D.department_id "
+			+ "INNER JOIN license_info as LI "
+			+ "ON LR.license_id = LI.license_id ";
 
-	//request_info から全てのデータを取得するメソッド
-	public ArrayList<Request> selectAll() {
+	//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+	/**
+	 * 各テーブルから資格申請一覧を行う際に必要な情報を取り出すメソッド
+	 * 取り出した情報はArrayListに格納してリターンする
+	 * @return ArrayList<LicenseRequestExclusive>
+	 */
+	public ArrayList<LicenseRequestExclusive> selectAllLicense() {
+
 		//変数宣言
 		Connection con = null;
 		Statement smt = null;
 
 		//データを格納リストの作成
-		ArrayList<Request> requestList = new ArrayList<Request>();
+		ArrayList<LicenseRequestExclusive> licenseRequestExclusiveList = new ArrayList<LicenseRequestExclusive>();
 
 		try {
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
-			//SQL文
-			String sql = "SELECT request_id, applicant_id, approver, applicant, approver, request_date, approval_date, "
-					+ "request_type_flag, request_flag FROM request_info ORDER BY request_info.request_date DESC";
+			//SQL文(request_infoとlicense_request_infoとgroup_infoとdepartment_infoとlicense_info)
+			String sql = licenseRequestSql+ "ORDER BY r.request_flag ASC, r.request_date DESC;"; 
 
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
-				Request request = new Request();
+				
+				//オブジェクト化
+				LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
+				
+				//request_info
+				licenseRequestExclusive.setRequestId(rs.getInt("request_id"));
+				licenseRequestExclusive.setApplicantId(rs.getInt("applicant_id"));
+				licenseRequestExclusive.setApproverId(rs.getInt("approver_id"));
+				licenseRequestExclusive.setApplicant(rs.getString("applicant"));
+				licenseRequestExclusive.setApprover(rs.getString("approver"));
+				licenseRequestExclusive.setRequestDate(rs.getTimestamp("request_date"));
+				licenseRequestExclusive.setApprovalDate(rs.getTimestamp("approval_date"));
+				licenseRequestExclusive.setRequestFlag(rs.getInt("request_flag"));
 
-				request.setRequestId(rs.getInt("request_id"));
-				request.setApplicantId(rs.getInt("applicant_id"));
-				request.setApproverId(rs.getInt("approver_id"));
-				request.setApplicant(rs.getString("applicant"));
-				request.setApprover(rs.getString("approver"));
-				request.setRequestDate(rs.getTimestamp("request_date"));
-				request.setApprovalDate(rs.getTimestamp("approval_date"));
-				request.setRequestTypeFlag(rs.getInt("request_type_flag"));
-				request.setRequestFlag(rs.getInt("request_flag"));
+				//license_request_info
+				licenseRequestExclusive.setLicenseRequestId(rs.getInt("license_request_id"));
+				licenseRequestExclusive.setGroupId(rs.getInt("group_id"));
+				licenseRequestExclusive.setDepartmentId(rs.getInt("department_id"));
+				licenseRequestExclusive.setLicenseId(rs.getInt("license_id"));
+				licenseRequestExclusive.setExamDate(rs.getTimestamp("exam_date"));
+				licenseRequestExclusive.setExamTime(rs.getInt("exam_time"));
+				licenseRequestExclusive.setReceipt(rs.getString("receipt"));
+				licenseRequestExclusive.setPassing(rs.getString("passing"));
 
-				requestList.add(request);
+				//group_info
+				licenseRequestExclusive.setGroupName(rs.getString("group_name"));
+
+				//department_info
+				licenseRequestExclusive.setDepartmentName(rs.getString("department_name"));
+
+				//license_info
+				licenseRequestExclusive.setLicenseName(rs.getString("license_name"));
+
+				licenseRequestExclusiveList.add(licenseRequestExclusive);
 			}
 
 		} catch (Exception e) {
@@ -70,43 +135,72 @@ public class RequestDAO {
 				}
 			}
 		}
-		return requestList;
+		return licenseRequestExclusiveList;
 	}
 
-	//work_request_infoの情報を取り出すメソッド
-	public WorkRequest selectByWorkRequestId(int requestid) {
+	/**
+	 *各テーブルから資格申請一覧を行う際に必要な情報をrequestIdで絞って取り出すメソッド
+	 *requestIdの値に応じた情報をリターンする
+	 *@param 申請情報のID
+	 *@return  資格申請一覧を行う際に必要な情報
+	 * */
+	public LicenseRequestExclusive selectByRequestId(int requestId) {
+
 		//変数宣言
 		Connection con = null;
-		Statement smt = null;
-		WorkRequest workRequest = new WorkRequest();
+		PreparedStatement smt = null;
+
+		//オブジェクト化
+		LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
 
 		try {
 			con = DAOconnection.getConnection();
-			smt = con.createStatement();
 
 			//SQL文
-			String sql = "SELECT work_request_id, situation, job_location, low_root, price, near_station, route_name "
-					+ "FROM work_request_info where request_id=" + requestid;
+			String sql = licenseRequestSql +"WHERE r.request_id = ? "
+					+ "ORDER BY r.request_flag ASC, r.request_date DESC";
 
-			ResultSet rs = smt.executeQuery(sql);
+			smt = con.prepareStatement(sql);
+			smt.setInt(1, requestId);
+
+			ResultSet rs = smt.executeQuery();
 
 			while (rs.next()) {
 
-				workRequest.setWorkRequestId(rs.getInt("work_request_id"));
-				workRequest.setRequestId(rs.getInt("request_id"));
-				workRequest.setSituation(rs.getString("situation"));
-				workRequest.setJobLocation(rs.getString("job_location"));
-				workRequest.setLowRoot(rs.getString("low_root"));
-				workRequest.setPrice(rs.getInt("price"));
-				workRequest.setNearStation(rs.getString("near_station"));
-				workRequest.setRouteName(rs.getString("route_name"));
+				//request_info
+				licenseRequestExclusive.setRequestId(rs.getInt("request_id"));
+				licenseRequestExclusive.setApplicantId(rs.getInt("applicant_id"));
+				licenseRequestExclusive.setApproverId(rs.getInt("approver_id"));
+				licenseRequestExclusive.setApplicant(rs.getString("applicant"));
+				licenseRequestExclusive.setApprover(rs.getString("approver"));
+				licenseRequestExclusive.setRequestDate(rs.getTimestamp("request_date"));
+				licenseRequestExclusive.setApprovalDate(rs.getTimestamp("approval_date"));
+				licenseRequestExclusive.setRequestFlag(rs.getInt("request_flag"));
 
+				//license_request_info
+				licenseRequestExclusive.setLicenseRequestId(rs.getInt("license_request_id"));
+				licenseRequestExclusive.setGroupId(rs.getInt("group_id"));
+				licenseRequestExclusive.setDepartmentId(rs.getInt("department_id"));
+				licenseRequestExclusive.setLicenseId(rs.getInt("license_id"));
+				licenseRequestExclusive.setExamDate(rs.getTimestamp("exam_date"));
+				licenseRequestExclusive.setExamTime(rs.getInt("exam_time"));
+				licenseRequestExclusive.setReceipt(rs.getString("receipt"));
+				licenseRequestExclusive.setPassing(rs.getString("passing"));
+
+				//group_info
+				licenseRequestExclusive.setGroupName(rs.getString("group_name"));
+
+				//department_info
+				licenseRequestExclusive.setDepartmentName(rs.getString("department_name"));
+
+				//license_info
+				licenseRequestExclusive.setLicenseName(rs.getString("license_name"));
 			}
 
 		} catch (Exception e) {
 			throw new IllegalStateException(e);
 		} finally {
-			//リソースの開放
+			//リソースの開放 
 			if (smt != null) {
 				try {
 					smt.close();
@@ -120,162 +214,7 @@ public class RequestDAO {
 				}
 			}
 		}
-		return workRequest;
-	}
-
-	//name_request_infoの情報を取り出すメソッド
-	public NameRequest selectByNameRequestId(int requestid) {
-		//変数宣言
-		Connection con = null;
-		Statement smt = null;
-		NameRequest nameRequest = new NameRequest();
-
-		try {
-			con = DAOconnection.getConnection();
-			smt = con.createStatement();
-
-			//SQL文
-			String sql = "SELECT name_request_id, request_id, old_name, old_name_kana, new_name, new_name_kana "
-					+ "FROM name_request_info where request_id=" + requestid;
-
-			ResultSet rs = smt.executeQuery(sql);
-
-			while (rs.next()) {
-
-				nameRequest.setNameRequestId(rs.getInt("name_request_id"));
-				nameRequest.setRequestId(rs.getInt("request_id"));
-				nameRequest.setOldName(rs.getString("old_name"));
-				nameRequest.setOldNameKana(rs.getString("old_name_kana"));
-				nameRequest.setNewName(rs.getString("new_name"));
-				nameRequest.setNewNameKana(rs.getString("new_name_kana"));
-
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			//リソースの開放
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException ignore) {
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
-		return nameRequest;
-	}
-
-	//address_request_infoの情報を取り出すメソッド
-	public AddressRequest selectByAddressRequestId(int requestid) {
-		//変数宣言
-		Connection con = null;
-		Statement smt = null;
-		AddressRequest addressRequest = new AddressRequest();
-
-		try {
-			con = DAOconnection.getConnection();
-			smt = con.createStatement();
-
-			//SQL文
-			String sql = "SELECT address_request_id, request_id, old_address, new_address, old_post, new_post "
-					+ "FROM address_request_info where request_id=" + requestid;
-
-			ResultSet rs = smt.executeQuery(sql);
-
-			while (rs.next()) {
-
-				addressRequest.setAddressRequestId(rs.getInt("address_request_id"));
-				addressRequest.setRequestId(rs.getInt("request_id"));
-				addressRequest.setOldAddress(rs.getString("old_address"));
-				addressRequest.setNewAddress(rs.getString("new_address"));
-				addressRequest.setOldPost(rs.getString("old_post"));
-				addressRequest.setNewPost(rs.getString("new_post"));
-
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			//リソースの開放
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException ignore) {
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
-		return addressRequest;
-	}
-
-	//license_request_infoの情報を取り出すメソッド
-	public RequestLicenseRequestUser selectLicenseRequestId(int requestid) {
-		//変数宣言
-		Connection con = null;
-		Statement smt = null;
-		RequestLicenseRequestUser requestLicenseRequestUser = new RequestLicenseRequestUser();
-		LicenseRequest licenseRequest = new LicenseRequest();
-		Request request = new Request();
-		User user = new User();
-
-		try {
-			con = DAOconnection.getConnection();
-			smt = con.createStatement();
-
-			//SQL文
-			String sql = "SELECT user_info.department_id,user_info.group_id,request_info.name,license_request_info.license_name,license_request_info.exam_date,"
-					+ "license_request_info.exam_time FROM user_info INNER JOIN request_info ON user_info.user_id = request_info.applicant_id"
-					+ " INNER JOIN license_request_info ON request_info.request_id = license_request_info.request_id "
-					+ "WHERE .request_info.request_id=" + requestid;
-
-			ResultSet rs = smt.executeQuery(sql);
-
-			while (rs.next()) {
-				licenseRequest.setLicenseName(rs.getString("license_name"));
-				licenseRequest.setExamDate(rs.getTimestamp("exam_date"));
-				licenseRequest.setExamTime(rs.getInt("exam_time"));
-
-				user.setDepartmentId(rs.getInt("department_id"));
-				user.setGroupId(rs.getInt("group_id"));
-
-				request.setApplicant(rs.getString("applicant"));
-				request.setApprover(rs.getString("approver"));
-
-				requestLicenseRequestUser.setRequest(request);
-				requestLicenseRequestUser.setLicenseRequest(licenseRequest);
-				requestLicenseRequestUser.setUser(user);
-
-			}
-
-		} catch (Exception e) {
-			throw new IllegalStateException(e);
-		} finally {
-			//リソースの開放
-			if (smt != null) {
-				try {
-					smt.close();
-				} catch (SQLException ignore) {
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
-		return requestLicenseRequestUser;
+		return licenseRequestExclusive;
 	}
 
 }

@@ -1,23 +1,36 @@
+/*
+ * 機能：資格申請DTO
+ * 
+ * 作成者：桑原岳
+ * 
+ * 最終更新日：2025/08/01
+ * 
+ * */
+
+
 package bean;
 
 import java.sql.Timestamp;
 
 public class LicenseRequest {
 
-	private int licenseId; //資格申請ID
-	private int requestId; //申請ID
-	private String licenseName; //	資格名
-	private String image; //画像
-	private Timestamp examDate; //受験日
-	private int examTime; //受験回数
+	private int licenseRequestId; 			//資格申請ID
+	private int requestId; 				//申請ID
+	private int groupId;	 				//所属グループID
+	private int departmentId; 				//部ID
+	private int licenseId; 				//資格ID
+	private Timestamp examDate; 			//受験日
+	private int examTime; 					//受験回数
+	private String receipt; 				//領収書画像
+	private String certificate ; 			//合格証画像
 	
 	
 	
-	public int getLicenseId() {
-		return licenseId;
+	public int getLicenseRequestId() {
+		return licenseRequestId;
 	}
-	public void setLicenseId(int licenseId) {
-		this.licenseId = licenseId;
+	public void setLicenseRequestId(int licenseRequestId) {
+		this.licenseRequestId = licenseRequestId;
 	}
 	public int getRequestId() {
 		return requestId;
@@ -25,17 +38,23 @@ public class LicenseRequest {
 	public void setRequestId(int requestId) {
 		this.requestId = requestId;
 	}
-	public String getLicenseName() {
-		return licenseName;
+	public int getGroupId() {
+		return groupId;
 	}
-	public void setLicenseName(String licenseName) {
-		this.licenseName = licenseName;
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
-	public String getImage() {
-		return image;
+	public int getDepartmentId() {
+		return departmentId;
 	}
-	public void setImage(String image) {
-		this.image = image;
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
+	public int getLicenseId() {
+		return licenseId;
+	}
+	public void setLicenseId(int licenseId) {
+		this.licenseId = licenseId;
 	}
 	public Timestamp getExamDate() {
 		return examDate;
@@ -49,6 +68,21 @@ public class LicenseRequest {
 	public void setExamTime(int examTime) {
 		this.examTime = examTime;
 	}
-
+	public String getReceipt() {
+		return receipt;
+	}
+	public void setReceipt(String receipt) {
+		this.receipt = receipt;
+	}
+	public String getCertificate() {
+		return certificate;
+	}
+	public void setCertificate(String certificate) {
+		this.certificate = certificate;
+	}
+	
+	
+	
+	
 	
 }
