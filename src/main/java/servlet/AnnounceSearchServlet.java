@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/01
+ * 更新日 : 2025/08/05
  */
 package servlet;
 
@@ -35,7 +35,7 @@ public class AnnounceSearchServlet extends HttpServlet {
 		// 変数宣言
 		String error = "";
 		String cmd = "";
-		
+
 		// 日付検索の初期値の設定
 		int year = 2012;
 		Month month = Month.APRIL;
@@ -66,7 +66,7 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 				// メソッドを呼び出してSQL文実行
 				announceList = announceDAO.selectByKeyword(keyword);
-				
+
 				// 検索キーワードをリクエストスコープに登録する
 				request.setAttribute("keyword", keyword);
 			}
@@ -74,16 +74,25 @@ public class AnnounceSearchServlet extends HttpServlet {
 			if (cmd.equals("filter")) {
 				// フォームからパラメータを受け取る
 				String announceFlag = request.getParameter("announce_flag");
-				String categoryId = request.getParameter("category_id");
-
+				String strAnnounceCategoryId = request.getParameter("category_id");
 				String start = request.getParameter("start_date");
 				String end = request.getParameter("end_date");
+
+				// パラメータをリクエストスコープに登録する
+				request.setAttribute("announceFlag", announceFlag);
+				if (!strAnnounceCategoryId.equals("")) {
+					int announceCategoryId = Integer.parseInt(strAnnounceCategoryId);
+					request.setAttribute("announceCategoryId", announceCategoryId);
+				}
 
 				ZoneId zoneId = ZoneId.of("Asia/Tokyo");
 
 				if (start != "") {
 					// フォームから受け取った開始日時(String型)をLocalDateTimeに変換する
 					localDateTimeStart = LocalDateTime.parse(start);
+
+					// パラメータをリクエストスコープに登録する
+					request.setAttribute("localDateTimeStart", localDateTimeStart);
 
 					// LocalDateTimeをTimestampに変換する(タイムゾーンを考慮)
 					ZonedDateTime zonedDateTimeStart = localDateTimeStart.atZone(zoneId);
@@ -92,17 +101,22 @@ public class AnnounceSearchServlet extends HttpServlet {
 				}
 
 				if (end != "") {
+					// フォームから受け取った開始日時(String型)をLocalDateTimeに変換する
 					localDateTimeEnd = LocalDateTime.parse(end);
 
+					// パラメータをリクエストスコープに登録する
+					request.setAttribute("localDateTimeEnd", localDateTimeEnd);
+
+					// LocalDateTimeをTimestampに変換する(タイムゾーンを考慮)
 					ZonedDateTime zonedDateTimeEnd = localDateTimeEnd.atZone(zoneId);
 					Instant instantEnd = zonedDateTimeEnd.toInstant();
 					endDate = Timestamp.from(instantEnd);
 				}
 
-				announceList = announceDAO.selectByFilter(announceFlag, categoryId, startDate, endDate);
+				announceList = announceDAO.selectByFilter(announceFlag, strAnnounceCategoryId, startDate, endDate);
 
 			}
-			
+
 			categoryList = announceDAO.selectCategoryAll();
 
 		} catch (Exception e) {

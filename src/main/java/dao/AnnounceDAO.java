@@ -628,13 +628,15 @@ public class AnnounceDAO {
 
 	/**
 	 * 絞り込み検索を行うメソッド
+	 * 2025/08/05 更新
+	 * 
 	 * @param announceFlag
 	 * @param announceCategoryId
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 */
-	public ArrayList<Announce> selectByFilter(String announceFlag, String announceCategoryId, Timestamp startDate,
+	public ArrayList<Announce> selectByFilter(String announceFlag, String strAnnounceCategoryId, Timestamp startDate,
 			Timestamp endDate) {
 
 		// 変数宣言
@@ -646,8 +648,8 @@ public class AnnounceDAO {
 		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
 				+ "WHERE CASE WHEN '" + announceFlag + "' = '' THEN '" + announceFlag + "' "
 				+ "ELSE announce_flag END = '" + announceFlag + "' "
-				+ "AND CASE WHEN '" + announceCategoryId + "' = '' THEN '" + announceCategoryId + "' "
-				+ "ELSE announce_category_id END = '" + announceCategoryId + "' "
+				+ "AND CASE WHEN '" + strAnnounceCategoryId + "' = '' THEN '" + strAnnounceCategoryId + "' "
+				+ "ELSE announce_category_id END = '" + strAnnounceCategoryId + "' "
 				+ "AND regist_date BETWEEN '" + startDate + "' "
 				+ "AND '" + endDate + "' "
 				+ "ORDER BY regist_date DESC;";
