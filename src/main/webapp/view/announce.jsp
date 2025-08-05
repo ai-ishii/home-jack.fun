@@ -4,22 +4,44 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/08/01
+更新日 : 2025/08/05
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="bean.Announce, bean.CategoryMap, util.MyFormat,
-	 java.util.ArrayList, java.text.SimpleDateFormat, java.sql.Timestamp, java.util.Date"%>
+<%@ page import="bean.Announce"
+		 import="bean.CategoryMap"
+		 import="util.MyFormat"
+		 import="java.util.ArrayList"
+		 import= "java.time.LocalDateTime"
+		 import="java.text.SimpleDateFormat"
+		 import="java.sql.Timestamp"
+		 import="java.util.Date"
+%>
 
 <%
-String cmd = (String) request.getAttribute("cmd");
-ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
-ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("categoryList");
+// 変数宣言
+int categoryId = 0;
+String category = null;
+
+//オブジェクト変数宣言
 MyFormat myFormat = new MyFormat();
 long millis = System.currentTimeMillis();
 Timestamp timestamp = new Timestamp(millis);
-int categoryId = 0;
-String category = null;
+
+// パラメータの取得
+String cmd = (String) request.getAttribute("cmd");
+ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
+ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("categoryList");
+
+String strAnnounceFlag = (String) request.getAttribute("announceFlag");
+/*
+* リクエストスコープから直接int型にキャストすると
+* うまくいかなかったので下記のような記述にしてます
+*/
+int announceCategoryId = 0;
+Object objAnnounceCategoryId = request.getAttribute("announceCategoryId");
+LocalDateTime localDateTimeStart = (LocalDateTime) request.getAttribute("localDateTimeStart");
+LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDateTimeEnd");
 %>
 <!DOCTYPE html>
 <html>
@@ -103,6 +125,13 @@ String category = null;
 
 .filter_box {
 	position: relative;
+}
+
+.filter_circle {
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: red;
 }
 
 /* モーダルを開くボタン */
@@ -283,6 +312,7 @@ a {
 }
 </style>
 
+
 </head>
 <body>
 	<div id="wrap">
@@ -314,6 +344,22 @@ a {
 
 					<div class="filter_box">
 						<button type="button" class="modal_open js_modal_open">絞り込み</button>
+						
+						<%
+						if (cmd != null) {
+							if (!strAnnounceFlag.equals("") || objAnnounceCategoryId != null || 
+									localDateTimeStart != null || localDateTimeEnd != null) {
+						%>
+						
+						<div class="filter_circle">
+							●
+						</div>
+
+						<%
+							}
+						}
+						%>
+						
 						<div class="modal js_modal">
 							<div class="modal_container">
 								<div class="modal_close js_modal_close">×</div>
@@ -322,7 +368,22 @@ a {
 										method="POST">
 										<div>
 											<input type="checkbox" id="important" value="1"
-												name="announce_flag"> 
+												name="announce_flag"
+											<%
+											if (cmd != null) {
+												if (cmd.equals("filter")) {
+													/*
+													* 重要記事にチェックをつけて検索したとき、
+													* チェックをを検索フォームに再表示する
+													*/
+													if (strAnnounceFlag.equals("1")) {
+											%>
+												checked="checked"
+											<%
+													}
+												}
+											}
+											%>> 
 												<label for="important">重要記事</label>
 											<input type="hidden" name="announce_flag" value="">
 										</div>
@@ -334,9 +395,30 @@ a {
 												for (int i = 0; i < categoryList.size(); i++) {
 													CategoryMap categoryMap = categoryList.get(i);
 												%>
-												<option value="<%= categoryMap.getId() %>">
-													<%= categoryMap.getName() %>
-												</option>
+												
+												<option value="<%= categoryMap.getId() %>"
+												
+													<%
+													if (cmd != null) {
+														/*
+														* カテゴリを選んで検索すると、カテゴリが検索後に
+														* 再表示される
+														*/
+														if (objAnnounceCategoryId != null &&
+																objAnnounceCategoryId instanceof Integer) {
+															announceCategoryId = (Integer) objAnnounceCategoryId;
+															if (announceCategoryId == i + 1) {
+													%>	
+													
+														selected
+													<%
+														}
+														}
+													}
+													%>
+													>
+														<%= categoryMap.getName() %>
+													</option>
 												<%
 												}
 												%>
@@ -344,11 +426,37 @@ a {
 										</div>
 										<div>
 											<label for="start_date">開始日</label> 
-											<input type="datetime-local" id="start_date" name="start_date">
+											<input type="datetime-local" id="start_date" name="start_date"
+											<%
+											if (cmd != null) {
+												/*
+												* 時間で検索したとき、入力した時間が検索フォームに再表示される
+												*/
+												if (localDateTimeStart != null) {
+											%>
+												value="<%= localDateTimeStart %>"
+											<%
+												}
+											}
+											%>
+											>
 										</div>
 										<div>
 											<label for="end_date">終了日</label> 
-											<input type="datetime-local" id="end_date" name="end_date">
+											<input type="datetime-local" id="end_date" name="end_date"
+											<%
+											if (cmd != null) {
+												/*
+												* 時間で検索したとき、入力した時間が検索フォームに再表示される
+												*/
+												if (localDateTimeEnd != null) {
+											%>
+												value="<%= localDateTimeEnd %>"
+											<%
+												}
+											}
+											%>
+											>
 										</div>
 										<input type="hidden" name="cmd" value="filter">
 										<button type="submit">検索</button>
@@ -364,42 +472,49 @@ a {
 					<%
 					if (cmd != null) {
 						if (cmd.equals("keyword")) {
-						String keyword = (String) request.getAttribute("keyword");
+							String keyword = (String) request.getAttribute("keyword");
+							
+							/*
+							* 検索ワードがnullではないかつ空文字ではないとき、
+							* 検索ワードを表示する
+							*/
+							if (keyword != null && !keyword.equals("")) {
 					%>
 					<div>
 						<p>"<%= keyword %>"の検索結果</p>
 					</div>
 					<%
+							}
 						}
 					}
 					%>
 					<%
 					if (announceList != null) {
-						for (int i = 0; i < announceList.size(); i++) {
+						for (int j = 0; j < announceList.size(); j++) {
 					%>
 					<div class="content_box">
 						<div class="announce_box">
 							<a
 								href="<%=request.getContextPath()%>/announceDetail
-								?announceId=<%=announceList.get(i).getAnnounceId()%>&cmd=detail"
+								?announceId=<%=announceList.get(j).getAnnounceId()%>&cmd=detail"
 								class="box_link">
 								<div class="date_box">
 									<p>
 										<%
-										timestamp = announceList.get(i).getRegistDate();
+										timestamp = announceList.get(j).getRegistDate();
 										%>
 										<%=myFormat.monthDayFormat(timestamp)%>
 									</p>
 								</div>
 								<div class="title_box">
-									<p><%=announceList.get(i).getTitle()%></p>
+									<p><%=announceList.get(j).getTitle()%></p>
 								</div>
 							</a>
 						</div>
 						<div class="category_box">
 							<p>
 								<%
-								categoryId = announceList.get(i).getAnnounceCategoryId();
+								categoryId = announceList.get(j).getAnnounceCategoryId();
 								if (categoryId == 1) {
 									category = "お知らせ";
 								} else if (categoryId == 2) {
@@ -415,7 +530,7 @@ a {
 							</p>
 						</div>
 						<%
-						int announceFlag = announceList.get(i).getAnnounceFlag();
+						int announceFlag = announceList.get(j).getAnnounceFlag();
 						if (announceFlag == 1) {
 						%>
 						<div class="announce_flag">
