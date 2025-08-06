@@ -59,6 +59,8 @@ if (goal != null) {
 <title>個人目標登録</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	
 <style>
 
 /* 個人目標のCSS */
