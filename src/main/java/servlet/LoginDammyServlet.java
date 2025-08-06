@@ -74,7 +74,7 @@ public class LoginDammyServlet extends HttpServlet {
 			} else {					// エラーがない場合 homeにフォワード
 				session.setAttribute("account", account);
 				session.setAttribute("user_id", user.getUserId());
-				session.setAttribute("name_name", user.getName());
+				session.setAttribute("user_name", user.getName());
 				request.getRequestDispatcher("/home").forward(request, response);
 			}
 		}
