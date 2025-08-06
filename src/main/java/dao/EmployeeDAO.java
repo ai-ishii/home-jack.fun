@@ -48,7 +48,7 @@ public class EmployeeDAO {
 	 			while (rs.next()) {
 	 				employee.setEmployeeId(rs.getInt("employee_id"));
 	 				employee.setUserId(rs.getInt("user_id"));
-	 				employee.setDevloper(rs.getInt("devloper"));
+	 				employee.setDeveloper(rs.getInt("devloper"));
 	 				employee.setLangSkill(rs.getString("lang_skill"));
 	 				employee.setMiddleSkill(rs.getString("middle_skill"));
 	 				employee.setHobby(rs.getString("hobby"));
@@ -167,7 +167,7 @@ public class EmployeeDAO {
 	 			if (rs.next()) {	
 	 				employee.setEmployeeId(rs.getInt("employee_id"));
 	 				employee.setUserId(rs.getInt("user_id"));
-	 				employee.setDevloper(rs.getInt("devloper"));
+	 				employee.setDeveloper(rs.getInt("devloper"));
 	 				employee.setLangSkill(rs.getString("lang_skill"));
 	 				employee.setMiddleSkill(rs.getString("middle_skill"));
 	 				employee.setHobby(rs.getString("hobby"));
@@ -213,7 +213,7 @@ public class EmployeeDAO {
 			String sql = "INSERT INTO employee_info(employee_id, user_id,"
 					+ " devloper, lang_skill, middle_skill, hobby, talent,"
 					+ " intro, position, regist_date, update_date, photo) "
-					+ "VALUES (null, " + userId + ", " + employee.getDevloper() + ", '"
+					+ "VALUES (null, " + userId + ", " + employee.getDeveloper() + ", '"
 					+ employee.getLangSkill() + "', '" + employee.getMiddleSkill() + "', '"
 					+ employee.getHobby() + "', '" + employee.getTalent() + "', '"
 					+ employee.getIntro() + "', '" + employee.getPosition() + "', '"
@@ -257,7 +257,7 @@ public class EmployeeDAO {
 			Connection con = null;
 			Statement smt = null;
 			
-			String sql = "UPDATE employee_info SET devloper = " + employee.getDevloper() + ", "
+			String sql = "UPDATE employee_info SET devloper = " + employee.getDeveloper() + ", "
 					+ "lang_skill = '" + employee.getLangSkill() + "', middle_skill = '" + employee.getMiddleSkill() + "', "
 					+ "hobby = '" + employee.getHobby() + "', talent = '" + employee.getTalent() + "', "
 					+ "intro = '" + employee.getIntro() + "', position = '" + employee.getPosition() + "', "
