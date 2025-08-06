@@ -354,11 +354,16 @@ String group = commonTable.selectGroup(user.getGroupId());
 						<%= department %> <%= group %>
 					</div>
 					<div id="img_slider">
+						<%
+						if (userListBySameBelong != null) {
+							if (userListBySameBelong.size() >= 3) {
+						%>
+
 						<button id="prev">◀</button>
 
 						<%
-						if (userListBySameBelong != null) {
-							for (int i = 0; i < 3; i++) {
+							}
+							for (int i = 0; i < 3 && i < userListBySameBelong.size(); i++) {
 								department = commonTable.selectDepartment(user.getDepartmentId());
 								group = commonTable.selectGroup(user.getGroupId());
 						%>
@@ -376,10 +381,15 @@ String group = commonTable.selectGroup(user.getGroupId());
 						</a>
 						<%
 							}
-						}
+							if (userListBySameBelong.size() >= 3) {
 						%>
 
 						<button id="next">▶</button>
+						
+						<%
+							}
+						}
+						%>
 					</div>
 				</div>
 
@@ -388,11 +398,15 @@ String group = commonTable.selectGroup(user.getGroupId());
 					<div id="joinTiming_title"><%=joiningDate%>入社
 					</div>
 					<div id="img_slider">
+						<%
+						if (userListBySameJoiningDate != null) {
+							if (userListBySameJoiningDate.size() >= 3) {
+						%>
 						<button id="prev">◀</button>
 						
 						<%
-						if (userListBySameJoiningDate != null) {
-							for (int i = 0; i < 3; i++) {
+							}
+							for (int i = 0; i < 3 && i < userListBySameJoiningDate.size(); i++) {
 						%>
 						<a id="joinTiming_link" href="detailEmployee?userId=<%= userListBySameJoiningDate.get(i).getUserId() %>">
 							<div id="employee_card">
@@ -408,10 +422,15 @@ String group = commonTable.selectGroup(user.getGroupId());
 						</a>
 						<%
 							}
-						}
+							if (userListBySameJoiningDate.size() >= 3) {
 						%>
 						
 						<button id="next">▶</button>
+						
+						<%
+							}
+						}
+						%>
 					</div>
 				</div>
 			</div>
