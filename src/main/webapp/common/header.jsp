@@ -13,17 +13,9 @@
 					</li>
 					<li>
 						<a href="<%= request.getContextPath() %>/employee"><p class="tomato">社員紹介</p></a>
-						<ul class="tomato-detail">
-							<li>wuu</li>
-							<li>wii</li>
-						</ul>
 					</li>
 					<li>
-						<p class="lettuce">個人目標確認</p>
-						<ul class="lettuce-detail">
-							<li>waa</li>
-							<li>wii</li>
-						</ul>
+						<a href="<%= request.getContextPath() %>/goalConfirm"><p class="lettuce">個人目標確認</p></a>
 					</li>
 					<li>
 						<p class="ketchup">申請</p>
@@ -43,6 +35,13 @@
 						<p class="patty">お問い合わせ</p>
 						<ul class="patty-detail">
 							<li>waa</li>
+							<li>wii</li>
+						</ul>
+					</li>
+					<li>
+						<a href="<%= request.getContextPath() %>/home"><p class="pickles">ホームに戻る</p></a>
+						<ul class="pickles-detail">
+							<li>wuu</li>
 							<li>wii</li>
 						</ul>
 					</li>
