@@ -45,7 +45,6 @@ public class GoalConfirmServlet extends HttpServlet {
 
 		//変数の宣言
 		String error = "";
-		String strUserId = "";
 		String cmd = "";
 		Integer userId = 0;
 
@@ -67,18 +66,15 @@ public class GoalConfirmServlet extends HttpServlet {
 
 		try {
 			//getParameterメソッドを使い、取得した値を代入する
-		//	userId = (Integer)session.getAttribute("user_id");
 			cmd = request.getParameter("cmd");
+			userId = (Integer) session.getAttribute("user_id");
 
 			//セッション登録がまだなため、仮で登録してます
-			strUserId = "4";
 			//※ここは後で絶対に変える文章なので覚えておいてください
 			if (cmd == null) {
 				cmd = ""; 
 			}
 			
-			//userIdをStringからintへキャスト
-			userId = Integer.parseInt(strUserId);
 
 			//部目標を呼び出す
 			teamGoal = teamGoalDAO.selectByUserId(userId);
@@ -97,7 +93,7 @@ public class GoalConfirmServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-		//	session.setAttribute("userId",userId);
+			session.setAttribute("userId",userId);
 			request.setAttribute("teamGoal", teamGoal);
 			request.setAttribute("goal", goal);
 			request.setAttribute("quarter_goal_list", quarterGoalList);

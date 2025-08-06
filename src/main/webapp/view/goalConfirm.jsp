@@ -7,7 +7,7 @@
 
 　最終更新日：7月25日
  -->
-<%@page import="bean.QuarterGoal"%>
+<%@page import="java.util.ArrayList,bean.QuarterGoal"%>
 <%@page import="bean.TeamGoal"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList,bean.Goal"%>

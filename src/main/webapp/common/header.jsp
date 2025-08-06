@@ -15,7 +15,7 @@
 						<a href="<%= request.getContextPath() %>/employee"><p class="tomato">社員紹介</p></a>
 					</li>
 					<li>
-						<a href="<%= request.getContextPath() %>/goalConfirm"><p class="lettuce">個人目標確認</p></a>
+						<a href="<%= request.getContextPath() %>/selectboxtest"><p class="lettuce">個人目標確認</p></a>
 					</li>
 					<li>
 						<p class="ketchup">申請</p>
