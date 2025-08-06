@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/07/30
+ * 更新日 : 2025/08/05
  */
 package servlet;
 
@@ -23,6 +23,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/announceRegister")
 public class AnnounceRegisterServlet extends HttpServlet {
@@ -41,6 +42,7 @@ public class AnnounceRegisterServlet extends HttpServlet {
 		Announce announce = new Announce();
 		AnnounceDAO announceDAO = new AnnounceDAO();
 		LocalDateTime localDateTime = null;
+		HttpSession session = request.getSession();
 
 		try {
 
@@ -49,6 +51,9 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			String text = request.getParameter("text");
 			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
 			int categoryId = Integer.parseInt(request.getParameter("category_id"));
+			
+			// セッションから情報を取得する
+			String author = (String) session.getAttribute("user_name");
 
 			// フォームから受け取った登録日時(String型)をLocalDateTimeに変換する
 			String regist = request.getParameter("regist_date");
@@ -66,6 +71,7 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			announce.setText(text);
 			announce.setAnnounceFlag(announceFlag);
 			announce.setAnnounceCategoryId(categoryId);
+			announce.setName(author);
 
 			// メソッドを呼び出してSQL文を実行する
 			announceDAO.regist(announce);

@@ -479,6 +479,7 @@ public class AnnounceDAO {
 
 	/**
 	 * 新規投稿をDBに登録するメソッド
+	 * 2025/08/06 更新
 	 * @param announce
 	 */
 	public void regist(Announce announce) {
@@ -487,13 +488,32 @@ public class AnnounceDAO {
 		Connection con = null;
 		Statement smt = null;
 
-		String sql = "INSERT INTO announce_info(announce_id, name,"
-				+ " regist_date, update_date, title, text, comment,"
-				+ " like_flag, announce_flag, announce_category_id, tag) "
-				+ "VALUES (null, null, '" + announce.getRegistDate() + "', null, '"
-				+ announce.getTitle() + "', '" + announce.getText() + "', null, 0, "
+		String sql = "INSERT INTO announce_info("
+				+ "announce_id, "
+				+ "name, "
+				+ "regist_date, "
+				+ "update_date, "
+				+ "title, "
+				+ "text, "
+				+ "comment, "
+				+ "like_flag, "
+				+ "announce_flag, "
+				+ "announce_category_id, "
+				+ "tag) "
+				+ "VALUES ("
+				+ "null, '"
+				+ announce.getName() 
+				+ "', '" 
+				+ announce.getRegistDate() 
+				+ "', null, '" 
+				+ announce.getTitle() 
+				+ "', '" 
+				+ announce.getText() 
+				+ "', null, "
+				+ "0, "
 				+ announce.getAnnounceFlag() + ", "
-				+ announce.getAnnounceCategoryId() + ", null)";
+				+ announce.getAnnounceCategoryId() + 
+				", null)";
 
 		try {
 			// DBに接続
