@@ -55,7 +55,7 @@ public class EmployeeUpdateServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			int userId = (int)session.getAttribute("user_id");
 			
-			int devloper = Integer.parseInt(request.getParameter("devloper"));
+			int developer = Integer.parseInt(request.getParameter("developer"));
 			String langSkill = request.getParameter("langSkill");
 			String middleSkill = request.getParameter("middleSkill");
 			String hobby = request.getParameter("hobby");
@@ -64,7 +64,7 @@ public class EmployeeUpdateServlet extends HttpServlet {
 			String position = request.getParameter("position");
 			
 //			employee.setPhoto(photo);
-			employee.setDevloper(devloper);
+			employee.setDeveloper(developer);
 			employee.setLangSkill(langSkill);
 			employee.setMiddleSkill(middleSkill);
 			employee.setHobby(hobby);

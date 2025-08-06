@@ -44,7 +44,7 @@ String cmd = request.getParameter("cmd");
 
 // 変数宣言
 String photo = "";
-int devloper = 0;
+int developer = 0;
 String langSkill = "";
 String middleSkill = "";
 String hobby = "";
@@ -56,7 +56,7 @@ String position = "";
 if (cmd.equals("registerConfirm") || cmd.equals("reRegister")) {
 	// 入力された情報をJSPから取得
 	photo = request.getParameter("photo");
-	devloper = Integer.parseInt(request.getParameter("devloper"));
+	developer = Integer.parseInt(request.getParameter("developer"));
 	langSkill = request.getParameter("langSkill");
 	middleSkill = request.getParameter("middleSkill");
 	hobby = request.getParameter("hobby");
@@ -252,8 +252,8 @@ a {
 								<td id="value"><%=joiningDateStr%></td>
 							</tr>
 							<tr id="inputRow">
-								<td id="item"><label for="devloper">開発経験年数</label></td>
-								<td id="value"><input id="readonlyInput" type="number" name="devloper" value="<%=devloper%>" style="margin-left: 0;"
+								<td id="item"><label for="developer">開発経験年数</label></td>
+								<td id="value"><input id="readonlyInput" type="number" name="developer" value="<%=developer%>" style="margin-left: 0;"
 									min="0">年</td>
 							</tr>
 							<tr id="inputRow">

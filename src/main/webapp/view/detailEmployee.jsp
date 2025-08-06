@@ -321,20 +321,48 @@ String group = commonTable.selectGroup(user.getGroupId());
 									<%=employee.getMiddleSkill()%></p>
 								<p>
 									開発年数
-									<%=employee.getDevloper()%>年
+									<%=employee.getDeveloper()%>年
 								</p>
 								<p>
 									生年月日
-									<%=birthday%></p>
+									<%
+									if (birthday != null) {
+									%>
+									<%=birthday%>
+									<%
+									}
+									%>
+								</p>
 								<p>
 									趣味
-									<%=employee.getHobby()%></p>
+									<%
+									if (employee.getHobby() != null) {
+									%>
+									<%=employee.getHobby()%>
+									<%
+									}
+									%>
+								</p>
 								<p>
 									特技
-									<%=employee.getTalent()%></p>
+									<%
+									if (employee.getTalent() != null) {
+									%>
+									<%=employee.getTalent()%>
+									<%
+									}
+									%>
+								</p>
 								<p>
 									役職
-									<%=employee.getPosition()%></p>
+									<%
+									if (employee.getPosition() != null) {
+									%>
+									<%=employee.getPosition()%>
+									<%
+									}
+									%>
+								</p>
 								<%
 								}
 								%>
