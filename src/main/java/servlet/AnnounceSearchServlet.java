@@ -119,9 +119,13 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 			categoryList = announceDAO.selectCategoryAll();
 
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーのため、お知らせの検索結果は表示できませんでした。";
+			//ログイン画面へ遷移
+			cmd = "login";
 		} catch (Exception e) {
-			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
+			cmd = "login";
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);

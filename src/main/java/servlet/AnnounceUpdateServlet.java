@@ -69,9 +69,15 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			// メソッドを呼び出してSQL文実行
 			announceDAO.update(announce);
 
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーのため、お知らせの更新はできませんでした。";
+			//ログイン画面へ遷移
+			cmd = "login";
+			
 		} catch (Exception e) {
-			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
+			cmd = "login";
+			
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
