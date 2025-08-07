@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：8月4日
+ * 最終更新日：8月7日
  * 
  */
 package servlet;
@@ -20,6 +20,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/goal")
 public class GoalServlet extends HttpServlet {
@@ -27,32 +28,28 @@ public class GoalServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String error = "";
-		String strUserId = "";
 		String cmd = "";
-		
-		//オブジェクト宣言
-		User user = new User();
+		Integer userId = 0;
+
 		//DAO宣言
 		UserDAO userDAO = new UserDAO();
 		
 		//配列宣言
 		ArrayList<User> userList = new ArrayList<User>();
-		
-		
+
+		//セッションオブジェクトの生成
+		HttpSession session = request.getSession();
+		userId = (Integer) session.getAttribute("userId");
+
 		try {
 			
 			//getParameterメソッドを呼び出す
-			strUserId = request.getParameter("user_id");
 			cmd = request.getParameter("cmd");
 			
-			strUserId = "4";
 
 			if (cmd == null) {
 				cmd = ""; //※ここは後で絶対に変える文章なので覚えておいてください
 			}
-			//userIdをキャスト
-			int userId = Integer.parseInt(strUserId);
-
 
 			//selectAllメソッドを呼び出す
 			userList = userDAO.selectAll();
@@ -66,6 +63,7 @@ public class GoalServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
+			session.setAttribute("userId",userId);
 			request.setAttribute("userList", userList);
 			request.getRequestDispatcher("/view/goal.jsp").forward(request, response);
 		}
