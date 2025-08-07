@@ -77,13 +77,18 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			announceDAO.regist(announce);
 
 		} catch (DateTimeParseException e) {
-
-			cmd = "";
 			error = "日付時刻の解析に失敗しました。";
+			//announceRegister.jspへ遷移
+			cmd = "announceRegister";
 
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーのため、お知らせの登録はできませんでした。";
+			//ログイン画面へ遷移
+			cmd = "login";
+			
 		} catch (Exception e) {
-			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
+			cmd = "login";
 
 		} finally {
 

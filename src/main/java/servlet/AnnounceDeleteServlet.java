@@ -10,6 +10,7 @@ package servlet;
 
 import java.io.IOException;
 
+import bean.Announce;
 import dao.AnnounceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,17 +30,33 @@ public class AnnounceDeleteServlet extends HttpServlet {
 
 		// オブジェクト生成
 		AnnounceDAO announceDAO = new AnnounceDAO();
+		Announce announce = new Announce();
 		
 		try {
 			// URLからannounceIdを取得
 			int announceId = Integer.parseInt(request.getParameter("announceId"));
 			
+			announce = announceDAO.selectByAnnounceId(announceId);
+			
+			if(announce.getAnnounceId() == 0) {
+				error = "削除対象のお知らせが存在しないため、お知らせ削除処理は行えませんでした。";
+				//お知らせ一覧画面へ遷移
+				cmd = "announce";
+				return;
+			}
+			
 			// メソッドを呼び出してSQL文実行
 			announceDAO.delete(announceId);
 			
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーのため、お知らせの削除はできませんでした。";
+			//ログイン画面へ遷移
+			cmd = "login";
+			
 		} catch (Exception e) {
-			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
+			cmd = "login";
+			
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);

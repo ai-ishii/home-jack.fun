@@ -55,10 +55,13 @@ public class AnnounceServlet extends HttpServlet {
 			// メソッドを呼び出してSQL文実行
 			announceList = announceDAO.selectAll();
 			categoryList = announceDAO.selectCategoryAll();
-			
+		
+		} catch (IllegalStateException e) {
+			error = "DB接続エラーのため、お知らせは表示できませんでした。";
+			cmd = "login";
 		} catch (Exception e) {
-			cmd = "";
 			error = "予期せぬエラーが発生しました。" + e;
+			cmd = "login";
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
