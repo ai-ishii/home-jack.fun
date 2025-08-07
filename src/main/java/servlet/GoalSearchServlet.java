@@ -40,7 +40,6 @@ public class GoalSearchServlet extends HttpServlet {
 			
 			//getParameterメソッドを呼び出す
 			cmd = request.getParameter("cmd");
-			
 
 			if (cmd == null) {
 				cmd = ""; //※ここは後で絶対に変える文章なので覚えておいてください

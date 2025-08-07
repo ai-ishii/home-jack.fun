@@ -467,7 +467,7 @@ keyframes fadeIn { 0% {
 							
 							<!--Java処理-->
 							<%
-							}
+								}
 							}
 							%>
 						</div>

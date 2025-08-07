@@ -18,7 +18,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.QuarterGoal;
-import bean.User;
 import util.DAOconnection;
 
 public class QuarterGoalDAO {
