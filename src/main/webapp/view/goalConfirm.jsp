@@ -5,23 +5,20 @@
 
 　作成日：7月8日
 
-　最終更新日：7月25日
+　最終更新日：8月7日
  -->
-<%@page import="bean.QuarterGoal"%>
+<%@page import="java.util.ArrayList,bean.QuarterGoal"%>
 <%@page import="bean.TeamGoal"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList,bean.Goal"%>
-
 <%
 //オブジェクト宣言
 TeamGoal teamGoal = new TeamGoal();
 Goal goal = new Goal();
-
 //getAttributeを使い要素を取得する
 teamGoal = (TeamGoal) request.getAttribute("teamGoal");
 goal = (Goal) request.getAttribute("goal");
 ArrayList<QuarterGoal> quarterGoalList = (ArrayList<QuarterGoal>) request.getAttribute("quarter_goal_list");
-
 //変数宣言
 String departmentGoal = "";
 String groupGoal = "";
@@ -121,9 +118,8 @@ if (goal != null) {
 	text-align: left;
 }
 
-.quarterpadding{
+.quarterpadding {
 	text-decoration: underline;
-	
 }
 
 .goalflex {
@@ -394,28 +390,24 @@ keyframes fadeIn { 0% {
 				<div id="quarterGoal" class="container">
 					<h1>目標を達成するためのステップ</h1>
 					<div id="quarterTitle" class="container">
-						<div class="tab-4" >
+						<div class="tab-4">
 							<!--Java処理-->
 							<%
 							if (quarterGoalList != null) {
 								for (int i = 0; i < quarterGoalList.size(); i++) {
 							%>
 
-							<label><input type="radio" name="tab-4"  <% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
-							</label>
+							<label><input type="radio" name="tab-4" <%if (i == 0) {%>
+								checked <%}%>> 第<%=i + 1%>四半期 </label>
 							<div class="goalpadding">
-								<div class="contents">
 									<h3>小目標</h3>
 									<input type="hidden" name="quarter_goal_id<%=i + 1%>"
 										value="<%=quarterGoalList.get(i).getQuarterGoalId()%>">
 									<textarea readonly class="details-content"
 										name="small_goal<%=i + 1%>" rows="5" cols="30"><%=quarterGoalList.get(i).getSmallGoal()%></textarea>
-								</div>
-								<div class="contents">
 									<h3>評価基準・材料</h3>
 									<textarea readonly class="details-content"
 										name="judge_material<%=i + 1%>" rows="5" cols="30"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
-								</div>
 								<div class="quarterpadding">
 									<h3>本人記入</h3>
 								</div>
@@ -426,9 +418,9 @@ keyframes fadeIn { 0% {
 								<div style="width: 80%; margin: 0 auto;">
 									<div class="flex">
 										<textarea readonly class="details-content"
-											name="achieve_rate<%= i + 1 %>" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
+											name="achieve_rate<%=i + 1%>" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
 										<textarea readonly class="details-content"
-											name="report<%= i + 1 %>" rows="10" style="flex: 3"><%=quarterGoalList.get(i).getReport()%></textarea>
+											name="report<%=i + 1%>" rows="10" style="flex: 3"><%=quarterGoalList.get(i).getReport()%></textarea>
 									</div>
 								</div>
 								<div class="quarterpadding">
@@ -456,8 +448,7 @@ keyframes fadeIn { 0% {
 						</div>
 					</div>
 				</div>
-
-				<div id="goalTitle" class="container">
+a				<div id="goalTitle" class="container">
 					<h1 style="text-align: center">年間結果</h1>
 					<div class="goalpadding">
 						<div class="quarterpadding">

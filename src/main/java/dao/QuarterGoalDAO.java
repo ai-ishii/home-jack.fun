@@ -5,7 +5,7 @@
  * 
  * 作成日：7月10日
  * 
- * 最終更新日：7月25日
+ * 最終更新日：8月7日
  * 
  */
 package dao;
@@ -18,9 +18,72 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.QuarterGoal;
+import bean.User;
 import util.DAOconnection;
 
 public class QuarterGoalDAO {
+	
+	
+	/**
+	 * 全情報を取得するメソッド
+	 * 
+	 * @return 四半期目標の全情報
+	 * 
+	 */
+	public ArrayList<QuarterGoal> selectAll(){
+		Connection con = null;
+		Statement smt = null;
+
+		//戻り値用のArrayListを作成
+		ArrayList<QuarterGoal> quarterGoalList = new ArrayList<QuarterGoal>();
+
+		//SQL文の作成
+		String sql = "SELECT quarter_goal_id, goal_id, user_id, small_goal,judge_material, achieve_rate, report, "
+				+ "achieve_rate_reviewer, evaluation, quarterly_flag  FROM quarter_goal_info";
+
+		try {
+			// データベース接続
+			con = DAOconnection.getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			while (rs.next()) {
+				QuarterGoal quarterGoal = new QuarterGoal();
+				quarterGoal.setQuarterGoalId(rs.getInt("quarter_goal_id"));
+				quarterGoal.setGoalId(rs.getInt("goal_id"));
+				quarterGoal.setUserId(rs.getInt("user_id"));
+				quarterGoal.setSmallGoal(rs.getString("small_goal"));
+				quarterGoal.setJudgeMaterial(rs.getString("judge_material"));
+				quarterGoal.setAchieveRate(rs.getString("achieve_rate"));
+				quarterGoal.setReport(rs.getString("report"));
+				quarterGoal.setAchieveRateReviewer(rs.getString("achieve_rate_reviewer"));
+				quarterGoal.setEvaluation(rs.getString("evaluation"));
+				quarterGoal.setQuarterlyFlag(rs.getInt("quarterly_flag"));
+
+				quarterGoalList.add(quarterGoal);
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		return quarterGoalList;
+	}
+	
+	
+	
 
 	/**
 	 * 検索を行うメソッド

@@ -5,7 +5,7 @@
 
 　作成日：7月14日
 
-　最終更新日：7月25日
+　最終更新日：8月7日
  -->
 <%@page import="bean.QuarterGoal"%>
 <%@page import="bean.TeamGoal"%>
@@ -59,6 +59,8 @@ if (goal != null) {
 <title>個人目標登録</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	
 <style>
 
 /* 個人目標のCSS */
