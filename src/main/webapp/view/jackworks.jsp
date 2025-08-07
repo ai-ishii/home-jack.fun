@@ -726,7 +726,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						if (note == null) {
 							note = "";
 						}
-						if (jack.getAdminFlag() == 1) {
+						if (jack.getApprovalFlag() == 1) {
 					%>
 					
 					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>">
@@ -791,7 +791,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						if (note == null) {
 							note = "";
 						}
-						if (jack.getAdminFlag() == 1) {
+						if (jack.getApprovalFlag() == 1) {
 				
 					%>
 					
@@ -844,7 +844,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						if (note == null) {
 							note = "";
 						}
-						if (jack.getAdminFlag() == 1) {
+						if (jack.getApprovalFlag() == 1) {
 					%>
 					
 					<tr>
