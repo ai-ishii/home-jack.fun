@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：8月7日
+ * 最終更新日：8月4日
  * 
  */
 package servlet;
@@ -27,8 +27,11 @@ public class GoalServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String error = "";
+		String strUserId = "";
 		String cmd = "";
 		
+		//オブジェクト宣言
+		User user = new User();
 		//DAO宣言
 		UserDAO userDAO = new UserDAO();
 		
@@ -39,12 +42,16 @@ public class GoalServlet extends HttpServlet {
 		try {
 			
 			//getParameterメソッドを呼び出す
+			strUserId = request.getParameter("user_id");
 			cmd = request.getParameter("cmd");
 			
+			strUserId = "4";
 
 			if (cmd == null) {
 				cmd = ""; //※ここは後で絶対に変える文章なので覚えておいてください
 			}
+			//userIdをキャスト
+			int userId = Integer.parseInt(strUserId);
 
 
 			//selectAllメソッドを呼び出す
