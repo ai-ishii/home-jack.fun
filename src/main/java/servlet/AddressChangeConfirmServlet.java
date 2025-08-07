@@ -1,3 +1,14 @@
+/*
+ * 機能：住所変更確認機能
+ * 
+ * 作成者：桑原岳
+ * 
+ * 最終更新日：2025/08/07
+ * 
+ * */
+
+
+
 package servlet;
 
 import java.io.IOException;

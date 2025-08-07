@@ -1,5 +1,5 @@
 <%--
-機能：住所変更の申請フォーム
+機能：氏名変更の申請フォーム
  
 制作者：桑原岳
 
@@ -14,7 +14,7 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 
 <html>
 <head>
-<title>住所変更申請フォーム</title>
+<title>氏名変更申請フォーム</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -131,7 +131,7 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 		<div id="main" class="container">
 			<div class="form-wrapper-container">
 				<div class="form-wrapper">
-					<h1 style="text-align: center">-住所変更申請フォーム-</h1>
+					<h1 style="text-align: center">-氏名変更申請フォーム-</h1>
 
 					<form id="sendform"
 						action="<%=request.getContextPath()%>/addressChangeConfirm"
@@ -144,20 +144,9 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 						}
 						%>
 
-
 						<div class="form-row">
 							<div class="form-label">
-								<label for="employeenumber">社員番号</label>
-							</div>
-							<div class="form-input">
-								<input type="text" id="employeenumber" name="employeenumber"
-									placeholder="例：000001" />
-							</div>
-						</div>
-
-						<div class="form-row">
-							<div class="form-label">
-								<label for="name">氏名</label>
+								<label for="name">旧氏名</label>
 							</div>
 							<div class="form-input">
 								<input type="text" id="name" name="name" />
@@ -166,89 +155,45 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 
 						<div class="form-row">
 							<div class="form-label">
-								<label for="changedate">住所変更日時</label>
+								<label for="name">旧氏名(かな)</label>
 							</div>
-							<div class="form-input-date">
-								<input type="date" id="addressChangedDate"
-									name="addressChangedDate" placeholder="例：2025/01/01" />
-							</div>
-						</div>
-
-						<div class="h-adr">
-							<span class="p-country-name" style="display: none;">Japan</span>
-							<div class="form-row">
-								<div class="form-label">
-									<label for="oldpost">旧郵便番号</label>
-								</div>
-								<div class="form-input">
-									<input type="text" id="oldpost" name="oldpost"
-										class="p-postal-code" />
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-label">
-									<label for="oldaddress">旧住所</label>
-								</div>
-								<div class="form-input-address">
-									<textarea name="oldaddress" cols="30" rows="5"
-										class="p-region p-locality p-street-address p-extended-address"></textarea>
-								</div>
+							<div class="form-input">
+								<input type="text" id="name" name="name" />
 							</div>
 						</div>
 
-						<div class="h-adr">
-							<span class="p-country-name" style="display: none;">Japan</span>
-							<div class="form-row">
-								<div class="form-label">
-									<label for="newpost">新郵便番号</label>
-								</div>
-								<div class="form-input">
-									<input type="text" id="newpost" name="newpost"
-										placeholder="例：1000001" class="p-postal-code" /> ※ -は記入しない
-								</div>
+						<div class="form-row">
+							<div class="form-label">
+								<label for="name">新氏名</label>
 							</div>
-							<div class="form-row">
-								<div class="form-label">
-									<label for="newaddress">新住所</label>
-								</div>
-								<div class="form-input-address">
-									<textarea id="newaddress" name="newaddress" cols="30" rows="5"
-										placeholder="例： 大阪府大阪市淀川区西中島５丁目１１−３ 新大阪サンアールビル西館"
-										class="p-region p-locality p-street-address p-extended-address"></textarea>
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-label">
-									<label for="neareststation">最寄り駅</label>
-								</div>
-								<div class="form-input">
-									<input type="text" id="neareststation" name="neareststation"
-										placeholder="例：JR大阪駅" />
-								</div>
-							</div>
-							<div class="form-link">
-								<a href="#" onclick="submitForm()">住所変更届はこちら⇀</a>
-							</div>
-							<div class="form-link">
-								<a
-									href="<%=request.getContextPath()%>/view/addressChangeForm.jsp">画像アップロードはこちら⇀</a>
+							<div class="form-input">
+								<input type="text" id="name" name="name" />
 							</div>
 						</div>
-					</form>
-
-					<button type="button" id="helpBtn">?</button>
+						<div class="form-row">
+							<div class="form-label">
+								<label for="name">新氏名(かな)</label>
+							</div>
+							<div class="form-input">
+								<input type="text" id="name" name="name" />
+							</div>
+						</div>
 				</div>
+				</form>
 
-				<div class="instruction-box">
-					<h2>住所変更申請フォーム手順</h2>
-					<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
-					<h3>2. 入力後、「住所変更届はこちら」を押して送信します。</h3>
-					<h3>3. ダウンロードされたExcelに内容が反映されているか確認します。</h3>
-					<h3>4. 確認後、印刷して押印してください。</h3>
-					<h3>5. 押印済の変更届と証明書類を「画像アップロードはこちら」から提出してください。</h3>
-				</div>
+				<button type="button" id="helpBtn">?</button>
+			</div>
+
+			<div class="instruction-box">
+				<h2>住所変更申請フォーム手順</h2>
+				<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
+				<h3>2. 入力後、「住所変更届はこちら」を押して送信します。</h3>
+				<h3>3. ダウンロードされたExcelに内容が反映されているか確認します。</h3>
+				<h3>4. 確認後、印刷して押印してください。</h3>
+				<h3>5. 押印済の変更届と証明書類を「画像アップロードはこちら」から提出してください。</h3>
 			</div>
 		</div>
+	</div>
 	</div>
 
 	<script src="https://yubinbango.github.io/yubinbango/yubinbango.js"
