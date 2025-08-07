@@ -1,12 +1,15 @@
 package bean;
 
 public class AddressRequest {
-	private int addressRequestId;      //住所申請ID
-	private int requestId;          	//申請ID
-	private String oldAddress;        	//旧住所  
-	private String newAddress;  		//新住所
-	private String oldPost;				//旧郵便番号
-	private String newPost; 			//新郵便番号
+
+	private int addressRequestId;      	//住所申請ID
+	private int requestId;          		//申請ID
+	private String oldAddress;        		//旧住所  
+	private String newAddress;  			//新住所
+	private String oldPost;					//旧郵便番号
+	private String newPost; 				//新郵便番号
+	private int addressChangedDate;        //住所変更日時
+	
 	
 	
 	public int getAddressRequestId() {
@@ -45,5 +48,14 @@ public class AddressRequest {
 	public void setNewPost(String newPost) {
 		this.newPost = newPost;
 	}
+	public int getAddressChangedDate() {
+		return addressChangedDate;
+	}
+	public void setAddressChangedDate(int addressChangedDate) {
+		this.addressChangedDate = addressChangedDate;
+	}
+	
+	
+	
 	
 }
