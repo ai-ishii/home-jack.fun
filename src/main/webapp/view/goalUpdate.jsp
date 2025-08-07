@@ -5,7 +5,7 @@
 
 　作成日：7月14日
 
-　最終更新日：7月25日
+　最終更新日：8月7日
  -->
 <%@page import="bean.QuarterGoal"%>
 <%@page import="bean.TeamGoal"%>

@@ -5,7 +5,7 @@
 
 　作成日：7月8日
 
-　最終更新日：7月25日
+　最終更新日：8月7日
  -->
 <%@page import="java.util.ArrayList,bean.QuarterGoal"%>
 <%@page import="bean.TeamGoal"%>
