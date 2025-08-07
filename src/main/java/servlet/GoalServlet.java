@@ -39,7 +39,7 @@ public class GoalServlet extends HttpServlet {
 
 		//セッションオブジェクトの生成
 		HttpSession session = request.getSession();
-		userId = (Integer) session.getAttribute("userId");
+		userId = (Integer) session.getAttribute("user_id");
 
 		try {
 			
@@ -63,7 +63,7 @@ public class GoalServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-			session.setAttribute("userId",userId);
+			session.setAttribute("user_id",userId);
 			request.setAttribute("userList", userList);
 			request.getRequestDispatcher("/view/goal.jsp").forward(request, response);
 		}

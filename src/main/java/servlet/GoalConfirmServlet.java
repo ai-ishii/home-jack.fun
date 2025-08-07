@@ -67,7 +67,7 @@ public class GoalConfirmServlet extends HttpServlet {
 		try {
 			//getParameterメソッドを使い、取得した値を代入する
 			cmd = request.getParameter("cmd");
-			userId = (Integer) session.getAttribute("userId");
+			userId = (Integer) session.getAttribute("user_id");
 
 			//※ここは後で絶対に変える文章なので覚えておいてください
 			if (cmd == null) {
@@ -91,7 +91,7 @@ public class GoalConfirmServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-			session.setAttribute("userId",userId);
+			session.setAttribute("user_id",userId);
 			request.setAttribute("teamGoal", teamGoal);
 			request.setAttribute("goal", goal);
 			request.setAttribute("quarter_goal_list", quarterGoalList);
