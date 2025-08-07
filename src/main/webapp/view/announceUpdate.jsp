@@ -21,6 +21,7 @@ int categoryId = announce.getAnnounceCategoryId();
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
 #content_box {
@@ -80,6 +81,10 @@ textarea {
 input[type="submit"], input[type="button"] {
 	margin: 10px;
 }
+
+span{
+color:red;
+}
 </style>
 
 <body>
@@ -94,9 +99,9 @@ input[type="submit"], input[type="button"] {
 				<div id="content_box">
 
 					<div class="form_box" class="container">
-						<label for="title" class="control_label">タイトル</label> <input
+						<label for="title" class="control_label">タイトル<span>*</span></label> <input
 							type="text" id="title" name="title"
-							value="<%=announce.getTitle()%>">
+							value="<%=announce.getTitle()%>" required>
 					</div>
 
 					<div class="form_box tiny_form">
@@ -125,14 +130,14 @@ input[type="submit"], input[type="button"] {
 					</div>
 
 					<div class="form_box">
-						<label for="announce_flag" class="control_label">重要記事</label> 
+						<label for="announce_flag" class="control_label">重要記事</label>
 						<input type="checkbox" name="announce_flag" value="1">
 						<input type="hidden" name="announce_flag" value="0">
 					</div>
 
 					<div class="form_box">
-						<label for="text" class="control_label">本文</label>
-						<textarea id="text" name="text" rows="5" cols="15"><%=announce.getText()%></textarea>
+						<label for="text" class="control_label">本文<span>*</span></label>
+						<textarea id="text" name="text" rows="5" cols="15" required><%=announce.getText()%></textarea>
 					</div>
 
 					<div class="form_box">

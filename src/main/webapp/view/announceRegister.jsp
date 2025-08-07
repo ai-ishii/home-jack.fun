@@ -17,6 +17,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <%-->
 tinyMCEの記述 textareaのCSS記述を外すと使えるよ
 <script src="../js/tinymce/tinymce.min.js"></script>
@@ -96,6 +97,10 @@ textarea {
 .tox-tinymce {
 	margin: 0 auto;
 }
+
+span{
+color:red;
+}
 </style>
 </head>
 
@@ -111,8 +116,8 @@ textarea {
 				<div id="content_box">
 
 					<div class="form_box">
-						<label for="title" class="control_label">タイトル</label> 
-						<input type="text" id="title" name="title">
+						<label for="title" class="control_label">タイトル<span>*</span></label> 
+						<input type="text" id="title" name="title" required>
 					</div>
 
 					<div class="form_box tiny_form">
@@ -137,8 +142,8 @@ textarea {
 					</div>
 
 					<div class="form_box">
-						<label for="text" class="control_label">本文</label>
-						<textarea id="text" name="text"></textarea>
+						<label for="text" class="control_label">本文<span>*</span></label>
+						<textarea id="text" name="text" required></textarea>
 					</div>
 
 					<div class="form_box">
