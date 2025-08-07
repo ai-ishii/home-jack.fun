@@ -28,7 +28,7 @@ public class JackworksDAO {
 
 			String sql = "SELECT jackworks_id, user_id, employee_number, name, category, assessment, point, points_get_date, "
 					+ "note, project, work_season, price, pay, work_place, work_content, phase, language, skill, need_people, "
-					+ "seller, contact, other, manager_flag, admin_flag, temporary_flag"
+					+ "seller, contact, other, approval_flag"
 					+ " FROM jackworks_info ORDER BY points_get_date DESC";
 			ResultSet rs = smt.executeQuery(sql);
 
@@ -56,9 +56,7 @@ public class JackworksDAO {
 				jack.setSeller(rs.getString("seller"));
 				jack.setContact(rs.getString("contact"));
 				jack.setOther(rs.getString("other"));
-				jack.setManagerFlag(rs.getInt("manager_flag"));
-				jack.setAdminFlag(rs.getInt("admin_flag"));
-				jack.setTemporaryFlag(rs.getInt("temporary_flag"));
+				jack.setApprovalFlag(rs.getInt("approval_flag"));
 				jackList.add(jack);
 			}
 
@@ -139,7 +137,7 @@ public class JackworksDAO {
 					+ "'" + jack.getWorkContent() + "', '" + jack.getPhase() + "', '" + jack.getLanguage() + "', '"
 					+ jack.getSkill() + "', '" + jack.getNeedPeople() + "', "
 					+ "'" + jack.getSeller() + "', '" + jack.getContact() + "', '" + jack.getOther() + "', '"
-					+ jack.getManagerFlag() + "', '" + jack.getAdminFlag() + "' , '" + jack.getTemporaryFlag() + "')";
+					+ jack.getApprovalFlag() + "')";
 
 			smt.executeUpdate(sql);
 
@@ -184,7 +182,7 @@ public class JackworksDAO {
 					+ jack.getSeller() + "', "
 					+ "contact = '" + jack.getContact() + "' , other = '" + jack.getOther() + "', language = '"
 					+ jack.getLanguage() + "', "
-					+ "temporary_flag = '1' "
+					+ "approval_flag = '" + jack.getApprovalFlag() + "'"
 					+ "WHERE jackworks_id = '" + jack.getJackworksId() + "'";
 
 			smt.executeUpdate(sql);
@@ -226,7 +224,7 @@ public class JackworksDAO {
 			smt = con.createStatement();
 
 			//検索内容と同じ文字のみ検索をおこなうsql
-			String sql = "SELECT jackworks_id, employee_number, point, points_get_date, name, category, assessment, note, admin_flag "
+			String sql = "SELECT jackworks_id, employee_number, point, points_get_date, name, category, assessment, note, approval_flag "
 					+ "FROM jackworks_info "
 					+ "WHERE employee_number = '" + name + "'"
 					+ "OR point = '" + name + "'";
@@ -243,13 +241,13 @@ public class JackworksDAO {
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
 				jack.setNote(rs.getString("note"));
-				jack.setAdminFlag(rs.getInt("admin_flag"));
+				jack.setApprovalFlag(rs.getInt("approval_flag"));
 				jackList.add(jack);
 			}
 
 			//検索内容を含んだ文字の検索をおこなうsql(あいまい検索)
 			if (jackList.size() == 0) {
-				sql = "SELECT jackworks_id, employee_number, point, points_get_date, name, category, assessment, note, admin_flag "
+				sql = "SELECT jackworks_id, employee_number, point, points_get_date, name, category, assessment, note, approval_flag "
 						+ "FROM jackworks_info "
 						+ "WHERE category LIKE '%" + name + "%' "
 						+ "OR assessment LIKE '%" + name + "%' "
@@ -268,7 +266,7 @@ public class JackworksDAO {
 					jack.setCategory(rs.getString("category"));
 					jack.setAssessment(rs.getString("assessment"));
 					jack.setNote(rs.getString("note"));
-					jack.setAdminFlag(rs.getInt("admin_flag"));
+					jack.setApprovalFlag(rs.getInt("approval_flag"));
 					jackList.add(jack);
 				}
 			}
@@ -325,7 +323,7 @@ public class JackworksDAO {
 				jack.setCategory(rs.getString("category"));
 				jack.setAssessment(rs.getString("assessment"));
 				jack.setNote(rs.getString("note"));
-				jack.setAdminFlag(rs.getInt("admin_flag"));
+				jack.setApprovalFlag(rs.getInt("approval_flag"));
 				jackList.add(jack);
 			}
 
@@ -391,9 +389,7 @@ public class JackworksDAO {
 				jack.setSeller(rs.getString("seller"));
 				jack.setContact(rs.getString("contact"));
 				jack.setOther(rs.getString("other"));
-				jack.setManagerFlag(rs.getInt("manager_flag"));
-				jack.setAdminFlag(rs.getInt("admin_flag"));
-				jack.setTemporaryFlag(rs.getInt("temporary_flag"));
+				jack.setApprovalFlag(rs.getInt("approval_flag"));
 				jackList.add(jack);
 			}
 
@@ -421,7 +417,7 @@ public class JackworksDAO {
 	 * 
 	 * @param 申請許可したい情報
 	 */
-	public void updateAdminFlag(int jackworksId) {
+	public void updateApprovalFlag(int jackworksId) {
 		Connection con = null;
 		Statement smt = null;
 
@@ -429,7 +425,7 @@ public class JackworksDAO {
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
-			String sql = "UPDATE jackworks_info SET admin_flag = ' 1 '"
+			String sql = "UPDATE jackworks_info SET approval_flag = ' 1 '"
 					+ "WHERE jackworks_id = '" + jackworksId + "'";
 
 			smt.executeUpdate(sql);
@@ -467,7 +463,7 @@ public class JackworksDAO {
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
-			String sql = "UPDATE jackworks_info SET admin_flag = ' 2 '"
+			String sql = "UPDATE jackworks_info SET approval_flag = ' 2 '"
 					+ "WHERE jackworks_id = '" + jackworksId + "'";
 
 			smt.executeUpdate(sql);

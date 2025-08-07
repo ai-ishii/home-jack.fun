@@ -27,8 +27,8 @@ if(name == null){
 }
 
 //権限分け
-int adminFlag = 0;
-int managerFlag = 1;
+int adminFlag = 1;
+int managerFlag = 0;
 // int adminFlag = account.getAdminFlag();
 // int adminFlag = account.getManagerFlag();
 %>
@@ -658,7 +658,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						if (note == null) {
 							note = "";
 						}
-						if(jack.getAdminFlag() == 0){
+						if(jack.getApprovalFlag() == 0){
 					%>
 					
 					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>&cmd=request">
@@ -717,7 +717,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						if (note == null) {
 							note = "";
 						}
-						if((jack.getAdminFlag() == 0)||(jack.getAdminFlag() == 2)){
+						if((jack.getApprovalFlag() == 0)||(jack.getApprovalFlag() == 2)){
 					%>
 					
 					<tr class="jack-link" data-href="<%=request.getContextPath()%>/jackworksDetail?jackworksId=<%=jack.getJackworksId()%>&cmd=request">
@@ -729,8 +729,8 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
 						<td data-label="備考" class="text" name="note"><%=note%></td>					
 					
-						<% if(jack.getAdminFlag() == 0){ %><td data-label="備考" class="" name="note"><strong>申請中</strong></td><%} %>
-						<% if(jack.getAdminFlag() == 2){ %>
+						<% if(jack.getApprovalFlag() == 0){ %><td data-label="備考" class="" name="note"><strong>申請中</strong></td><%} %>
+						<% if(jack.getApprovalFlag() == 2){ %>
 						<td data-label="備考" class="request" name="note">
 						<a href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>&cmd=denial" onclick="return confirm('本当に削除しますか?')">
 						<strong>申請が拒否されました</strong></a>

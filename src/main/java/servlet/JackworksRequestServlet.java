@@ -46,7 +46,7 @@ public class JackworksRequestServlet extends HttpServlet {
 				//JackWorksのJackWorksIDを取得する
 				String jackworksId = request.getParameter("jackworksId");
 				//AdminFlagを申請許可に変更するメソッドの実行
-				jackworksDAO.updateAdminFlag(Integer.parseInt(jackworksId));
+				jackworksDAO.updateApprovalFlag(Integer.parseInt(jackworksId));
 			}
 
 			if (cmd.equals("denial")) {

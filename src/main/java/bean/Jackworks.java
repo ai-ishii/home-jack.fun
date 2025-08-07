@@ -23,13 +23,11 @@ public class Jackworks{
 	private String phase;					//フェーズ
 	private String language;				//開発言語
 	private String skill;					//必要スキル
-	private String needPeople;					//必要人数
+	private String needPeople;				//必要人数
 	private String seller;					//営業担当者
 	private String contact;					//連絡先
 	private String other;					//その他
-	private int managerFlag;				//マネージャー承認フラグ
-	private int adminFlag;					//管理者承認フラグ
-	private int temporaryFlag;				//仮登録フラグ
+	private int approvalFlag;				//申請フラグ
 	
 		public int getJackworksId() {
 			return jackworksId;
@@ -230,27 +228,6 @@ public class Jackworks{
 			this.other = other;
 		}
 
-
-		public int getManagerFlag() {
-			return managerFlag;
-		}
-
-
-		public void setManagerFlag(int managerFlag) {
-			this.managerFlag = managerFlag;
-		}
-
-
-		public int getAdminFlag() {
-			return adminFlag;
-		}
-
-
-		public void setAdminFlag(int adminFlag) {
-			this.adminFlag = adminFlag;
-		}
-
-
 		public String getEmployeeNumber() {
 			return employeeNumber;
 		}
@@ -270,14 +247,13 @@ public class Jackworks{
 			this.name = name;
 		}
 
-
-		public int getTemporaryFlag() {
-			return temporaryFlag;
+		public int getApprovalFlag() {
+			return approvalFlag;
 		}
 
 
-		public void setTemporaryFlag(int temporaryFlag) {
-			this.temporaryFlag = temporaryFlag;
+		public void setApprovalFlag(int approvalFlag) {
+			this.approvalFlag = approvalFlag;
 		}
 
 
