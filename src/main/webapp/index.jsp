@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <!-- タイトル -->
-<title>ログイン</title>
+<title>ログイン | Home-Jack</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
