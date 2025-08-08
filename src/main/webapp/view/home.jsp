@@ -30,21 +30,40 @@ MyFormat myformat = new MyFormat();
 
 <html>
 <head>
-<title></title>
+<title>Home-Jack</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
 /*-----------------------------------------------------------------------------------*/
+/*ホーム画面（body）*/
+.home {
+	width: 100%;
+}
+
 /*サイドバー表示*/
 #sidebar {
 	flex: 1;
-	margin-left: 10px;
+	margin: 100px auto;
+	width: 80%;
 }
 
 #announce {
-	flex: 3;
+	margin-right: auto;
+	margin-left: auto;
+	width: 80%;
+}
+
+/*「カレンダー」*/
+.calendar p {
+	display: inline-block;
+	padding: 5px 10px;
+	margin-bottom: 0;
+	border-radius: 10px 10px 0 0;
+	background-color: #777;
+	color: snow;
+	font-size: 30px;
 }
 
 .overflow {
@@ -55,7 +74,7 @@ MyFormat myformat = new MyFormat();
 .announce-list {
 	position: relative;
 	list-style: none outside;
-	margin: 0;
+	margin-bottom: 30px;
 	padding: 0;
 	width: 100%;
 	z-index: 10;
@@ -93,16 +112,15 @@ MyFormat myformat = new MyFormat();
 }
 
 .announce-list .item .tag {
-	margin: 0;
-	min-width: 130px;
+	margin-right: 20px;
+	text-align: center;
+	min-width: 100px;
 }
 
 .announce-list .item .tag span {
-	background: #999999;
 	color: #ffffff;
-	text-align: center;
 	display: inline-block;
-	padding: 5px 20px;
+	padding: 5px;
 	font-size: 12px;
 	line-height: 1;
 }
@@ -133,7 +151,45 @@ MyFormat myformat = new MyFormat();
 }
 
 .announce-list .item a:hover .title {
-	color: #0000ff;
+	color: chocolate;
+}
+
+.linkToAnnounce {
+	display: inline-block;
+	color: #303030;
+	text-decoration: none;
+}
+
+h2 {
+	padding-left: 15px;
+	border-left: solid 5px sienna;
+}
+
+/*お知らせ表示部分*/
+ul {
+	padding: 0;
+}
+
+/*一覧へ飛ぶリンク（a）*/
+.list-link {
+	margin-left: 900px;
+	color: #303030;
+	font-weight: bold;
+	text-decoration: none;
+	vertical-align: bottom;
+}
+
+.list-link:hover {
+	color: sienna;
+}
+
+/*一覧へのリンク横についてる右矢印アイコン*/
+.linkIcon {
+	margin-bottom: 2px;
+    margin-left: 8px;
+    width: 20px;
+    height: 15px;
+    vertical-align: bottom;
 }
 
 .announce
@@ -154,21 +210,17 @@ MyFormat myformat = new MyFormat();
 /*-----------------------------------------------------------------------------------*/
 </style>
 
-<body>
+<body class="home">
 	<div id="wrap">
 		<%@ include file="../common/header.jsp"%>
 
 		<div id="main" class="container">
-			<div class="flex overflow">
-				<div id="sidebar" class="container">
-					<div class="calendar">
-						<p>カレンダー</p>
-						<iframe src="https://calendar.google.com/calendar/embed?height=300&wkst=1&ctz=Asia%2FTokyo&showPrint=0&src=dGVzdXRvdS5oYWppbWVAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043" style="border:solid 1px #777" width="300" height="300" frameborder="0" scrolling="no"></iframe>
-					</div>
-				</div>
-
+			<div class="overflow">
+				
 				<div id="announce" class="container">
-					<h2>重要なお知らせ</h2>
+					<a class="linkToAnnounce" href="<%= request.getContextPath() %>/announce">
+						<h2>重要なお知らせ</h2>
+					</a>
 					<div class="announce-list">
 						<ul>
 							<%
@@ -199,12 +251,13 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
-						<a href="<%= request.getContextPath() %>/announce">
-							<p class="list-link">一覧へ</p>
+						<a class="list-link" href="<%= request.getContextPath() %>/announce">一覧へ
+						<img class="linkIcon" src="<%= request.getContextPath() %>/img/linkIcon-right.png" alt="リンク用アイコン">
 						</a>
 					</div>
-					
+					<a class="linkToAnnounce" href="<%= request.getContextPath() %>/announce">
 					<h2>最新のお知らせ</h2>
+					</a>
 					<div class="announce-list">
 						<ul>
 							<%
@@ -235,12 +288,13 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
-						<a href="<%= request.getContextPath() %>/announce">
-							<p class="list-link">一覧へ</p>
+						<a class="list-link" href="<%= request.getContextPath() %>/announce">一覧へ
+						<img class="linkIcon" src="<%= request.getContextPath() %>/img/linkIcon-right.png" alt="リンク用アイコン">
 						</a>
 					</div>
-					
+					<a class="linkToAnnounce" href="<%= request.getContextPath() %>/announce">
 					<h2>最新のチーム活動</h2>
+					</a>
 					<div class="announce-list">
 						<ul>
 							<%
@@ -270,13 +324,36 @@ MyFormat myformat = new MyFormat();
 							}
 							%>
 						</ul>
-						<a href="<%= request.getContextPath() %>/announce">
-							<p class="list-link">一覧へ</p>
+						<a class="list-link" href="<%= request.getContextPath() %>/announce">一覧へ
+						<img class="linkIcon" src="<%= request.getContextPath() %>/img/linkIcon-right.png" alt="リンク用アイコン">
 						</a>
 					</div>
 				</div>
+				<div id="sidebar" class="container">
+					<div class="calendar">
+						<p>カレンダー</p>
+						<iframe src="https://calendar.google.com/calendar/embed?height=300&wkst=1&ctz=Asia%2FTokyo&showPrint=0&src=dGVzdXRvdS5oYWppbWVAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043" style="border:solid 5px #777" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		// 必要な要素を取得
+		const spanList = document.querySelectorAll(".tag");
+
+		// カテゴリーごとに背景色を変更
+		for (let i = 0; i < spanList.length; i++) {
+			if(spanList[i].textContent.trim() == "お知らせ") {
+				spanList[i].style.backgroundColor = "olivedrab";
+			} else if (spanList[i].textContent.trim() == "チーム活動") {
+				spanList[i].style.backgroundColor = "palevioletred";
+			} else if (spanList[i].textContent.trim() == "ナレッジベース") {
+				spanList[i].style.backgroundColor = "steelblue";
+			}
+		}
+	</script>
 </body>
 </html>

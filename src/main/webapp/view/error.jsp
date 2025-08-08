@@ -47,12 +47,13 @@ if (cmd.equals("announce")) {
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
-
+/*エラー画面を表示するエリア（div）*/
 .errorArea {
 	margin-top: 5%;
 	width: 100%;
 }
 
+/*エラー画面左側（div）*/
 .main {
 	display: inline-block;
 	padding-top: 0;
@@ -61,11 +62,13 @@ if (cmd.equals("announce")) {
 	vertical-align: top;
 }
 
+/*「Error」*/
 h1 {
 	margin: 0;
 	font-size: 100px;
 }
 
+/*戻るリンク（a）*/
 .back {
 	display: inline-block;
 	padding: 5%;
@@ -75,6 +78,11 @@ h1 {
 	font-weight: bold;
 }
 
+.back:hover {
+	background-color: darksalmon;
+}
+
+/*エラー時に出てくるキャラ（img）*/
 .errorChara {
 	position: absolute;
 	top: 40%;
@@ -83,6 +91,7 @@ h1 {
 	height: 200px;
 }
 
+/*エラー画面右側（div）*/
 .sub {
 	display: inline-block;
 	position: relative;
