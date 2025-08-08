@@ -22,7 +22,7 @@ public class AccountDAO {
 			
 			Account account = new Account();
 			
-			String sql = "SELECT account_id, email, admin_flag, manager_flag FROM account_info WHERE email = '" + email + "'";
+			String sql = "SELECT account_id, email FROM account_info WHERE email = '" + email + "'";
 			
 			try {
 				// DBに接続
@@ -34,8 +34,6 @@ public class AccountDAO {
 				if (rs.next()) {
 					account.setAccountId(rs.getString("account_id"));
 					account.setEmail(rs.getString("email"));
-					account.setAdminFlag(rs.getInt("admin_flag"));
-					account.setManagerFlag(rs.getInt("manager_flag"));
 				}
 				
 			} catch (Exception e) {
@@ -68,7 +66,7 @@ public class AccountDAO {
 			
 			Account account = new Account();
 			
-			String sql = "SELECT account_id, email, admin_flag, manager_flag FROM account_info WHERE account_id = '" + accountId + "'";
+			String sql = "SELECT account_id, email FROM account_info WHERE account_id = '" + accountId + "'";
 			
 			try {
 				// DBに接続
@@ -80,8 +78,6 @@ public class AccountDAO {
 				if (rs.next()) {
 					account.setAccountId(rs.getString("account_id"));
 					account.setEmail(rs.getString("email"));
-					account.setAdminFlag(rs.getInt("admin_flag"));
-					account.setManagerFlag(rs.getInt("manager_flag"));
 				}
 				
 			} catch (Exception e) {
