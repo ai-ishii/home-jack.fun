@@ -51,10 +51,11 @@ public class EmployeeUpdateServlet extends HttpServlet {
 			// ファイル取得用の情報を受け取る
 //			Part filePart = request.getPart("photo");
 			
-			// セッションからユーザー情報を取得
+			//セッションからユーザー情報を取得
 			HttpSession session = request.getSession();
-			int userId = (int)session.getAttribute("user_id");
+			int sessionUserId = (int)session.getAttribute("user_id");
 			
+			int paramUserId = Integer.parseInt(request.getParameter("userId"));
 			int developer = Integer.parseInt(request.getParameter("developer"));
 			String langSkill = request.getParameter("langSkill");
 			String middleSkill = request.getParameter("middleSkill");
@@ -62,6 +63,11 @@ public class EmployeeUpdateServlet extends HttpServlet {
 			String talent = request.getParameter("talent");
 			String intro = request.getParameter("intro");
 			String position = request.getParameter("position");
+			
+			if(sessionUserId != paramUserId) {
+				error ="不正なアクセスです。";
+				return;
+			}
 			
 //			employee.setPhoto(photo);
 			employee.setDeveloper(developer);
@@ -75,7 +81,7 @@ public class EmployeeUpdateServlet extends HttpServlet {
 			employee.setUpdateDate(null);
 			
 			// メソッドからSQL実行
-			employeeDAO.update(employee, userId);
+			employeeDAO.update(employee, paramUserId);
 			
 		} catch (Exception e) {
 			cmd = "";

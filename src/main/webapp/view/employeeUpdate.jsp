@@ -18,12 +18,13 @@ CommonTable commonTable = new CommonTable();
 //セッションでユーザーのデータを取得
 account = (Account)session.getAttribute("account");
 int userId_session = (int)session.getAttribute("user_id");
-String name = (String)session.getAttribute("name");
+int userId = Integer.parseInt(request.getParameter("userId"));
 
 //セッションからユーザー情報を取得
-user = userDAO.selectByUserId(userId_session);
+user = userDAO.selectByUserId(userId);
 
 String employeeNumber = user.getEmployeeNumber();
+String name = user.getName();
 String nameKana = user.getNameKana();
 Date birthday = user.getBirthday();
 int departmentId = user.getDepartmentId();
@@ -42,7 +43,6 @@ String group = commonTable.selectGroup(groupId);
 // cmdを取得
 String cmd = request.getParameter("cmd");
 // JSPから送られてきたユーザーIDを取得
-int userId = Integer.parseInt(request.getParameter("userId"));
 
 // 変数宣言
 String photo = "";

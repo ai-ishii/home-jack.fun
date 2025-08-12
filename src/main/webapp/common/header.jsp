@@ -1,6 +1,12 @@
 <%@page contentType="text/html; charset=UTF-8"%>
-
+<%@page import="bean.User, dao.UserDAO" %>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+
+<%
+
+//セッションでユーザーのデータを取得
+
+%>
 
 <body>
 	<header class="container">

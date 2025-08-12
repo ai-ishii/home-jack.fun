@@ -153,7 +153,7 @@ public class EmployeeDAO {
 	 		
 	 		// SQL文
 	 		String sql = "SELECT * FROM employee_info "
-	 				+ "WHERE user_id = " + userId + ";";
+	 				+ "WHERE user_id = " + userId;
 	 		
 	 		try {
 	 			// DBに接続
@@ -167,7 +167,7 @@ public class EmployeeDAO {
 	 			if (rs.next()) {	
 	 				employee.setEmployeeId(rs.getInt("employee_id"));
 	 				employee.setUserId(rs.getInt("user_id"));
-	 				employee.setDeveloper(rs.getInt("devloper"));
+	 				employee.setDeveloper(rs.getInt("developer"));
 	 				employee.setLangSkill(rs.getString("lang_skill"));
 	 				employee.setMiddleSkill(rs.getString("middle_skill"));
 	 				employee.setHobby(rs.getString("hobby"));

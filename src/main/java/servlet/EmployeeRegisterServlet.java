@@ -40,13 +40,16 @@ public class EmployeeRegisterServlet extends HttpServlet {
 
 		try {
 			
+			
+			
 			// 入力された情報をJSPから取得
 			String photo = request.getParameter("photo");
 			
 			// セッションからユーザー情報を取得
 			HttpSession session = request.getSession();
-			int userId = (int)session.getAttribute("user_id");
+			int sessionUserId = (int)session.getAttribute("user_id");
 			
+			int paramUserId = Integer.parseInt(request.getParameter("userId"));
 			int developer = Integer.parseInt(request.getParameter("developer"));
 			String langSkill = request.getParameter("langSkill");
 			String middleSkill = request.getParameter("middleSkill");
@@ -54,6 +57,11 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			String talent = request.getParameter("talent");
 			String intro = request.getParameter("intro");
 			String position = request.getParameter("position");
+			
+			if(sessionUserId != paramUserId) {
+				error= "不正なアクセスです。";
+				return;
+			}
 			
 			employee.setPhoto(photo);
 			employee.setDeveloper(developer);
@@ -67,7 +75,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			employee.setUpdateDate(null);
 			
 			// メソッドからSQL実行
-			employeeDAO.regist(employee, userId);
+			employeeDAO.regist(employee, sessionUserId);
 			
 		} catch (Exception e) {
 			cmd = "";
