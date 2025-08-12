@@ -352,6 +352,8 @@ ul {
 				spanList[i].style.backgroundColor = "palevioletred";
 			} else if (spanList[i].textContent.trim() == "ナレッジベース") {
 				spanList[i].style.backgroundColor = "steelblue";
+			} else if (spanList[i].textContent.trim() == "その他") {
+				spanList[i].style.backgroundColor = "dimgray";
 			}
 		}
 	</script>
