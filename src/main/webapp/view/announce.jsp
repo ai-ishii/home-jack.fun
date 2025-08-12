@@ -46,7 +46,7 @@ LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDate
 <!DOCTYPE html>
 <html>
 <head>
-<title>お知らせ</title>
+<title>お知らせ | Home-Jack</title>
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
@@ -66,17 +66,29 @@ LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDate
 	display: flex;
 	flex-direction: row;
 	height: 50px;
+	align-items: center;
 }
 
+/*
 .register_box {
 	text-align: center;
+	padding: 10px 5px;
 	margin: 0 10px;
+	width: 100px;
+	height: 20px;
 	background-color: orange;
 	border-radius: 20px;
-	height: 100%;
 }
+*/
 
 .register_box a {
+	padding: 10px 20px;
+	margin: 0 10px;
+	width: 100px;
+	height: 20px;
+	border-radius: 20px;
+	background-color: orange;
+	text-align: center;
 	color: #fff;
 }
 
@@ -84,10 +96,11 @@ LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDate
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-right: 5px;
+    margin-left: 20px;
     width: 300px;
-    height: 100%;
+    height: 50px;
     overflow: hidden;
-    border-radius: 25px;
     background-color: #e8e0fe;
 }
 
@@ -108,6 +121,7 @@ LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDate
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 30px;
     width: 50px;
     height: 100%;
     border: none;
@@ -137,12 +151,11 @@ LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDate
 /* モーダルを開くボタン */
 .modal_open {
 	font-size: 16px;
-	width: 100px;
-	height: 100%;
+	width: 120px;
+	height: 50px;
+	border: none;
 	color: #777;
 	background: #e8e0fe;
-	border: none;
-	border-radius: 10px;
 	cursor: pointer;
 }
 
@@ -327,9 +340,7 @@ a {
 				<div class="tab_menu">
 					<div class="register_box">
 						<a href="<%=request.getContextPath()%>/view/announceRegister.jsp"
-							class="box-link">
-							<p>新規投稿</p> 
-						</a>
+							class="box-link">新規投稿</a>
 					</div>
 
 					<form action="<%=request.getContextPath()%>/announceSearch"
@@ -337,13 +348,13 @@ a {
 						<div class="search-form">
 							<input type="text" id="searchInput" name="keyword"
 								placeholder="キーワードを入力"> 
-							<button type="submit" aria-label="検索"></button>
+							<button class="searchIcon" type="submit" aria-label="検索"></button>
 							<input type="hidden" name="cmd" value="keyword">
 						</div>
 					</form>
 
 					<div class="filter_box">
-						<button type="button" class="modal_open js_modal_open">絞り込み</button>
+						<button type="button" class="modal_open js_modal_open">絞り込み　∨</button>
 						
 						<%
 						if (cmd != null) {
@@ -568,6 +579,8 @@ a {
 			modal.classList.remove('is-active');
 		}
 		addEventListener('blur', modalOut);
+
+		
 	</script>
 </body>
 </html>

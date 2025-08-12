@@ -5,50 +5,53 @@
 
 　作成日：7月8日
 
-　最終更新日：8月7日
+　最終更新日：8月12日
  -->
-<%@page import="bean.QuarterGoal"%>
-<%@page import="bean.TeamGoal"%>
+<%@page import="bean.Goal"%>
+<%@page import="bean.GoalQuarter"%>
+<%@page import="bean.GoalDepartment"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList,bean.Goal"%>
 
 <%
 //オブジェクト宣言
-TeamGoal teamGoal = new TeamGoal();
 Goal goal = new Goal();
+GoalDepartment goalDepartment = new GoalDepartment();
 
 //getAttributeを使い要素を取得する
-teamGoal = (TeamGoal) request.getAttribute("teamGoal");
 goal = (Goal) request.getAttribute("goal");
-ArrayList<QuarterGoal> quarterGoalList = (ArrayList<QuarterGoal>) request.getAttribute("quarter_goal_list");
+goalDepartment = (GoalDepartment) request.getAttribute("goal_department");
+ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goal_quarter_list");
 
 //変数宣言
+String groupCode = "";
 String departmentGoal = "";
 String groupGoal = "";
 String annualGoal = "";
 String situationChallenge = "";
-String result = "";
+int result = 0;
 String resultComment = "";
-String resultReviewer = "";
+int resultReviewer = 0;
 String resultCommentReviewer = "";
-
-//teamGoalの値がnullでなければ
-if (teamGoal != null) {
-	//ゲッターメソッドを使って値を取得する
-	departmentGoal = teamGoal.getDepartmentGoal();
-	groupGoal = teamGoal.getGroupGoal();
-}
 
 //goalの値がnullでなければ
 if (goal != null) {
 
 	//ゲッターメソッドを使って値を取得する
+	groupCode = goal.getGroupCode();
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
 	result = goal.getResult();
 	resultComment = goal.getResultComment();
 	resultReviewer = goal.getResultReviewer();
 	resultCommentReviewer = goal.getResultCommentReviewer();
+}
+
+//goalDepartmentの値がnullでなければ
+if (goalDepartment != null) {
+	//ゲッターメソッドを使って値を取得する
+	departmentGoal = goalDepartment.getDepartmentGoal();
+	groupGoal = goalDepartment.getGroupGoal();
 }
 %>
 <!DOCTYPE html>
@@ -369,121 +372,121 @@ keyframes fadeIn { 0% {
 							<input type="submit" value="編集"> <input type="hidden"
 								name="cmd" value="update">
 						</div>
-					</div>
-					<div class="goalpadding">
-						<input type="hidden" name="team_id"
-							value="<%=teamGoal.getTeamId()%>">
-						<textarea readonly name="departmentGoal" rows="5" cols="80"><%=departmentGoal%></textarea>
-					</div>
-					<div class="goalpadding">
-						<h3>チーム目標</h3>
-						<textarea readonly name="groupGoal" rows="5" cols="80"><%=groupGoal%></textarea>
-					</div>
-					<div class="goalpadding">
-						<h3>年間目標</h3>
-						<input type="hidden" name="goal_id" value="<%=goal.getGoalId()%>">
-						<textarea readonly name="annualGoal" rows="5" cols="80"><%=annualGoal%></textarea>
-					</div>
-					<div class="goalpadding">
-						<h3>現状と課題</h3>
-						<textarea readonly name="situationChallenge" rows="5" cols="80"><%=situationChallenge%></textarea>
+						<div class="goalpadding">
+							<input type="hidden" name="team_id"
+								value="<%=groupCode%>">
+							<textarea readonly name="departmentGoal" rows="5" cols="80"><%=departmentGoal%></textarea>
+						</div>
+						<div class="goalpadding">
+							<h3>チーム目標</h3>
+							<textarea readonly name="groupGoal" rows="5" cols="80"><%=groupGoal%></textarea>
+						</div>
+						<div class="goalpadding">
+							<h3>年間目標</h3>
+							<input type="hidden" name="goal_id" value="<%=goal.getGoalId()%>">
+							<textarea readonly name="annualGoal" rows="5" cols="80"><%=annualGoal%></textarea>
+						</div>
+						<div class="goalpadding">
+							<h3>現状と課題</h3>
+							<textarea readonly name="situationChallenge" rows="5" cols="80"><%=situationChallenge%></textarea>
+						</div>
+	
 					</div>
 
-				</div>
-
-				<div id="quarterGoal" class="container">
-					<h1>目標を達成するためのステップ</h1>
-					<div id="quarterTitle" class="container">
-						<div class="tab-4" >
-							<!--Java処理-->
-							<%
-							if (quarterGoalList != null) {
-								for (int i = 0; i < quarterGoalList.size(); i++) {
-							%>
-
-							<label><input type="radio" name="tab-4"  <% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
-							</label>
-							<div class="goalpadding">
-								<div class="contents">
-									<h3>小目標</h3>
-									<input type="hidden" name="quarter_goal_id<%=i + 1%>"
-										value="<%=quarterGoalList.get(i).getQuarterGoalId()%>">
-									<textarea readonly class="details-content"
-										name="small_goal<%=i + 1%>" rows="5" cols="30"><%=quarterGoalList.get(i).getSmallGoal()%></textarea>
-								</div>
-								<div class="contents">
-									<h3>評価基準・材料</h3>
-									<textarea readonly class="details-content"
-										name="judge_material<%=i + 1%>" rows="5" cols="30"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
-								</div>
-								<div class="quarterpadding">
-									<h3>本人記入</h3>
-								</div>
-								<div class="flex">
-									<h3 style="flex-shrink: 3;">達成率</h3>
-									<h3>報告内容</h3>
-								</div>
-								<div style="width: 80%; margin: 0 auto;">
+					<div id="quarterGoal" class="container">
+						<h1>目標を達成するためのステップ</h1>
+						<div id="quarterTitle" class="container">
+							<div class="tab-4" >
+								<!--Java処理-->
+								<%
+								if (goalQuarterList != null) {
+									for (int i = 0; i < goalQuarterList.size(); i++) {
+								%>
+	
+								<label><input type="radio" name="tab-4"  <% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
+								</label>
+								<div class="goalpadding">
+									<div class="contents">
+										<h3>小目標</h3>
+										<input type="hidden" name="quarter_goal_id<%=i + 1%>"
+											value="<%=goalQuarterList.get(i).getGoalQuarterId()%>">
+										<textarea readonly class="details-content"
+											name="small_goal<%=i + 1%>" rows="5" cols="30"><%=goalQuarterList.get(i).getSmallGoal()%></textarea>
+									</div>
+									<div class="contents">
+										<h3>評価基準・材料</h3>
+										<textarea readonly class="details-content"
+											name="judge_material<%=i + 1%>" rows="5" cols="30"><%=goalQuarterList.get(i).getJudgeMaterial()%></textarea>
+									</div>
+									<div class="quarterpadding">
+										<h3>本人記入</h3>
+									</div>
 									<div class="flex">
-										<textarea readonly class="details-content"
-											name="achieve_rate<%= i + 1 %>" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
-										<textarea readonly class="details-content"
-											name="report<%= i + 1 %>" rows="10" style="flex: 3"><%=quarterGoalList.get(i).getReport()%></textarea>
+										<h3 style="flex-shrink: 3;">達成率</h3>
+										<h3>報告内容</h3>
+									</div>
+									<div style="width: 80%; margin: 0 auto;">
+										<div class="flex">
+											<textarea readonly class="details-content"
+												name="achieve_rate<%= i + 1 %>" rows="10" style="flex: 1"><%=goalQuarterList.get(i).getAchieveRate()%>%</textarea>
+											<textarea readonly class="details-content"
+												name="report<%= i + 1 %>" rows="10" style="flex: 3"><%=goalQuarterList.get(i).getReport()%></textarea>
+										</div>
+									</div>
+									<div class="quarterpadding">
+										<h3>評価者記入</h3>
+									</div>
+	
+									<div class="flex">
+										<h3 style="flex-shrink: 3;">達成率</h3>
+										<h3>報告を受けての評価</h3>
+									</div>
+									<div style="width: 80%; margin: 0 auto;">
+										<div class="flex">
+											<textarea readonly class="details-content"
+												name="achieve_rate_reviewer" rows="10" style="flex: 1"><%=goalQuarterList.get(i).getAchieveRateReviewer()%>%</textarea>
+											<textarea readonly class="details-content" name="evaluation"
+												rows="10" style="flex: 3"><%=goalQuarterList.get(i).getEvaluation()%></textarea>
+										</div>
 									</div>
 								</div>
-								<div class="quarterpadding">
-									<h3>評価者記入</h3>
-								</div>
-
-								<div class="flex">
-									<h3 style="flex-shrink: 3;">達成率</h3>
-									<h3>報告を受けての評価</h3>
-								</div>
-								<div style="width: 80%; margin: 0 auto;">
-									<div class="flex">
-										<textarea readonly class="details-content"
-											name="achieve_rate_reviewer" rows="10" style="flex: 1"><%=quarterGoalList.get(i).getAchieveRateReviewer()%></textarea>
-										<textarea readonly class="details-content" name="evaluation"
-											rows="10" style="flex: 3"><%=quarterGoalList.get(i).getEvaluation()%></textarea>
-									</div>
-								</div>
-							</div>
-							<!--Java処理-->
-							<%
-							}
-							}
-							%>
-						</div>
-					</div>
-				</div>
-
-				<div id="goalTitle" class="container">
-					<h1 style="text-align: center">年間結果</h1>
-					<div class="goalpadding">
-						<div class="quarterpadding">
-							<h3>本人記入</h3>
-						</div>
-						<h3>達成率 報告を受けての評価</h3>
-						<div class="flex">
-							<div style="width: 20%">
-								<textarea readonly name="annualGoal" rows="10" cols="80"><%=result%></textarea>
-							</div>
-							<div style="width: 80%">
-								<textarea readonly name="annualGoal" rows="10" cols="80"><%=resultComment%></textarea>
+								<!--Java処理-->
+								<%
+								}
+								}
+								%>
 							</div>
 						</div>
 					</div>
-					<div class="goalpadding">
-						<div class="quarterpadding">
-							<h3>評価者記入</h3>
-						</div>
-						<h3>達成率 報告内容</h3>
-						<div class="flex">
-							<div style="width: 20%">
-								<textarea readonly name="annualGoal" rows="10" cols="80"><%=resultReviewer%></textarea>
+
+					<div id="goalTitle" class="container">
+						<h1 style="text-align: center">年間結果</h1>
+						<div class="goalpadding">
+							<div class="quarterpadding">
+								<h3>本人記入</h3>
 							</div>
-							<div style="width: 80%">
-								<textarea readonly name="annualGoal" rows="10" cols="80"><%=resultCommentReviewer%></textarea>
+							<h3>達成率 報告を受けての評価</h3>
+							<div class="flex">
+								<div style="width: 20%">
+									<textarea readonly name="annualGoal" rows="10" cols="80"><%=result%>%</textarea>
+								</div>
+								<div style="width: 80%">
+									<textarea readonly name="annualGoal" rows="10" cols="80"><%=resultComment%></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="goalpadding">
+							<div class="quarterpadding">
+								<h3>評価者記入</h3>
+							</div>
+							<h3>達成率 報告内容</h3>
+							<div class="flex">
+								<div style="width: 20%">
+									<textarea readonly name="annualGoal" rows="10" cols="80"><%=resultReviewer%>%</textarea>
+								</div>
+								<div style="width: 80%">
+									<textarea readonly name="annualGoal" rows="10" cols="80"><%=resultCommentReviewer%></textarea>
+								</div>
 							</div>
 						</div>
 					</div>

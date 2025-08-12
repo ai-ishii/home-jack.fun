@@ -20,16 +20,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/goal")
 public class GoalServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// 変数宣言
 		String error = "";
 		String cmd = "";
-		Integer userId = 0;
 
 		//DAO宣言
 		UserDAO userDAO = new UserDAO();
@@ -37,33 +36,19 @@ public class GoalServlet extends HttpServlet {
 		//配列宣言
 		ArrayList<User> userList = new ArrayList<User>();
 
-		//セッションオブジェクトの生成
-		HttpSession session = request.getSession();
-		userId = (Integer) session.getAttribute("user_id");
-
 		try {
-			
-			//getParameterメソッドを呼び出す
-			cmd = request.getParameter("cmd");
-			
+			// userDAO.selectAll();
 
-			if (cmd == null) {
-				cmd = ""; //※ここは後で絶対に変える文章なので覚えておいてください
-			}
-
-			//selectAllメソッドを呼び出す
-			userList = userDAO.selectAll();
-			
-			System.out.print(userList);
 			
 		} catch (Exception e) {
 			error = "エラーです。";
 		} finally {
 			if (!error.isEmpty()) {
+				request.setAttribute("cmd", cmd);
+				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-			session.setAttribute("user_id",userId);
 			request.setAttribute("userList", userList);
 			request.getRequestDispatcher("/view/goal.jsp").forward(request, response);
 		}
