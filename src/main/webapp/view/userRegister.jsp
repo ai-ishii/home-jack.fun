@@ -300,7 +300,7 @@ button.btn-border:active:before {
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
-					<span>登録するけど</span>
+					<span>登録するけどね</span>
 				</button>
 			</div>
 			</td>
