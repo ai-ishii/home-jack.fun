@@ -128,8 +128,8 @@ color:red;
 
 					<div class="form_box tiny_form">
 						<label for="category" class="control_label">カテゴリ<span>*</span></label> 
-						<select id="category" name="category_id">
-							<option value="0">選択してください</option>
+						<select id="category" name="category_id" class="errorSelect">
+							<option value="">選択してください</option>
 							<option value="1">お知らせ</option>
 							<option value="2">チーム活動</option>
 							<option value="3">ナレッジベース</option>
