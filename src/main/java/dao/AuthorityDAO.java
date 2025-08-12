@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -190,20 +191,50 @@ public class AuthorityDAO {
 		return list;
 	}
 
+	/**
+	 * 
+	 * @param userId
+	 * @param list
+	 */
 	public void updateAuthorityHaving (int userId, ArrayList<AuthorityHaving> list) {
 		
 		Connection con = null;
-		Statement smt = null;
+		PreparedStatement smt = null;
 		
-		String sql = "";
+		boolean success = false;
+		
+		String sql = "INSERT INTO "
+						+ "authority_info ("
+							+ "authority_id, "
+							+ "user_id, "
+							+ "authority_code, "
+							+ "regist_date) "
+						+ "VALUES ("
+							+ "NULL, "
+							+ "?, "
+							+ "?, "
+							+ "NOW());";
 		
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
-			smt = con.createStatement();
 			
+			//オートコミットを無効化
+			con.setAutoCommit(false);
 			
+			smt = con.prepareStatement(sql);
 			
+			for (AuthorityHaving role : list) {
+				smt.setInt(1, userId);
+				smt.setString(2, role.getAuthorityCode());
+				smt.addBatch();
+			}
+			
+			smt.executeBatch();
+			
+			con.commit();
+			success = true;
+
 		} catch (SQLException e) {
 			System.err.println("AuthorityDAOのデータベース接続時にエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
@@ -211,11 +242,21 @@ public class AuthorityDAO {
 			System.err.println("AuthorityDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
+			if (!success && con != null) {
+				try {
+					System.err.println("トランザクションが失敗したため、ロールバックします。");
+					con.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			try {
 				if (smt != null) {
+					
 					smt.close();
 				}
 				if (con != null) {
+					con.setAutoCommit(true);
 					con.close();
 				}
 			} catch (SQLException e) {
@@ -225,4 +266,6 @@ public class AuthorityDAO {
 			}
 		}
 	}
+	
+	
 }
