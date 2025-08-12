@@ -1,5 +1,5 @@
 //<!-- 社員紹介 確認画面など画面遷移のための機能（作：石井） -->
-//<!-- 作成日：7/30　最終更新日：8/1 12:00 -->
+//<!-- 作成日：7/30　最終更新日：8/12 14:00 -->
 
 package servlet;
 
@@ -18,6 +18,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/employeeConfirm")
@@ -42,11 +43,13 @@ public class EmployeeConfirmServlet extends HttpServlet {
 		String cmd = "";
 		String registerSubmit = "";
 		String updateSubmit = "";
-		int userId = 0;
+		int paramUserId = 0;
 		String path = "";
 
 		// オブジェクト生成
 		Employee employee = new Employee();
+		
+		
 		
 		/*
 		 * ファイル送信が上手くできていない
@@ -58,10 +61,19 @@ public class EmployeeConfirmServlet extends HttpServlet {
 			// 押されたボタンの種類をjspから取得
 			registerSubmit = request.getParameter("registerSubmit");
 			updateSubmit = request.getParameter("updateSubmit");
+			
+			//セッションからユーザー情報を取得
+			HttpSession session = request.getSession();
+			int sessionUserId = (int)session.getAttribute("user_id");
 
 			if (request.getParameter("userId") != null) {
 				// jspから送られてきたユーザーIDを取得
-				userId = Integer.parseInt(request.getParameter("userId"));
+				paramUserId = Integer.parseInt(request.getParameter("userId"));
+			}
+			
+			if(sessionUserId != paramUserId) {
+				error ="不正なアクセスです";
+				return;
 			}
 			
 			System.out.println(request.getPart("photo"));
@@ -146,9 +158,9 @@ public class EmployeeConfirmServlet extends HttpServlet {
 
 			// 遷移先を分ける
 			if (cmd.equals("updateConfirm")) {	// 確認画面のとき
-				path = "/view/employeeUpdate.jsp?cmd=updateConfirm&userId=" + userId;
+				path = "/view/employeeUpdate.jsp?cmd=updateConfirm&userId=" + paramUserId;
 			} else if (cmd.equals("reUpdate")) {	// 変更画面に戻るとき
-				path = "/view/employeeUpdate.jsp?cmd=reUpdate&userId=" + userId;
+				path = "/view/employeeUpdate.jsp?cmd=reUpdate&userId=" + paramUserId;
 			} else if (cmd.equals("update") ) {	// 変更完了のとき
 				path = "/employeeUpdate";
 			}
