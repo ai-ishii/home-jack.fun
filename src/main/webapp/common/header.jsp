@@ -1,3 +1,14 @@
+<%--
+/**
+ * ヘッダー画面
+ * 
+ * 作成者：石田允彦
+ * 
+ * 作成日：2025/07/03
+ * 最終更新日：2025/08/12
+ */
+--%>
+
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.User, dao.UserDAO" %>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
