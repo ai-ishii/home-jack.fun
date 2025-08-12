@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：7月25日
+ * 最終更新日：8月12日
  * 
  */
 package dao;
@@ -22,22 +22,35 @@ import util.DAOconnection;
 public class GoalDAO {
 
 	/**
-	 * 全検索を行うメソッド
+	 * 一覧表示する情報を検索するメソッド
 	 * 
 	 * @return ユーザー情報
 	 * @throws IllegalStateException 例外が発生した場合
 	 */
 	public Goal selectByUserId(int userId) {
 
+		// DB接続用変数の宣言
 		Connection con = null;
 		Statement smt = null;
 
 		//呼び出し元に返すオブジェクトの生成
+		Goal goal = new Goal();
 
 		//SQL文
-		String sql = "SELECT goal_id, team_id, user_id, annual_goal, situation_challenge, result, result_comment, result_reviewer, "
-				+ "result_comment_reviewer, regist_date, update_date FROM goal_info WHERE user_id=" + userId;
-		Goal goal = new Goal();
+		String sql = "SELECT "
+				+ "goal_id, "
+				+ "group_code, "
+				+ "user_id, "
+				+ "annual_goal, "
+				+ "situation_challenge, "
+				+ "result, "
+				+ "result_comment, "
+				+ "result_reviewer, "
+				+ "result_comment_reviewer, "
+				+ "start_date, "
+				+ "update_date, "
+				+ "end_date "
+				+ "FROM goal_info WHERE user_id=" + userId + ";";
 
 		try {
 			con = DAOconnection.getConnection();
@@ -48,17 +61,18 @@ public class GoalDAO {
 
 			//検索結果を配列に格納
 			while (rs.next()) {
-				goal.setGoalId(rs.getInt("goal_id")); //個人目標ID
-				goal.setTeamId(rs.getString("team_id")); //グループ目標ID
-				goal.setUserId(rs.getInt("user_id")); //ユーザー情報ID
-				goal.setAnnualGoal(rs.getString("annual_goal")); //年間目標
-				goal.setSituationChallenge(rs.getString("situation_challenge")); //現状と課題
-				goal.setResult(rs.getString("result")); //年間結果達成率
-				goal.setResultComment(rs.getString("result_comment")); //年間結果コメント
-				goal.setResultReviewer(rs.getString("result_reviewer")); //年間結果達成率（評価者）
-				goal.setResultCommentReviewer(rs.getString("result_comment_reviewer")); //年間結果コメント（評価者）
-				goal.setRegistDate(rs.getTimestamp("regist_date")); //登録日時
-				goal.setUpdateDate(rs.getTimestamp("update_date")); //更新日時
+				goal.setGoalId(rs.getInt("goal_id"));
+				goal.setGroupCode(rs.getString("group_code"));
+				goal.setUserId(rs.getInt("user_id"));
+				goal.setAnnualGoal(rs.getString("annual_goal"));
+				goal.setSituationChallenge(rs.getString("situation_challenge"));
+				goal.setResult(rs.getInt("result"));
+				goal.setResultComment(rs.getString("result_comment"));
+				goal.setResultReviewer(rs.getInt("result_reviewer"));
+				goal.setResultCommentReviewer(rs.getString("result_comment_reviewer"));
+				goal.setStartDate(rs.getTimestamp("start_date"));
+				goal.setUpdateDate(rs.getTimestamp("update_date"));
+				goal.setEndDate(rs.getTimestamp("end_date"));
 			}
 
 		} catch (Exception e) {
@@ -109,9 +123,9 @@ public class GoalDAO {
 
 			ps.setString(1, goal.getAnnualGoal());
 			ps.setString(2, goal.getSituationChallenge());
-			ps.setString(3, goal.getResult());
+			ps.setInt(3, goal.getResult());
 			ps.setString(4, goal.getResultComment());
-			ps.setString(5, goal.getResultReviewer());
+			ps.setInt(5, goal.getResultReviewer());
 			ps.setString(6, goal.getResultCommentReviewer());
 			ps.setInt(7, goal.getGoalId());
 
