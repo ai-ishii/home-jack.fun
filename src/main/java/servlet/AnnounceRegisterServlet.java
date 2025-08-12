@@ -78,8 +78,8 @@ public class AnnounceRegisterServlet extends HttpServlet {
 
 		} catch (DateTimeParseException e) {
 			error = "日付時刻の解析に失敗しました。";
-			//announceRegister.jspへ遷移
-			cmd = "announceRegister";
+			//お知らせ一覧へ遷移
+			cmd = "announce";
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、お知らせの登録はできませんでした。";
@@ -95,7 +95,7 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("#").forward(request, response);
+				request.getRequestDispatcher("").forward(request, response);
 			}
 
 			request.getRequestDispatcher("/announce").forward(request, response);
