@@ -7,10 +7,12 @@
 
 　最終更新日：8月12日
  -->
-<%@page import="bean.Goal"%>
-<%@page import="bean.GoalQuarter"%>
-<%@page import="bean.GoalDepartment"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="bean.Goal,
+				bean.GoalQuarter,
+				bean.GoalDepartment,
+				java.util.ArrayList"
+%>
+
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%
@@ -20,8 +22,8 @@ GoalDepartment goalDepartment = new GoalDepartment();
 
 //getAttributeを使い要素を取得する
 goal = (Goal) request.getAttribute("goal");
-goalDepartment = (GoalDepartment) request.getAttribute("goal_department");
-ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goal_quarter_list");
+goalDepartment = (GoalDepartment) request.getAttribute("goalDepartment");
+ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goalQuarterList");
 
 //変数宣言
 String groupCode = "";
@@ -359,7 +361,7 @@ keyframes fadeIn { 0% {
 	<div id="wrap">
 		<%@ include file="../common/header.jsp"%>
 		<div id="main" class="container">
-			<form action="<%=request.getContextPath()%>/goalDetail" method="POST">
+			<form action="<%=request.getContextPath()%>/goalConfirm" method="POST">
 
 
 				<div id="goalTitle" class="container">
@@ -369,17 +371,17 @@ keyframes fadeIn { 0% {
 					<div class="departpadding">
 						<h3>部目標</h3>
 						<div class="edit">
-							<input type="submit" value="編集"> <input type="hidden"
-								name="cmd" value="update">
+							<input type="submit" value="編集"> 
+							<input type="hidden" name="cmd" value="update">
 						</div>
 						<div class="goalpadding">
-							<input type="hidden" name="team_id"
+							<input type="hidden" name="group_code"
 								value="<%=groupCode%>">
-							<textarea readonly name="departmentGoal" rows="5" cols="80"><%=departmentGoal%></textarea>
+							<textarea readonly name="department_goal" rows="5" cols="80"><%=departmentGoal%></textarea>
 						</div>
 						<div class="goalpadding">
 							<h3>チーム目標</h3>
-							<textarea readonly name="groupGoal" rows="5" cols="80"><%=groupGoal%></textarea>
+							<textarea readonly name="group_goal" rows="5" cols="80"><%=groupGoal%></textarea>
 						</div>
 						<div class="goalpadding">
 							<h3>年間目標</h3>

@@ -11,6 +11,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,4 +77,74 @@ public class GoalDepartmentDAO {
 		return goalDepartment;
 	}
 
+	/**
+	 * 部目標を更新するメソッド
+	 * @param goalDepartment
+	 * @throws IllegalStateException 例外が発生した場合
+	 */
+	public void update(GoalDepartment goalDepartment) {
+
+		Connection con = null;
+		PreparedStatement smt = null;
+		
+		boolean success = false;
+
+
+		//SQL文
+		String sql_A = "UPDATE team_goal_info SET "
+				+ "management_theme = ?,"
+				+ "WHERE end_date = null";
+		
+		String sql_B = "";
+		
+		String sql_C = "";
+		
+		try {
+			// DBに接続
+			con = DAOconnection.getConnection();
+			
+			// オートコミットを無効化
+			con.setAutoCommit(false);
+			
+			smt = con.prepareStatement(sql_A);
+
+			// 1つ目のSQL文実行
+			smt.setString(1, goalDepartment.getManagementTheme());
+			smt.addBatch();
+			smt.executeBatch();
+			
+			// 2つ目のSQL文実行
+			
+			
+			// 3つ目のSQL文実行
+			
+			con.commit();
+			success = true;
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			if (!success && con != null) {
+				try {
+					System.err.println("トランザクションが失敗したため、ロールバックします。");
+					con.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			//リソースの開放
+			if (smt != null) {
+				try {
+					smt.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+	}
 }
