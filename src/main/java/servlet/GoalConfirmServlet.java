@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：8月7日
+ * 最終更新日：8月12日
  * 
  */
 package servlet;
@@ -14,11 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.Goal;
-import bean.QuarterGoal;
-import bean.TeamGoal;
+import bean.GoalDepartment;
+import bean.GoalQuarter;
 import dao.GoalDAO;
-import dao.QuarterGoalDAO;
-import dao.TeamGoalDAO;
+import dao.GoalDepartmentDAO;
+import dao.GoalQuarterDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -50,15 +50,15 @@ public class GoalConfirmServlet extends HttpServlet {
 
 		//オブジェクト宣言
 		Goal goal = new Goal();
-		TeamGoal teamGoal = new TeamGoal();
+		GoalDepartment goalDepartment = new GoalDepartment();
 
 		//各DAOをインスタンス化し、メソッドを呼び出す
 		GoalDAO goalDAO = new GoalDAO();
-		QuarterGoalDAO quarterGoalDAO = new QuarterGoalDAO();
-		TeamGoalDAO teamGoalDAO = new TeamGoalDAO();
+		GoalQuarterDAO goalQuarterDAO = new GoalQuarterDAO();
+		GoalDepartmentDAO goalDepartmentDAO = new GoalDepartmentDAO();
 		
 		//配列宣言
-		ArrayList<QuarterGoal> quarterGoalList = new ArrayList<QuarterGoal>();
+		ArrayList<GoalQuarter> goalQuarterList = new ArrayList<GoalQuarter>();
 
 		//セッションオブジェクトの生成
 		HttpSession session = request.getSession();
@@ -74,14 +74,18 @@ public class GoalConfirmServlet extends HttpServlet {
 				cmd = ""; 
 			}
 			
-			//部目標を呼び出す
-			teamGoal = teamGoalDAO.selectByUserId(userId);
-			
-			//目標を呼び出す
+			// 目標を呼び出す
 			goal = goalDAO.selectByUserId(userId);
+			
+			// メソッドの引数となる変数をを格納する
+			String groupCode = goal.getGroupCode();
+			int goalId = goal.getGoalId();	
+			
+			// 部目標を呼び出す
+			goalDepartment = goalDepartmentDAO.selectByGroupCode(groupCode);
 
-			//四半期目標を呼び出す
-			quarterGoalList = quarterGoalDAO.selectByUserId(userId);
+			// 四半期目標を呼び出す(ここから テーブルにuserIdがないため修正要
+			goalQuarterList = goalQuarterDAO.selectByGoalId(goalId);
 
 		} catch (Exception e) {
 			error = "エラーです！";
@@ -92,9 +96,9 @@ public class GoalConfirmServlet extends HttpServlet {
 			}
 			//リクエストスコープを使ってフォワード
 			session.setAttribute("user_id",userId);
-			request.setAttribute("teamGoal", teamGoal);
+			request.setAttribute("goal_department", goalDepartment);
 			request.setAttribute("goal", goal);
-			request.setAttribute("quarter_goal_list", quarterGoalList);
+			request.setAttribute("goal_quarter_list", goalQuarterList);
 			request.getRequestDispatcher("/view/goalConfirm.jsp").forward(request, response);
 		}
 	}

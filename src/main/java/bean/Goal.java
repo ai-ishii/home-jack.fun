@@ -1,22 +1,28 @@
+/*
+ * 個人目標を管理するDTOファイル
+ * 
+ * 作成者:月向亮太
+ * 
+ * 更新日:2025/08/12
+ */
 package bean;
 
 import java.sql.Timestamp;
 
 public class Goal {
 
-	
-	private int goalId;							//個人目標ID
-	private String teamId;							//グループ目標ID
-	private int userId;							//ユーザー情報ID
+	private int goalId;						//個人目標ID
+	private String groupCode;					//グループコード
+	private int userId;						//ユーザー情報ID
 	private String annualGoal;					//年間目標
 	private String situationChallenge;			//現状と課題
-	private String result;						//年間結果達成率
+	private int result;						//年間結果達成率
 	private String resultComment;				//年間結果コメント
-	private String resultReviewer;				//年間結果達成率（評価者）
+	private int resultReviewer;				//年間結果達成率（評価者）
 	private String resultCommentReviewer; 		//年間結果コメント（評価者）
-	private Timestamp registDate;				//登録日時
+	private Timestamp startDate;				//登録日時
+	private Timestamp endDate;					//終了日時
 	private Timestamp updateDate;				//更新日時
-	
 	
 	public int getGoalId() {
 		return goalId;
@@ -24,12 +30,11 @@ public class Goal {
 	public void setGoalId(int goalId) {
 		this.goalId = goalId;
 	}
-	
-	public String getTeamId() {
-		return teamId;
+	public String getGroupCode() {
+		return groupCode;
 	}
-	public void setTeamId(String teamId) {
-		this.teamId = teamId;
+	public void setGroupCode(String groupCode) {
+		this.groupCode = groupCode;
 	}
 	public int getUserId() {
 		return userId;
@@ -37,7 +42,6 @@ public class Goal {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
 	public String getAnnualGoal() {
 		return annualGoal;
 	}
@@ -50,10 +54,10 @@ public class Goal {
 	public void setSituationChallenge(String situationChallenge) {
 		this.situationChallenge = situationChallenge;
 	}
-	public String getResult() {
+	public int getResult() {
 		return result;
 	}
-	public void setResult(String result) {
+	public void setResult(int result) {
 		this.result = result;
 	}
 	public String getResultComment() {
@@ -62,10 +66,10 @@ public class Goal {
 	public void setResultComment(String resultComment) {
 		this.resultComment = resultComment;
 	}
-	public String getResultReviewer() {
+	public int getResultReviewer() {
 		return resultReviewer;
 	}
-	public void setResultReviewer(String resultReviewer) {
+	public void setResultReviewer(int resultReviewer) {
 		this.resultReviewer = resultReviewer;
 	}
 	public String getResultCommentReviewer() {
@@ -74,11 +78,17 @@ public class Goal {
 	public void setResultCommentReviewer(String resultCommentReviewer) {
 		this.resultCommentReviewer = resultCommentReviewer;
 	}
-	public Timestamp getRegistDate() {
-		return registDate;
+	public Timestamp getStartDate() {
+		return startDate;
 	}
-	public void setRegistDate(Timestamp registDate) {
-		this.registDate = registDate;
+	public void setStartDate(Timestamp startDate) {
+		this.startDate = startDate;
+	}
+	public Timestamp getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Timestamp endDate) {
+		this.endDate = endDate;
 	}
 	public Timestamp getUpdateDate() {
 		return updateDate;
@@ -86,10 +96,6 @@ public class Goal {
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
-}
-
-
-		
-
-
-
+	
+	
+}		
