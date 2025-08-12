@@ -192,7 +192,7 @@ public class AuthorityDAO {
 	}
 
 	/**
-	 * 
+	 * 受け取ったユーザーIDと配列をもとに、権限をつけなおすメソッド
 	 * @param userId
 	 * @param list
 	 */
