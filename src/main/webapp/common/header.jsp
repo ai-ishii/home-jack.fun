@@ -43,7 +43,7 @@ String user_name = (String)session.getAttribute("user_name");
 						<p class="ketchup">申請</p>
 						<ul class="ketchup-detail">
 							<li>
-								<a href="<%= request.getContextPath() %>/jackworksSearch">社員紹介</a>
+								<a href="<%= request.getContextPath() %>/monthJackworks">Jackworks</a>
 							</li>
 							<li>wii</li>
 						</ul>
