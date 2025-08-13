@@ -58,15 +58,15 @@ public class AnnounceServlet extends HttpServlet {
 		
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、お知らせは表示できませんでした。";
-			cmd = "login";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "login";
+			cmd = "logout";
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("").forward(request, response);
+				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			} else {
 				request.setAttribute("announceList", announceList);
 				request.setAttribute("categoryList", categoryList);

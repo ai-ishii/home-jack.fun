@@ -135,27 +135,27 @@ public class GoalDAO {
 			//SQL文をDBに移行
 			ps.executeUpdate();
 
+		} catch (SQLException e) {
+			System.err.println("GoalDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("GoalDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソースの開放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (ps != null) {
-				try {
+				if (ps != null) {
 					ps.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("GoalDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("GoalDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 	}

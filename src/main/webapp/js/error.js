@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',() => {
 	
 	//.errorFormの要素を取得
-	const errorForm = document.querySelector('.errorForm');
+	const errorForm = document.querySelector('.error-form');
 	//form要素の存在チェック
 	if(errorForm){
 		//エラー用のクラス
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded',() => {
 		//requiredクラスの要素の集まり
 		const required = document.querySelectorAll('.required');
 		//errorSelectクラスの要素の集まり
-		const errorSelect = document.querySelectorAll('.errorSelect');
+		const errorSelect = document.querySelectorAll('.error-select');
 	
 			//エラーメッセージを表示する
 			//elem:要素
@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded',() => {
 				errorElems.forEach( (elem)=>{
 					elem.remove();
 				});
+				
+				//エラーの有無を管理するフラグ(有:true,無:false)
+				let errorFlag = false;
 
 				//.requiredの要素を検証
 				required.forEach( (elem) => {
@@ -40,28 +43,34 @@ document.addEventListener('DOMContentLoaded',() => {
 					//未入力の場合にエラー表示する
 					if(elem.value.length === 0){
 						elem.classList.add("error-back");
-						createError(elem,'入力してください。');
+						createError(elem,'値を入力してください。');
+						//エラーのフラグを変更
+						errorFlag = true;
 					}else{
 					//値の前後の空白文字を削除
 					const elemValue = elem.value.trim();
 						//値が空の場合にエラー表示する
 						if(elemValue.length === 0){
 							elem.classList.add("error-back");
-							createError(elem,'入力形式が間違っています。');
+							createError(elem,'スペース（空白）のみでの入力はできません。');
+							errorFlag = true;
 						}
 					}
-					//フォームの送信を中止
-					e.preventDefault();
 				});
 				
 				//.errorSelectの要素の検証
 				errorSelect.forEach( (elem) => {
 					if(elem.value.length === 0 && elem.tagName === 'SELECT'){
-						createError(elem,'選択してください。');	
+						createError(elem,'選択必須項目です。');	
+						errorFlag = true;
 					}
+				});
+				
+				//エラーフラグがtrueのとき
+				if(errorFlag){
 					//フォームの送信を中止
 					e.preventDefault();
-				});
+				}
 			});
 	}
 });
