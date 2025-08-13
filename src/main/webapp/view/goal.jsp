@@ -12,166 +12,93 @@
 ごめんなさい。
  -->
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList,java.util.Map,java.util.LinkedHashMap,bean.User"%>
+<%@page
+	import="java.util.ArrayList,java.util.Map,java.util.LinkedHashMap,bean.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-    // サーブレットから渡されたuserListを取得
-    ArrayList<User> userList = (ArrayList<User>) request.getAttribute("userList");
+// サーブレットから渡されたuserListを取得
+ArrayList<User> userList = (ArrayList<User>) request.getAttribute("userList");
 
-    // JSPの上部で、userListから重複しないチームのリスト（Map）を作成
-    // Map<キーの型, 値の型>
-    Map<Integer, String> teamMap = new LinkedHashMap<>();
-    if (userList != null) {
-        for (User user : userList) {
-            teamMap.put(user.getDepartmentId(), "第" + user.getDepartmentId() + "事業部");
-        }
-    }
-    pageContext.setAttribute("teamMap", teamMap);
+// JSPの上部で、userListから重複しないチームのリスト（Map）を作成
+// Map<キーの型, 値の型>
+Map<Integer, String> teamMap = new LinkedHashMap<>();
+if (userList != null) {
+	for (User user : userList) {
+		teamMap.put(user.getDepartmentId(), "第" + user.getDepartmentId() + "事業部");
+	}
+}
+pageContext.setAttribute("teamMap", teamMap);
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>個人目標一覧</title>
+<title>個人目標一覧 | Home-Jack</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="${pageContext.request.contextPath}/js/script.js "></script>
 
 <script>
-window.onload = function() {
-    const selectionGroup = document.getElementById('departmentKing');
 
-    const allCheckboxes = selectionGroup.querySelectorAll('input[type="checkbox"]');
-
-    const allPanels = document.querySelectorAll('.nonee');
-
-    allCheckboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            const checkedValues = Array.from(allCheckboxes)
-                                       .filter(i => i.checked) 
-                                       .map(i => i.value);     
-
-            allPanels.forEach(function(panel) {
-                if (checkedValues.includes(panel.id)) {
-                    panel.style.display = 'block';
-                } else {
-                    panel.style.display = 'none';
-                }
-            });
-        });
-    });
-};
 </script>
 <style>
-
-/* 個人目標のCSS */
-#goalTitle {
-	position: relative;
-	margin-top: 100px;
-	margin-bottom: 10px;
+/* 所属している社員一覧が表示されるエリア（div） */
+.nameList {
+	margin-top: 50px;
+	margin-right: auto;
+	margin-left: auto;
 	width: 80%;
-	border-radius: 30px;
-	background-color: #ffffff;
-	box-shadow: 1px 2px 5px #CCCCEE;
-	font-size: 20px;
-	text-align: center;
 }
 
-.select01 {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	margin: 2em auto;
+/* タブ親（ul） */
+.tabList {
+	padding-left: 0;
+	margin: 0;
 }
 
-.select01 .sl {
-	position: relative;
-	width: 5%;
-	height: 48px;
+/* タブ（li） */
+.tabItem {
+	display: inline-block;
+	padding: 10px 12px;
+	border-width: 3px 3px 0 3px;
+	border-style: solid;
+	border-color: orange;
+	border-radius: 10px 10px 0 0;
+	font-weight: bold;
+	list-style: none;
+	letter-spacing: 1px;
+}
+
+.tabItem:hover {
+	background-color: cornsilk;
 	cursor: pointer;
-	text-overflow: ellipsis;
-	z-index: 1;
-	border: none;
-	appearance: none;
-	outline: none;
-	background: transparent; /* 背景に透明にする設定 */
-	border-radius: 0;
-	border-bottom: 1px solid #666666; /* 下線表示 */
 }
-/*プルダウンの三角を設定*/
-/*.select01::after {
-	position: absolute;
-	left: 60px;
-	content: '';  
-	width: 16px;
-	height: 8px;
-	background: #666666;
-	clip-path: polygon(0 0, 100% 0, 50% 100%);  
+
+/* タブがアクティブなときはスタイルを変える */
+.tabItem.active {
+	background-color: orange;
+	color: white;
 }
-*/
-.sl_selectlabel {
-	position: absolute;
-	left: 0;
-	top: 10px;
-	color: #666666;
-	transition: 0.2s ease all; /* アニメーション設定 */
+
+/* グループのタブ内のリンク（a） */
+.group {
+	color: inherit;
+	text-decoration: none;
 }
-/*選択した際の動き:「Choose」の文字*/
-.sl:focus ~ .sl_selectlabel, .sl:valid ~.sl_selectlabel {
-	color: #da3c41;
-	top: -20px;
-	transition: 0.2s ease all;
-	font-size: 80%;
+
+/* 所属している社員の名前一覧が表示されるエリア（div） */
+.tabPanel {
+	display: none; /*基本的には非表示*/
+	padding: 50px;
+	height: 500px;
+	background-color: cornsilk;
+	border: solid 3px orange;
 }
-/*選択した際の動き:セレクト下のライン*/
-.sl_selectbar {
-	position: relative;
+
+/* activeがついているときだけ表示 */
+.tabPanel.active {
 	display: block;
-	width: 100%;
-}
-
-.sl_selectbar:before, .sl_selectbar:after {
-	bottom: 1px;
-	content: '';
-	width: 0;
-	height: 2px;
-	position: absolute;
-	background: #da3c41;
-	transition: 0.2s ease all;
-}
-
-.sl_selectbar:before {
-	left: 50%;
-}
-
-.sl_selectbar:after {
-	right: 50%;
-}
-/*focus時の設定*/
-.select01 .sl:focus {
-	border-bottom: 1px solid transparent;
-}
-
-.sl:focus ~ .sl_selectbar:before, .sl:focus ~.sl_selectbar:after {
-	width: 50%;
-}
-
-.nonee {
-	display: none;
-}
-
-.content-panel table {
-	border-collapse: collapse;
-	width: 100%;
-	margin-top: 1em;
-}
-
-.content-panel td, .content-panel th {
-	border: 1px solid #000;
-	padding: 8px;
-	text-align: left;
 }
 </style>
 
@@ -180,47 +107,129 @@ window.onload = function() {
 	<div id="wrap">
 		<%@ include file="../common/header.jsp"%>
 
-		<div class="Goaltitle">
-			<h1 style="text-align: center">チーム内個人目標一覧</h1>
+		<!-- メイン部分 -->
+		<div id="main" class="container">
 
-			<div class="select01">
+			<div class="Goaltitle">
+				<h1 style="text-align: center">チーム内個人目標一覧</h1>
 
-				<div id="departmentKing">
-					<c:forEach items="${teamMap}" var="teamEntry">
-						<label> <input type="checkbox" name="department_choice"
-							value="panel_${teamEntry.key}" /> ${teamEntry.value}<br> 
-						</label>
-					</c:forEach>
+				<!-- 所属社員一覧 -->
+				<div class="nameList">
+					<!-- 部署のタブ -->
+					<ul class="tabList">
+						<li class="tabItem active">
+							<!-- おそらくの遷移先 たぶんここでサーブレットに遷移して、所属社員の名前をDAOで取ってくる --> <!-- <%= request.getContextPath() %>/view/goal?groupCode=BS1001 -->
+							<a class="group" href="">BS1001</a>
+						</li>
+						<li class="tabItem"><a class="group" href="">BS1002</a></li>
+						<li class="tabItem"><a class="group" href="">BS1003</a></li>
+						<li class="tabItem"><a class="group" href="">BS1004</a></li>
+						<li class="tabItem"><a class="group" href="">BS1005</a></li>
+						<li class="tabItem"><a class="group" href="">BS2001</a></li>
+						<li class="tabItem"><a class="group" href="">BS2002</a></li>
+						<li class="tabItem"><a class="group" href="">NX1000</a></li>
+						<li class="tabItem"><a class="group" href="">MG1000</a></li>
+						<li class="tabItem"><a class="group" href="">SA1000</a></li>
+					</ul>
+
+					<!-- 名前を表示するパネル（BS1001） -->
+					<div class="tabPanel active">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						いちのいちです
+					</div>
+					<!-- 名前を表示するパネル（BS1002） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						いちのにです
+					</div>
+					<!-- 名前を表示するパネル（BS1003） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						いちのさんです
+					</div>
+					<!-- 名前を表示するパネル（BS1004） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						いちのよんです
+					</div>
+					<!-- 名前を表示するパネル（BS1005） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						いちのごです
+					</div>
+					<!-- 名前を表示するパネル（BS2001） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						にのいちです
+					</div>
+					<!-- 名前を表示するパネル（BS2002） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						にのにです
+					</div>
+					<!-- 名前を表示するパネル（NX1000） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						ねくすといのべーしょんです
+					</div>
+					<!-- 名前を表示するパネル（MG1000） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						けいえいかんりです
+					</div>
+					<!-- 名前を表示するパネル（SA1000） -->
+					<div class="tabPanel">
+						<!-- ここに選択された所属の社員の名前が一覧で表示される -->
+						えいぎょうです
+					</div>
 				</div>
 
-				<div>
-					<c:forEach items="${teamMap}" var="teamEntry">
-						<div id="panel_${teamEntry.key}" class="nonee" >
-							<%-- idはMapのキー（チームID） --%>
-							<h3>${teamEntry.value}</h3>
-							<table>
-								<c:forEach items="${userList}" var="user">
-									<c:if test="${user.departmentId == teamEntry.key}">
-										<tr>
-										<div class="br">
-											<a href="${pageContext.request.contextPath}/goalUser?user_id=${user.userId}">${user.name}</a>
-										</div>
-										</tr>
-									</c:if>
-								</c:forEach>
-							</table>
-						</div>
-					</c:forEach>
-				</div>
 			</div>
-
 		</div>
 	</div>
 
+	<%
+	// 変数受け渡し
+	String groupCode = request.getParameter("groupCode");
+	%>
+
+	<script>
+	// 変数受け渡し
+	const groupCode = '<%= groupCode %>';
 	
+	// 必要な要素を取得
+	const tabItems = document.querySelectorAll(".tabItem");
+	const groupLink = document.querySelectorAll(".group");
+	const tabPanels = document.querySelectorAll(".tabPanel");
 
+	tabItems.forEach((tabItem) => {
+		// タブをクリックしたら
+		tabItem.addEventListener('click', () => {
+			// 一度各タブをすべて非アクティブにする
+			tabItems.forEach((t) => {
+				t.classList.remove("active");
+			});
 
+			for (let i = 0; i < groupLink.length; i++) {
+				// クリックされたタブをアクティブにする
+				if (groupCode == groupLink[i].textContent) {
+				tabItems[i].classList.add("active");
+				}
+			}
 
+			// タブに合わせてパネルもアクティブにする
+			for (let i = 0; i < tabItems.length; i++) {
+				if (tabItems[i].classList.contains("active")) {
+					// 一度各タブをすべて非アクティブにする
+					tabPanels.forEach((tabPanel) => {
+						tabPanel.classList.remove("active");
+					});
+					tabPanels[i].classList.add("active");
+				}
+			}
+		});
+	});
+	</script>
 
 </body>
 </html>
