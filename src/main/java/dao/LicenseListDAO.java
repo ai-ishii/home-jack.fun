@@ -52,23 +52,24 @@ public class LicenseListDAO {
 				list.add(licenselist);
 
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
+			System.err.println("LicenseListDAOのデータベース接続時にエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
-
+		} catch (Exception e) {
+			System.err.println("LicenseListDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} finally {
-			//リソース開放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("LicenseListDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("LicenseListDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return list;//return end
@@ -106,25 +107,25 @@ public class LicenseListDAO {
 				list.add(licenselist);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("LicenseListDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("LicenseListDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソース開放
-			if (smt != null) {
-
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("LicenseListDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("LicenseListDAOの不明なエラー: " + e.getMessage());
 			}
-
 		}
 		return list;//return end
 	}
@@ -160,25 +161,25 @@ public class LicenseListDAO {
 				list.add(licenselist);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("LicenseListDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("LicenseListDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソース開放
-			if (smt != null) {
-
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("LicenseListDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("LicenseListDAOの不明なエラー: " + e.getMessage());
 			}
-
 		}
 		return list;//return end
 

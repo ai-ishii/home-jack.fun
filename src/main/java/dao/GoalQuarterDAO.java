@@ -70,23 +70,25 @@ public class GoalQuarterDAO {
 				goalQuarterList.add(goalQuarter);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("GoalQuarterDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("GoalQuarterDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソースの開放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("GoalQuarterDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("GoalQuarterDAOの不明なエラー: " + e.getMessage());
 			}
-
 		}
 		return goalQuarterList;
 	}

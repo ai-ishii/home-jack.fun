@@ -61,23 +61,26 @@ public class EmployeeDAO {
 	 				
 	 				employeeList.add(employee);
 	 			}
-	 		} catch (Exception e) {
+	 		} catch (SQLException e) {
+				System.err.println("EmployeeDAOのデータベース接続時にエラー: " + e.getMessage());
 				throw new IllegalStateException(e);
-		} finally {
-			// リソースの解放
-			if (smt != null) {
+			} catch (Exception e) {
+				System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
+			} finally {
 				try {
-					smt.close();
-				} catch (SQLException ignore) {
+					if (smt != null) {
+						smt.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (SQLException e) {
+					System.err.println("EmployeeDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
 				}
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
-				}
-			}
-		}
 		
 		return employeeList;
 	 		
@@ -116,24 +119,27 @@ public class EmployeeDAO {
 	 				employee.setPhoto(rs.getString("photo"));
 	 				photo = employee.getPhoto();
 	 			}
-	 		} catch (Exception e) {
-	 			throw new IllegalStateException(e);
-	 		} finally {
-	 			// リソースの解放
-	 			if (smt != null) {
-	 				try {
-	 					smt.close();
-	 				} catch (SQLException ignore) {
-	 				}
-	 			}
-	 			if (con != null) {
-	 				try {
-	 					con.close();
-	 				} catch (SQLException ignore) {
-	 				}
-	 			}
-	 		}
-	 		
+	 			
+	 		} catch (SQLException e) {
+				System.err.println("EmployeeDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
+			} catch (Exception e) {
+				System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
+			} finally {
+				try {
+					if (smt != null) {
+						smt.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (SQLException e) {
+					System.err.println("EmployeeDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
+				}
+			}
 	 		return photo;
 	 		
 	 	}
@@ -178,23 +184,26 @@ public class EmployeeDAO {
 	 				employee.setUpdateDate(rs.getTimestamp("update_date"));
 	 				employee.setPhoto(rs.getString("photo"));
 	 			}
-	 		} catch (Exception e) {
-	 			throw new IllegalStateException(e);
-	 		} finally {
-	 			// リソースの解放
-	 			if (smt != null) {
-	 				try {
-	 					smt.close();
-	 				} catch (SQLException ignore) {
-	 				}
-	 			}
-	 			if (con != null) {
-	 				try {
-	 					con.close();
-	 				} catch (SQLException ignore) {
-	 				}
-	 			}
-	 		}
+	 		} catch (SQLException e) {
+				System.err.println("EmployeeDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
+			} catch (Exception e) {
+				System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
+			} finally {
+				try {
+					if (smt != null) {
+						smt.close();
+					}
+					if (con != null) {
+						con.close();
+					}
+				} catch (SQLException e) {
+					System.err.println("EmployeeDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
+				}
+			}
 	 		
 	 		return employee;
 	 		
@@ -228,21 +237,24 @@ public class EmployeeDAO {
 				// SQL文発行
 				smt.executeUpdate(sql);
 
+			} catch (SQLException e) {
+				System.err.println("EmployeeDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
 			} catch (Exception e) {
+				System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
 				throw new IllegalStateException(e);
 			} finally {
-				// リソースの解放
-				if (smt != null) {
-					try {
+				try {
+					if (smt != null) {
 						smt.close();
-					} catch (SQLException ignore) {
 					}
-				}
-				if (con != null) {
-					try {
+					if (con != null) {
 						con.close();
-					} catch (SQLException ignore) {
 					}
+				} catch (SQLException e) {
+					System.err.println("EmployeeDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
 				}
 			}
 		}
@@ -272,21 +284,24 @@ public class EmployeeDAO {
 				// SQL文発行
 				smt.executeUpdate(sql);
 				
+			} catch (SQLException e) {
+				System.err.println("EmployeeDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
 			} catch (Exception e) {
+				System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
 				throw new IllegalStateException(e);
 			} finally {
-				// リソースの解放
-				if (smt != null) {
-					try {
+				try {
+					if (smt != null) {
 						smt.close();
-					} catch (SQLException ignore) {
 					}
-				}
-				if (con != null) {
-					try {
+					if (con != null) {
 						con.close();
-					} catch (SQLException ignore) {
 					}
+				} catch (SQLException e) {
+					System.err.println("EmployeeDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
 				}
 			}
 		}
@@ -311,21 +326,24 @@ public class EmployeeDAO {
 				// SQL文発行
 				smt.executeUpdate(sql);
 				
+			} catch (SQLException e) {
+				System.err.println("EmployeeDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
 			} catch (Exception e) {
+				System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
 				throw new IllegalStateException(e);
 			} finally {
-				// リソースの解放
-				if (smt != null) {
-					try {
+				try {
+					if (smt != null) {
 						smt.close();
-					} catch (SQLException ignore) {
 					}
-				}
-				if (con != null) {
-					try {
+					if (con != null) {
 						con.close();
-					} catch (SQLException ignore) {
 					}
+				} catch (SQLException e) {
+					System.err.println("EmployeeDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("EmployeeDAOの不明なエラー: " + e.getMessage());
 				}
 			}
 		}

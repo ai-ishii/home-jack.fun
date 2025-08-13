@@ -118,21 +118,24 @@ public class RequestDAO {
 				licenseRequestExclusiveList.add(licenseRequestExclusive);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("RequestDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソースの開放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("RequestDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return licenseRequestExclusiveList;
@@ -149,6 +152,8 @@ public class RequestDAO {
 		//変数宣言
 		Connection con = null;
 		PreparedStatement smt = null;
+		
+		boolean success = false;
 
 		//オブジェクト化
 		LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
@@ -159,6 +164,9 @@ public class RequestDAO {
 			//SQL文
 			String sql = licenseRequestSql +"WHERE r.request_id = ? "
 					+ "ORDER BY r.request_flag ASC, r.request_date DESC";
+			
+			//オートコミットを無効化
+			con.setAutoCommit(false);
 
 			smt = con.prepareStatement(sql);
 			smt.setInt(1, requestId);
@@ -196,22 +204,38 @@ public class RequestDAO {
 				//license_info
 				licenseRequestExclusive.setLicenseName(rs.getString("license_name"));
 			}
+			
+			con.commit();
+			success = true;
 
+		} catch (SQLException e) {
+			System.err.println("RequestDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソースの開放 
-			if (smt != null) {
+			if (!success && con != null) {
 				try {
-					smt.close();
-				} catch (SQLException ignore) {
+					System.err.println("トランザクションが失敗したため、ロールバックします。");
+					con.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
+			try {
+				if (smt != null) {
+					
+					smt.close();
 				}
+				if (con != null) {
+					con.setAutoCommit(true);
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("RequestDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return licenseRequestExclusive;
