@@ -36,19 +36,24 @@ public class AccountDAO {
 					account.setEmail(rs.getString("email"));
 				}
 				
+			} catch (SQLException e) {
+				System.err.println("AccountDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
 			} catch (Exception e) {
+				System.err.println("AccountDAOの不明なエラー: " + e.getMessage());
 				throw new IllegalStateException(e);
 			} finally {
-				// リソースの解放
-				if (smt != null) {
-					try {
+				try {
+					if (smt != null) {
 						smt.close();
-					} catch (SQLException ignore) { }
-				}
-				if (con != null) {
-					try {
+					}
+					if (con != null) {
 						con.close();
-					} catch (SQLException ignore) { }
+					}
+				} catch (SQLException e) {
+					System.err.println("AccountDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("AccountDAOの不明なエラー: " + e.getMessage());
 				}
 			}
 			return account;
@@ -80,19 +85,24 @@ public class AccountDAO {
 					account.setEmail(rs.getString("email"));
 				}
 				
+			} catch (SQLException e) {
+				System.err.println("AccountDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
 			} catch (Exception e) {
+				System.err.println("AccountDAOの不明なエラー: " + e.getMessage());
 				throw new IllegalStateException(e);
 			} finally {
-				// リソースの解放
-				if (smt != null) {
-					try {
+				try {
+					if (smt != null) {
 						smt.close();
-					} catch (SQLException ignore) { }
-				}
-				if (con != null) {
-					try {
+					}
+					if (con != null) {
 						con.close();
-					} catch (SQLException ignore) { }
+					}
+				} catch (SQLException e) {
+					System.err.println("AccountDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("AccountDAOの不明なエラー: " + e.getMessage());
 				}
 			}
 			return account;
@@ -115,19 +125,24 @@ public class AccountDAO {
 				
 				count = smt.executeUpdate(sql);
 				
+			} catch (SQLException e) {
+				System.err.println("AccountDAOのデータベース接続時にエラー: " + e.getMessage());
+				throw new IllegalStateException(e);
 			} catch (Exception e) {
+				System.err.println("AccountDAOの不明なエラー: " + e.getMessage());
 				throw new IllegalStateException(e);
 			} finally {
-				// リソースの解放
-				if (smt != null) {
-					try {
+				try {
+					if (smt != null) {
 						smt.close();
-					} catch (SQLException ignore) { }
-				}
-				if (con != null) {
-					try {
+					}
+					if (con != null) {
 						con.close();
-					} catch (SQLException ignore) { }
+					}
+				} catch (SQLException e) {
+					System.err.println("AccountDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				} catch (Exception e) {
+					System.err.println("AccountDAOの不明なエラー: " + e.getMessage());
 				}
 			}
 			return count;

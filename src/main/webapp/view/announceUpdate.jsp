@@ -105,13 +105,13 @@ color:red;
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="update_date" class="control_label">編集日時</label> 
+						<label for="update_date" class="control_label">編集日時<span>*</span></label> 
 						<input type="datetime-local" id="update_date" name="update_date"
 							value="<%=announce.getRegistDate()%>" />
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="category" class="control_label">カテゴリ</label> 
+						<label for="category" class="control_label">カテゴリ<span>*</span></label> 
 						<select id="category" name="category_id">
 
 							<option value="1" <%if (categoryId == 1) {%> selected <%}%>>
@@ -130,7 +130,7 @@ color:red;
 					</div>
 
 					<div class="form_box">
-						<label for="announce_flag" class="control_label">重要記事</label>
+						<label for="announce_flag" class="control_label">重要記事<span>*</span></label>
 						<input type="checkbox" name="announce_flag" value="1">
 						<input type="hidden" name="announce_flag" value="0">
 					</div>
