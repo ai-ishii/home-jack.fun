@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.LicenseRequestExclusive;
+import bean.NameRequest;
 import util.DAOconnection;
 
 public class RequestDAO {
@@ -240,5 +241,52 @@ public class RequestDAO {
 		}
 		return licenseRequestExclusive;
 	}
+	/**
+     * 氏名変更申請をデータベースに登録するメソッド
+     * @param nameRequest 登録したい申請データ
+     * @return 登録に成功した場合は true, 失敗した場合は false
+     */
+    public boolean insertNameChange(NameRequest nameRequest) {
+    	
+		
+        // try-with-resources構文で、処理が終わったら自動でリソースを閉じる
+        try {
 
+    		Connection con = null;
+    		PreparedStatement smt = null;
+    		
+            // 1. データベースへ接続
+        		con = DAOconnection.getConnection();
+        
+            // 2. INSERT文
+            String sql = "INSERT "
+            		+ "INTO name_request_info "
+            		+ "(old_name, "
+            		+ "old_name_kana, "
+            		+ "new_name, "
+            		+ "new_name_kana) "
+            		+ "VALUES (?, ?, ?, ?)";
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+
+            // 3. SQL文の「?」に値をセット
+            pstmt.setString(1, nameRequest.getOldName());
+            pstmt.setString(2, nameRequest.getOldNameKana());
+            pstmt.setString(3, nameRequest.getNewName());
+            pstmt.setString(4, nameRequest.getNewNameKana());
+
+            // 4. INSERT文を実行し、結果（更新された行数）を取得
+            int affectedRows = pstmt.executeUpdate();
+
+            // 5. 1行以上更新されていれば成功とみなし true を返す
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            // エラーが発生した場合は、コンソールにエラー内容を出力
+            e.printStackTrace();
+            // 失敗したため false を返す
+            return false;
+        }
+    }
 }
+
