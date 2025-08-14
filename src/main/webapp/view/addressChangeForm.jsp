@@ -101,6 +101,11 @@
 .instruction-box h3 {
 	margin-bottom: 15px;
 }
+/*申請ボタンのデザインをお願いします*/
+.application-button {
+	text-align:center;
+	padding:30px;
+}
 
 .help-container {
 	/* 位置指定をこちらに移動 */
@@ -112,7 +117,6 @@
 	display: flex;
 	align-items: center;
 	gap: 5px; /* 文字とボタンの間隔 */
-	cursor: pointer; /* エリア全体をクリックできるように見せる */
 }
 
 #helpBtn {
@@ -256,8 +260,8 @@
 										value="${formValues.neareststation}" placeholder="例：JR大阪駅" />
 								</div>
 							</div>
-							<div class="form-link">
-								<a href="#" onclick="submitForm()">住所変更届はこちら⇀</a>
+							<div class="application-button">
+								<button type="submit">申請</button>
 							</div>
 							<div class="form-link">
 								<a
@@ -274,7 +278,7 @@
 				<div class="instruction-box">
 					<h2>住所変更申請フォーム手順</h2>
 					<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
-					<h3>2. 入力後、「住所変更届はこちら」を押して送信します。</h3>
+					<h3>2. 入力後、「申請」ボタンを押して送信します。</h3>
 					<h3>3. ダウンロードされたExcelに内容が反映されているか確認します。</h3>
 					<h3>4. 確認後、印刷して押印してください。</h3>
 					<h3>5. 押印済の変更届と証明書類を「画像アップロードはこちら」から提出してください。</h3>

@@ -38,7 +38,6 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	background-color: #f9f9f9;
-	/* ▼absolute指定で、親の「基準」内で自由に配置されます */
 	position: relative;
 }
 
@@ -102,14 +101,23 @@ String errorMessage = (String) request.getAttribute("errorMessage");
     display: inline-block;
     margin: 0 10px;
 }
-
-#helpBtn {
-	/* ▼absolute指定で、親の「基準」内で自由に配置されます */
+/*申請ボタンのデザインをお願いします*/
+.application-button {
+	text-align:center;
+	padding:30px;
+}
+.help-container {
+	/* 位置指定をこちらに移動 */
 	position: absolute;
-	/* ▼基準となる枠の右上からの距離を指定 */
 	top: 25px;
 	right: 25px;
 	z-index: 10;
+	/* 中の文字とボタンを横並びにする */
+	display: flex;
+	align-items: center;
+	gap:5px; /* 文字とボタンの間隔 */
+}
+#helpBtn {
 	width: 36px;
 	height: 36px;
 	font-size: 20px;
@@ -118,7 +126,6 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	color: white;
 	font-weight: bold;
 	border: none;
-	cursor: pointer;
 	padding: 0;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	transition: all 0.3s ease;
@@ -148,6 +155,10 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 		<div id="main" class="container">
 			<div class="form-wrapper-container">
 				<div class="form-wrapper">
+				<div class="help-container">
+							<span>手順がわからない方へ</span>
+							<button type="button" id="helpBtn">?</button>
+                       </div>
 					<h1 style="text-align: center">-氏名変更申請フォーム-</h1>
 <form id="sendform" action="<%=request.getContextPath()%>/nameChangeConfirm" method="post">
 
@@ -190,20 +201,16 @@ String errorMessage = (String) request.getAttribute("errorMessage");
                                 value="${formValues['newnamekana']}" />
                         </div>
                     </div>
-
-                    <button type="button" id="helpBtn">?</button>
-
-                    <div class="form-link">
-                        <a href="#" onclick="submitForm()">入力内容確認はこちら⇀</a>
-
-						</div>
-				</div>
-				</form>
+						<div class="application-button">
+							<button type="submit">申請</button>
+						</div></div>
+					</form>
+			
 				<div class="instruction-box">
 					<h2>氏名変更申請フォーム手順</h2>
 					<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
-					<h3>2. 入力後、「内容確認はこちら」を押して内容確認をします。</h3>
-					<h3>3. 確認してよければ申請ボタンを押します。</h3>
+					<h3>2. 入力後、「申請」ボタンを押して内容確認をします。</h3>
+					<h3>3. 確認してよければ「この内容で確定する」ボタンを押します。</h3>
 
 				</div>
 			</div>
