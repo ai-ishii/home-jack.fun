@@ -3,17 +3,25 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/07
+最終更新日：2025/08/12
  --%>
 
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%
-String errorMessage = (String) request.getAttribute("errorMessage");
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:set var="formValues"
+	value="${not empty userInput ? userInput : param}" />
 
 <html>
-<head>
+<head><input type="hidden" name="employeenumber" value="${employeeNumber}">
+<input type="hidden" name="name" value="${name}">
+<input type="hidden" name="addressChangedDate" value="${addressChangedDate}">
+<input type="hidden" name="oldpost" value="${oldPost}">
+<input type="hidden" name="oldaddress" value="${oldAddress}">
+<input type="hidden" name="newpost" value="${newPost}">
+<input type="hidden" name="newaddress" value="${newAddress}">
+<input type="hidden" name="neareststation" value="${nearestStation}">
 <title>住所変更申請フォーム</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
@@ -35,7 +43,6 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	background-color: #f9f9f9;
-	/* ▼この要素がボタン配置の「基準」となります */
 	position: relative;
 }
 
@@ -82,17 +89,33 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	text-align: right;
 }
 
+.required {
+	color: #dc3545;
+	font-weight: bold;
+}
+
+.error-field {
+	border: 2px solid red !important;
+}
+
 .instruction-box h3 {
 	margin-bottom: 15px;
 }
 
-#helpBtn {
-	/* ▼absolute指定で、親の「基準」内で自由に配置されます */
+.help-container {
+	/* 位置指定をこちらに移動 */
 	position: absolute;
-	/* ▼基準となる枠の右上からの距離を指定 */
 	top: 25px;
 	right: 25px;
 	z-index: 10;
+	/* 中の文字とボタンを横並びにする */
+	display: flex;
+	align-items: center;
+	gap: 5px; /* 文字とボタンの間隔 */
+	cursor: pointer; /* エリア全体をクリックできるように見せる */
+}
+
+#helpBtn {
 	width: 36px;
 	height: 36px;
 	font-size: 20px;
@@ -101,7 +124,6 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	color: white;
 	font-weight: bold;
 	border: none;
-	cursor: pointer;
 	padding: 0;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	transition: all 0.3s ease;
@@ -126,6 +148,7 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 </head>
 
 <body>
+
 	<div id="wrap">
 		<%@ include file="../common/header.jsp"%>
 		<div id="main" class="container">
@@ -136,14 +159,10 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 					<form id="sendform"
 						action="<%=request.getContextPath()%>/addressChangeConfirm"
 						method="post">
-						<%
-						if (errorMessage != null && !errorMessage.isEmpty()) {
-						%>
-						<h2 style="color: red; text-align: center;"><%=errorMessage%></h2>
-						<%
-						}
-						%>
 
+						<c:if test="${not empty errorMessage}">
+							<h2 style="color: red; text-align: center;">${errorMessage}</h2>
+						</c:if>
 
 						<div class="form-row">
 							<div class="form-label">
@@ -151,7 +170,8 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 							</div>
 							<div class="form-input">
 								<input type="text" id="employeenumber" name="employeenumber"
-									placeholder="例：000001" />
+									class="${errors.employeeNumber_error ? 'error-field' : ''}"
+									value="${formValues.employeenumber}" placeholder="例：000001" />
 							</div>
 						</div>
 
@@ -160,17 +180,22 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 								<label for="name">氏名</label>
 							</div>
 							<div class="form-input">
-								<input type="text" id="name" name="name" />
+								<input type="text" id="name" name="name"
+									class="${errors.name_error ? 'error-field' : ''}"
+									value="${formValues.name}" />
 							</div>
 						</div>
 
 						<div class="form-row">
 							<div class="form-label">
-								<label for="changedate">住所変更日時</label>
+								<label for="changedate">住所変更日時<span class="required">【必須】</span></label>
 							</div>
 							<div class="form-input-date">
 								<input type="date" id="addressChangedDate"
-									name="addressChangedDate" placeholder="例：2025/01/01" />
+									name="addressChangedDate"
+									class="${errors.addressChangedDate_error ? 'error-field' : ''}"
+									value="${formValues.addressChangedDate}"
+									placeholder="例：2025/01/01" />
 							</div>
 						</div>
 
@@ -182,7 +207,8 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 								</div>
 								<div class="form-input">
 									<input type="text" id="oldpost" name="oldpost"
-										class="p-postal-code" />
+										class="p-postal-code ${errors.oldPost_error ? 'error-field' : ''}"
+										value="${formValues.oldpost}" />
 								</div>
 							</div>
 							<div class="form-row">
@@ -191,7 +217,7 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 								</div>
 								<div class="form-input-address">
 									<textarea name="oldaddress" cols="30" rows="5"
-										class="p-region p-locality p-street-address p-extended-address"></textarea>
+										class="p-region p-locality p-street-address p-extended-address ${errors.oldAddress_error ? 'error-field' : ''}">${formValues.oldaddress}</textarea>
 								</div>
 							</div>
 						</div>
@@ -200,30 +226,34 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 							<span class="p-country-name" style="display: none;">Japan</span>
 							<div class="form-row">
 								<div class="form-label">
-									<label for="newpost">新郵便番号</label>
+									<label for="newpost">新郵便番号<span class="required">【必須】</span></label>
 								</div>
 								<div class="form-input">
 									<input type="text" id="newpost" name="newpost"
-										placeholder="例：1000001" class="p-postal-code" /> ※ -は記入しない
+										placeholder="例：1000001"
+										class="p-postal-code ${errors.newPost_error ? 'error-field' : ''}"
+										value="${formValues.newpost}" /> ※ -は記入しない
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-label">
-									<label for="newaddress">新住所</label>
+									<label for="newaddress">新住所<span class="required">【必須】</span></label>
 								</div>
 								<div class="form-input-address">
 									<textarea id="newaddress" name="newaddress" cols="30" rows="5"
 										placeholder="例： 大阪府大阪市淀川区西中島５丁目１１−３ 新大阪サンアールビル西館"
-										class="p-region p-locality p-street-address p-extended-address"></textarea>
+										class="p-region p-locality p-street-address p-extended-address ${errors.newAddress_error ? 'error-field' : ''}">${formValues.newaddress}</textarea>
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-label">
-									<label for="neareststation">最寄り駅</label>
+									<label for="neareststation">新住所最寄り駅<span
+										class="required">【必須】</span></label>
 								</div>
 								<div class="form-input">
 									<input type="text" id="neareststation" name="neareststation"
-										placeholder="例：JR大阪駅" />
+										class="${errors.nearestStation_error ? 'error-field' : ''}"
+										value="${formValues.neareststation}" placeholder="例：JR大阪駅" />
 								</div>
 							</div>
 							<div class="form-link">
@@ -235,8 +265,10 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 							</div>
 						</div>
 					</form>
-
-					<button type="button" id="helpBtn">?</button>
+					<div class="help-container">
+						<span>手順がわからない方へ</span>
+						<button type="button" id="helpBtn">?</button>
+					</div>
 				</div>
 
 				<div class="instruction-box">
