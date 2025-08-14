@@ -30,10 +30,20 @@ Timestamp timestamp = new Timestamp(millis);
 
 // パラメータの取得
 String cmd = (String) request.getAttribute("cmd");
+String keyword = (String) request.getAttribute("keyword");
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
 ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("categoryList");
 
 String strAnnounceFlag = (String) request.getAttribute("announceFlag");
+
+if(strAnnounceFlag == null){
+	strAnnounceFlag = ""; 
+}
+
+if(cmd == null){
+	cmd = ""; 
+}
+
 /*
 * リクエストスコープから直接int型にキャストすると
 * うまくいかなかったので下記のような記述にしてます
@@ -323,6 +333,13 @@ a {
 	font-size: 17px;
 	margin: 0;
 }
+
+/* spamタグの空白をなくすため */
+.aokisaikyou{
+display: flex;
+gap: 0				/* 子要素の感覚を0にする */
+}
+
 </style>
 
 
@@ -437,7 +454,7 @@ a {
 										</div>
 										<div>
 											<label for="start_date">開始日</label> 
-											<input type="datetime-local" id="start_date" name="start_date"
+											<input type="datetime-local" id="start_date" name="start_date" max="9999-12-31 23:59"
 											<%
 											if (cmd != null) {
 												/*
@@ -454,7 +471,7 @@ a {
 										</div>
 										<div>
 											<label for="end_date">終了日</label> 
-											<input type="datetime-local" id="end_date" name="end_date"
+											<input type="datetime-local" id="end_date" name="end_date" max="9999-12-31 23:59"
 											<%
 											if (cmd != null) {
 												/*
@@ -483,8 +500,7 @@ a {
 					<%
 					if (cmd != null) {
 						if (cmd.equals("keyword")) {
-							String keyword = (String) request.getAttribute("keyword");
-							
+	
 							/*
 							* 検索ワードがnullではないかつ空文字ではないとき、
 							* 検索ワードを表示する
@@ -499,6 +515,25 @@ a {
 						}
 					}
 					%>
+					
+					<!-- 検索結果が0件の場合メッセージを表示 -->
+					<%
+					if(cmd.equals("no-result")){ 
+						//キーワード検索が0件の場合
+						if(keyword != null){
+					%>
+					<div class="aokisaikyou">
+					<span>"<%= keyword %>"の</span>
+					<%
+						}
+					%>
+					<span>検索結果は0件です。</span>
+					</div>
+					<p>内容を変更して再度検索をしてください。</p>	
+					<%
+					}
+					%>
+					
 					<%
 					if (announceList != null) {
 						for (int j = 0; j < announceList.size(); j++) {

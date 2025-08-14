@@ -58,6 +58,10 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 		// フォームから送信した検索方法をを受け取る
 		cmd = request.getParameter("cmd");
+		
+		if(cmd == null) {
+			cmd = "";
+		}
 
 		try {
 			if (cmd.equals("keyword")) {
@@ -66,7 +70,12 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 				// メソッドを呼び出してSQL文実行
 				announceList = announceDAO.selectByKeyword(keyword);
-
+				
+				//検索結果が0件の場合
+				if(announceList.size() == 0) {
+					cmd = "no-result";
+				}
+				
 				// 検索キーワードをリクエストスコープに登録する
 				request.setAttribute("keyword", keyword);
 			}
@@ -114,6 +123,11 @@ public class AnnounceSearchServlet extends HttpServlet {
 				}
 
 				announceList = announceDAO.selectByFilter(announceFlag, strAnnounceCategoryId, startDate, endDate);
+				
+				//絞り込み結果が0件の場合
+				if(announceList.size() == 0) {
+					cmd = "no-result";
+				}
 
 			}
 
