@@ -4,11 +4,14 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/15
+ * 
+ * 最終更新日：2025/08/13
  */
 
 package servlet;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import bean.Jackworks;
@@ -37,45 +40,44 @@ public class JackworksSearchServlet extends HttpServlet {
 		try {
 			//検索された値をnameで受け取る
 			String name = request.getParameter("name");
-			
-			if(name == null) {
-				name="";
-			}
-			
-			//jackworksRequest.jspからcmd=requestを受け取る
-			cmd = request.getParameter("cmd");
-			
-			if(cmd == null) {
-				cmd = "";
-			}
-
 			//選択された年月を受け取る
-			String monthSearch = request.getParameter("month-search");
-			String yearSearch = request.getParameter("year-search");
+			String start = request.getParameter("start_date");
+			String end = request.getParameter("end_date");
 
-			if (name.equals("") && monthSearch != null) {
-				String selectSearch = yearSearch + "-" + monthSearch;
-				//選択された年月に該当する情報を検索するメソッド
-				jackList = jackworksDAO.selectSearch(selectSearch);
-			} else {
-				//入力された文字に該当する情報を検索するメソッド
+			if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
+				Timestamp startDate = Timestamp.valueOf(start + " 00:00:00");
+				Timestamp endDate = Timestamp.valueOf(end + " 23:59:59");
+				jackList = jackworksDAO.selectByDateFilter(startDate, endDate);
+
+			} else if (name != null && !name.isEmpty()) {
+
+				// --- キーワード検索 ---
 				jackList = jackworksDAO.search(name);
 			}
 
-			if(!cmd.equals("request")) {
-			//検索表示させるためのcmd
-			cmd = "search";
-			
-			path = "/monthJackworks";
+			if (name == null) {
+				name = "";
 			}
-			
+
+			//jackworksRequest.jspからcmd=requestを受け取る
+			cmd = request.getParameter("cmd");
+
+			if (cmd == null) {
+				cmd = "";
+			}
+
+			if (!cmd.equals("request")) {
+				//検索表示させるためのcmd
+				cmd = "search";
+
+				path = "/monthJackworks";
+			}
+
 			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
 			request.setAttribute("name", name);
-			
-			request.setAttribute("monthSearch", monthSearch);
-			request.setAttribute("yearSearch", yearSearch);
-			
+			request.setAttribute("srartDate", start);
+			request.setAttribute("end", end);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
