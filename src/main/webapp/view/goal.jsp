@@ -42,9 +42,6 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="${pageContext.request.contextPath}/js/script.js "></script>
 
-<script>
-
-</script>
 <style>
 /* 所属している社員一覧が表示されるエリア（div） */
 .nameList {
@@ -105,12 +102,6 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 	line-height: 2.0;
 }
 
-/* activeがついているときだけ表示 */
-/*
-.tabPanel.active {
-	display: block;
-}
-*/
 </style>
 
 </head>
@@ -218,7 +209,27 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 	const tabItems = document.querySelectorAll(".tabItem");
 	const tabPanels = document.querySelectorAll(".tabPanel");
 
-	
+	tabItems.forEach((tabItem) => {
+
+		// ページ読み込み時
+		//document.addEventListener('DOMContentLoaded', () => {
+			// 一度各タブをすべて非アクティブにする
+			//tabItems.forEach((t) => {
+				//t.classList.remove("active");
+			//});
+		//});
+		
+		// タブをクリックしたら
+		tabItem.addEventListener('click', () => {
+			// 一度各タブをすべて非アクティブにする
+			tabItems.forEach((t) => {
+				t.classList.remove("active");
+			});
+
+			// クリックされたタブをアクティブにする
+			tabItem.classList.add("active");
+		});
+	});
 	</script>
 
 </body>
