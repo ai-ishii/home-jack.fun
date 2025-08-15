@@ -1,9 +1,11 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import bean.Jackworks;
@@ -484,5 +486,72 @@ public class JackworksDAO {
 				}
 			}
 		}
+	}
+	/**
+	 * 日付の絞り込み検索を行うメソッド
+	 * @param startDate 検索開始日
+	 * @param endDate   検索終了日
+	 * @return 検索結果のJackWorksリスト
+	 */
+	
+	public ArrayList<Jackworks> selectByDateFilter(Timestamp startDate, Timestamp endDate){
+		
+		// 変数宣言
+		Connection con = null;
+		PreparedStatement ps = null;
+		ArrayList<Jackworks> jackList = new ArrayList<>();
+		
+		
+		String sql = "SELECT * FROM jackworks_info "
+                + "WHERE points_get_date BETWEEN ? AND ? "
+                + "ORDER BY points_get_date DESC";
+
+		try {
+			// DBに接続
+			con = DAOconnection.getConnection();
+			ps = con.prepareStatement(sql);
+
+			//プレースホルダーに値をセット
+			ps.setTimestamp(1, startDate);
+            ps.setTimestamp(2, endDate);
+			
+			
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Jackworks jack = new Jackworks();
+				jack.setJackworksId(rs.getInt("jackworks_id"));
+				jack.setEmployeeNumber(rs.getString("employee_number"));
+				jack.setPoint(rs.getInt("point"));
+				jack.setPointsGetDate(rs.getDate("points_get_date"));
+				jack.setName(rs.getString("name"));
+				jack.setCategory(rs.getString("category"));
+				jack.setAssessment(rs.getString("assessment"));
+				jack.setNote(rs.getString("note"));
+				jack.setApprovalFlag(rs.getInt("approval_flag"));
+				jackList.add(jack);
+			}
+
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		} finally {
+			// リソースの解放
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException ignore) {
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
+		
+		
+		
+		return jackList;
 	}
 }

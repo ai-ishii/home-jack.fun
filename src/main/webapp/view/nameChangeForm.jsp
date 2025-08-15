@@ -3,7 +3,7 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/07
+最終更新日：2025/08/14
  --%>
 
 
@@ -11,6 +11,7 @@
 <%
 String errorMessage = (String) request.getAttribute("errorMessage");
 %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -19,6 +20,8 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<c:set var="formValues"
+	value="${not empty userInput ? userInput : param}" />
 <style>
 .form-wrapper-container {
 	display: flex;
@@ -35,7 +38,6 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	background-color: #f9f9f9;
-	/* ▼この要素がボタン配置の「基準」となります */
 	position: relative;
 }
 
@@ -86,13 +88,36 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	margin-bottom: 15px;
 }
 
-#helpBtn {
-	/* ▼absolute指定で、親の「基準」内で自由に配置されます */
+.required {
+	color: #dc3545;
+	font-weight: bold;
+}
+.error-field {
+	border: 2px solid red !important;
+}
+
+/* フォームを横に並べるためのスタイル */
+.button-area form {
+    display: inline-block;
+    margin: 0 10px;
+}
+/*申請ボタンのデザインをお願いします*/
+.application-button {
+	text-align:center;
+	padding:30px;
+}
+.help-container {
+	/* 位置指定をこちらに移動 */
 	position: absolute;
-	/* ▼基準となる枠の右上からの距離を指定 */
 	top: 25px;
 	right: 25px;
 	z-index: 10;
+	/* 中の文字とボタンを横並びにする */
+	display: flex;
+	align-items: center;
+	gap:5px; /* 文字とボタンの間隔 */
+}
+#helpBtn {
 	width: 36px;
 	height: 36px;
 	font-size: 20px;
@@ -101,7 +126,6 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	color: white;
 	font-weight: bold;
 	border: none;
-	cursor: pointer;
 	padding: 0;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	transition: all 0.3s ease;
@@ -131,67 +155,67 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 		<div id="main" class="container">
 			<div class="form-wrapper-container">
 				<div class="form-wrapper">
+				<div class="help-container">
+							<span>手順がわからない方へ</span>
+							<button type="button" id="helpBtn">?</button>
+                       </div>
 					<h1 style="text-align: center">-氏名変更申請フォーム-</h1>
+<form id="sendform" action="<%=request.getContextPath()%>/nameChangeConfirm" method="post">
 
-					<form id="sendform"
-						action="<%=request.getContextPath()%>/addressChangeConfirm"
-						method="post">
-						<%
-						if (errorMessage != null && !errorMessage.isEmpty()) {
-						%>
-						<h2 style="color: red; text-align: center;"><%=errorMessage%></h2>
-						<%
-						}
-						%>
+                    <c:if test="${not empty errorMessage}">
+                        <h2 style="color: red; text-align: center;">${errorMessage}</h2>
+                    </c:if>
 
-						<div class="form-row">
-							<div class="form-label">
-								<label for="name">旧氏名</label>
-							</div>
-							<div class="form-input">
-								<input type="text" id="name" name="name" />
-							</div>
-						</div>
+                    <div class="form-row">
+                        <div class="form-label"><label for="oldname">旧氏名</label></div>
+                        <div class="form-input">
+                            <input type="text" id="oldname" name="oldname"
+                                class="${errors['oldname_error'] ? 'error-field' : ''}"
+                                value="${formValues['oldname']}" />
+                        </div>
+                    </div>
 
-						<div class="form-row">
-							<div class="form-label">
-								<label for="name">旧氏名(かな)</label>
-							</div>
-							<div class="form-input">
-								<input type="text" id="name" name="name" />
-							</div>
-						</div>
+                    <div class="form-row">
+                        <div class="form-label"><label for="oldnamekana">旧氏名(かな)</label></div>
+                        <div class="form-input">
+                            <input type="text" id="oldnamekana" name="oldnamekana"
+                                class="${errors['oldnamekana_error'] ? 'error-field' : ''}"
+                                value="${formValues['oldnamekana']}" />
+                        </div>
+                    </div>
 
-						<div class="form-row">
-							<div class="form-label">
-								<label for="name">新氏名</label>
-							</div>
-							<div class="form-input">
-								<input type="text" id="name" name="name" />
-							</div>
-						</div>
-						<div class="form-row">
-							<div class="form-label">
-								<label for="name">新氏名(かな)</label>
-							</div>
-							<div class="form-input">
-								<input type="text" id="name" name="name" />
-							</div>
-						</div>
+                    <div class="form-row">
+                        <div class="form-label"><label for="newname">新氏名<span class="required">【必須】</span></label></div>
+                        <div class="form-input">
+                            <input type="text" id="newname" name="newname"
+                                class="${errors['newname_error'] ? 'error-field' : ''}"
+                                value="${formValues['newname']}" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label"><label for="newnamekana">新氏名(かな)<span class="required">【必須】</span></label></div>
+                        <div class="form-input">
+                            <input type="text" id="newnamekana" name="newnamekana"
+                                class="${errors['newnamekana_error'] ? 'error-field' : ''}"
+                                value="${formValues['newnamekana']}" />
+                        </div>
+                    </div>
+						<div class="application-button">
+							<button type="submit">申請</button>
+						</div></div>
+					</form>
+			
+				<div class="instruction-box">
+					<h2>氏名変更申請フォーム手順</h2>
+					<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
+					<h3>2. 入力後、「申請」ボタンを押して内容確認をします。</h3>
+					<h3>3. 確認してよければ「この内容で確定する」ボタンを押します。</h3>
+
 				</div>
-				</form>
-
-				<button type="button" id="helpBtn">?</button>
 			</div>
 
-			<div class="instruction-box">
-				<h2>住所変更申請フォーム手順</h2>
-				<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
-				<h3>2. 入力後、「住所変更届はこちら」を押して送信します。</h3>
-				<h3>3. ダウンロードされたExcelに内容が反映されているか確認します。</h3>
-				<h3>4. 確認後、印刷して押印してください。</h3>
-				<h3>5. 押印済の変更届と証明書類を「画像アップロードはこちら」から提出してください。</h3>
-			</div>
+
 		</div>
 	</div>
 	</div>

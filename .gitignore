@@ -4,6 +4,5 @@
 *.class
 *.iml
 .idea/
-.classpath
 .project
 .settings/
