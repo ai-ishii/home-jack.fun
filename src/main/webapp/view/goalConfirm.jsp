@@ -72,6 +72,9 @@ if (goalDepartment != null) {
 一緒に頑張ろうね！！
 */
 
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
+
 /*ページタイトル*/
 #contents {
 width: 90%;
@@ -82,8 +85,8 @@ margin-left: auto;
 #link-line {
 padding: 1rem 0;
 margin-bottom: 0.2rem;
-background-image: linear-gradient(90deg, #b2d5de 0 25%, #ddcfb3 25% 50%, #b3ddb4 50% 75%,
-	#ddbab3 75%);
+background-image: linear-gradient(90deg, #b2d5de 0 25%, #ddcfb3 25% 50%,
+					#b3ddb4 50% 75%, #ddbab3 75%);
 background-repeat: no-repeat;
 background-size: 100% 0.3rem;
 background-position: bottom;
@@ -97,24 +100,42 @@ text-align: center;
 text-align: center;
 }
 
-#seal{
+/* 本文の大きな枠 */
+.seal{
 /*width:860px;*/
-width:75%;
-margin: auto;
-padding-top:10px;
+width:90%;
+margin: 0 auto 40px;
+padding:10px 0 50px;
 background-color: #fff;
 }
 
+/* アンダーライン付き小見出し */
 .yorushikaLine{
-border-bottom: 2px solid #ffc766;
+border-bottom: 4px solid #e53434;
 width: 80%;
-font-size: 25px;
+font-size: 35px;
+font-family: "M PLUS 1p", sans-serif;
+font-weight: bold;
 text-align: center;
-color: #e89b17;
-margin: auto;
+color: #e53434;
+margin: 40px auto;
 }
 
-/*タイトル見出し*/
+.yorushikaRine{
+font-size: 30px;
+color: #d1d1d1;
+padding: 0;
+}
+
+/* ただの色付き小見出し */
+.yorushika{
+width: 75%;
+font-size: 22px;
+color: #e89b17;
+margin: 20px auto 0;
+}
+
+/* ボックス型小見出し */
 .yorushikaBox{
 display: flex;				/* 子要素を横並びに配置 */
 align-items: center; 		/* 垂直方向の中央揃え */
@@ -128,6 +149,7 @@ margin-top:20px;
 */
 }
 
+/* ボックス型小見出しの文字の色とか */
 .titleBox{
 background-color: #ffc766;
 padding: 10px 20px;
@@ -138,7 +160,7 @@ font-weight: bold;
 margin-right:auto;
 }
 
-/* 右側に線を引く用のCSS*/
+/* ボックスの右の線 */
 .yorushikaBox::after {
 content: ''; 					/* 擬似要素には必須 */
 position: absolute;
@@ -151,6 +173,7 @@ transform: translateY(-50%); 	/* 垂直方向の中心に調整 */
 z-index: 0; 					/* 四角い箱の下に配置 */
 }
 
+/* 大きめの本文 */
 .subhead{
 font-size: 20px;
 margin: 20px auto 0;
@@ -165,74 +188,99 @@ overflow-wrap: break-word; /* 要素からはみ出さないように強制的�
 word-break: break-all; /* 単語の途中でも強制的に改行する。 */
 }
 
+/* 小さめの本文 */
 .mainText{
 font-size: 15px;
 margin: 20px auto 0;
+width: 75%;
 }
 
+.mainFlex{
+display: flex;
+}
+
+.mainText > div{
+margin: auto 20px;
+}
+
+.ratio{
+font-size: 22px;
+font-family: "Yusei Magic", sans-serif;
+color: #1f1f1f;
+}
+
+.leftLine{
+border-left: 3px solid #e3e3e3;
+padding-left: 40px;
+}
+
+/* タブ設定 */
 .tab-4 {
-	display: flex;
-	margin: 0 auto;
-	max-width: 900px;
-	flex-direction: row;
-	flex-wrap: wrap;
+display: flex;
+margin: 0 auto;
+flex-direction: row;
+flex-wrap: wrap;
+
 }
 
+input[type="radio"]{
+-webkit-appearance: none; /* WebKit系のブラウザ（Chrome, Safariなど）に対応 */
+-moz-appearance: none;    /* Firefoxに対応 */
+appearance: none;         /* 標準的なCSSプロパティ */
+display: none;
+}
+
+/* なくても動作はするががあった方が良い */
+.tab-4 > input,
+.tab-4 > label,
+.tab-4 > .tab-content {
+order: 2; /* すべての子要素はデフォルトで2に設定 */
+}
+
+/* タブ選択のデザイン */
 .tab-4>label {
-	flex-grow: 1;
-	flex-shrink: 1;
-	padding: .7em 1em .5em;
-	order: -2;
-	min-width: 70px;
-	background-color: #f2f2f2;
-	color: #999;
-	font-weight: 600;
-	font-size: .9em;
-	text-align: center;
-	cursor: pointer;
-	padding: .7em 1em .5em;
+flex-grow: 1;
+flex-shrink: 1;
+padding: .7em 1em .5em;
+min-width: 70px;
+background-color: #fff;
+color: #999;
+font-weight: 600;
+font-size: 20px;
+text-align: center;
+cursor: pointer;
+order: 1;
 }
 
 .tab-4>label:hover {
 	opacity: .8;
 }
 
-.tab-4 input {
-	display: none;
+.tab-4 .tab-content {
+display: none;
+animation: fadeIn .7s ease;
+width: 100%;
+background-color: #fff;
+
 }
 
-.tab-4>div {
-	display: none;
-	padding: 1.5em 1em;
-	width: 100%;
-	background-color: #fff;
+.tab-4 input[type="radio"]:checked + label {
+    border-bottom: 4px solid #ffdd00;
+    color: #ffdd00;
 }
 
-.tab-4 label:has(:checked) {
-	border-bottom: 4px solid #ffdd00;
-	color: #ffdd00;
+/* タブを選んだ時にtab-contentを表示するようにする */
+.tab-4 input[type="radio"]:checked + label + .tab-content {
+    display: block;
 }
 
-.tab-4 label:has(:checked)+div {
-	display: block;
-}
-
-.details-content {
-	padding: 20px;
-	height: 70px;
-	overflow: hidden;
-	overflow-y: auto;
-	background-color: #fff;
-}
-
-.details[open] .details-content {
-	animation: fadeIn .3s ease;
-}
-
+/* なくてもいいアニメーション */
 @keyframes fadeIn { 0% {
-	opacity: 0;
-	transform: translateY(-10px);
+opacity: 0;
+transform: translateY(-10px);
 }
+
+
 
 </style>
 
@@ -248,7 +296,7 @@ margin: 20px auto 0;
 			<h1 id="link-line">個人目標詳細</h1>
 			</div>
 			
-			<div id="seal">
+			<div class="seal">
 				<!-- 経営テーマのボックス -->
 				<div class="yorushikaLine">
 				経営テーマ
@@ -278,34 +326,97 @@ margin: 20px auto 0;
 				<span class="titleBox">現状と課題</span>
 				</div>
 				<div class="subhead"><%=situationChallenge%></div>
+				</div>
 				
+				<div class="seal">
 				<!-- 経営テーマのボックス -->
 				<div class="yorushikaLine">
 				目標を達成するためのステップ
 				</div>
-				<div class="tab-4" >
+				<div class="tab-4" style="min-height: 30px;" >
 				<%
 				if (goalQuarterList != null) {
 					for (int i = 0; i < goalQuarterList.size(); i++) {
 				%>
-						<label>
-						<input type="radio" name="tab-4"  <% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
-						</label>
+						<input type="radio" id="tab-<%=i%>" name="tab-group" <% if(i == 0){ %>checked<%} %>>
+						<label for="tab-<%=i%>" class="tab-label">第<%=i + 1%>四半期</label>
+				
+						<div id="tab-<%=i%>-content" class="tab-content">
+							<div class="yorushikaBox">
+								<span class="titleBox">小目標</span>
+							</div>
+							<div class="mainText"><%=goalQuarterList.get(i).getSmallGoal()%></div>
 						
-						<div class="yorushikaBox">
-							<span class="titleBox">小目標</span>
+							<div class="yorushikaBox">
+								<span class="titleBox">評価基準・材料</span>
+							</div>
+							<div class="mainText"><%=goalQuarterList.get(i).getJudgeMaterial()%></div>
+						
+							<div class="yorushika">本人記入</div>
+							
+							<div class="yorushikaBox">
+									<span class="titleBox">報告内容</span>
+								</div>
+								<div class="mainText mainFlex">
+									<div class="ratio"><%=goalQuarterList.get(i).getAchieveRate()%>%</div>
+									<div class="yorushikaRine">|</div>
+									<div><%=goalQuarterList.get(i).getReport()%></div>
+								</div>
+							
+							<div class="yorushika">評価者記入</div>
+							
+								<div class="yorushikaBox">
+									<span class="titleBox">報告内容</span>
+								</div>
+								<div class="mainText mainFlex">
+									<div class="ratio"><%=goalQuarterList.get(i).getAchieveRateReviewer()%>%</div>
+									<div class="yorushikaRine">|</div>
+									<div>
+									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
+									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
+									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
+									</div>
+									<!-- <div><%=goalQuarterList.get(i).getEvaluation()%></div> -->
+								</div>
+								
 						</div>
-						<div class="mainText  details-content"><%=goalQuarterList.get(i).getSmallGoal()%></div>
-						
-						
-						
+
 				<%
 					}
 				}
 				%>
 				</div>
+				</div>
+
+				<div class="seal">
+				<div class="yorushikaLine">年間結果</div>
+				<div class="yorushika">本人記入</div>
+				<div class="yorushikaBox">
+					<span class="titleBox">報告内容</span>
+				</div>
 				
-			</div>
+				<div class="mainText mainFlex">
+				<div class="ratio"><%=result%>%</div>
+				<div class="yorushikaRine">|</div>
+				<div><%=resultComment%></div>
+				</div>
+				
+				<div class="yorushika">評価者記入</div>
+				
+				<div class="yorushikaBox">
+					<span class="titleBox">報告を受けての評価</span>
+				</div>
+				<div class="mainText mainFlex">
+				<div class="ratio"><%=resultReviewer%>%</div>
+				
+				<div class="leftLine"><%=resultCommentReviewer%>
+				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
+				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
+				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
+				</div>
+				</div>
+
+				</div>
 		</div>
 		</div>
 	</div>
