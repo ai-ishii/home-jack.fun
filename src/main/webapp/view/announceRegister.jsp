@@ -10,7 +10,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%
-//JackWorksの全情報が格納されたjack_listを受け取る
+//エラーの内容が格納されたerrorを受け取る
 String error = (String) request.getAttribute("error");
 %>
 
@@ -133,6 +133,7 @@ color:red;
 						if(error != null){
 						%>
 						
+						<!-- 時刻解析のエラー表示 -->
 						<span><%= error %></span>
 						
 						<% } %>

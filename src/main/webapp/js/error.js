@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded',() => {
 					//未入力の場合にエラー表示する
 					if(elem.value.length === 0){
 						elem.classList.add("error-back");
-						createError(elem,'値を入力してください。');
+						createError(elem,'文字または数字を入力してください。');
 						//エラーのフラグを変更
 						errorFlag = true;
 					}else{

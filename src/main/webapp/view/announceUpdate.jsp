@@ -21,6 +21,7 @@ int categoryId = announce.getAnnounceCategoryId();
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
@@ -95,13 +96,13 @@ color:red;
 		<!-- メイン部分 -->
 		<div id="main" class="container">
 			<form action="<%=request.getContextPath()%>/announceUpdate"
-				method="post" class="container">
+				method="post" class="container error-form">
 				<div id="content_box">
 
 					<div class="form_box" class="container">
 						<label for="title" class="control_label">タイトル<span>*</span></label> <input
 							type="text" id="title" name="title"
-							value="<%=announce.getTitle()%>" required>
+							value="<%=announce.getTitle()%>" class='required'>
 					</div>
 
 					<div class="form_box tiny_form">
@@ -137,7 +138,7 @@ color:red;
 
 					<div class="form_box">
 						<label for="text" class="control_label">本文<span>*</span></label>
-						<textarea id="text" name="text" rows="5" cols="15" required><%=announce.getText()%></textarea>
+						<textarea id="text" name="text" rows="5" cols="15" class='required'><%=announce.getText()%></textarea>
 					</div>
 
 					<div class="form_box">
@@ -149,17 +150,15 @@ color:red;
 						value="<%=announce.getAnnounceId()%>">
 
 					<div class="btm_box">
-						<input onclick="location.href='<%=request.getContextPath()%>
-							/announceDetail?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
+						<input onclick="location.href='<%=request.getContextPath()%>/announceDetail?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
 							type="button" value="キャンセル"> 
 						<input type="submit" value="一時保存"> 
 						<input type="submit" value="編集確定">
 					</div>
-					
-					<a href="<%=request.getContextPath()%>/announceDelete
-					?announceId=<%=announce.getAnnounceId()%>"
+					<div>
+					<a href="<%=request.getContextPath()%>/announceDelete?announceId=<%=announce.getAnnounceId()%>"
 					onclick="return confirm('本当に削除しますか？')">削除</a>
-					
+					</div>
 				</div>
 			</form>
 		</div>
