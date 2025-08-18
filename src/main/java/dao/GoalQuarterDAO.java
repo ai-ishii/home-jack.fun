@@ -5,12 +5,13 @@
  * 
  * 作成日：7月10日
  * 
- * 最終更新日：8月12日
+ * 最終更新日：8月18日
  * 
  */
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -37,16 +38,17 @@ public class GoalQuarterDAO {
 
 		//SQL文
 		String sql = "SELECT "
-				+ "goal_quarter_id, "
-				+ "small_goal, "
-				+ "judge_material, "
-				+ "achieve_rate, "
-				+ "report, "
-				+ "achieve_rate_reviewer, "
-				+ "evaluation, "
-				+ "quarterly_flag "
-				+ "FROM goal_quarter_info "
-				+ "WHERE goal_id=" + goalId;
+						+ "goal_quarter_id, "
+						+ "small_goal, "
+						+ "judge_material, "
+						+ "achieve_rate, "
+						+ "report, "
+						+ "achieve_rate_reviewer, "
+						+ "evaluation, "
+						+ "quarterly_flag "
+						+ "FROM goal_quarter_info "
+					+ "WHERE "
+						+ "goal_id=" + goalId;
 
 		try {
 			con = DAOconnection.getConnection();
@@ -91,6 +93,70 @@ public class GoalQuarterDAO {
 			}
 		}
 		return goalQuarterList;
+	}
+	
+	/**
+	 * 
+	 * @param goalQuarter
+	 * @throws IllegalStateException 例外が発生した場合
+	 */
+	public void update(GoalQuarter goalQuarter) {
+
+		Connection con = null;
+		PreparedStatement smt = null;
+
+		//SQL文
+		String sql = "UPDATE "
+						+ "goal_quarter_info "
+					+ "SET "
+						+ "small_goal=?,"
+						+ "judge_material=?,"
+						+ "achieve_rate=?,"
+						+ "report=?,"
+						+ "achieve_rate_reviewer=?,"
+						+ "evaluation=?, "
+						+ "quarterly_flag=? "
+					+ "WHERE "
+						+ "goal_quarter_id = ?";
+		try {
+			con = DAOconnection.getConnection();
+			smt = con.prepareStatement(sql);
+
+			smt.setString(1, goalQuarter.getSmallGoal());
+			smt.setString(2, goalQuarter.getJudgeMaterial());
+			smt.setInt(3, goalQuarter.getAchieveRate());
+			smt.setString(4, goalQuarter.getReport());
+			smt.setInt(5, goalQuarter.getAchieveRateReviewer());
+			smt.setString(6, goalQuarter.getEvaluation());
+			smt.setInt(7, goalQuarter.getQuarterlyFlag());
+			smt.setInt(8, goalQuarter.getGoalQuarterId());
+
+			//SQL文をDBに移行
+			smt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.err.println("goalQuarterDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("goalQuarterDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (smt != null) {
+					smt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+				if (smt != null) {
+					smt.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("goalQuarterDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("goalQuarterDAOの不明なエラー: " + e.getMessage());
+			}
+		}
 	}
 
 }

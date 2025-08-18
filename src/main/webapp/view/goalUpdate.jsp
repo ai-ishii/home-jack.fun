@@ -5,9 +5,9 @@
 
 　作成日：7月14日
 
-　最終更新日：8月12日
+　最終更新日：8月18日
  -->
- <%@page import="bean.Goal"%>
+<%@page import="bean.Goal"%>
 <%@page import="bean.GoalQuarter"%>
 <%@page import="bean.GoalDepartment"%>
 <%@page import="java.util.ArrayList"%>
@@ -330,7 +330,7 @@ keyframes fadeIn { 0% {
 	opacity: .8;
 }
 
-.tab-4 input {
+.tab-4 input[type="radio"] {
 	display: none;
 }
 
@@ -420,7 +420,8 @@ keyframes fadeIn { 0% {
 								for (int i = 0; i < goalQuarterList.size(); i++) {
 							%>
 
-							<label> <input type="radio" name="tab-4"<% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
+							<label> 
+								<input type="radio" name="tab-4"<% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
 							</label>
 								<div class="goalpadding">
 									<div class="contents">
@@ -437,28 +438,44 @@ keyframes fadeIn { 0% {
 											placeholder="例　レポートの発表"><%=goalQuarterList.get(i).getJudgeMaterial()%></textarea>
 									</div>
 									<div class="flex">
-									<h3 style="flex-shrink: 3;">達成率</h3>
-									<h3 style="">報告内容</h3>
-								</div>
-										<div style="width: 80%; margin: 0 auto;">
-											<div class="flex">
-												<textarea class="details-content"
-													name="achieve_rate<%=i + 1%>" rows="10" style="flex: 1"
-													placeholder="例　80%"><%=goalQuarterList.get(i).getAchieveRate()%>%</textarea>
-												<textarea class="details-content" name="report<%=i + 1%>"
-													rows="10" style="flex: 3" placeholder="例　〇〇することができました。"><%=goalQuarterList.get(i).getReport()%></textarea>
+										<h3 style="flex-shrink: 3;">達成率</h3>
+										<h3 style="">報告内容</h3>
+									</div>
+									<div style="width: 80%; margin: 0 auto;">
+										<div class="flex">
+											<div class="details-content">
+												<input 
+													type="number" 
+													name="achieve_rate<%=i + 1%>" 
+													placeholder="例　80%" 
+													value="<%=goalQuarterList.get(i).getAchieveRate()%>">%
+											</div>
+											<div class="details-content">
+												<textarea 
+													name="report<%=i + 1%>" 
+													placeholder="例　〇〇することができました。">
+													<%=goalQuarterList.get(i).getReport()%>
+												</textarea>
 											</div>
 										</div>
+									</div>
 									<div class="contents">
 										<h3>達成率 報告を受けての評価</h3>
 										<div style="width: 80%; margin: 0 auto;">
 											<div class="flex">
-												<textarea class="details-content"
-													name="achieve_rate_reviewer<%=i + 1%>" rows="10"
-													style="flex: 1" placeholder="例　80"><%=goalQuarterList.get(i).getAchieveRateReviewer()%>%</textarea>
-												<textarea class="details-content"
-													name="evaluation<%=i + 1%>" rows="10" style="flex: 3"
-													placeholder="例　上出来です。"><%=goalQuarterList.get(i).getEvaluation()%></textarea>
+												<div class="details-content">
+													<input 
+														type="number" 
+														name="achieve_rate_reviewer<%=i + 1%>" 
+														placeholder="例　80" 
+														value="<%=goalQuarterList.get(i).getAchieveRateReviewer()%>">%
+												</div>
+												<div class="details-content">
+													<textarea
+														name="evaluation<%=i + 1%>" rows="10" style="flex: 3"
+														placeholder="例　上出来です。"><%=goalQuarterList.get(i).getEvaluation()%>
+													</textarea>
+												</div>
 												<input type="hidden" name="quarterly_flag<%=i + 1%>"
 													value="<%=goalQuarterList.get(i).getQuarterlyFlag()%>">
 											</div>
@@ -486,7 +503,7 @@ keyframes fadeIn { 0% {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea name="result" rows="10" cols="80" placeholder="例　100"><%=result%>%</textarea>
+								<input type="number" name="result" placeholder="例　100" value="<%=result%>">%
 							</div>
 							<div style="width: 80%">
 								<textarea name="result_comment" rows="10" cols="80"
@@ -503,8 +520,8 @@ keyframes fadeIn { 0% {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea name="result_reviewer" rows="10" cols="80"
-									placeholder="例　100"><%=resultReviewer%>%</textarea>
+								<input type="number" name="result_reviewer"
+									placeholder="例　100" value="<%=resultReviewer%>">%
 							</div>
 							<div style="width: 80%">
 								<textarea name="result_comment_reviewer" rows="10" cols="80"
