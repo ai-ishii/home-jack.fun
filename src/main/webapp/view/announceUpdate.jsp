@@ -83,7 +83,7 @@ input[type="submit"], input[type="button"] {
 	margin: 10px;
 }
 
-span{
+.error , .warning{
 color:red;
 }
 </style>
@@ -100,19 +100,19 @@ color:red;
 				<div id="content_box">
 
 					<div class="form_box" class="container">
-						<label for="title" class="control_label">タイトル<span>*</span></label> <input
+						<label for="title" class="control_label">タイトル<span class="warning">*</span></label> <input
 							type="text" id="title" name="title"
 							value="<%=announce.getTitle()%>" class='required'>
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="update_date" class="control_label">編集日時<span>*</span></label> 
+						<label for="update_date" class="control_label">編集日時<span class="warning">*</span></label> 
 						<input type="datetime-local" id="update_date" name="update_date"
 							value="<%=announce.getRegistDate()%>" />
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="category" class="control_label">カテゴリ<span>*</span></label> 
+						<label for="category" class="control_label">カテゴリ<span class="warning">*</span></label> 
 						<select id="category" name="category_id">
 
 							<option value="1" <%if (categoryId == 1) {%> selected <%}%>>
@@ -131,13 +131,13 @@ color:red;
 					</div>
 
 					<div class="form_box">
-						<label for="announce_flag" class="control_label">重要記事<span>*</span></label>
+						<label for="announce_flag" class="control_label">重要記事<span class="warning">*</span></label>
 						<input type="checkbox" name="announce_flag" value="1">
 						<input type="hidden" name="announce_flag" value="0">
 					</div>
 
 					<div class="form_box">
-						<label for="text" class="control_label">本文<span>*</span></label>
+						<label for="text" class="control_label">本文<span class="warning">*</span></label>
 						<textarea id="text" name="text" rows="5" cols="15" class='required'><%=announce.getText()%></textarea>
 					</div>
 
