@@ -50,7 +50,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 				//registerJackworks.jspから各値を受け取り、オブジェクトに格納
 				jack.setEmployeeNumber(request.getParameter("employeeNumber"));
 				String date = request.getParameter("date");
-				Date pointDate = java.sql.Date.valueOf(format.forRegisterDate(date));
+				Date pointDate = java.sql.Date.valueOf(date);
 				jack.setPointsGetDate(pointDate);
 				jack.setName(request.getParameter("name"));
 				jack.setCategory(category);

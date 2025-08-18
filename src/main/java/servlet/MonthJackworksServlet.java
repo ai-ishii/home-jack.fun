@@ -46,17 +46,23 @@ public class MonthJackworksServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-			
+
 			//jackWorksの検索結果が格納されたjack_listを受け取る
 			ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
 			//検索された文字(name)を受け取る
 			String name = (String) request.getAttribute("name");
 
 			//SearchJackworksからcmd=searchを受け取る
-			cmd = (String) request.getAttribute("cmd");
+			cmd = (String) request.getParameter("cmd");
 
 			if (cmd == null) {
 				cmd = "";
+			}
+
+			//画面遷移のための処理
+			//後々消す
+			if (cmd.equals("change")) {
+				path = "/view/monthJackworks.jsp";
 			}
 
 			//MonthJackWorksの全情報を取得するメソッド
@@ -64,7 +70,7 @@ public class MonthJackworksServlet extends HttpServlet {
 
 			//取得したmonthJackをリクエストスコープにmonthJackで登録
 			session.setAttribute("monthJack", monthJack);
-			
+
 			//cmdをリクエストスコープにcmdで登録
 			request.setAttribute("cmd", cmd);
 			request.setAttribute("name", name);
@@ -98,7 +104,7 @@ public class MonthJackworksServlet extends HttpServlet {
 	//以下ファイル出力のための処理
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		//エラー文を格納する用の変数設定
 		String error = null;
 		//例外と遷移先情報を格納する用の変数設定
@@ -112,15 +118,27 @@ public class MonthJackworksServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-		// ファイル取得用の情報を受け取る
-		Part filePart = request.getPart("image");
-	
-		//ファイル保存先を格納する用の変数設定
-		String uploadDir = "";
-		String filePath = "";
 
-		// ファイルサイズを元にファイルの有無を確認
-		if (filePart.getSize() != 0) {
+			//SearchJackworksからcmd=changeを受け取る
+			cmd = (String) request.getParameter("cmd");
+
+			if (cmd == null) {
+				cmd = "";
+			}
+
+			//monthJackworks.jspから値を受け取る
+			String theme = request.getParameter("theme");
+			monthJack.setTheme(theme);
+			String note = request.getParameter("note");
+			monthJack.setNote(note);
+
+			// ファイル取得用の情報を受け取る(更新の場合)
+			Part filePart = request.getPart("image");
+
+			//ファイル保存先を格納する用の変数設定
+			String uploadDir = "";
+			String filePath = "";
+
 			//imageに関する情報の文字列取得
 			String contentDisposition = filePart.getHeader("content-disposition");
 			String fileName = "";
@@ -128,50 +146,48 @@ public class MonthJackworksServlet extends HttpServlet {
 			Pattern pattern = Pattern.compile("filename=\"(.*)\"");
 			//検索対象の文字列を格納
 			Matcher matcher = pattern.matcher(contentDisposition);
-			
-			// 抽出したファイル名が存在していれば抽出、なければ空白
+
+			// ファイル名が存在していれば抽出
 			if (matcher.find()) {
 				//最初の(.*)に一致する文字列を返す
 				fileName = matcher.group(1);
+
+				File file_name = new File(fileName);
+
+				// ファイル保存先のディレクトリ
+				uploadDir = getServletContext().getRealPath("/file").replace("\\", "/");
+				// アップロード先のフォルダがなければ作成
+				File uploadDirectory = new File(uploadDir);
+				if (!uploadDirectory.exists()) {
+					uploadDirectory.mkdirs();
+				}
+
+				// ファイルを指定されたディレクトリに保存
+				// （具体的には以下の階層に保存される）
+				// C:\
+				// usr\kis_java_pkg_2023\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps
+				filePath = uploadDir + "/" + file_name.getName();
+				try (InputStream inputStream = filePart.getInputStream()) {
+					//実際にファイルに保存を行う処理
+					Files.copy(inputStream, new File(filePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+				}
+
+				monthJack.setImage(file_name.getName());
+
 			} else {
-				fileName = "";
+				//登録されていたファイル名を使用する
+				String image = request.getParameter("image");
+				monthJack.setImage(image);
 			}
-
-			File file_name = new File(fileName);
-
-			// ファイル保存先のディレクトリ
-			uploadDir = getServletContext().getRealPath("/file").replace("\\", "/");
-			// アップロード先のフォルダがなければ作成
-			File uploadDirectory = new File(uploadDir);
-			if (!uploadDirectory.exists()) {
-				uploadDirectory.mkdirs();
-			}
-
-			// ファイルを指定されたディレクトリに保存
-			// （具体的には以下の階層に保存される）
-			// C:\
-			// usr\kis_java_pkg_2023\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps
-			filePath = uploadDir + "/" + file_name.getName();
-			try (InputStream inputStream = filePart.getInputStream()) {
-				//実際にファイルに保存を行う処理
-				Files.copy(inputStream, new File(filePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
-			}
-
-			monthJack.setImage(file_name.getName());
-
-			String theme = request.getParameter("theme");
-			monthJack.setTheme(theme);
-			String note = request.getParameter("note");
-			monthJack.setNote(note);
-
+			
+			//テーマ更新を行うメソッド
 			monthJackDAO.update(monthJack);
-		}
-		//MonthJackWorksの全情報を取得するメソッド
-		monthJack = monthJackDAO.selectAll();
-		
-		//取得したmonthJackをリクエストスコープにmonthJackで登録
-		session.setAttribute("monthJack", monthJack);
-		
+			//MonthJackWorksの全情報を取得するメソッド
+			monthJack = monthJackDAO.selectAll();
+
+			//取得したmonthJackをリクエストスコープにmonthJackで登録
+			session.setAttribute("monthJack", monthJack);
+
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、今月のJackWorksは登録できませんでした。";
 			cmd = "";
@@ -186,7 +202,7 @@ public class MonthJackworksServlet extends HttpServlet {
 				request.setAttribute("cmd", cmd);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
-		}
+			}
 			// pathにフォワード
 			request.getRequestDispatcher(path).forward(request, response);
 		}
