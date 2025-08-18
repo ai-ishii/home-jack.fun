@@ -107,25 +107,22 @@ width:90%;
 margin: 0 auto 40px;
 padding:10px 0 50px;
 background-color: #fff;
+border-radius: 40px; 
 }
 
 /* アンダーライン付き小見出し */
 .yorushikaLine{
-border-bottom: 4px solid #e53434;
+border-bottom: 4px solid #ff8b4d;
 width: 80%;
 font-size: 35px;
 font-family: "M PLUS 1p", sans-serif;
 font-weight: bold;
 text-align: center;
-color: #e53434;
+color: #ff8b4d;
 margin: 40px auto;
 }
 
-.yorushikaRine{
-font-size: 30px;
-color: #d1d1d1;
-padding: 0;
-}
+
 
 /* ただの色付き小見出し */
 .yorushika{
@@ -133,6 +130,8 @@ width: 75%;
 font-size: 22px;
 color: #e89b17;
 margin: 20px auto 0;
+padding-left: 10px;
+border-left: 5px solid #ff8b4d;
 }
 
 /* ボックス型小見出し */
@@ -142,7 +141,7 @@ align-items: center; 		/* 垂直方向の中央揃え */
 justify-content: center; 	/* 水平方向の中央揃え */
 position: relative; 		/* 疑似要素の位置の基準点に */
 width: 75%;
-margin: 20px auto 0;
+margin: 10px auto 0;
 /*
 margin-left: 50px;
 margin-top:20px;
@@ -176,7 +175,8 @@ z-index: 0; 					/* 四角い箱の下に配置 */
 /* 大きめの本文 */
 .subhead{
 font-size: 20px;
-margin: 20px auto 0;
+margin: 20px auto;
+padding-left: 20px;
 
 /*
 margin-left: 50px;
@@ -191,8 +191,10 @@ word-break: break-all; /* 単語の途中でも強制的に改行する。 */
 /* 小さめの本文 */
 .mainText{
 font-size: 15px;
-margin: 20px auto 0;
+margin: 20px auto;
 width: 75%;
+padding-left: 20px;
+
 }
 
 .mainFlex{
@@ -210,8 +212,21 @@ color: #1f1f1f;
 }
 
 .leftLine{
-border-left: 3px solid #e3e3e3;
+/* border-left: 3px solid #e3e3e3; */
 padding-left: 40px;
+position: relative;
+}
+
+.leftLine::before{
+content: '';
+position: absolute;
+height: 65%;
+width: 3px;
+top: 50%;
+left: 0;
+background-color: #e3e3e3;
+transform: translateY(-50%);
+
 }
 
 /* タブ設定 */
@@ -256,6 +271,7 @@ order: 1;
 	opacity: .8;
 }
 
+/* タブの中身 */
 .tab-4 .tab-content {
 display: none;
 animation: fadeIn .7s ease;
@@ -279,8 +295,6 @@ background-color: #fff;
 opacity: 0;
 transform: translateY(-10px);
 }
-
-
 
 </style>
 
@@ -351,8 +365,6 @@ transform: translateY(-10px);
 								<span class="titleBox">評価基準・材料</span>
 							</div>
 							<div class="mainText"><%=goalQuarterList.get(i).getJudgeMaterial()%></div>
-						
-							<div class="yorushika">本人記入</div>
 							
 							<div class="yorushikaBox">
 									<span class="titleBox">報告内容</span>
@@ -363,20 +375,19 @@ transform: translateY(-10px);
 									<div><%=goalQuarterList.get(i).getReport()%></div>
 								</div>
 							
-							<div class="yorushika">評価者記入</div>
+							<div class="yorushika">評価者</div>
 							
 								<div class="yorushikaBox">
 									<span class="titleBox">報告内容</span>
 								</div>
 								<div class="mainText mainFlex">
 									<div class="ratio"><%=goalQuarterList.get(i).getAchieveRateReviewer()%>%</div>
-									<div class="yorushikaRine">|</div>
-									<div>
+									<div class="leftLine">
 									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
 									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
 									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
 									</div>
-									<!-- <div><%=goalQuarterList.get(i).getEvaluation()%></div> -->
+									<!-- <div class="leftLine"><%=goalQuarterList.get(i).getEvaluation()%></div> -->
 								</div>
 								
 						</div>
@@ -390,18 +401,16 @@ transform: translateY(-10px);
 
 				<div class="seal">
 				<div class="yorushikaLine">年間結果</div>
-				<div class="yorushika">本人記入</div>
 				<div class="yorushikaBox">
 					<span class="titleBox">報告内容</span>
 				</div>
 				
 				<div class="mainText mainFlex">
 				<div class="ratio"><%=result%>%</div>
-				<div class="yorushikaRine">|</div>
-				<div><%=resultComment%></div>
+				<div class="leftLine"><%=resultComment%></div>
 				</div>
 				
-				<div class="yorushika">評価者記入</div>
+				<div class="yorushika">評価者</div>
 				
 				<div class="yorushikaBox">
 					<span class="titleBox">報告を受けての評価</span>
