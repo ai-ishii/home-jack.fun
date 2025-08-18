@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded',() => {
 				
 				//.errorDateの要素の検証
 				errorDate.forEach( (elem) => {
-					if(errorDate.value == ''){
+					if(errorDate.value === ''){
 						createError(elem,'日付が入力されていません。');	
 						errorFlag = true;
 					}
