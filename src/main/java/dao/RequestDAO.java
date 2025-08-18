@@ -8,54 +8,66 @@
  */
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import bean.AddressRequestExclusive;
+import bean.LicenseRequest;
 import bean.LicenseRequestExclusive;
 import bean.NameRequest;
+import jakarta.servlet.http.Part;
 import util.DAOconnection;
 
 public class RequestDAO {
-	
-	
-	
-	
+
 	private static final String licenseRequestSql =
-			
+
 			//R(request_info),LR(license_request_info),G(group_info),D(department_info),LI(license_info)
 			"SELECT "
-			+ "R.request_id, "
-			+ "R.applicant_id, "
-			+ "R.approver_id, "
-			+ "R.applicant, "
-			+ "R.approver, "
-			+ "R.request_date, "
-			+ "R.approval_date, "
-			+ "R.request_flag, "
-			+ "LR.license_request_id,"
-			+ "LR.group_id,"
-			+ "LR.department_id, "
-			+ "LR.exam_date, "
-			+ "LR.exam_time, "
-			+ "LR.receipt,"
-			+ "LR.license_id, "
-			+ "LR.passing, "
-			+ "G.group_name, "
-			+ "D.department_name, "
-			+ "LI.license_name "
-			+ "FROM license_request_info as LR "
-			+ "INNER JOIN request_info as R "
-			+ "ON LR.request_id = R.request_id "
-			+ "INNER JOIN group_info as G "  
-			+ "ON LR.group_id = G.group_id "
-			+ "INNER JOIN department_info as D "
-			+ "ON LR.department_id = D.department_id "
-			+ "INNER JOIN license_info as LI "
-			+ "ON LR.license_id = LI.license_id ";
+					+ "R.request_id, "
+					+ "R.applicant_id, "
+					+ "R.approver_id, "
+					+ "R.applicant, "
+					+ "R.approver, "
+					+ "R.request_date, "
+					+ "R.approval_date, "
+					+ "R.request_flag, "
+					+ "LR.license_request_id,"
+					+ "LR.group_id,"
+					+ "LR.department_id, "
+					+ "LR.exam_date, "
+					+ "LR.exam_time, "
+					+ "LR.receipt,"
+					+ "LR.license_id, "
+					+ "LR.passing, "
+					+ "G.group_name, "
+					+ "D.department_name, "
+					+ "LI.license_name "
+					+ "FROM "
+					+ "license_request_info as LR "
+					+ "INNER JOIN "
+					+ "request_info as R "
+					+ "ON "
+					+ "LR.request_id = R.request_id "
+					+ "INNER JOIN "
+					+ "group_info as G "
+					+ "ON "
+					+ "LR.group_id = G.group_id "
+					+ "INNER JOIN "
+					+ "department_info as D "
+					+ "ON "
+					+ "LR.department_id = D.department_id "
+					+ "INNER JOIN "
+					+ "license_info as LI "
+					+ "ON "
+					+ "LR.license_id = LI.license_id ";
 
 	//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -78,15 +90,18 @@ public class RequestDAO {
 			smt = con.createStatement();
 
 			//SQL文(request_infoとlicense_request_infoとgroup_infoとdepartment_infoとlicense_info)
-			String sql = licenseRequestSql+ "ORDER BY r.request_flag ASC, r.request_date DESC;"; 
+			String sql = licenseRequestSql
+					+ "ORDER BY "
+					+ "r.request_flag ASC, "
+					+ "r.request_date DESC;";
 
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
-				
+
 				//オブジェクト化
 				LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
-				
+
 				//request_info
 				licenseRequestExclusive.setRequestId(rs.getInt("request_id"));
 				licenseRequestExclusive.setApplicantId(rs.getInt("applicant_id"));
@@ -153,7 +168,7 @@ public class RequestDAO {
 		//変数宣言
 		Connection con = null;
 		PreparedStatement smt = null;
-		
+
 		boolean success = false;
 
 		//オブジェクト化
@@ -163,9 +178,13 @@ public class RequestDAO {
 			con = DAOconnection.getConnection();
 
 			//SQL文
-			String sql = licenseRequestSql +"WHERE r.request_id = ? "
-					+ "ORDER BY r.request_flag ASC, r.request_date DESC";
-			
+			String sql = licenseRequestSql
+					+ "WHERE"
+					+ " r.request_id = ? "
+					+ "ORDER BY "
+					+ "r.request_flag ASC, "
+					+ "r.request_date DESC";
+
 			//オートコミットを無効化
 			con.setAutoCommit(false);
 
@@ -205,7 +224,7 @@ public class RequestDAO {
 				//license_info
 				licenseRequestExclusive.setLicenseName(rs.getString("license_name"));
 			}
-			
+
 			con.commit();
 			success = true;
 
@@ -226,7 +245,7 @@ public class RequestDAO {
 			}
 			try {
 				if (smt != null) {
-					
+
 					smt.close();
 				}
 				if (con != null) {
@@ -241,52 +260,180 @@ public class RequestDAO {
 		}
 		return licenseRequestExclusive;
 	}
+
 	/**
-     * 氏名変更申請をデータベースに登録するメソッド
-     * @param nameRequest 登録したい申請データ
-     * @return 登録に成功した場合は true, 失敗した場合は false
-     */
-    public boolean insertNameChange(NameRequest nameRequest) {
-    	
-		
-        // try-with-resources構文で、処理が終わったら自動でリソースを閉じる
-        try {
+	 * 氏名変更申請をデータベースに登録するメソッド
+	 * @param nameRequest 登録したい申請データ
+	 * @return 登録に成功した場合は true, 失敗した場合は false
+	 */
+	public boolean insertNameChange(NameRequest nameRequest) {
 
-    		Connection con = null;
-    		PreparedStatement smt = null;
-    		
-            // 1. データベースへ接続
-        		con = DAOconnection.getConnection();
-        
-            // 2. INSERT文
-            String sql = "INSERT "
-            		+ "INTO name_request_info "
-            		+ "(old_name, "
-            		+ "old_name_kana, "
-            		+ "new_name, "
-            		+ "new_name_kana) "
-            		+ "VALUES (?, ?, ?, ?)";
-            
-            PreparedStatement pstmt = con.prepareStatement(sql);
+		// try-with-resources構文で、処理が終わったら自動でリソースを閉じる
+		try {
 
-            // 3. SQL文の「?」に値をセット
-            pstmt.setString(1, nameRequest.getOldName());
-            pstmt.setString(2, nameRequest.getOldNameKana());
-            pstmt.setString(3, nameRequest.getNewName());
-            pstmt.setString(4, nameRequest.getNewNameKana());
+			Connection con = null;
+			PreparedStatement smt = null;
 
-            // 4. INSERT文を実行し、結果（更新された行数）を取得
-            int affectedRows = pstmt.executeUpdate();
+			// 1. データベースへ接続
+			con = DAOconnection.getConnection();
 
-            // 5. 1行以上更新されていれば成功とみなし true を返す
-            return affectedRows > 0;
+			// 2. INSERT文
+			String sql = "INSERT "
+					+ "INTO name_request_info( "
+					+ "old_name, "
+					+ "old_name_kana, "
+					+ "new_name, "
+					+ "new_name_kana) "
+					+ "VALUES (?, ?, ?, ?)";
 
-        } catch (SQLException e) {
-            // エラーが発生した場合は、コンソールにエラー内容を出力
-            e.printStackTrace();
-            // 失敗したため false を返す
-            return false;
-        }
-    }
+			PreparedStatement pstmt = con.prepareStatement(sql);
+
+			// 3. SQL文の「?」に値をセット
+			pstmt.setString(1, nameRequest.getOldName());
+			pstmt.setString(2, nameRequest.getOldNameKana());
+			pstmt.setString(3, nameRequest.getNewName());
+			pstmt.setString(4, nameRequest.getNewNameKana());
+
+			// 4. INSERT文を実行し、結果（更新された行数）を取得
+			int affectedRows = pstmt.executeUpdate();
+
+			// 5. 1行以上更新されていれば成功とみなし true を返す
+			return affectedRows > 0;
+
+		} catch (SQLException e) {
+			// エラーが発生した場合は、コンソールにエラー内容を出力
+			e.printStackTrace();
+			// 失敗したため false を返す
+			return false;
+		}
+	}
+
+	/**
+	 * 住所変更申請をデータベースに登録するメソッド
+	 * @param addressRequestExclusive 登録したい申請データ
+	 * @return 登録に成功した場合は true, 失敗した場合は false
+	 */
+	public boolean insertAddressChange(AddressRequestExclusive addressRequestExclusive) {
+
+		// try-with-resources構文で、処理が終わったら自動でリソースを閉じる
+		try {
+
+			Connection con = null;
+			PreparedStatement smt = null;
+
+			// 1. データベースへ接続
+			con = DAOconnection.getConnection();
+
+			// 2. INSERT文
+			String sql = "INSERT INTO address_request_info ("
+					+ "employee_number, "
+					+ "name, "
+					+ "change_date, "
+					+ "old_post, "
+					+ "old_address, "
+					+ "new_post, "
+					+ "new_address, "
+					+ "nearest_station,"
+					+ "request_datetime) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+			smt = con.prepareStatement(sql); 
+
+			// 3. SQL文の「?」に値をセット
+			smt.setString(1, addressRequestExclusive.getEmployeenumber());
+			smt.setString(2, addressRequestExclusive.getName());
+			smt.setDate(3, Date.valueOf(addressRequestExclusive.getAddressChangedDate()));
+			smt.setString(4, addressRequestExclusive.getOldPost());
+			smt.setString(5, addressRequestExclusive.getOldAddress());
+			smt.setString(6, addressRequestExclusive.getNewPost());
+			smt.setString(7, addressRequestExclusive.getNewAddress());
+			smt.setString(8, addressRequestExclusive.getNeareststation());
+			smt.setDate(9, Date.valueOf(addressRequestExclusive.getApplicationDate()));
+			// 4. INSERT文を実行し、結果（更新された行数）を取得
+			int affectedRows = smt.executeUpdate();
+
+			// 5. 1行以上更新されていれば成功とみなし true を返す
+			return affectedRows > 0;
+
+		} catch (SQLException e) {
+			// エラーが発生した場合は、コンソールにエラー内容を出力
+			e.printStackTrace();
+			// 失敗したため false を返す
+			return false;
+		}
+	}
+
+	/**
+	 * 資格申請の情報をデータベースに登録します。
+	 * @param licenseRequest 登録するデータが格納されたDTO
+	 * @return 登録に成功した場合は true, 失敗した場合は false
+	 */
+	public boolean insertLicenseRequest(LicenseRequest licenseRequest) {
+		try {
+
+			Connection con = null;
+			PreparedStatement smt = null;
+
+			// 1. データベースへ接続
+			con = DAOconnection.getConnection();
+			// ★SQL文は実際のテーブル名とカラム名に合わせてください
+			String sql = "INSERT INTO license_request_info ("
+					+ "applicant_name, "
+					+ "department_name, "
+					+ "group_name, "
+					+ "license_name, "
+					+ "exam_date, "
+					+ "exam_time, "
+					+ "receipt_data, "
+					+ "passing_data) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			smt = con.prepareStatement(sql); 
+
+			// DTOから値を取得してPreparedStatementにセット
+			smt.setString(1, licenseRequest.getApplicant());
+			smt.setString(2, licenseRequest.getDepartmentName());
+			smt.setString(3, licenseRequest.getGroupName());
+			smt.setString(4, licenseRequest.getLicenseName());
+			smt.setDate(5, Date.valueOf(licenseRequest.getExamDate())); // LocalDateをjava.sql.Dateに変換
+			smt.setInt(6, licenseRequest.getExamTime());
+
+			// --- ファイル（Part）の処理 ---
+			Part receiptPart = licenseRequest.getReceipt();
+			Part passingPart = licenseRequest.getPassing();
+
+			// 領収書ファイル
+			if (receiptPart != null && receiptPart.getSize() > 0) {
+				// PartからInputStreamを取得してセット
+				try (InputStream receiptInputStream = receiptPart.getInputStream()) {
+					smt.setBinaryStream(7, receiptInputStream, receiptPart.getSize());
+				}
+			} else {
+				// ファイルが添付されていない場合はNULLをセット
+				smt.setNull(7, java.sql.Types.BLOB);
+			}
+
+			// 合格証ファイル
+			if (passingPart != null && passingPart.getSize() > 0) {
+				// PartからInputStreamを取得してセット
+				try (InputStream passingInputStream = passingPart.getInputStream()) {
+					smt.setBinaryStream(8, passingInputStream, passingPart.getSize());
+				}
+			} else {
+				// ファイルが添付されていない場合はNULLをセット
+				smt.setNull(8, java.sql.Types.BLOB);
+			}
+
+			// INSERT文を実行し、更新された行数を取得
+			int affectedRows = smt.executeUpdate();
+
+			// 1行以上更新されていれば成功とみなす
+			return affectedRows > 0;
+
+		} catch (SQLException | IOException e) {
+			// SQLエラーまたはファイルのI/Oエラーが発生した場合
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
-

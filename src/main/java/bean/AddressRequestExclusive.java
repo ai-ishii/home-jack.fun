@@ -11,13 +11,12 @@
 
 package bean;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class AddressRequestExclusive {
 	
 		private int requestId;          			//申請ID
-		private Timestamp applicationDate;     		//申請日時
+		private LocalDate applicationDate;     		//申請日時
 		private String name;          				//申請者名
 		private int addressRequestId;      		//住所申請ID
 		private String oldAddress;        			//旧住所  
@@ -37,10 +36,10 @@ public class AddressRequestExclusive {
 		public void setRequestId(int requestId) {
 			this.requestId = requestId;
 		}
-		public Timestamp getApplicationDate() {
+		public LocalDate getApplicationDate() {
 			return applicationDate;
 		}
-		public void setApplicationDate(Timestamp applicationDate) {
+		public void setApplicationDate(LocalDate applicationDate) {
 			this.applicationDate = applicationDate;
 		}
 		public String getName() {

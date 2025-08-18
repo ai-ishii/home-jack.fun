@@ -43,12 +43,26 @@ String user_name = (String)session.getAttribute("user_name");
 						<a href="<%= request.getContextPath() %>/monthJackworks"><p class="ketchup">Jackworks</p></a>
 					</li>
 					<li>
-						<p class="egg">申請</p>
+						<p class="ketchup">申請</p>
 						<ul class="ketchup-detail">
 							<li>
-								<a href="<%= request.getContextPath() %>/jackworksSearch">社員紹介</a>
+								<a href="<%= request.getContextPath() %>/view/RequestMenu.jsp">申請メニュー</a>
 							</li>
-							<li>wii</li>
+							<li>
+								<a href="<%= request.getContextPath() %>/view/addressChangeForm.jsp">住所申請</a>
+							</li>
+							<li>
+								<a href="<%= request.getContextPath() %>/view/RequestMenu.jsp">画像アップロード</a>
+							</li>
+							<li>
+								<a href="<%= request.getContextPath() %>/view/nameChangeForm.jsp">氏名申請</a>
+							</li>
+							<li>
+								<a href="<%= request.getContextPath() %>/view/RequestMenu.jsp">資格申請</a>
+							</li>
+							<li>
+								<a href="<%= request.getContextPath() %>/view/monthJackworks">社員紹介</a>
+							</li>
 						</ul>
 					</li>
 					<li>

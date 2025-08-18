@@ -107,7 +107,7 @@
 					<h1 style="text-align: center">-申請メニュー-</h1>
 					<div class="button-spacing">
 
-						<a href="#" class="btn btn-arrow"> <i
+						<a href="<%= request.getContextPath() %>/view/addressChangeForm.jsp" class="btn btn-arrow"> <i
 							class="fa-solid fa-envelope"></i> <span>住所変更申請</span> <i
 							class="fa-solid fa-chevron-right"></i>
 						</a>
@@ -119,7 +119,7 @@
 						</a>
 					</div>
 					<div class="button-spacing">
-						<a href="#" class="btn btn-arrow"> <i
+						<a href="<%= request.getContextPath() %>/view/nameChangeForm.jsp" class="btn btn-arrow"> <i
 							class="fa-solid fa-envelope"></i> <span>氏名変更申請</span> <i
 							class="fa-solid fa-chevron-right"></i>
 						</a>
