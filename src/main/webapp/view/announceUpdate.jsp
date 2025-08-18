@@ -21,6 +21,7 @@ int categoryId = announce.getAnnounceCategoryId();
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
@@ -82,7 +83,7 @@ input[type="submit"], input[type="button"] {
 	margin: 10px;
 }
 
-span{
+.error , .warning{
 color:red;
 }
 </style>
@@ -95,23 +96,23 @@ color:red;
 		<!-- メイン部分 -->
 		<div id="main" class="container">
 			<form action="<%=request.getContextPath()%>/announceUpdate"
-				method="post" class="container">
+				method="post" class="container error-form">
 				<div id="content_box">
 
 					<div class="form_box" class="container">
-						<label for="title" class="control_label">タイトル<span>*</span></label> <input
+						<label for="title" class="control_label">タイトル<span class="warning">*</span></label> <input
 							type="text" id="title" name="title"
-							value="<%=announce.getTitle()%>" required>
+							value="<%=announce.getTitle()%>" class='required'>
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="update_date" class="control_label">編集日時</label> 
+						<label for="update_date" class="control_label">編集日時<span class="warning">*</span></label> 
 						<input type="datetime-local" id="update_date" name="update_date"
 							value="<%=announce.getRegistDate()%>" />
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="category" class="control_label">カテゴリ</label> 
+						<label for="category" class="control_label">カテゴリ<span class="warning">*</span></label> 
 						<select id="category" name="category_id">
 
 							<option value="1" <%if (categoryId == 1) {%> selected <%}%>>
@@ -130,14 +131,14 @@ color:red;
 					</div>
 
 					<div class="form_box">
-						<label for="announce_flag" class="control_label">重要記事</label>
+						<label for="announce_flag" class="control_label">重要記事<span class="warning">*</span></label>
 						<input type="checkbox" name="announce_flag" value="1">
 						<input type="hidden" name="announce_flag" value="0">
 					</div>
 
 					<div class="form_box">
-						<label for="text" class="control_label">本文<span>*</span></label>
-						<textarea id="text" name="text" rows="5" cols="15" required><%=announce.getText()%></textarea>
+						<label for="text" class="control_label">本文<span class="warning">*</span></label>
+						<textarea id="text" name="text" rows="5" cols="15" class='required'><%=announce.getText()%></textarea>
 					</div>
 
 					<div class="form_box">
@@ -149,17 +150,15 @@ color:red;
 						value="<%=announce.getAnnounceId()%>">
 
 					<div class="btm_box">
-						<input onclick="location.href='<%=request.getContextPath()%>
-							/announceDetail?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
+						<input onclick="location.href='<%=request.getContextPath()%>/announceDetail?announceId=<%=announce.getAnnounceId()%>&cmd=detail'"
 							type="button" value="キャンセル"> 
 						<input type="submit" value="一時保存"> 
 						<input type="submit" value="編集確定">
 					</div>
-					
-					<a href="<%=request.getContextPath()%>/announceDelete
-					?announceId=<%=announce.getAnnounceId()%>"
+					<div>
+					<a href="<%=request.getContextPath()%>/announceDelete?announceId=<%=announce.getAnnounceId()%>"
 					onclick="return confirm('本当に削除しますか？')">削除</a>
-					
+					</div>
 				</div>
 			</form>
 		</div>

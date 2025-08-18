@@ -1,21 +1,24 @@
 /*
- * 機能：JSPのフォームで入力された内容をExcelに反映させる機能
+ * 機能：JSPで入力された内容をエクセルに反映させる機能
  * 
  * 作成者：桑原岳
  * 
- * 最終更新日：2025/08/07
+ * 最終更新日：2025/08/14
  * 
  * */
 
 package servlet;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.time.LocalDate; // ★LocalDateをインポート
-import java.util.stream.Stream;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
+import org.apache.poi.openxml4j.exceptions.OpenXML4JRuntimeException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -30,87 +33,100 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/jspToExcel")
 public class JspToExcelServlet extends HttpServlet {
 
-	private void setCellValueSafe(Sheet sheet, int rowIndex, int cellIndex, String value) {
-		if (sheet.getRow(rowIndex) == null) {
-			sheet.createRow(rowIndex);
-		}
-		if (sheet.getRow(rowIndex).getCell(cellIndex) == null) {
-			sheet.getRow(rowIndex).createCell(cellIndex);
-		}
-		sheet.getRow(rowIndex).getCell(cellIndex).setCellValue(value);
-	}
+    private void setCellValueSafe(Sheet sheet, int rowIndex, int cellIndex, String value) {
+        if (sheet.getRow(rowIndex) == null) {
+            sheet.createRow(rowIndex);
+        }
+        if (sheet.getRow(rowIndex).getCell(cellIndex) == null) {
+            sheet.getRow(rowIndex).createCell(cellIndex);
+        }
+        sheet.getRow(rowIndex).getCell(cellIndex).setCellValue(value != null ? value : "");
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		request.setCharacterEncoding("UTF-8");
-		
-		// フォームに存在するパラメータのみ取得する
-		String employeeNumber = request.getParameter("employeenumber");
-		String name = request.getParameter("name");
-		// JSPのname属性に合わせて "addressChangedDate" を取得
-		String changeDate = request.getParameter("addressChangedDate");
-		String oldPost = request.getParameter("oldpost");
-		String oldAddress = request.getParameter("oldaddress");
-		String newPost = request.getParameter("newpost");
-		String newAddress = request.getParameter("newaddress");
-		String nearestStation = request.getParameter("neareststation");
+        request.setCharacterEncoding("UTF-8");
 
-		// チェックする項目をフォームに存在するパラメータのみにする
-		boolean hasMissingFields = Stream.of(employeeNumber, name, changeDate,
-				oldPost, oldAddress, newPost, newAddress, nearestStation)
-				.anyMatch(s -> s == null || s.trim().isEmpty());
 
-		if (hasMissingFields) {
-			request.setAttribute("errorMessage", "入力されていない欄があるため再入力をお願いします。");
-			getServletContext().getRequestDispatcher("/view/addressChangeForm.jsp").forward(request, response);
-			return;
-		}
+        //　1. フォームデータの受け取り
+        String employeeNumber = request.getParameter("employeenumber");
+        String name = request.getParameter("name");
+        String strAddressChangeDate = request.getParameter("addressChangedDate");
+        String oldPost = request.getParameter("oldpost");
+        String oldAddress = request.getParameter("oldaddress");
+        String newPost = request.getParameter("newpost");
+        String newAddress = request.getParameter("newaddress");
+        String nearestStation = request.getParameter("neareststation");
 
-		// 「申請日時」は現在の日付を自動で取得する
-		LocalDate today = LocalDate.now();
-		String applicationYear = String.valueOf(today.getYear());
-		String applicationMonth = String.valueOf(today.getMonthValue());
-		String applicationDay = String.valueOf(today.getDayOfMonth());
 
-		// 「変更日時」の区切り文字を "/" から "-" に変更
-		String[] changeParts = changeDate.split("-");
-		String changeYear = changeParts[0];
-		String changeMonth = changeParts[1];
-		String changeDay = changeParts[2];
 
-		String templatePath = getServletContext().getRealPath("/WEB-INF/住所変更届のコピー.xlsx");
+        // 2. 日付形式の検証
+        LocalDate addressChangeDate;
+        try {
+            addressChangeDate = LocalDate.parse(strAddressChangeDate);
+        } catch (DateTimeParseException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "日付の形式が正しくありません。「YYYY-MM-DD」形式で入力してください。");
+            return;
+        }
+        
+        LocalDate today = LocalDate.now();
+        String strYear = String.valueOf(today.getYear());
+        String strMonth = String.valueOf(today.getMonthValue());
+        String strDay = String.valueOf(today.getDayOfMonth());
+        String changeYear = String.valueOf(addressChangeDate.getYear());
+        String changeMonth = String.valueOf(addressChangeDate.getMonthValue());
+        String changeDay = String.valueOf(addressChangeDate.getDayOfMonth());
 
-		try (InputStream fis = new FileInputStream(templatePath);
-				Workbook workbook = new XSSFWorkbook(fis);
-				ServletOutputStream out = response.getOutputStream()) {
+        // 3. Excel処理の開始
+        String templatePath = getServletContext().getRealPath("/WEB-INF/住所変更届のコピー.xlsx");
 
-			Sheet sheet = workbook.getSheetAt(0);
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        String fileName = "住所変更届.xlsx";
+        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+        response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedFileName);
 
-			setCellValueSafe(sheet, 3, 26, applicationYear);
-			setCellValueSafe(sheet, 3, 32, applicationMonth);
-			setCellValueSafe(sheet, 3, 36, applicationDay);
-			setCellValueSafe(sheet, 6, 0, employeeNumber);
-			setCellValueSafe(sheet, 6, 11, name);
-			setCellValueSafe(sheet, 9, 14, changeYear);
-			setCellValueSafe(sheet, 9, 22, changeMonth);
-			setCellValueSafe(sheet, 9, 30, changeDay);
-			setCellValueSafe(sheet, 10, 16, newPost);
-			setCellValueSafe(sheet, 11, 14, newAddress);
-			setCellValueSafe(sheet, 12, 16, oldPost);
-			setCellValueSafe(sheet, 13, 14, oldAddress);
-			setCellValueSafe(sheet, 14, 14, nearestStation);
+        try (InputStream fis = new FileInputStream(templatePath);
+             Workbook workbook = new XSSFWorkbook(fis);
+             ServletOutputStream out = response.getOutputStream()) {
 
-			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			String fileName = "住所変更届のコピー.xlsx";
-			String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
-			response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedFileName);
+            Sheet sheet = workbook.getSheetAt(0);
+            if (sheet == null) {
+                throw new IOException("テンプレートファイルにシートが存在しません。ファイルが破損している可能性があります。");
+            }
 
-			workbook.write(out);
+            setCellValueSafe(sheet, 3, 26, strYear);
+            setCellValueSafe(sheet, 3, 32, strMonth);
+            setCellValueSafe(sheet, 3, 36, strDay);
+            setCellValueSafe(sheet, 6, 0, employeeNumber);
+            setCellValueSafe(sheet, 6, 11, name);
+            setCellValueSafe(sheet, 9, 14, changeYear);
+            setCellValueSafe(sheet, 9, 22, changeMonth);
+            setCellValueSafe(sheet, 9, 30, changeDay);
+            setCellValueSafe(sheet, 10, 16, newPost);
+            setCellValueSafe(sheet, 11, 14, newAddress);
+            setCellValueSafe(sheet, 12, 16, oldPost);
+            setCellValueSafe(sheet, 13, 14, oldAddress);
+            setCellValueSafe(sheet, 14, 14, nearestStation);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Excelファイルの生成中にエラーが発生しました。");
-		}
-	}
+            workbook.write(out);
+
+        } catch (FileNotFoundException e) {
+            System.err.println("【エラー】Excelテンプレートファイルが見つかりません。パスとファイル名を確認してください。 Path: " + templatePath);
+            e.printStackTrace();
+        } catch (IOException e) {
+            String message = e.getMessage();
+            if (message != null && message.contains("Broken pipe")) {
+                System.out.println("【情報】クライアントが接続を閉じました。ファイル送信を中断します。");
+            } else {
+                System.err.println("【エラー】Excelファイルの読み書き中にIOエラーが発生しました。テンプレートファイルが破損している可能性があります。");
+                e.printStackTrace();
+            }
+        } catch (OpenXML4JRuntimeException e) {
+            System.out.println("【情報】POIライブラリがファイルの保存に失敗しました。クライアントが接続を閉じた可能性が高いです。");
+        } catch (Exception e) {
+            System.err.println("【エラー】Excel処理中に予期せぬエラーが発生しました。入力値やプログラムのロジックを確認してください。");
+            e.printStackTrace();
+        }
+    }
 }

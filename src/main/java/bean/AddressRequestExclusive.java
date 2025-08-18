@@ -11,22 +11,22 @@
 
 package bean;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class AddressRequestExclusive {
 	
-		private int requestId;          		//申請ID
-		private Timestamp applicationDate;     //申請日時
-		private String name;          			//申請者名
-		private int addressRequestId;      	//住所申請ID
-		private String oldAddress;        		//旧住所  
-		private String newAddress;  			//新住所
-		private String oldPost;					//旧郵便番号
-		private String newPost; 				//新郵便番号
-		private Date addressChangedDate;       //住所変更日時
-		private String employeenumber;        	//社員番号
-		private String neareststation; 			//最寄り駅
+		private int requestId;          			//申請ID
+		private Timestamp applicationDate;     		//申請日時
+		private String name;          				//申請者名
+		private int addressRequestId;      		//住所申請ID
+		private String oldAddress;        			//旧住所  
+		private String newAddress;  				//新住所
+		private String oldPost;						//旧郵便番号
+		private String newPost; 					//新郵便番号
+		private LocalDate  addressChangedDate; 		//住所変更日時
+		private String employeeNumber;        		//社員番号
+		private String nearestStation; 				//最寄り駅
 		
 		
 		
@@ -79,23 +79,23 @@ public class AddressRequestExclusive {
 		public void setNewPost(String newPost) {
 			this.newPost = newPost;
 		}
-		public Date getAddressChangedDate() {
+		public LocalDate  getAddressChangedDate() {
 			return addressChangedDate;
 		}
-		public void setAddressChangedDate(Date addressChangedDate) {
+		public void setAddressChangedDate(LocalDate  addressChangedDate) {
 			this.addressChangedDate = addressChangedDate;
 		}
 		public String getEmployeenumber() {
-			return employeenumber;
+			return employeeNumber;
 		}
 		public void setEmployeenumber(String employeenumber) {
-			this.employeenumber = employeenumber;
+			this.employeeNumber = employeenumber;
 		}
 		public String getNeareststation() {
-			return neareststation;
+			return nearestStation;
 		}
 		public void setNeareststation(String neareststation) {
-			this.neareststation = neareststation;
+			this.nearestStation = neareststation;
 		}
 		
 		

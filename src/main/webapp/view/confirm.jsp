@@ -3,12 +3,13 @@
 
 作成者：桑原岳
 
-最終更新日：2025/08/07
+最終更新日：2025/08/12
  --%>
 
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html>
 <head>
@@ -43,6 +44,11 @@
 	margin: 0 15px;
 	cursor: pointer;
 }
+/* 処理中にボタンを無効化するスタイル */
+.button-area button:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
 </style>
 </head>
 <body>
@@ -53,78 +59,108 @@
 			<p style="text-align: center;">以下の内容でよろしいですか？</p>
 
 			<table class="confirm-table">
-				
 				<tr>
 					<th>社員番号</th>
-					<td><%=request.getAttribute("employeeNumber")%></td>
+					<td>${employeeNumber}</td>
 				</tr>
 				<tr>
 					<th>氏名</th>
-					<td><%=request.getAttribute("name")%></td>
+					<td>${name}</td>
 				</tr>
 				<tr>
 					<th>住所変更日時</th>
-					<td><%=request.getAttribute("addressChangedDate")%></td>
+					<td>${addressChangedDate}</td>
 				</tr>
 				<tr>
 					<th>旧郵便番号</th>
-					<td><%=request.getAttribute("oldPost")%></td>
+					<td>${oldPost}</td>
 				</tr>
 				<tr>
 					<th>旧住所</th>
-					<td><%=request.getAttribute("oldAddress")%></td>
+					<td>${oldAddress}</td>
 				</tr>
 				<tr>
 					<th>新郵便番号</th>
-					<td><%=request.getAttribute("newPost")%></td>
+					<td>${newPost}</td>
 				</tr>
 				<tr>
 					<th>新住所</th>
-					<td><%=request.getAttribute("newAddress")%></td>
+					<td>${newAddress}</td>
 				</tr>
 				<tr>
 					<th>最寄り駅</th>
-					<td><%=request.getAttribute("nearestStation")%></td>
+					<td>${nearestStation}</td>
 				</tr>
 			</table>
 
-			<form id="confirmForm"
-				action="<%=request.getContextPath()%>/jspToExcel" method="post">
-			
-				<input type="hidden" name="employeenumber"
-					value="<%=request.getAttribute("employeeNumber")%>">
-				<input type="hidden" name="name"
-					value="<%=request.getAttribute("name")%>">
-				<input type="hidden" name="addressChangedDate"
-					value="<%=request.getAttribute("addressChangedDate")%>">
-				<input type="hidden" name="oldpost"
-					value="<%=request.getAttribute("oldPost")%>">
-				<input type="hidden" name="oldaddress"
-					value="<%=request.getAttribute("oldAddress")%>">
-				<input type="hidden" name="newpost"
-					value="<%=request.getAttribute("newPost")%>">
-				<input type="hidden" name="newaddress"
-					value="<%=request.getAttribute("newAddress")%>">
-				<input type="hidden" name="neareststation"
-					value="<%=request.getAttribute("nearestStation")%>">
+			<form id="confirmDataForm" method="post">
+				<input type="hidden" name="employeenumber" value="${employeeNumber}">
+				<input type="hidden" name="name" value="${name}"> <input
+					type="hidden" name="addressChangedDate"
+					value="${addressChangedDate}"> <input type="hidden"
+					name="oldpost" value="${oldPost}"> <input type="hidden"
+					name="oldaddress" value="${oldAddress}"> <input
+					type="hidden" name="newpost" value="${newPost}"> <input
+					type="hidden" name="newaddress" value="${newAddress}"> <input
+					type="hidden" name="neareststation" value="${nearestStation}">
 
 				<div class="button-area">
-					<button type="button" onclick="history.back()">修正する</button>
-					<button type="button" onclick="submitAndRedirect()">この内容で確定する</button>
+					<button type="button" onclick="returnToEdit()">修正する</button>
+					<button type="button" id="submitButton"
+						onclick="submitAndDownload()">この内容で確定する</button>
 				</div>
 			</form>
 		</div>
 	</div>
-	<script>
-        function submitAndRedirect() {
-            // 1. フォームを送信してダウンロードを開始する
-            document.getElementById('confirmForm').submit();
 
-            // 2. 0.5秒後に完了画面へ遷移する
-            setTimeout(function() {
-                window.location.href = '<%=request.getContextPath()%>/view/completion.jsp';
-            }, 500);
-        }
+	<script>
+    // 「修正する」ボタンが押されたときの処理
+  function returnToEdit() {
+    const form = document.getElementById('confirmDataForm');
+    form.action = `<%=request.getContextPath()%>/addressChangeRetouching`;
+    form.submit();
+  }
+
+    // 「この内容で確定する」ボタンが押されたときの処理
+    async function submitAndDownload() {
+        const submitButton = document.getElementById('submitButton');
+        const form = document.getElementById('confirmDataForm');
+        
+        submitButton.disabled = true;
+        submitButton.textContent = '処理中...';
+
+            // サーブレットにデータを送信
+            const response = await fetch(`<%=request.getContextPath()%>/jspToExcel`, {
+                method: 'POST',
+                body: new URLSearchParams(new FormData(form)),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(`サーバーでエラーが発生しました: ${response.status} ${errorMessage}`);
+            }
+
+            // レスポンス（Excelファイル）をダウンロード
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = '住所変更届のコピー.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+            // 完了ページへ画面遷移
+            window.location.href = `<%=request.getContextPath()%>
+		/view/completion.jsp`;
+
+		}
 	</script>
 </body>
 </html>
