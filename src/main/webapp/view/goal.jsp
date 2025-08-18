@@ -199,7 +199,7 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 						<div class="nameListArea"userNameList.get(i)(i) %></div>
 						 -->
 						<a class="nameLink"
-							href="<%=request.getContextPath()%>/goalUser?user_id=<%=userIdList.get(i)%>">
+							href="<%=request.getContextPath()%>/goalConfirm?user_id=<%=userIdList.get(i)%>&cmd=manager">
 							<%=userNameList.get(i)%>
 						</a> <br>
 						<%
