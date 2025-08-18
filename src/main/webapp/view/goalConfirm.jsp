@@ -8,7 +8,7 @@
 
  最終更新日：8月18日
  -->
- 
+
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Goal, bean.GoalQuarter, bean.GoalDepartment, java.util.ArrayList"%>
 
@@ -19,8 +19,8 @@ GoalDepartment goalDepartment = new GoalDepartment();
 
 //リクエストスコープから要素を取得する
 goal = (Goal) request.getAttribute("goal");
-goalDepartment = (GoalDepartment) request.getAttribute("goal_department");
-ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goal_quarter_list");
+goalDepartment = (GoalDepartment) request.getAttribute("goalDepartment");
+ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goalQuarterList");
 
 //変数宣言
 String groupCode = "";
