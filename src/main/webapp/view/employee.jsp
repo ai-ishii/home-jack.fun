@@ -1,5 +1,5 @@
 <!-- 社員紹介 一覧機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：8/1 12:00 -->
+<!-- 作成日：7/2　最終更新日：8/14 12:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -131,6 +131,92 @@ a:hover {
 	color: black;
 	font-size: 14px;
 	cursor: pointer;
+	
+}
+
+.filter_box {
+	position: relative;
+}
+
+/* モーダルを開くボタン */
+.modal_open {
+	font-size: 16px;
+	width: 120px;
+	height: 50px;
+	border: none;
+	color: #777;
+	background: #e8e0fe;
+	cursor: pointer;
+}
+
+/* モーダルと背景の指定 */
+.modal {
+	display: none;
+	position: absolute;
+	top: 50px;
+	width: 200%;
+	max-height: 100%;
+	text-align: center;
+	overflow: visible;
+	transition: .3s;
+	box-sizing: border-box;
+}
+
+/* モーダルの擬似要素の指定 */
+.modal:before {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	margin-left: -0.2em;
+}
+
+/* クラスが追加された時の指定 */
+.modal.is-active {
+	display: block;
+	z-index: 20;
+}
+
+/* モーダル内側の指定 */
+.modal_container {
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+/* モーダルを閉じるボタンの指定 */
+.modal_close {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: -20px;
+	right: -20px;
+	width: 40px;
+	height: 40px;
+	color: #fff;
+	background: #000;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+/* モーダルのコンテンツ部分の指定 */
+.modal_content {
+	background: #e8e0fe;
+	text-align: left;
+	line-height: 1.8;
+	border-radius: 5px;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.modal_content label {
+	color: #777;
+}
+
+/* モーダルのコンテンツ部分のテキストの指定 */
+.modal_content p {
+	margin: 1em 0;
 }
 </style>
 
@@ -145,10 +231,64 @@ a:hover {
 				<!-- タイトル部分 -->
 				<table style="width: 80%;">
 					<tr>
-						<td style="width: 20%;"><input type="search" name="search"
-							style="height: 20px;"> <img
-							src="<%=request.getContextPath()%>/img/searchIcon.png"
-							alt="検索アイコン" style="width: 30px; height: auto;"></td>
+						
+						<td style="width: 20%;">
+							<form action="<%=request.getContextPath() %>/employeeSearch" class="search-form">
+							<input type="search" name="keyword"
+								style="height: 20px;"> 
+							<button type="submit" aria-label="検索"></button>
+						</form>
+						</td>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<!--　絞り込み検索を作成する予定ですというメモです。
+						<td>
+						<div class="filter_box">
+					
+					  
+						<button type="button" class="modal_open js_modal_open">絞り込み　∨</button>
+						
+						
+						<div class="modal js_modal">
+							<div class="modal_container">
+								<div class="modal_close js_modal_close">×</div>
+						</div>
+						</div>
+						<div>
+							<label for="category">カテゴリ</label>
+								<select id="category">
+									<option value="">全カテゴリ</option>
+								</select>
+							</div>
+							<div>
+								<label for="hobby">趣味</label>
+							</div>
+						</div>
+						
+						</td>
+						
+						-->
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						<td style="width: 40%;">
 							<h1>社員紹介</h1>
 						</td>
@@ -159,6 +299,8 @@ a:hover {
 						</a></td>
 					</tr>
 				</table>
+				
+				
 
 				<div id="employee_list">
 					<!-- 社員一覧の1行分（5枚ずつ） -->
@@ -202,5 +344,29 @@ a:hover {
 			</div>
 		</div>
 	</div>
+		
+	<script>
+		const modal = document.querySelector('.js_modal'), 
+			open = document.querySelector('.js_modal_open'), 
+			close = document.querySelector('.js_modal_close'),
+			content = document.querySelector('.js_modal_content');
+
+		function modalOpen() {
+			modal.classList.add('is-active');
+		}
+		open.addEventListener('click', modalOpen);
+
+		function modalClose() {
+			modal.classList.remove('is-active');
+		}
+		close.addEventListener('click', modalClose);
+
+		function modalOut() {
+			modal.classList.remove('is-active');
+		}
+		addEventListener('blur', modalOut);
+
+		
+	</script>
 </body>
 </html>
