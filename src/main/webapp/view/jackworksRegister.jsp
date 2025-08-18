@@ -22,6 +22,7 @@ if(cmd == null){
 <title>JackWorks</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
@@ -175,6 +176,10 @@ button.btn-border:active:before {
 	bottom: -1px;
 }
 
+.error{
+color:red;
+}
+
 </style>
 
 <body>
@@ -193,7 +198,7 @@ button.btn-border:active:before {
 		</div>
 
 		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
-		<form action="<%=request.getContextPath()%>/jackworksRegister">
+		<form action="<%=request.getContextPath()%>/jackworksRegister"  class="error-form">
 		
 		<% if(cmd.equals("")){ %>
 
@@ -204,37 +209,40 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="date" value="" size="45" placeholder="2024年09月18日" required></td>
+					<td>
+					<label for="start_date"></label>
+					<input type="date" class="error-date" name="date" value="" max="9999-12-31">
+					</td>
 				<tr>
 					<td style="display: flex">社員No
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="employeeNumber" value="" size="45" placeholder="001234" required></td>
+					<td><input type="text" name="employeeNumber" value="" size="45" placeholder="001234" class="required"></td>
 				<tr>
 					<td style="display: flex">氏名
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="name" value="" size="45" placeholder="山田太郎" required></td>
+					<td><input type="text" name="name" value="" size="45" placeholder="山田太郎" class="required"></td>
 				<tr>
 					<td style="display: flex">カテゴリ
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="category" value="" size="45" placeholder="チーム取組み" required></td>
+					<td><input type="text" name="category" value="" size="45" placeholder="チーム取組み" class="required"></td>
 				<tr>
 					<td style="display: flex">評価項目
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="assessment" rows="" cols="" placeholder="チーム活動報告の投稿" required></textarea></td>
+					<td><textarea name="assessment" rows="" cols="" placeholder="チーム活動報告の投稿" class="required"></textarea></td>
 				<tr>
 					<td style="display: flex">付与ポイント
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="point" value="" size="45" placeholder="10" required></td>
+					<td><input type="text" name="point" value="" size="45" placeholder="10" class="required"></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
@@ -256,7 +264,7 @@ button.btn-border:active:before {
 				<% if(cmd.equals("next")){ %>
 				
 				<!-- 入力された今月のJackWorksのデータを送るフォーム -->
-				<form action="<%=request.getContextPath()%>/jackworksRegister">
+				<form action="<%=request.getContextPath()%>/jackworksRegister" class="error-form">
 				
 				<!-- 入力フォーム -->
 				<table id="box-mar">
@@ -265,37 +273,37 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="project" value="" size="45" required></td>
+					<td><input type="text" name="project" value="" size="45" class="required"></td>
 				<tr>
 					<td style="display: flex">作業時期
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="workSeason" value="" size="45"  required></td>
+					<td><input type="text" name="workSeason" value="" size="45"  class="required"></td>
 				<tr>
 					<td style="display: flex">単価
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" required></td>
+					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="required"></td>
 				<tr>
 					<td style="display: flex">精算
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" required></td>
+					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="required"></td>
 				<tr>
 					<td style="display: flex">作業場所
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="workPlace" value="" size="45" required></td>
+					<td><input type="text" name="workPlace" value="" size="45" class="required"></td>
 				<tr>
 					<td style="display: flex">作業内容
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="workContent" rows="" cols="" required></textarea></td>
+					<td><textarea name="workContent" rows="" cols="" class="required"></textarea></td>
 				<tr>
 					<td>フェーズ</td>
 				</tr>
@@ -317,13 +325,13 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="seller" value="" size="45" required></td>
+					<td><input type="text" name="seller" value="" size="45" class="required"></td>
 				<tr>
 					<td style="display: flex">連絡先
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="contact" rows="" cols="" required></textarea></td>
+					<td><textarea name="contact" rows="" cols="" class="required"></textarea></td>
 				<tr>
 					<td>その他</td>
 				</tr>

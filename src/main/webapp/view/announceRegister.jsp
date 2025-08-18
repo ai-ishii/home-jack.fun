@@ -104,7 +104,7 @@ textarea {
 	margin: 0 auto;
 }
 
-span{
+.error , .warning{
 color:red;
 }
 </style>
@@ -122,12 +122,12 @@ color:red;
 				<div id="content_box">
 
 					<div class="form_box">
-						<label for="title" class="control_label">タイトル<span>*</span></label> 
+						<label for="title" class="control_label">タイトル<span class="warning">*</span></label> 
 						<input type="text" id="title" name="title" class='required'>
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="regist_date" class="control_label">投稿日時<span>*</span></label> 
+						<label for="regist_date" class="control_label">投稿日時<span class="warning">*</span></label> 
 						<input id="regist_date" type="datetime-local" name="regist_date" />
 						<%
 						if(error != null){
@@ -140,7 +140,7 @@ color:red;
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="category" class="control_label">カテゴリ<span>*</span></label> 
+						<label for="category" class="control_label">カテゴリ<span class="warning">*</span></label> 
 						<select id="category" name="category_id" class="error-select">
 							<option value="">選択してください</option>
 							<option value="1">お知らせ</option>
@@ -157,7 +157,7 @@ color:red;
 					</div>
 
 					<div class="form_box">
-						<label for="text" class="control_label">本文<span>*</span></label>
+						<label for="text" class="control_label">本文<span class="warning">*</span></label>
 						<textarea id="text" name="text" class='required'></textarea>
 					</div>
 
