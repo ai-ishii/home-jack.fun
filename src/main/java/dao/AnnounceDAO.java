@@ -15,7 +15,39 @@ public class AnnounceDAO {
 
 	//ホーム画面で取得する記事数
 	private static final int numArticles = 3;
-
+	
+	//sql文をまとめる用のメソッド
+	private static final String announceSql (String cmd) {
+		
+		String sqlSelect = "SELECT "
+						+ "announce_id, "
+						+ "name, "
+						+ "regist_date, "
+						+ "update_date, "
+						+ "title, "
+						+ "announce_flag, "
+						+ "announce_category_id, "
+						+ "tag"
+					+ " FROM "
+						+ "announce_info "
+					+ "WHERE ";
+		
+		if ("new".equals(cmd)) {
+			sqlSelect +=  "NOT announce_category_id = '2' ";
+		} else if ("important".equals(cmd)) {
+			sqlSelect += "announce_flag = '1' " ;
+		} else if ("activity".equals(cmd)) {
+			sqlSelect += "announce_category_id = '2' ";
+		} else {
+			//なにもつけずに返す
+			return sqlSelect;
+		}
+		
+		sqlSelect += "ORDER BY regist_date DESC ";
+		
+		return sqlSelect;
+	}
+	
 	/**
 	 * DBにあるお知らせ情報を全件取得するメソッド
 	 * @return ArrayList<Announce> list
@@ -30,8 +62,22 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT announce_id, user_id, name, regist_date, update_date, title, text, comment, like_flag, announce_flag,"
-				+ " announce_category_id, tag FROM announce_info ORDER BY regist_date DESC";
+		String sql = "SELECT "
+						+ "announce_id, "
+						+ "user_id, "
+						+ "name, "
+						+ "regist_date, "
+						+ "update_date, "
+						+ "title, "
+						+ "text, "
+						+ "comment, "
+						+ "like_flag, "
+						+ "announce_flag, "
+						+ "announce_category_id, "
+						+ "tag "
+					+ "FROM "
+						+ "announce_info "
+					+ "ORDER BY regist_date DESC ";
 
 		try {
 			// DBに接続
@@ -95,8 +141,23 @@ public class AnnounceDAO {
 		Statement smt = null;
 
 		// SQL文
-		String sql = "SELECT announce_id, user_id, name, regist_date, update_date, title, text, comment, like_flag, announce_flag, "
-				+ "announce_category_id, tag  FROM announce_info WHERE announce_id = " + announceId + ";";
+		String sql = "SELECT "
+						+ "announce_id, "
+						+ "user_id, "
+						+ "name, "
+						+ "regist_date, "
+						+ "update_date, "
+						+ "title, "
+						+ "text, "
+						+ "comment, "
+						+ "like_flag, "
+						+ "announce_flag, "
+						+ "announce_category_id, "
+						+ "tag "
+					+ "FROM "
+						+ "announce_info "
+					+ "WHERE "
+						+ "announce_id = " + announceId + ";";
 
 		Announce announce = new Announce();
 
@@ -160,15 +221,32 @@ public class AnnounceDAO {
 		// 配列宣言
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
+		
+		
 		// SQL文
-		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
-				+ "WHERE NOT announce_category_id = '2' ORDER BY regist_date DESC LIMIT " + numArticles;
+		/*String sql = "SELECT "
+						+ "announce_id, "
+						+ "name, "
+						+ "regist_date, "
+						+ "update_date, "
+						+ "title, "
+						+ "announce_flag, "
+						+ "announce_category_id, "
+						+ "tag "
+					+ "FROM announce_info "
+					+ "WHERE NOT "
+						+ "announce_category_id = '2' "
+					+ "ORDER BY regist_date DESC LIMIT " + numArticles;
+		*/
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
+			//sql文
+			String sql = AnnounceDAO.announceSql("new")  + "LIMIT " + numArticles;
+			
 			// SQL文発行
 			ResultSet rs = smt.executeQuery(sql);
 
@@ -224,14 +302,18 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
+		/*String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
 				+ "WHERE announce_flag = '1' ORDER BY regist_date DESC";
+		*/
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
 
+			//sql文
+			String sql = AnnounceDAO.announceSql("important")  + "LIMIT " + numArticles;
+			
 			// SQL文発行
 			ResultSet rs = smt.executeQuery(sql);
 
@@ -287,13 +369,17 @@ public class AnnounceDAO {
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
 		// SQL文
-		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag "
+		/*String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag "
 				+ "FROM announce_info WHERE announce_category_id = '2' ORDER BY regist_date DESC LIMIT " + numArticles;
+		*/
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
+			
+			//sql文
+			String sql = AnnounceDAO.announceSql("activity")  + "LIMIT " + numArticles;
 
 			// SQL文発行
 			ResultSet rs = smt.executeQuery(sql);
@@ -405,10 +491,11 @@ public class AnnounceDAO {
 		ArrayList<CategoryMap> list = new ArrayList<CategoryMap>();
 
 		String sql = "SELECT "
-				+ "announce_category_id, "
-				+ "category, "
-				+ "category_code "
-				+ "FROM announce_category_info";
+						+ "announce_category_id, "
+						+ "category, "
+						+ "category_code "
+					+ "FROM "
+						+ "announce_category_info";
 
 		try {
 			// DBに接続
@@ -461,7 +548,7 @@ public class AnnounceDAO {
 
 		String category = "";
 
-		String sql = "SELECT * FROM announce_category_info WHERE announce_category_code = '" + categoryCode + "'";
+		String sql = "SELECT category FROM announce_category_info WHERE announce_category_code = '" + categoryCode + "'";
 
 		try {
 			// DBに接続
@@ -576,11 +663,16 @@ public class AnnounceDAO {
 		Connection con = null;
 		Statement smt = null;
 
-		String sql = "UPDATE announce_info SET title = '" + announce.getTitle() + "', update_date = '"
-				+ announce.getUpdateDate() + "', text = '" + announce.getText() + "', announce_category_id = "
-				+ announce.getAnnounceCategoryId() + ", announce_flag = " + announce.getAnnounceFlag()
-				+ " WHERE announce_id = '"
-				+ announce.getAnnounceId() + "'";
+		String sql = "UPDATE "
+						+ "announce_info "
+					+ "SET "
+						+ "title = '" + announce.getTitle() + "', "
+						+ "update_date = '"+ announce.getUpdateDate() + "', "
+						+ "text = '" + announce.getText() + "', "
+						+ "announce_category_id = "+ announce.getAnnounceCategoryId() + ", "
+						+ "announce_flag = " + announce.getAnnounceFlag()
+					+ " WHERE "
+						+ "announce_id = '"+ announce.getAnnounceId() + "'";
 
 		try {
 			// DBに接続
@@ -625,17 +717,36 @@ public class AnnounceDAO {
 
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
-		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
+		/*String sql = "SELECT "
+						+ "announce_id, "
+						+ "name, "
+						+ "regist_date, "
+						+ "update_date, "
+						+ "title, "
+						+ "announce_flag, "
+						+ "announce_category_id, "
+						+ "tag "
+					+ "FROM "
+						+ "announce_info "
 				+ "WHERE name LIKE '%" + keyword + "%' "
 				+ "OR title LIKE '%" + keyword + "%' "
 				+ "OR text LIKE '%" + keyword + "%' "
 				+ "OR tag LIKE '%" + keyword + "%'"
 				+ "ORDER BY regist_date DESC;";
+		*/
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
+			
+			//sql文
+			String sql = AnnounceDAO.announceSql("keyword")
+					+ "name LIKE '%" + keyword + "%' "
+					+ "OR title LIKE '%" + keyword + "%' "
+					+ "OR text LIKE '%" + keyword + "%' "
+					+ "OR tag LIKE '%" + keyword + "%'"
+					+ "ORDER BY regist_date DESC;";
 
 			ResultSet rs = smt.executeQuery(sql);
 
@@ -695,7 +806,7 @@ public class AnnounceDAO {
 
 		ArrayList<Announce> list = new ArrayList<Announce>();
 
-		String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
+		/*String sql = "SELECT announce_id, name, regist_date, update_date, title, announce_flag, announce_category_id, tag FROM announce_info "
 				+ "WHERE CASE WHEN '" + announceFlag + "' = '' THEN '" + announceFlag + "' "
 				+ "ELSE announce_flag END = '" + announceFlag + "' "
 				+ "AND CASE WHEN '" + strAnnounceCategoryId + "' = '' THEN '" + strAnnounceCategoryId + "' "
@@ -703,11 +814,25 @@ public class AnnounceDAO {
 				+ "AND regist_date BETWEEN '" + startDate + "' "
 				+ "AND '" + endDate + "' "
 				+ "ORDER BY regist_date DESC;";
+		*/
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
 			smt = con.createStatement();
+			
+			//sql文
+			String sql = AnnounceDAO.announceSql("filter")
+						+ "CASE WHEN '" + announceFlag + "' = '' THEN '" + announceFlag + "' "
+						+ "ELSE announce_flag END = '" + announceFlag + "' "
+					+ "AND "
+						+ "CASE WHEN '" + strAnnounceCategoryId + "' = '' THEN '" + strAnnounceCategoryId + "' "
+						+ "ELSE announce_category_id END = '" + strAnnounceCategoryId + "' "
+					+ "AND "
+						+ "regist_date "
+						+ "BETWEEN '" + startDate + "'AND '" + endDate + "' "
+					+ "ORDER BY regist_date DESC;";
+					;
 
 			ResultSet rs = smt.executeQuery(sql);
 

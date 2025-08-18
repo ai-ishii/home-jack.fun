@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import bean.Announce;
@@ -35,6 +36,8 @@ public class AnnounceSearchServlet extends HttpServlet {
 		// 変数宣言
 		String error = "";
 		String cmd = "";
+		
+		String search = "";
 
 		// 日付検索の初期値の設定
 		int year = 2012;
@@ -57,14 +60,15 @@ public class AnnounceSearchServlet extends HttpServlet {
 		Timestamp endDate = new Timestamp(System.currentTimeMillis());
 
 		// フォームから送信した検索方法をを受け取る
-		cmd = request.getParameter("cmd");
+		search = request.getParameter("cmd");
 		
-		if(cmd == null) {
-			cmd = "";
+		if(search == null) {
+			search = "";
 		}
 
 		try {
-			if (cmd.equals("keyword")) {
+			//検索の場合
+			if ("keyword".equals(search)) {
 				// フォームからパラメータを受け取る
 				String keyword = request.getParameter("keyword");
 
@@ -73,14 +77,15 @@ public class AnnounceSearchServlet extends HttpServlet {
 				
 				//検索結果が0件の場合
 				if(announceList.size() == 0) {
-					cmd = "no-result";
+					search = "no-result";
 				}
 				
 				// 検索キーワードをリクエストスコープに登録する
 				request.setAttribute("keyword", keyword);
 			}
 
-			if (cmd.equals("filter")) {
+			//フィルターの場合
+			if ("filter".equals(search)) {
 				// フォームからパラメータを受け取る
 				String announceFlag = request.getParameter("announce_flag");
 				String strAnnounceCategoryId = request.getParameter("category_id");
@@ -89,14 +94,14 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 				// パラメータをリクエストスコープに登録する
 				request.setAttribute("announceFlag", announceFlag);
-				if (!strAnnounceCategoryId.equals("")) {
+				if (!("").equals(strAnnounceCategoryId)) {
 					int announceCategoryId = Integer.parseInt(strAnnounceCategoryId);
 					request.setAttribute("announceCategoryId", announceCategoryId);
 				}
 
 				ZoneId zoneId = ZoneId.of("Asia/Tokyo");
 
-				if (start != "") {
+				if (!("").equals(start)) {
 					// フォームから受け取った開始日時(String型)をLocalDateTimeに変換する
 					localDateTimeStart = LocalDateTime.parse(start);
 
@@ -109,7 +114,7 @@ public class AnnounceSearchServlet extends HttpServlet {
 					startDate = Timestamp.from(instantStart);
 				}
 
-				if (end != "") {
+				if (!("").equals(end)) {
 					// フォームから受け取った開始日時(String型)をLocalDateTimeに変換する
 					localDateTimeEnd = LocalDateTime.parse(end);
 
@@ -126,13 +131,17 @@ public class AnnounceSearchServlet extends HttpServlet {
 				
 				//絞り込み結果が0件の場合
 				if(announceList.size() == 0) {
-					cmd = "no-result";
+					search = "no-result";
 				}
 
 			}
 
 			categoryList = announceDAO.selectCategoryAll();
 
+		} catch (DateTimeParseException e) {
+			error = "DB接続エラーのため、お知らせの検索結果は表示できませんでした";
+			//ログイン画面へ遷移
+			cmd = "logout";	
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、お知らせの検索結果は表示できませんでした";
 			//ログイン画面へ遷移

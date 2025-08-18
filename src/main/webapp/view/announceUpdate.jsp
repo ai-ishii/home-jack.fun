@@ -107,8 +107,9 @@ color:red;
 
 					<div class="form_box tiny_form">
 						<label for="update_date" class="control_label">編集日時<span class="warning">*</span></label> 
-						<input type="datetime-local" id="update_date" name="update_date"
+						<input type="datetime-local" id="update_date" name="update_date" max="9999-12-31 23:59"
 							value="<%=announce.getRegistDate()%>" />
+																														<!-- 現在時刻をつける -->
 					</div>
 
 					<div class="form_box tiny_form">
