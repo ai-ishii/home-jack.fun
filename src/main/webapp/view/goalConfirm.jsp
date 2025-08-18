@@ -404,12 +404,7 @@ transform: translateY(-10px);
 								</div>
 								<div class="mainText mainFlex">
 									<div class="ratio"><%=goalQuarterList.get(i).getAchieveRateReviewer()%>%</div>
-									<div class="leftLine">
-									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
-									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
-									１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
-									</div>
-									<!-- <div class="leftLine"><%=goalQuarterList.get(i).getEvaluation()%></div> -->
+									<div class="leftLine"><%=goalQuarterList.get(i).getEvaluation()%></div>
 								</div>
 								
 						</div>
@@ -444,11 +439,7 @@ transform: translateY(-10px);
 				</div>
 				<div class="mainText mainFlex">
 				<div class="ratio"><%=resultReviewer%>%</div>
-				<div class="leftLine"><%=resultCommentReviewer%>
-				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
-				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
-				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
-				</div>
+				<div class="leftLine"><%=resultCommentReviewer%></div>
 				</div>
 
 				</div>
