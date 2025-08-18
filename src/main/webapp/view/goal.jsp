@@ -27,9 +27,9 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 // Map<キーの型, 値の型>
 //Map<Integer, String> teamMap = new LinkedHashMap<>();
 //if (userList != null) {
-	//for (User user : userList) {
-		//teamMap.put(user.getDepartmentId(), "第" + user.getDepartmentId() + "事業部");
-	//}
+//for (User user : userList) {
+//teamMap.put(user.getDepartmentId(), "第" + user.getDepartmentId() + "事業部");
+//}
 //}
 //pageContext.setAttribute("teamMap", teamMap);
 %>
@@ -101,7 +101,6 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 	font-size: 20px;
 	line-height: 2.0;
 }
-
 </style>
 
 </head>
@@ -123,59 +122,68 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 						for (int i = 0; i < groupCodeList.size(); i++) {
 							if (groupCodeList.get(i).equals("BS1001")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=1&g=2">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=1&g=2">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("BS1002")) {
+						} else if (groupCodeList.get(i).equals("BS1002")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=1&g=3">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=1&g=3">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("BS1003")) {
+						} else if (groupCodeList.get(i).equals("BS1003")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=1&g=4">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=1&g=4">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("BS1004")) {
+						} else if (groupCodeList.get(i).equals("BS1004")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=1&g=5">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=1&g=5">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("BS2001")) {
+						} else if (groupCodeList.get(i).equals("BS2001")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=2&g=2">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=2&g=2">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("BS2002")) {
+						} else if (groupCodeList.get(i).equals("BS2002")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=2&g=3">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=2&g=3">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("NX1000")) {
+						} else if (groupCodeList.get(i).equals("NX1000")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=4&g=1">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=4&g=1">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("MG1000")) {
+						} else if (groupCodeList.get(i).equals("MG1000")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=5&g=1">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=5&g=1">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							} else if (groupCodeList.get(i).equals("SA1000")) {
+						} else if (groupCodeList.get(i).equals("SA1000")) {
 						%>
-						<a class="group" href="<%= request.getContextPath() %>/goal?groupCode=<%= groupCodeList.get(i) %>&d=3&g=1">
-							<li class="tabItem"><%= groupCodeList.get(i) %></li>
+						<a class="group"
+							href="<%=request.getContextPath()%>/goal?groupCode=<%=groupCodeList.get(i)%>&d=3&g=1">
+							<li class="tabItem"><%=groupCodeList.get(i)%></li>
 						</a>
 						<%
-							}
+						}
 						}
 						%>
 					</ul>
@@ -183,17 +191,17 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 					<!-- 名前を表示するパネル -->
 					<div class="tabPanel">
 						<!-- ここに選択された所属社員の名前が一覧で表示される -->
-						<h2><%= groupName %></h2>
+						<h2><%=groupName%></h2>
 						<%
 						for (int i = 0; i < userNameList.size(); i++) {
 						%>
 						<!-- 
-						<div class="nameListArea"><%= userNameList.get(i) %></div>
+						<div class="nameListArea"userNameList.get(i)(i) %></div>
 						 -->
-						 <a class="nameLink" href="<%= request.getContextPath() %>/goalUser?user_id=<%= userIdList.get(i) %>">
-						 	<%= userNameList.get(i) %>
-						 </a>
-						 <br>
+						<a class="nameLink"
+							href="<%=request.getContextPath()%>/goalUser?user_id=<%=userIdList.get(i)%>">
+							<%=userNameList.get(i)%>
+						</a> <br>
 						<%
 						}
 						%>
@@ -204,31 +212,53 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 		</div>
 	</div>
 
+	<%
+	// 変数受け渡し
+	String groupCode = request.getParameter("groupCode");
+	%>
+
 	<script>
+	// 変数受け渡し
+	let groupCode = "<%=groupCode%>";
+
 	// 必要な要素を取得
 	const tabItems = document.querySelectorAll(".tabItem");
-	const tabPanels = document.querySelectorAll(".tabPanel");
 
-	tabItems.forEach((tabItem) => {
+	// インデックス
+	let index = 0;
 
-		// ページ読み込み時
-		//document.addEventListener('DOMContentLoaded', () => {
-			// 一度各タブをすべて非アクティブにする
-			//tabItems.forEach((t) => {
-				//t.classList.remove("active");
-			//});
-		//});
-		
-		// タブをクリックしたら
-		tabItem.addEventListener('click', () => {
-			// 一度各タブをすべて非アクティブにする
-			tabItems.forEach((t) => {
-				t.classList.remove("active");
-			});
-
-			// クリックされたタブをアクティブにする
-			tabItem.classList.add("active");
+	document.addEventListener(('DOMContentLoaded'), () => {
+		// ページ読み込み時にアクティブをすべて削除
+		tabItems.forEach((item) => {
+			item.classList.remove("active");
 		});
+
+		// 最初のアクセス時はグループコードがnullなので、最初はBS1001をアクティブ
+		if (groupCode == "null") {
+			console.log(groupCode);
+			tabItems[0].classList.add("active");
+		}
+
+		// 受け取ったパラメータに応じてアクティブにするタブを切り替え
+		if (groupCode == "BS1001") {
+			tabItems[index].classList.add("active");
+		} else if (groupCode == "BS1002") {
+			tabItems[index + 1].classList.add("active");
+		} else if (groupCode == "BS1003") {
+			tabItems[index + 2].classList.add("active");
+		} else if (groupCode == "BS1004") {
+			tabItems[index + 3].classList.add("active");
+		} else if (groupCode == "BS2001") {
+			tabItems[index + 4].classList.add("active");
+		} else if (groupCode == "BS2002") {
+			tabItems[index + 5].classList.add("active");
+		} else if (groupCode == "NX1000") {
+			tabItems[index + 6].classList.add("active");
+		} else if (groupCode == "MG1000") {
+			tabItems[index + 7].classList.add("active");
+		} else if (groupCode == "SA1000") {
+			tabItems[index + 8].classList.add("active");
+		}
 	});
 	</script>
 
