@@ -6,7 +6,7 @@
 
  作成日：7月8日
 
- 最終更新日：8月12日
+ 最終更新日：8月18日
  -->
  
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -63,15 +63,6 @@ if (goalDepartment != null) {
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
-
-/*この中にCSSを書く*/
-/*
-お世話になっております。
-いつも教えてくれてありがとうね。
-これからも助けてくださいね。
-一緒に頑張ろうね！！
-*/
-
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
 
@@ -104,7 +95,7 @@ text-align: center;
 .seal{
 /*width:860px;*/
 width:90%;
-margin: 0 auto 40px;
+margin: 30px auto 40px;
 padding:10px 0 50px;
 background-color: #fff;
 border-radius: 40px; 
@@ -120,18 +111,39 @@ font-weight: bold;
 text-align: center;
 color: #ff8b4d;
 margin: 40px auto;
+padding-bottom: 5px;
 }
 
+/* 経営テーマ用の小見出し */
+.adminTitle{
+width: 80%;
+font-size: 35px;
+font-family: "M PLUS 1p", sans-serif;
+font-weight: bold;
+text-align: center;
+color: #ff8b4d;
+margin: 40px auto 0;
+}
 
+/* 経営テーマ本文 */
+.adminLine{
+width: 80%;
+font-size: 25px;
+font-family: "M PLUS 1p", sans-serif;
+font-weight: bold;
+text-align: center;
+color: #ff8b4d;
+border-bottom: 4px solid #ff8b4d;
+margin: 0 auto 40px;
+padding-bottom: 5px;
+}
 
 /* ただの色付き小見出し */
 .yorushika{
-width: 75%;
 font-size: 22px;
 color: #e89b17;
-margin: 20px auto 0;
-padding-left: 10px;
-border-left: 5px solid #ff8b4d;
+margin-left: 10px;
+margin-right: auto;
 }
 
 /* ボックス型小見出し */
@@ -142,16 +154,12 @@ justify-content: center; 	/* 水平方向の中央揃え */
 position: relative; 		/* 疑似要素の位置の基準点に */
 width: 75%;
 margin: 10px auto 0;
-/*
-margin-left: 50px;
-margin-top:20px;
-*/
 }
 
 /* ボックス型小見出しの文字の色とか */
 .titleBox{
 background-color: #ffc766;
-padding: 10px 20px;
+padding: 10px 20px;			/* 10px 20px*/
 position: relative; 		/* z-indexを有効にするため */
 z-index: 1; 				/* 線の上に表示させる */
 color: white;
@@ -177,11 +185,6 @@ z-index: 0; 					/* 四角い箱の下に配置 */
 font-size: 20px;
 margin: 20px auto;
 padding-left: 20px;
-
-/*
-margin-left: 50px;
-margin-top: 20px;
-*/
 width: 75%;
 white-space: pre-wrap;  /* 必要に応じて自動改行かつ要素がはみ出さない */
 overflow-wrap: break-word; /* 要素からはみ出さないように強制的に改行する */
@@ -197,6 +200,14 @@ padding-left: 20px;
 
 }
 
+/* 小見出し用の縦線 */
+.yorushikaStripe{
+border-left: 5px solid #ff8b4d;
+margin: 10px auto 20px;
+width: 74.6%;					/* 数値を合わせるとなぜかずれるので微妙に値を変えてます */
+}
+
+/* フレックス */
 .mainFlex{
 display: flex;
 }
@@ -205,22 +216,25 @@ display: flex;
 margin: auto 20px;
 }
 
+/* 割合表示 */
 .ratio{
-font-size: 22px;
+font-size: 25px;
 font-family: "Yusei Magic", sans-serif;
-color: #1f1f1f;
+color: #545454;
 }
 
+/* 左線ありの本文 */
 .leftLine{
-/* border-left: 3px solid #e3e3e3; */
 padding-left: 40px;
 position: relative;
 }
 
+/* 疑似要素で左線をつけている */
 .leftLine::before{
 content: '';
 position: absolute;
 height: 65%;
+min-height: 20px;
 width: 3px;
 top: 50%;
 left: 0;
@@ -238,6 +252,7 @@ flex-wrap: wrap;
 
 }
 
+/* ラジオボタンのボタンを非表示 (タブ) */
 input[type="radio"]{
 -webkit-appearance: none; /* WebKit系のブラウザ（Chrome, Safariなど）に対応 */
 -moz-appearance: none;    /* Firefoxに対応 */
@@ -265,6 +280,7 @@ font-size: 20px;
 text-align: center;
 cursor: pointer;
 order: 1;
+margin-bottom: 20px;
 }
 
 .tab-4>label:hover {
@@ -312,10 +328,11 @@ transform: translateY(-10px);
 			
 			<div class="seal">
 				<!-- 経営テーマのボックス -->
-				<div class="yorushikaLine">
+				<div class="adminTitle">
 				経営テーマ
+				</div>
 				<!-- 以下のdivタグにはリクエストスコープから取得した経営テーマが入る -->
-				<br>PLAYFULL LEARNING</div>
+				<div class="adminLine">PLAYFULL LEARNING</div>
 				
 				<!-- 部目標ボックス -->
 				<div class="yorushikaBox">
@@ -343,7 +360,7 @@ transform: translateY(-10px);
 				</div>
 				
 				<div class="seal">
-				<!-- 経営テーマのボックス -->
+				<!-- 4半期目標のボックス -->
 				<div class="yorushikaLine">
 				目標を達成するためのステップ
 				</div>
@@ -352,15 +369,18 @@ transform: translateY(-10px);
 				if (goalQuarterList != null) {
 					for (int i = 0; i < goalQuarterList.size(); i++) {
 				%>
+						<!-- 四半期目標のタブ -->
 						<input type="radio" id="tab-<%=i%>" name="tab-group" <% if(i == 0){ %>checked<%} %>>
 						<label for="tab-<%=i%>" class="tab-label">第<%=i + 1%>四半期</label>
 				
+						<!-- 四半期目標の本文 -->
 						<div id="tab-<%=i%>-content" class="tab-content">
 							<div class="yorushikaBox">
 								<span class="titleBox">小目標</span>
 							</div>
 							<div class="mainText"><%=goalQuarterList.get(i).getSmallGoal()%></div>
 						
+							<!-- 四半期目標本人記入欄 -->
 							<div class="yorushikaBox">
 								<span class="titleBox">評価基準・材料</span>
 							</div>
@@ -371,11 +391,13 @@ transform: translateY(-10px);
 								</div>
 								<div class="mainText mainFlex">
 									<div class="ratio"><%=goalQuarterList.get(i).getAchieveRate()%>%</div>
-									<div class="yorushikaRine">|</div>
-									<div><%=goalQuarterList.get(i).getReport()%></div>
+									<div class="leftLine"><%=goalQuarterList.get(i).getReport()%></div>
 								</div>
 							
+							<!-- 四半期目標評価者記入欄 -->
+							<div class="yorushikaStripe">
 							<div class="yorushika">評価者</div>
+							</div>
 							
 								<div class="yorushikaBox">
 									<span class="titleBox">報告内容</span>
@@ -399,25 +421,29 @@ transform: translateY(-10px);
 				</div>
 				</div>
 
+				<!-- 年間結果のボックス -->
 				<div class="seal">
 				<div class="yorushikaLine">年間結果</div>
 				<div class="yorushikaBox">
 					<span class="titleBox">報告内容</span>
 				</div>
 				
+				<!-- 本人記入欄 -->
 				<div class="mainText mainFlex">
 				<div class="ratio"><%=result%>%</div>
 				<div class="leftLine"><%=resultComment%></div>
 				</div>
 				
+				<!-- 評価者記入欄 -->
+				<div class="yorushikaStripe">
 				<div class="yorushika">評価者</div>
+				</div>
 				
 				<div class="yorushikaBox">
 					<span class="titleBox">報告を受けての評価</span>
 				</div>
 				<div class="mainText mainFlex">
 				<div class="ratio"><%=resultReviewer%>%</div>
-				
 				<div class="leftLine"><%=resultCommentReviewer%>
 				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
 				１年間で基本情報技術者試験を合格することができましたが、これで満足せず、さらなる成長をして見せます。
