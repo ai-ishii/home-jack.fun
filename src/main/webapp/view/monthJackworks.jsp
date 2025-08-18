@@ -25,6 +25,7 @@ if(cmd == null){
 <!-- タイトル -->
 <title>JackWorks</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
@@ -193,7 +194,7 @@ button.btn-border:active:before {
 		</div>
 		
 		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
-		<form action="<%=request.getContextPath()%>/monthJackworks" enctype="multipart/form-data" method="post">
+		<form action="<%=request.getContextPath()%>/monthJackworks" enctype="multipart/form-data" method="post" class="error-form">
 
 			<!-- 入力フォーム -->
 			<table id="box-mar">
@@ -217,7 +218,7 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" size="35" class="required"></td>
+				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required" size="35"></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
