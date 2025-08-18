@@ -11,6 +11,13 @@
 <%
 //今月のJackWorksの全情報が格納されたmonthJackを受け取る
 Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
+
+//戻るボタン後の画面遷移先を分けるためのcmdを受け取る
+String cmd = (String) request.getAttribute("cmd");
+
+if(cmd == null){
+	cmd="";
+}
 %>
 
 <html>
@@ -190,24 +197,33 @@ button.btn-border:active:before {
 
 			<!-- 入力フォーム -->
 			<table id="box-mar">
+			<%if(!cmd.equals("change")){ %>
+				<tr>
+					<td>
+						<a href="<%=request.getContextPath()%>/monthJackworks?cmd=change">画像変更</a>
+						<input type="hidden" name="image" value="<%=monthJack.getImage()%>">
+					</td>
+				</tr>
+			<%}else{ %>
 				<tr>
 					<td style="display: flex">画像
 						<div class="warning">*</div>
 					</td>
 				</tr>
 				<td><input type="file" name="image" size="35" value="" required></td>
+			<%} %>
 				<tr>
 					<td style="display: flex">今月のテーマ
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" size="35" required></td>
+				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" size="35" class="required"></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
 				<td><textarea name="note" rows="" cols="" ><%=monthJack.getNote()%></textarea></td>
 			</table>
-			
+
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">

@@ -58,6 +58,10 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 		// フォームから送信した検索方法をを受け取る
 		cmd = request.getParameter("cmd");
+		
+		if(cmd == null) {
+			cmd = "";
+		}
 
 		try {
 			if (cmd.equals("keyword")) {
@@ -66,7 +70,12 @@ public class AnnounceSearchServlet extends HttpServlet {
 
 				// メソッドを呼び出してSQL文実行
 				announceList = announceDAO.selectByKeyword(keyword);
-
+				
+				//検索結果が0件の場合
+				if(announceList.size() == 0) {
+					cmd = "no-result";
+				}
+				
 				// 検索キーワードをリクエストスコープに登録する
 				request.setAttribute("keyword", keyword);
 			}
@@ -114,23 +123,28 @@ public class AnnounceSearchServlet extends HttpServlet {
 				}
 
 				announceList = announceDAO.selectByFilter(announceFlag, strAnnounceCategoryId, startDate, endDate);
+				
+				//絞り込み結果が0件の場合
+				if(announceList.size() == 0) {
+					cmd = "no-result";
+				}
 
 			}
 
 			categoryList = announceDAO.selectCategoryAll();
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせの検索結果は表示できませんでした。";
+			error = "DB接続エラーのため、お知らせの検索結果は表示できませんでした";
 			//ログイン画面へ遷移
-			cmd = "login";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "login";
+			cmd = "logout";
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("").forward(request, response);
+				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 
 			request.setAttribute("cmd", cmd);

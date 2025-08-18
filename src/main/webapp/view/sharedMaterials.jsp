@@ -7,12 +7,15 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <html>
-	<head>
-		<title>共有資料</title>
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
-		
-		
-<style type="text/css">
+<head>
+<!-- タイトル -->
+<title>共有資料</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+
+<style>
 #link-title {
 	text-align: center;
 }
@@ -69,11 +72,14 @@ margin-left : auto;
 	text-align: center;
 }
 </style>
-		
-	</head>
-	<body>
-	
-	<%@include file = "../common/header.jsp" %>
+
+<body>
+<div id="wrap">
+	<!-- ヘッダー部分 -->
+	<%@ include file="../common/header.jsp"%>
+
+	<!-- メイン部分 -->
+	<div id="main" class="container">
 	
 	<div id="contents">
 
@@ -111,5 +117,7 @@ margin-left : auto;
 		</tr>
 	</table>
 	</div>		
+	</div>
+	</div>
 	</body>
 </html>

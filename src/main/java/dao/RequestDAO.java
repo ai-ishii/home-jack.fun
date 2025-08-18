@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bean.LicenseRequestExclusive;
+import bean.NameRequest;
 import util.DAOconnection;
 
 public class RequestDAO {
@@ -118,21 +119,24 @@ public class RequestDAO {
 				licenseRequestExclusiveList.add(licenseRequestExclusive);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("RequestDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソースの開放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("RequestDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return licenseRequestExclusiveList;
@@ -149,6 +153,8 @@ public class RequestDAO {
 		//変数宣言
 		Connection con = null;
 		PreparedStatement smt = null;
+		
+		boolean success = false;
 
 		//オブジェクト化
 		LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
@@ -159,6 +165,9 @@ public class RequestDAO {
 			//SQL文
 			String sql = licenseRequestSql +"WHERE r.request_id = ? "
 					+ "ORDER BY r.request_flag ASC, r.request_date DESC";
+			
+			//オートコミットを無効化
+			con.setAutoCommit(false);
 
 			smt = con.prepareStatement(sql);
 			smt.setInt(1, requestId);
@@ -196,25 +205,88 @@ public class RequestDAO {
 				//license_info
 				licenseRequestExclusive.setLicenseName(rs.getString("license_name"));
 			}
+			
+			con.commit();
+			success = true;
 
+		} catch (SQLException e) {
+			System.err.println("RequestDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			//リソースの開放 
-			if (smt != null) {
+			if (!success && con != null) {
 				try {
-					smt.close();
-				} catch (SQLException ignore) {
+					System.err.println("トランザクションが失敗したため、ロールバックします。");
+					con.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException ignore) {
+			try {
+				if (smt != null) {
+					
+					smt.close();
 				}
+				if (con != null) {
+					con.setAutoCommit(true);
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("RequestDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return licenseRequestExclusive;
 	}
+	/**
+     * 氏名変更申請をデータベースに登録するメソッド
+     * @param nameRequest 登録したい申請データ
+     * @return 登録に成功した場合は true, 失敗した場合は false
+     */
+    public boolean insertNameChange(NameRequest nameRequest) {
+    	
+		
+        // try-with-resources構文で、処理が終わったら自動でリソースを閉じる
+        try {
 
+    		Connection con = null;
+    		PreparedStatement smt = null;
+    		
+            // 1. データベースへ接続
+        		con = DAOconnection.getConnection();
+        
+            // 2. INSERT文
+            String sql = "INSERT "
+            		+ "INTO name_request_info "
+            		+ "(old_name, "
+            		+ "old_name_kana, "
+            		+ "new_name, "
+            		+ "new_name_kana) "
+            		+ "VALUES (?, ?, ?, ?)";
+            
+            PreparedStatement pstmt = con.prepareStatement(sql);
+
+            // 3. SQL文の「?」に値をセット
+            pstmt.setString(1, nameRequest.getOldName());
+            pstmt.setString(2, nameRequest.getOldNameKana());
+            pstmt.setString(3, nameRequest.getNewName());
+            pstmt.setString(4, nameRequest.getNewNameKana());
+
+            // 4. INSERT文を実行し、結果（更新された行数）を取得
+            int affectedRows = pstmt.executeUpdate();
+
+            // 5. 1行以上更新されていれば成功とみなし true を返す
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            // エラーが発生した場合は、コンソールにエラー内容を出力
+            e.printStackTrace();
+            // 失敗したため false を返す
+            return false;
+        }
+    }
 }
+

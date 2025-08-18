@@ -58,21 +58,24 @@ public class AnnounceDAO {
 				announce.setTag(rs.getString("tag"));
 				list.add(announce);
 			}
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 
@@ -120,21 +123,24 @@ public class AnnounceDAO {
 				announce.setAnnounceCategoryId(rs.getInt("announce_category_id"));
 				announce.setTag(rs.getString("tag"));
 			}
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 
@@ -180,21 +186,24 @@ public class AnnounceDAO {
 				list.add(announce);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 
@@ -240,21 +249,24 @@ public class AnnounceDAO {
 				list.add(announce);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 
@@ -300,21 +312,24 @@ public class AnnounceDAO {
 				list.add(announce);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return list;
@@ -410,21 +425,24 @@ public class AnnounceDAO {
 				map.setCode(rs.getString("category_code"));
 				list.add(map);
 			}
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return list;
@@ -457,21 +475,24 @@ public class AnnounceDAO {
 				category = rs.getString("category");
 			}
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return category;
@@ -523,21 +544,24 @@ public class AnnounceDAO {
 			// SQL文発行
 			smt.executeUpdate(sql);
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 	}
@@ -566,21 +590,24 @@ public class AnnounceDAO {
 			// SQL文発行
 			smt.executeUpdate(sql);
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 	}
@@ -625,21 +652,24 @@ public class AnnounceDAO {
 				list.add(announce);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 
@@ -694,21 +724,24 @@ public class AnnounceDAO {
 				list.add(announce);
 			}
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return list;
@@ -734,21 +767,24 @@ public class AnnounceDAO {
 			// SQL文発行
 			smt.executeUpdate(sql);
 
+		} catch (SQLException e) {
+			System.err.println("AnnounceDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("AnnounceDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("AnnounceDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 	}

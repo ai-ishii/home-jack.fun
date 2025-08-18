@@ -34,14 +34,18 @@ public class EmployeeServlet extends HttpServlet {
 		// 変数宣言
 		String error = "";
 		String cmd = "";
-		
-		try {
+	
 		// オブジェクト生成
 		UserDAO userDAO = new UserDAO();
 		EmployeeDAO employeeDAO = new EmployeeDAO();
-		
 		// メソッドからSQL実行
-		ArrayList<User> userList = userDAO.selectAll();
+				ArrayList<User> userList = userDAO.selectAll();
+		try {
+			//検索された値をnameで受け取る
+			String name = request.getParameter("name");
+		
+			if (name != null && !name.isEmpty()) {
+			}
 		
 		// 社員写真を格納する配列宣言
 		String[] photos = new String[userList.size()];

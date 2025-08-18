@@ -71,20 +71,24 @@ public class UserDAO {
 				user.setUpdateDate(rs.getTimestamp("update_date"));
 				userList.add(user);
 			}
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return userList;
@@ -128,20 +132,24 @@ public class UserDAO {
 			//登録の処理
 			smt.executeUpdate(sql);
 
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 
@@ -176,20 +184,24 @@ public class UserDAO {
 			smt.executeUpdate(sql);
 			
 			
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		
@@ -227,20 +239,24 @@ public class UserDAO {
 			//更新の処理
 			smt.executeUpdate(sql);
 
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 
@@ -298,20 +314,24 @@ public class UserDAO {
 				user.setUpdateDate(rs.getTimestamp("update_date"));
 			}
 
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		// 戻り値返却
@@ -370,20 +390,24 @@ public class UserDAO {
 				user.setUpdateDate(rs.getTimestamp("update_date"));
 			}
 
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		// 戻り値返却
@@ -451,20 +475,24 @@ public class UserDAO {
 				user.setUpdateDate(rs.getTimestamp("update_date"));
 				userList.add(user);
 			}
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return userList;
@@ -523,20 +551,24 @@ public class UserDAO {
 				user.setUpdateDate(rs.getTimestamp("update_date"));
 				userList.add(user);
 			}
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		return userList;
@@ -555,21 +587,24 @@ public class UserDAO {
 
 			smt.executeUpdate(sql);
 
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
-			// リソースの解放
-			if (smt != null) {
-				try {
+			try {
+				if (smt != null) {
 					smt.close();
-				} catch (SQLException ignore) {
 				}
-			}
-			if (con != null) {
-				try {
+				if (con != null) {
 					con.close();
-				} catch (SQLException ignore) {
 				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 	}
@@ -632,22 +667,26 @@ public class UserDAO {
                 userList.add(user);
             }
             
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        } finally {
-            if (smt != null) {
-                try {
-                    smt.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException ignore) {
-                }
-            }
-        }
+        } catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (smt != null) {
+					smt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			}
+		}
         return userList;
     }
     
@@ -707,22 +746,26 @@ public class UserDAO {
                 userList.add(user);
             }
             
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        } finally {
-            if (smt != null) {
-                try {
-                    smt.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException ignore) {
-                }
-            }
-        }
+        } catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (smt != null) {
+					smt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			}
+		}
         return userList;
     }
 }

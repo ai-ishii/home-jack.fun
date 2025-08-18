@@ -1,6 +1,24 @@
-<%@page contentType="text/html; charset=UTF-8"%>
+<%--
+/**
+ * ヘッダー画面
+ * 
+ * 作成者：石田允彦
+ * 
+ * 作成日：2025/07/03
+ * 最終更新日：2025/08/12
+ */
+--%>
 
+<%@page contentType="text/html; charset=UTF-8"%>
+<%@page import="bean.User, dao.UserDAO" %>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+
+<%
+
+//セッションでユーザーのデータを取得
+String user_name = (String)session.getAttribute("user_name");
+
+%>
 
 <body>
 	<header class="container">
@@ -9,6 +27,7 @@
 			<nav id="navi">
 				<ul id="header-menu">
 					<li>
+					<%=user_name %>
 						<a href="<%= request.getContextPath() %>/announce"><p class="cheese">お知らせ</p></a>
 					</li>
 					<li>
@@ -21,9 +40,14 @@
 						<a href="<%= request.getContextPath() %>/selectboxtest"><p class="lettuce">個人目標一覧（テスト用）</p></a>
 					</li>
 					<li>
-						<p class="ketchup">申請</p>
+						<a href="<%= request.getContextPath() %>/monthJackworks"><p class="ketchup">Jackworks</p></a>
+					</li>
+					<li>
+						<p class="egg">申請</p>
 						<ul class="ketchup-detail">
-							<li>waa</li>
+							<li>
+								<a href="<%= request.getContextPath() %>/jackworksSearch">社員紹介</a>
+							</li>
 							<li>wii</li>
 						</ul>
 					</li>
@@ -48,15 +72,27 @@
 							<li>wii</li>
 						</ul>
 					</li>
+					<li>
+						<a href="<%= request.getContextPath() %>/logout"><p class="pickles">ログアウト</p></a>
+					</li>
 				</ul>
 				
 
 			</nav>
 			<div class="navi-close">
 			</div>
-			<div id="hamburger" class="hamburger">
-				<span></span><span></span><span></span>
-			</div>
+			<%
+			if (user_name != null){
+			%>
+			
+			
+				<div id="hamburger" class="hamburger">
+					<span></span><span></span><span></span>
+				</div>
+			
+			<%
+			}
+			%>
 			
 			<div id="page-title">
 				

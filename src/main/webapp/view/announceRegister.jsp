@@ -9,6 +9,11 @@
 <!DOCTYPE html>
 <%@page contentType="text/html; charset=UTF-8"%>
 
+<%
+//エラーの内容が格納されたerrorを受け取る
+String error = (String) request.getAttribute("error");
+%>
+
 <html>
 <head>
 <!-- タイトル -->
@@ -17,6 +22,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <%-->
 tinyMCEの記述 textareaのCSS記述を外すと使えるよ
@@ -98,7 +104,7 @@ textarea {
 	margin: 0 auto;
 }
 
-span{
+.error , .warning{
 color:red;
 }
 </style>
@@ -112,22 +118,31 @@ color:red;
 		<!-- メイン部分 -->
 		<div id="main" class="container">
 			<form action="<%=request.getContextPath()%>/announceRegister"
-				method="post" class="container">
+				method="post" class="container error-form">
 				<div id="content_box">
 
 					<div class="form_box">
-						<label for="title" class="control_label">タイトル<span>*</span></label> 
-						<input type="text" id="title" name="title" required>
+						<label for="title" class="control_label">タイトル<span class="warning">*</span></label> 
+						<input type="text" id="title" name="title" class='required'>
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="regist_date" class="control_label">投稿日時</label> 
+						<label for="regist_date" class="control_label">投稿日時<span class="warning">*</span></label> 
 						<input id="regist_date" type="datetime-local" name="regist_date" />
+						<%
+						if(error != null){
+						%>
+						
+						<!-- 時刻解析のエラー表示 -->
+						<span><%= error %></span>
+						
+						<% } %>
 					</div>
 
 					<div class="form_box tiny_form">
-						<label for="category" class="control_label">カテゴリ</label> 
-						<select id="category" name="category_id">
+						<label for="category" class="control_label">カテゴリ<span class="warning">*</span></label> 
+						<select id="category" name="category_id" class="error-select">
+							<option value="">選択してください</option>
 							<option value="1">お知らせ</option>
 							<option value="2">チーム活動</option>
 							<option value="3">ナレッジベース</option>
@@ -142,8 +157,8 @@ color:red;
 					</div>
 
 					<div class="form_box">
-						<label for="text" class="control_label">本文<span>*</span></label>
-						<textarea id="text" name="text" required></textarea>
+						<label for="text" class="control_label">本文<span class="warning">*</span></label>
+						<textarea id="text" name="text" class='required'></textarea>
 					</div>
 
 					<div class="form_box">

@@ -47,6 +47,14 @@ h1, h2 {
 	padding: 10px 0;
 }
 
+.error-back {
+	border-color: #cc1111;
+	background-color: #ffe9e9;
+	border-width: 1px;
+	border-style: solid;  
+	
+}
+
 /*-----------------------------------*/
 
 #navi {
