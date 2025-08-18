@@ -38,7 +38,6 @@ public class AnnounceUpdateServlet extends HttpServlet {
 		AnnounceDAO announceDAO = new AnnounceDAO();
 		LocalDateTime localDateTime = null;
 
-
 		try {
 
 			// jspファイルからパラメータ取得
@@ -47,6 +46,16 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			String text = request.getParameter("text");
 			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
 			int categoryId = Integer.parseInt(request.getParameter("category_id"));
+
+			// メソッドからSQL実行
+			announce = announceDAO.selectByAnnounceId(announceId);
+
+			if (announce.getAnnounceId() == 0) {
+				error = "対象のお知らせが存在しません。更新してもう一度お試しください。";
+				//お知らせ一覧画面へ遷移
+				cmd = "announce";
+				return;
+			}
 
 			// フォームから受け取った登録日時(String型)をLocalDateTimeに変換する
 			String update = request.getParameter("update_date");
@@ -73,11 +82,11 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			error = "DB接続エラーのため、お知らせの更新はできませんでした。";
 			//ログイン画面へ遷移
 			cmd = "logout";
-			
+
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";
-			
+
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);

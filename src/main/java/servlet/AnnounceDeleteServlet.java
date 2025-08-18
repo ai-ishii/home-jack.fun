@@ -39,7 +39,7 @@ public class AnnounceDeleteServlet extends HttpServlet {
 			announce = announceDAO.selectByAnnounceId(announceId);
 			
 			if(announce.getAnnounceId() == 0) {
-				error = "削除対象のお知らせが存在しないため、お知らせ削除処理は行えませんでした。";
+				error = "このお知らせは、すでに削除されています。";
 				//お知らせ一覧画面へ遷移
 				cmd = "announce";
 				return;

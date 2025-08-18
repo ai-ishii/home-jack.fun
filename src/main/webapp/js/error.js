@@ -11,13 +11,15 @@ document.addEventListener('DOMContentLoaded',() => {
 		const required = document.querySelectorAll('.required');
 		//errorSelectクラスの要素の集まり
 		const errorSelect = document.querySelectorAll('.error-select');
+		//error-dateクラスの要素の集まり
+		const errorDate = document.querySelectorAll('.error-date');
 	
 			//エラーメッセージを表示する
 			//elem:要素
 			//errorMessage:エラーメッセージ
 			const createError = (elem, errorMessage) =>{
 				//span要素の生成
-				const errorSpan = document.createElement('span');
+				const errorSpan = document.createElement('div');
 				//エラー用のクラス追加
 				errorSpan.classList.add(errorClassName);
 				//引数のエラーメッセージを設定
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded',() => {
 					//未入力の場合にエラー表示する
 					if(elem.value.length === 0){
 						elem.classList.add("error-back");
-						createError(elem,'値を入力してください。');
+						createError(elem,'文字または数字を入力してください。');
 						//エラーのフラグを変更
 						errorFlag = true;
 					}else{
@@ -62,6 +64,14 @@ document.addEventListener('DOMContentLoaded',() => {
 				errorSelect.forEach( (elem) => {
 					if(elem.value.length === 0 && elem.tagName === 'SELECT'){
 						createError(elem,'選択必須項目です。');	
+						errorFlag = true;
+					}
+				});
+				
+				//.errorDateの要素の検証
+				errorDate.forEach( (elem) => {
+					if(errorDate.value == ''){
+						createError(elem,'日付が入力されていません。');	
 						errorFlag = true;
 					}
 				});
