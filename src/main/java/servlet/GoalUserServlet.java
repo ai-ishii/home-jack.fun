@@ -5,7 +5,7 @@
  * 
  * 作成日：7月23日
  * 
- * 最終更新日：8月4日
+ * 最終更新日：8月12日
  * 
  */
 package servlet;
@@ -58,7 +58,6 @@ public class GoalUserServlet extends HttpServlet {
 			}
 			//userIdをStringからintへキャスト
 			int userId = Integer.parseInt(strUserId);
-
 
 			//部目標を呼び出す
 			teamGoal = teamGoalDAO.selectByUserId(userId);

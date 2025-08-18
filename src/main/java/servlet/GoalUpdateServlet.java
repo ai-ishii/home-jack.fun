@@ -5,7 +5,7 @@
  * 
  * 作成日：7月14日
  * 
- * 最終更新日：8月4日
+ * 最終更新日：8月12日
  * 
  */
 package servlet;
@@ -13,11 +13,11 @@ package servlet;
 import java.io.IOException;
 
 import bean.Goal;
-import bean.QuarterGoal;
-import bean.TeamGoal;
+import bean.GoalDepartment;
+import bean.GoalQuarter;
 import dao.GoalDAO;
-import dao.QuarterGoalDAO;
-import dao.TeamGoalDAO;
+import dao.GoalDepartmentDAO;
+import dao.GoalQuarterDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -41,73 +41,77 @@ public class GoalUpdateServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String error = "";
-		int GoalId = 0;
 
 		try {
 
 			//オブジェクトの生成
-			TeamGoal teamGoal = new TeamGoal();
 			Goal goal = new Goal();
+			GoalDepartment goalDepartment = new GoalDepartment();
 
 			//各DAOをインスタンス化し、メソッドを呼び出す
-			TeamGoalDAO teamGoalDAO = new TeamGoalDAO();
+			GoalDepartmentDAO goalDepartmentDAO = new GoalDepartmentDAO();
 			GoalDAO goalDAO = new GoalDAO();
-			QuarterGoalDAO quarterGoalDAO = new QuarterGoalDAO();
+			GoalQuarterDAO GoalQuarterDAO = new GoalQuarterDAO();
 
 			//getParameterメソッドを使い、取得した値を代入する
-			String TeamId = request.getParameter("team_id");
-			String DepartmentGoal = request.getParameter("department_goal");
-			String GroupGoal = request.getParameter("group_goal");
-			GoalId = Integer.parseInt(request.getParameter("goal_id"));
-			String AnnualGoal = request.getParameter("annual_goal");
-			String SituationChallenge = request.getParameter("situation_challenge");
-			String Result = request.getParameter("result");
-			String ResultComment = request.getParameter("result_comment");
-			String ResultReviewer = request.getParameter("result_reviewer");
-			String ResultCommentReviewer = request.getParameter("result_comment_reviewer");
+			String groupCode = request.getParameter("group_code");
+			String departmentGoal = request.getParameter("department_goal");
+			String groupGoal = request.getParameter("group_goal");
+			String strGoalId = request.getParameter("goal_id");
+			String annualGoal = request.getParameter("annual_goal");
+			String situationChallenge = request.getParameter("situation_challenge");
+			String strResult = request.getParameter("result");
+			String resultComment = request.getParameter("result_comment");
+			String strResultReviewer = request.getParameter("result_reviewer");
+			String resultCommentReviewer = request.getParameter("result_comment_reviewer");
+			
+			// int型で格納する変数をパースする
+			int goalId = Integer.parseInt(strGoalId);	
+			int result = Integer.parseInt(strResult);
+			int resultReviewer = Integer.parseInt(strResultReviewer);
 
 			//セッターメソッドを呼び出す
-			teamGoal.setTeamId(TeamId);
-			teamGoal.setDepartmentGoal(DepartmentGoal);
-			teamGoal.setGroupGoal(GroupGoal);
-			goal.setGoalId(GoalId);
-			goal.setAnnualGoal(AnnualGoal);
-			goal.setSituationChallenge(SituationChallenge);
-			goal.setResult(Result);
-			goal.setResultComment(ResultComment);
-			goal.setResultReviewer(ResultReviewer);
-			goal.setResultCommentReviewer(ResultCommentReviewer);
+			goalDepartment.setGroupCode(groupCode);
+			goalDepartment.setDepartmentGoal(departmentGoal);
+			goalDepartment.setGroupGoal(groupGoal);
+			goal.setGoalId(goalId);
+			goal.setAnnualGoal(annualGoal);
+			goal.setSituationChallenge(situationChallenge);
+			goal.setResult(result);
+			goal.setResultComment(resultComment);
+			goal.setResultReviewer(resultReviewer);
+			goal.setResultCommentReviewer(resultCommentReviewer);
 			
 			//updateメソッドを呼び出す
-			teamGoalDAO.update(teamGoal);
+			goalDepartmentDAO.update(goalDepartment);
 			goalDAO.update(goal);
 
 			for (int i = 1; i <= 4; i++) {
-				//QuarterGoalオブジェクトの生成
-				QuarterGoal quarterGoal = new QuarterGoal();
+				//GoalQuarterオブジェクトの生成
+				GoalQuarter GoalQuarter = new GoalQuarter();
 
 				//getParameterメソッドを呼び出す
-				int QuarterGoalId = Integer.parseInt(request.getParameter("quarter_goal_id" + (i)));
+				int GoalQuarterId = Integer.parseInt(request.getParameter("quarter_goal_id" + (i)));
 				String SmallGoal = request.getParameter("small_goal" + (i));
 				String JudgeMaterial = request.getParameter("judge_material" + (i));
-				String AchieveRate = request.getParameter("achieve_rate" + (i));
+				int AchieveRate = request.getParameter("achieve_rate" + (i));
 				String Report = request.getParameter("report" + (i));
-				String AchieveRateReviewer = request.getParameter("achieve_rate_reviewer" + (i));
+				int AchieveRateReviewer = request.getParameter("achieve_rate_reviewer" + (i));
 				String Evaluation = request.getParameter("evaluation" + (i));
 				int QuarterlyFlag = Integer.parseInt(request.getParameter("quarterly_flag" + (i)));
 
 				//セッターメソッドを使って格納する
-				quarterGoal.setQuarterGoalId(QuarterGoalId);
-				quarterGoal.setSmallGoal(SmallGoal);
-				quarterGoal.setJudgeMaterial(JudgeMaterial);
-				quarterGoal.setAchieveRate(AchieveRate);
-				quarterGoal.setReport(Report);
-				quarterGoal.setAchieveRateReviewer(AchieveRateReviewer);
-				quarterGoal.setEvaluation(Evaluation);
-				quarterGoal.setQuarterlyFlag(QuarterlyFlag);
+				GoalQuarter.setGoalQuarterId(GoalQuarterId);
+				GoalQuarter.setSmallGoal(SmallGoal);
+				GoalQuarter.setJudgeMaterial(JudgeMaterial);
+				GoalQuarter.setAchieveRate(AchieveRate);
+				GoalQuarter.setReport(Report);
+				GoalQuarter.setAchieveRateReviewer(AchieveRateReviewer);
+				GoalQuarter.setEvaluation(Evaluation);
+				GoalQuarter.setQuarterlyFlag(QuarterlyFlag);
 
-				//quarterGoalを引数にupdateメソッドを呼び出す
-				quarterGoalDAO.update(quarterGoal);
+				//GoalQuarterを引数にupdateメソッドを呼び出す
+				GoalQuarterDAO.update(GoalQuarter);
 			}
 
 		} catch (Exception e) {
