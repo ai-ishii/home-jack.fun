@@ -60,7 +60,11 @@ public class GoalDepartmentDAO {
 				goalDepartment.setGroupGoal(rs.getString("group_goal"));
 			}
 			
+		} catch (SQLException e) {
+			System.err.println("GoalDepartmentDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
 		} catch (Exception e) {
+			System.err.println("GoalDepartmentDAOの不明なエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
 			try {
@@ -70,7 +74,10 @@ public class GoalDepartmentDAO {
 				if (con != null) {
 					con.close();
 				}
-			} catch (SQLException ignore) {
+			} catch (SQLException e) {
+				System.err.println("GoalDepartmentDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("GoalDepartmentDAOの不明なエラー: " + e.getMessage());
 			}
 		}
 		

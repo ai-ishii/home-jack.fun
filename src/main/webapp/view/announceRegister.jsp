@@ -9,6 +9,11 @@
 <!DOCTYPE html>
 <%@page contentType="text/html; charset=UTF-8"%>
 
+<%
+//エラーの内容が格納されたerrorを受け取る
+String error = (String) request.getAttribute("error");
+%>
+
 <html>
 <head>
 <!-- タイトル -->
@@ -113,7 +118,7 @@ color:red;
 		<!-- メイン部分 -->
 		<div id="main" class="container">
 			<form action="<%=request.getContextPath()%>/announceRegister"
-				method="post" class="container errorForm">
+				method="post" class="container error-form">
 				<div id="content_box">
 
 					<div class="form_box">
@@ -124,12 +129,20 @@ color:red;
 					<div class="form_box tiny_form">
 						<label for="regist_date" class="control_label">投稿日時<span>*</span></label> 
 						<input id="regist_date" type="datetime-local" name="regist_date" />
+						<%
+						if(error != null){
+						%>
+						
+						<!-- 時刻解析のエラー表示 -->
+						<span><%= error %></span>
+						
+						<% } %>
 					</div>
 
 					<div class="form_box tiny_form">
 						<label for="category" class="control_label">カテゴリ<span>*</span></label> 
-						<select id="category" name="category_id">
-							<option value="0">選択してください</option>
+						<select id="category" name="category_id" class="error-select">
+							<option value="">選択してください</option>
 							<option value="1">お知らせ</option>
 							<option value="2">チーム活動</option>
 							<option value="3">ナレッジベース</option>

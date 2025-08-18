@@ -77,25 +77,28 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			announceDAO.regist(announce);
 
 		} catch (DateTimeParseException e) {
-			error = "日付時刻の解析に失敗しました。";
-			//お知らせ一覧へ遷移
+			error = "時刻解析に失敗しました。もう一度入力してください。";
+			//お知らせ登録画面へ遷移
 			cmd = "announce";
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、お知らせの登録はできませんでした。";
 			//ログイン画面へ遷移
-			cmd = "login";
+			cmd = "logout";
 			
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "login";
+			cmd = "logout";
 
 		} finally {
 
-			if (error != "") {
+			if(cmd.equals("announce")) {
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("/view/announceRegister.jsp").forward(request, response);
+			}else if (error != "") {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("").forward(request, response);
+				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 
 			request.getRequestDispatcher("/announce").forward(request, response);

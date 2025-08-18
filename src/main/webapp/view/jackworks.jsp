@@ -659,29 +659,14 @@ document.addEventListener("DOMContentLoaded", function() {
 							
 						<!-- 十年間の西暦検索を行うフォーム -->
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
-						<td><label class="selectbox-4">
-								<select id="yearSelect" name="year-search">
-							</label>
-								</select>
+						<td>
+					         <label for="start_date">開始日:</label>
+				            <input type="date" id="start_date" name="start_date" value="${startDate}">
 						</td>
-						
-						<!-- 月の検索を行うセレクトボックス -->
-						<td><label class="selectbox-4">
-								<select id="monthSearch" name="month-search">
-									<option value="01">1月</option>
-									<option value="02">2月</option>
-									<option value="03">3月</option>
-									<option value="04">4月</option>
-									<option value="05">5月</option>
-									<option value="06">6月</option>
-									<option value="07">7月</option>
-									<option value="08">8月</option>
-									<option value="09">9月</option>
-									<option value="10">10月</option>
-									<option value="11">11月</option>
-									<option value="12">12月</option>
-								</select>
-						</td></label>
+					    <td>
+							<label for="end_date">終了日:</label>
+					        <input type="date" id="end_date" name="end_date" value="${endDate}">
+					    </td>
 						<td>
 						<button type="submit" class="select-button" >検索</button>
 						</form>

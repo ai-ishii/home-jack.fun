@@ -39,7 +39,7 @@ public class AnnounceDeleteServlet extends HttpServlet {
 			announce = announceDAO.selectByAnnounceId(announceId);
 			
 			if(announce.getAnnounceId() == 0) {
-				error = "削除対象のお知らせが存在しないため、お知らせ削除処理は行えませんでした。";
+				error = "このお知らせは、すでに削除されています。";
 				//お知らせ一覧画面へ遷移
 				cmd = "announce";
 				return;
@@ -51,17 +51,17 @@ public class AnnounceDeleteServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーのため、お知らせの削除はできませんでした。";
 			//ログイン画面へ遷移
-			cmd = "login";
+			cmd = "logout";
 			
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "login";
+			cmd = "logout";
 			
 		} finally {
 			if (error != "") {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("#").forward(request, response);
+				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			request.getRequestDispatcher("/announce").forward(request, response);
 		}
