@@ -65,7 +65,6 @@ public class JspToExcelServlet extends HttpServlet {
 		RequestDAO requestDAO = new RequestDAO();
 		AddressRequestExclusive addressRequestExclusive = new AddressRequestExclusive();
 
-		addressRequestExclusive.setEmployeenumber(employeeNumber);
 		addressRequestExclusive.setName(name);
 		addressRequestExclusive.setAddressChangedDate(addressChangeDate);
 		addressRequestExclusive.setOldPost(oldPost);
@@ -87,10 +86,10 @@ public class JspToExcelServlet extends HttpServlet {
 			String changeMonth = String.valueOf(addressChangeDate.getMonthValue());
 			String changeDay = String.valueOf(addressChangeDate.getDayOfMonth());
 
-			String templatePath = getServletContext().getRealPath("/WEB-INF/住所変更届のコピー.xlsx");
+			String templatePath = getServletContext().getRealPath("/WEB-INF/住所変更届エクセル.xlsx");
 
 			response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			String fileName = "住所変更届.xlsx";
+			String fileName = "住所変更届エクセル.xlsx";
 			String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
 			response.setHeader("Content-Disposition", "attachment; filename*=UTF-8''" + encodedFileName);
 

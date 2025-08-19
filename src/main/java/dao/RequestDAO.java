@@ -8,21 +8,18 @@
  */
 package dao;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Map;
 
 import bean.AddressRequestExclusive;
-import bean.LicenseRequest;
 import bean.LicenseRequestExclusive;
 import bean.NameRequest;
-import jakarta.servlet.http.Part;
 import util.DAOconnection;
 
 public class RequestDAO {
@@ -309,131 +306,191 @@ public class RequestDAO {
 	}
 
 	/**
-	 * 住所変更申請をデータベースに登録するメソッド
+	 * 住所変更申請をトランザクション内で2つのテーブルに登録します。
+	 * 1. request_infoに申請者と日付を登録し、request_idを取得。
+	 * 2. address_request_infoに詳細情報を登録。
 	 * @param addressRequestExclusive 登録したい申請データ
 	 * @return 登録に成功した場合は true, 失敗した場合は false
 	 */
 	public boolean insertAddressChange(AddressRequestExclusive addressRequestExclusive) {
 
-		// try-with-resources構文で、処理が終わったら自動でリソースを閉じる
-		try {
+	    Connection con = null;
+	    PreparedStatement smt1 = null; // request_infoへのINSERT用
+	    PreparedStatement smt2 = null; // address_request_infoへのINSERT用
+	    ResultSet rs = null;           // 生成されたrequest_idを取得するため
 
-			Connection con = null;
-			PreparedStatement smt = null;
+	    try {
+	        // データベース接続を取得
+	        con = DAOconnection.getConnection();
 
-			// 1. データベースへ接続
-			con = DAOconnection.getConnection();
+	        // トランザクションを開始
+	        con.setAutoCommit(false);
 
-			// 2. INSERT文
-			String sql = "INSERT INTO address_request_info ("
-					+ "employee_number, "
-					+ "name, "
-					+ "change_date, "
-					+ "old_post, "
-					+ "old_address, "
-					+ "new_post, "
-					+ "new_address, "
-					+ "nearest_station,"
-					+ "request_datetime) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	        // --- 処理1：request_infoテーブルに氏名と現在日時をINSERT ---
+	     // --- 親テーブルにINSERT ---
+	     // --- 親テーブルにINSERT ---
+	        String sql1 = "INSERT INTO request_info (applicant, request_date) VALUES (?, NOW())";
+	        smt1 = con.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+	        smt1.setString(1, addressRequestExclusive.getName());
+	        smt1.executeUpdate();
 
-			smt = con.prepareStatement(sql); 
+	        // request_idを取得
+	        rs = smt1.getGeneratedKeys();
+	        long newRequestId = 0;
+	        if (rs.next()) {
+	            newRequestId = rs.getLong(1);
+	        } else {
+	            throw new SQLException("request_idの取得に失敗しました。");
+	        }
 
-			// 3. SQL文の「?」に値をセット
-			smt.setString(1, addressRequestExclusive.getEmployeenumber());
-			smt.setString(2, addressRequestExclusive.getName());
-			smt.setDate(3, Date.valueOf(addressRequestExclusive.getAddressChangedDate()));
-			smt.setString(4, addressRequestExclusive.getOldPost());
-			smt.setString(5, addressRequestExclusive.getOldAddress());
-			smt.setString(6, addressRequestExclusive.getNewPost());
-			smt.setString(7, addressRequestExclusive.getNewAddress());
-			smt.setString(8, addressRequestExclusive.getNeareststation());
-			smt.setDate(9, Date.valueOf(addressRequestExclusive.getApplicationDate()));
-			// 4. INSERT文を実行し、結果（更新された行数）を取得
-			int affectedRows = smt.executeUpdate();
+	        // --- 子テーブルにINSERT ---
+	        String sql2 = "INSERT INTO address_request_info ("
+	                + "request_id, "
+	                + "old_post, "
+	                + "old_address, "
+	                + "new_post, "
+	                + "new_address, "
+	                + "nearest_station, "
+	                + "address_change_date) "
+	                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-			// 5. 1行以上更新されていれば成功とみなし true を返す
-			return affectedRows > 0;
+	        smt2 = con.prepareStatement(sql2);
+	        smt2.setLong(1, newRequestId);
+	        smt2.setString(2, addressRequestExclusive.getOldPost());
+	        smt2.setString(3, addressRequestExclusive.getOldAddress());
+	        smt2.setString(4, addressRequestExclusive.getNewPost());
+	        smt2.setString(5, addressRequestExclusive.getNewAddress());
+	        smt2.setString(6, addressRequestExclusive.getNeareststation());
 
-		} catch (SQLException e) {
-			// エラーが発生した場合は、コンソールにエラー内容を出力
-			e.printStackTrace();
-			// 失敗したため false を返す
-			return false;
-		}
+	        // LocalDate → Timestamp に変換
+	        smt2.setTimestamp(7, Timestamp.valueOf(
+	                addressRequestExclusive.getAddressChangedDate().atStartOfDay()
+	        ));
+
+	        int affectedRows = smt2.executeUpdate();
+	        con.commit();
+	        return affectedRows > 0;
+
+	    // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+	    // ★★★ catchブロックを SQLException と ClassNotFoundException に分離 ★★★
+	    // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        if (con != null) {
+	            try {
+	                con.rollback();
+	            } catch (SQLException e2) {
+	                e2.printStackTrace();
+	            }
+	        }
+	        return false;
+
+	    } finally {
+	        // --- 最後に必ずリソースを解放する ---
+	        try {
+	            if (rs != null) rs.close();
+	            if (smt1 != null) smt1.close();
+	            if (smt2 != null) smt2.close();
+	            if (con != null) {
+	                con.setAutoCommit(true);
+	                con.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 
 	/**
-	 * 資格申請の情報をデータベースに登録します。
-	 * @param licenseRequest 登録するデータが格納されたDTO
-	 * @return 登録に成功した場合は true, 失敗した場合は false
+	 * 資格申請の情報をトランザクション内で2つのテーブルに登録します。
+	 * @param userInput 登録するデータが格納されたMap
+	 * @return 2つの登録処理がすべて成功した場合は true, 途中で失敗した場合は false
 	 */
-	public boolean insertLicenseRequest(LicenseRequest licenseRequest) {
+	public boolean insertLicenseRequest(Map<String, Object> userInput) {
+		Connection con = null;
+		PreparedStatement smt1 = null; // request_infoへのINSERT用
+		PreparedStatement smt2 = null; // license_request_infoへのINSERT用
+		ResultSet rs = null; // 生成されたrequest_idを取得するため
+
 		try {
+			// データベース接続を取得
+			con = DAOconnection.getConnection(); // ご自身の接続クラス名にしてください
 
-			Connection con = null;
-			PreparedStatement smt = null;
+			// ★★★ トランザクションを開始（自動コミットを無効化） ★★★
+			con.setAutoCommit(false);
 
-			// 1. データベースへ接続
-			con = DAOconnection.getConnection();
-			// ★SQL文は実際のテーブル名とカラム名に合わせてください
-			String sql = "INSERT INTO license_request_info ("
-					+ "applicant_name, "
-					+ "department_name, "
-					+ "group_name, "
-					+ "license_name, "
-					+ "exam_date, "
-					+ "exam_time, "
-					+ "receipt_data, "
-					+ "passing_data) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-			
-			smt = con.prepareStatement(sql); 
+			// --- 処理1：request_infoテーブルにINSERT ---
+			// NOW() を使うことで、DBサーバーの現在日時が記録される
+			// --- 親テーブルにINSERT ---
+			String sql1 = "INSERT INTO request_info (applicant, request_date) VALUES (?, NOW())";
+			smt1 = con.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+			smt1.setString(1, addressRequestExclusive.getName());
+			smt1.executeUpdate();
 
-			// DTOから値を取得してPreparedStatementにセット
-			smt.setString(1, licenseRequest.getApplicant());
-			smt.setString(2, licenseRequest.getDepartmentName());
-			smt.setString(3, licenseRequest.getGroupName());
-			smt.setString(4, licenseRequest.getLicenseName());
-			smt.setDate(5, Date.valueOf(licenseRequest.getExamDate())); // LocalDateをjava.sql.Dateに変換
-			smt.setInt(6, licenseRequest.getExamTime());
-
-			// --- ファイル（Part）の処理 ---
-			Part receiptPart = licenseRequest.getReceipt();
-			Part passingPart = licenseRequest.getPassing();
-
-			// 領収書ファイル
-			if (receiptPart != null && receiptPart.getSize() > 0) {
-				// PartからInputStreamを取得してセット
-				try (InputStream receiptInputStream = receiptPart.getInputStream()) {
-					smt.setBinaryStream(7, receiptInputStream, receiptPart.getSize());
-				}
+			// request_idを取得
+			rs = smt1.getGeneratedKeys();
+			long newRequestId = 0;
+			if (rs.next()) {
+			    newRequestId = rs.getLong(1);
 			} else {
-				// ファイルが添付されていない場合はNULLをセット
-				smt.setNull(7, java.sql.Types.BLOB);
+			    throw new SQLException("request_idの取得に失敗しました。");
 			}
 
-			// 合格証ファイル
-			if (passingPart != null && passingPart.getSize() > 0) {
-				// PartからInputStreamを取得してセット
-				try (InputStream passingInputStream = passingPart.getInputStream()) {
-					smt.setBinaryStream(8, passingInputStream, passingPart.getSize());
-				}
-			} else {
-				// ファイルが添付されていない場合はNULLをセット
-				smt.setNull(8, java.sql.Types.BLOB);
-			}
+			// --- 子テーブルにINSERT ---
+			String sql2 = "INSERT INTO address_request_info ("
+			        + "request_id, "
+			        + "old_post, "
+			        + "old_address, "
+			        + "new_post, "
+			        + "new_address, "
+			        + "nearest_station, "
+			        + "address_change_date) "
+			        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-			// INSERT文を実行し、更新された行数を取得
-			int affectedRows = smt.executeUpdate();
+			smt2 = con.prepareStatement(sql2);
+			smt2.setLong(1, newRequestId);
+			smt2.setString(2, addressRequestExclusive.getOldPost());
+			smt2.setString(3, addressRequestExclusive.getOldAddress());
+			smt2.setString(4, addressRequestExclusive.getNewPost());
+			smt2.setString(5, addressRequestExclusive.getNewAddress());
+			smt2.setString(6, addressRequestExclusive.getNeareststation());
 
-			// 1行以上更新されていれば成功とみなす
+			// LocalDate → Timestamp に変換
+			smt2.setTimestamp(7, Timestamp.valueOf(
+			        addressRequestExclusive.getAddressChangedDate().atStartOfDay()
+			));
+
+			int affectedRows = smt2.executeUpdate();
+			con.commit();
 			return affectedRows > 0;
 
-		} catch (SQLException | IOException e) {
-			// SQLエラーまたはファイルのI/Oエラーが発生した場合
+
+		} catch (SQLException e) {
 			e.printStackTrace();
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+			}
 			return false;
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (smt1 != null)
+					smt1.close();
+				if (smt2 != null)
+					smt2.close();
+				if (con != null) {
+					con.setAutoCommit(true);
+
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
