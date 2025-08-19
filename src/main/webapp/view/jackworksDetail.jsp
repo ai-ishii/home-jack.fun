@@ -1,7 +1,11 @@
 <%--
 JackWorks詳細画面
+
 作成者：青木美波
+更新者：占部虎司郎
+
 作成日 2025/07/18
+最終更新日:2025/08/19
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -31,6 +35,11 @@ if(cmd == null){
 
 <!-- 以下CSS -->
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yomogi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
 
 #contents {
 	width: 90%;
@@ -87,7 +96,7 @@ td.jack-left{
 width:50%;
 padding-left: 10px;
 background-color:#fff;
-border-right:dotted;
+border-right:dotted #ffd9ad;
 }
 
 td.jack-right{
@@ -103,8 +112,8 @@ padding:10px 10px 10px;
 }
 
 tr.jack-double{
-border-bottom:double;
-border-top:solid;
+border-bottom:double #ffd9ad;
+border-top:solid #ffb35c;
 }
 
 p.cap{
@@ -114,47 +123,48 @@ text-align:left;
 font-size:16px;
 }
 
-/* 削除ボタンのCSS */
-.btn, a.btn{
-	font-size: 15px;
-	font-weight: 700;
-	line-height: 1.5;
-	display: inline-block;
-	padding: 2px 15px;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-transition: all 0.3s;
-	transition: all 0.3s;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	letter-spacing: 0.1em;
-	border-radius: 3px;
-	border:2px solid #484a60;
-}
-
-a.btn--delete {
-	position:relative;
-	color: #000;
-	background-color: #e5e7ff;
-	border-bottom: 5px solid #727592;
-	transform: translateY(0);
-}
-
-a.btn--delete:hover {
-	transform: translateY(3px);
-	color: #000;
-	background: #706caa;
-	border-bottom: 2px solid #4a488e;
-}
-
 .jack-return{
 margin-top:2%;
 height:40px;
 text-align:center;
+}
+
+/* aタグの初期CSSのリセット */
+.jackReset{
+text-decoration: none;
+color: #000;
+}
+
+/* 戻るボタンの大枠 */
+.jackFlex{
+display: flex;
+align-items: center;
+height: 30px;
+width: 85%;
+margin: 30px auto 0;
+}
+
+/* 矢印 */
+.arrow{
+display: inline-block;
+vertical-align: middle;
+transition: transform 0.5s ease;
+overflow: visible; 					/* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf{
+height: 100%;
+font-family: "Yomogi", cursive;
+font-weight: 700;
+font-size: 25px;
+}
+
+/* 矢印ホバー時の動き */
+.jackReset:hover svg path {
+transform: translateX(-10px);
+stroke: #f9de95;
+fill: #f9de95;
 }
 
 .mag {
@@ -266,13 +276,25 @@ margin-top: 3%;
 			</table>
 			
 			<% if(cmd.equals("request")) {%>
-			<div class="jack-return">
-				<a href="<%=request.getContextPath()%>/jackworksRequest" class="btn btn--delete">戻る</a>
+			<div class="jackFlex">
+				<a href="<%=request.getContextPath()%>/jackworksRequest" class="jackReset">
+					<svg class="arrow" width="50"  height="20">
+						<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+						<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+					</svg>
+					<span class="beaf">PREV</span>
+				</a>
 			</div>
 			
 			<%}else{ %>
-			<div class="jack-return">
-				<a href="<%=request.getContextPath()%>/monthJackworks" class="btn btn--delete">戻る</a>
+			<div class="jackFlex">
+				<a href="<%=request.getContextPath()%>/monthJackworks" class="jackReset">
+					<svg class="arrow" width="50"  height="20">
+						<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+						<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+					</svg>
+					<span class="beaf">PREV</span>
+				</a>
 			</div>
 			<%} %>
 			
