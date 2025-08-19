@@ -5,51 +5,54 @@
 
 　作成日：7月14日
 
-　最終更新日：7月25日
+　最終更新日：8月18日
  -->
-<%@page import="bean.QuarterGoal"%>
-<%@page import="bean.TeamGoal"%>
+<%@page import="bean.Goal"%>
+<%@page import="bean.GoalQuarter"%>
+<%@page import="bean.GoalDepartment"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList,bean.Goal"%>
 
 <%
 //オブジェクト宣言
 Goal goal = new Goal();
-TeamGoal teamGoal = new TeamGoal();
+GoalDepartment goalDepartment = new GoalDepartment();
 
 //getAttributeを使い要素を取得する
 goal = (Goal) request.getAttribute("goal");
-teamGoal = (TeamGoal) request.getAttribute("teamGoal");
-ArrayList<QuarterGoal> quarterGoalList = (ArrayList<QuarterGoal>) request.getAttribute("quarter_goal_list");
+goalDepartment= (GoalDepartment) request.getAttribute("goalDepartment");
+ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goalQuarterList");
 
 //変数宣言
-String departmentGoal = "tst";
-String groupGoal = "わらび";
+String groupCode = "";
+String departmentGoal = "";
+String groupGoal = "";
 String annualGoal = "";
 String situationChallenge = "";
-String result = "";
+int result = 0;
 String resultComment = "";
-String resultReviewer = "";
+int resultReviewer = 0;
 String resultCommentReviewer = "";
-
-//teamGoalの値がnullでなければ
-if (teamGoal != null) {
-
-	//ゲッターメソッドを使って値を取得する
-	departmentGoal = teamGoal.getDepartmentGoal();
-	groupGoal = teamGoal.getGroupGoal();
-}
 
 //goalの値がnullでなければ
 if (goal != null) {
 
 	//ゲッターメソッドを使って値を取得する
+	groupCode = goal.getGroupCode();
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
 	result = goal.getResult();
 	resultComment = goal.getResultComment();
 	resultReviewer = goal.getResultReviewer();
 	resultCommentReviewer = goal.getResultCommentReviewer();
+}
+
+//GoalDepartmentの値がnullでなければ
+if (goalDepartment != null) {
+
+	//ゲッターメソッドを使って値を取得する
+	departmentGoal = goalDepartment.getDepartmentGoal();
+	groupGoal = goalDepartment.getGroupGoal();
 }
 %>
 <!DOCTYPE html>
@@ -73,7 +76,7 @@ if (goal != null) {
 	font-size: 20px;
 }
 
-#quarterGoal {
+#goalQuarter {
 	position: relative;
 	padding-bottom: 10%;
 	margin-top: 100px;
@@ -200,7 +203,7 @@ if (goal != null) {
 	text-align: left;
 }
 
-.quarterGoal {
+.goalQuarter {
 	margin: 0 auto;
 	width: 80.5%;
 	background-color: #ffd700;
@@ -327,7 +330,7 @@ keyframes fadeIn { 0% {
 	opacity: .8;
 }
 
-.tab-4 input {
+.tab-4 input[type="radio"] {
 	display: none;
 }
 
@@ -385,8 +388,8 @@ keyframes fadeIn { 0% {
 
 					<div class="goalpadding">
 						<h3>部目標</h3>
-						<input type="hidden" name="team_id"
-							value="<%=teamGoal.getTeamId()%>">
+						<input type="hidden" name="group_code"
+							value="<%=groupCode%>">
 						<textarea name="department_goal" rows="5" cols="80"><%=departmentGoal%></textarea>
 					</div>
 					<div class="goalpadding">
@@ -406,58 +409,75 @@ keyframes fadeIn { 0% {
 					</div>
 				</div>
 
-				<div id="quarterGoal" class="container">
+				<div id="goalQuarter" class="container">
 					<h1>目標を達成するためのステップ</h1>
 					<div id="quarterTitle" class="container">
 						<div class="tab-4">
 
 							<!--Java処理-->
 							<%
-							if (quarterGoalList != null) {
-								for (int i = 0; i < quarterGoalList.size(); i++) {
+							if (goalQuarterList != null) {
+								for (int i = 0; i < goalQuarterList.size(); i++) {
 							%>
 
-							<label> <input type="radio" name="tab-4"<% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
+							<label> 
+								<input type="radio" name="tab-4"<% if(i == 0){ %>checked<%} %>> 第<%=i + 1%>四半期
 							</label>
 								<div class="goalpadding">
 									<div class="contents">
 										<h3>小目標</h3>
 										<input type="hidden" name="quarter_goal_id<%=i + 1%>"
-											value="<%=quarterGoalList.get(i).getQuarterGoalId()%>">
+											value="<%=goalQuarterList.get(i).getGoalQuarterId()%>">
 										<textarea class="details-content" name="small_goal<%=i + 1%>"
-											rows="5" cols="30" placeholder="例　〇〇について勉強し、レポートにまとめる"><%=quarterGoalList.get(i).getSmallGoal()%></textarea>
+											rows="5" cols="30" placeholder="例　〇〇について勉強し、レポートにまとめる"><%=goalQuarterList.get(i).getSmallGoal()%></textarea>
 									</div>
 									<div class="contents">
 										<h3>評価基準・材料</h3>
 										<textarea class="details-content"
 											name="judge_material<%=i + 1%>" rows="5" cols="30"
-											placeholder="例　レポートの発表"><%=quarterGoalList.get(i).getJudgeMaterial()%></textarea>
+											placeholder="例　レポートの発表"><%=goalQuarterList.get(i).getJudgeMaterial()%></textarea>
 									</div>
 									<div class="flex">
-									<h3 style="flex-shrink: 3;">達成率</h3>
-									<h3 style="">報告内容</h3>
-								</div>
-										<div style="width: 80%; margin: 0 auto;">
-											<div class="flex">
-												<textarea class="details-content"
-													name="achieve_rate<%=i + 1%>" rows="10" style="flex: 1"
-													placeholder="例　80%"><%=quarterGoalList.get(i).getAchieveRate()%></textarea>
-												<textarea class="details-content" name="report<%=i + 1%>"
-													rows="10" style="flex: 3" placeholder="例　〇〇することができました。"><%=quarterGoalList.get(i).getReport()%></textarea>
+										<h3 style="flex-shrink: 3;">達成率</h3>
+										<h3 style="">報告内容</h3>
+									</div>
+									<div style="width: 80%; margin: 0 auto;">
+										<div class="flex">
+											<div class="details-content">
+												<input 
+													type="number" 
+													name="achieve_rate<%=i + 1%>" 
+													placeholder="例　80%" 
+													value="<%=goalQuarterList.get(i).getAchieveRate()%>">%
+											</div>
+											<div class="details-content">
+												<textarea 
+													name="report<%=i + 1%>" 
+													placeholder="例　〇〇することができました。">
+													<%=goalQuarterList.get(i).getReport()%>
+												</textarea>
 											</div>
 										</div>
+									</div>
 									<div class="contents">
 										<h3>達成率 報告を受けての評価</h3>
 										<div style="width: 80%; margin: 0 auto;">
 											<div class="flex">
-												<textarea class="details-content"
-													name="achieve_rate_reviewer<%=i + 1%>" rows="10"
-													style="flex: 1" placeholder="例　80"><%=quarterGoalList.get(i).getAchieveRateReviewer()%></textarea>
-												<textarea class="details-content"
-													name="evaluation<%=i + 1%>" rows="10" style="flex: 3"
-													placeholder="例　上出来です。"><%=quarterGoalList.get(i).getEvaluation()%></textarea>
+												<div class="details-content">
+													<input 
+														type="number" 
+														name="achieve_rate_reviewer<%=i + 1%>" 
+														placeholder="例　80" 
+														value="<%=goalQuarterList.get(i).getAchieveRateReviewer()%>">%
+												</div>
+												<div class="details-content">
+													<textarea
+														name="evaluation<%=i + 1%>" rows="10" style="flex: 3"
+														placeholder="例　上出来です。"><%=goalQuarterList.get(i).getEvaluation()%>
+													</textarea>
+												</div>
 												<input type="hidden" name="quarterly_flag<%=i + 1%>"
-													value="<%=quarterGoalList.get(i).getQuarterlyFlag()%>">
+													value="<%=goalQuarterList.get(i).getQuarterlyFlag()%>">
 											</div>
 										</div>
 									</div>
@@ -483,7 +503,7 @@ keyframes fadeIn { 0% {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea name="result" rows="10" cols="80" placeholder="例　100"><%=result%></textarea>
+								<input type="number" name="result" placeholder="例　100" value="<%=result%>">%
 							</div>
 							<div style="width: 80%">
 								<textarea name="result_comment" rows="10" cols="80"
@@ -500,8 +520,8 @@ keyframes fadeIn { 0% {
 					<div class="goalpadding">
 						<div class="flex">
 							<div style="width: 20%">
-								<textarea name="result_reviewer" rows="10" cols="80"
-									placeholder="例　100"><%=resultReviewer%></textarea>
+								<input type="number" name="result_reviewer"
+									placeholder="例　100" value="<%=resultReviewer%>">%
 							</div>
 							<div style="width: 80%">
 								<textarea name="result_comment_reviewer" rows="10" cols="80"

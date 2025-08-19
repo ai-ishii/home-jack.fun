@@ -61,7 +61,7 @@ MyFormat myformat = new MyFormat();
 	padding: 5px 10px;
 	margin-bottom: 0;
 	border-radius: 10px 10px 0 0;
-	background-color: #777;
+	background-color: sienna;
 	color: snow;
 	font-size: 30px;
 }
@@ -332,7 +332,7 @@ ul {
 				<div id="sidebar" class="container">
 					<div class="calendar">
 						<p>カレンダー</p>
-						<iframe src="https://calendar.google.com/calendar/embed?height=300&wkst=1&ctz=Asia%2FTokyo&showPrint=0&src=dGVzdXRvdS5oYWppbWVAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043" style="border:solid 5px #777" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+						<iframe src="https://calendar.google.com/calendar/embed?height=300&wkst=1&ctz=Asia%2FTokyo&showPrint=0&src=dGVzdXRvdS5oYWppbWVAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043" style="border:solid 5px sienna" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
 					</div>
 				</div>
 				

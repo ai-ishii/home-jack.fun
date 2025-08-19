@@ -8,7 +8,7 @@
 
  最終更新日：8月18日
  -->
- 
+
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Goal, bean.GoalQuarter, bean.GoalDepartment, java.util.ArrayList"%>
 
@@ -19,10 +19,11 @@ GoalDepartment goalDepartment = new GoalDepartment();
 
 //リクエストスコープから要素を取得する
 goal = (Goal) request.getAttribute("goal");
-goalDepartment = (GoalDepartment) request.getAttribute("goal_department");
-ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goal_quarter_list");
+goalDepartment = (GoalDepartment) request.getAttribute("goalDepartment");
+ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goalQuarterList");
 
 //変数宣言
+String managementTheme = "";
 String groupCode = "";
 String departmentGoal = "";
 String groupGoal = "";
@@ -49,6 +50,7 @@ if (goal != null) {
 //goalDepartmentの値がnullでなければ
 if (goalDepartment != null) {
 	//ゲッターメソッドを使って値を取得する
+	managementTheme = goalDepartment.getManagementTheme();
 	departmentGoal = goalDepartment.getDepartmentGoal();
 	groupGoal = goalDepartment.getGroupGoal();
 }
@@ -324,6 +326,12 @@ transform: translateY(-10px);
 		<div id = "contents">
 			<div id="link-title">
 			<h1 id="link-line">個人目標詳細</h1>
+			
+			<!-- デザインお願いします -->
+			<button type="button" onclick="location.href='<%=request.getContextPath()%>/goalConfirm?cmd=update'">
+				編集
+			</button>
+			
 			</div>
 			
 			<div class="seal">
@@ -332,7 +340,7 @@ transform: translateY(-10px);
 				経営テーマ
 				</div>
 				<!-- 以下のdivタグにはリクエストスコープから取得した経営テーマが入る -->
-				<div class="adminLine">PLAYFULL LEARNING</div>
+				<div class="adminLine"><%=managementTheme%></div>
 				
 				<!-- 部目標ボックス -->
 				<div class="yorushikaBox">
