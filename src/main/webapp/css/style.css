@@ -52,7 +52,7 @@ h1, h2 {
     background-color: #ffe9e9; 
 }
 
-.error .warning{
+.error , .warning{
 	color:red;
 }
 

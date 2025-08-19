@@ -4,7 +4,6 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/15
- * 
  * 最終更新日：2025/08/13
  */
 
@@ -80,11 +79,11 @@ public class JackworksSearchServlet extends HttpServlet {
 			request.setAttribute("end", end);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
-			cmd = "";
+			error = "システムの一時的な問題により、\\r\\n検索結果の読み込みができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			cmd = "logout";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
