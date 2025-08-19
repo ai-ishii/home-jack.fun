@@ -47,7 +47,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			announce = announceDAO.selectByAnnounceId(announceId);
 
 			if (announce.getAnnounceId() == 0) {
-				error = "対象のお知らせが存在しません。更新してもう一度お試しください。";
+				error = "対象のお知らせが存在しません。";
 				//お知らせ一覧画面へ遷移
 				cmd = "announce";
 				return;
@@ -60,7 +60,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			//遷移前の更新日時とデータベース上の更新日時を比較
 			//違う場合
 			if (!updateDateBefore.equals(updateDateAfter)) {
-				error = "このデータはすでに変更されています。更新してもう一度お試しください。";
+				error = "このデータはすでに変更されています。";
 				cmd = "announce";
 				return;
 			}
@@ -76,7 +76,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			announceDAO.update(announce);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせの更新はできませんでした。";
+			error = "システムの一時的な問題により、\\r\\nお知らせの更新ができませんでした。";
 			//ログイン画面へ遷移
 			cmd = "logout";
 
