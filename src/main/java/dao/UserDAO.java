@@ -599,7 +599,13 @@ public class UserDAO {
 		return userList;
 	}
 
-	public void insert(String accountId) {
+	/**
+	 * 登録を行うメソッド
+	 * 
+	 * @param 登録したい情報
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	public void insert(String accountId, String name) {
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -607,14 +613,13 @@ public class UserDAO {
 		String sql = "INSERT INTO "
 					+ "user_info (" 
 				+ "account_id,"
-				+ "joining_date,"
+				+ "name,"
 				+ "marriage_flag,"
 				+ "display_flag,"
 				+ "rest_flag,"
-				+ "regist_date,"
-				+ "update_date" + ")"
+				+ "regist_date" + ")"
 					+ "VALUES "
-				+ "(?, NOW(), 0, 1, 0, NOW(), NOW())";
+				+ "(? ,?, 0, 1, 0, NOW())";
 
 		try {
 			// DBに接続
@@ -622,6 +627,7 @@ public class UserDAO {
 			ps = con.prepareStatement(sql);
 			
 			ps.setString(1, accountId);
+			ps.setString(2, name);
 
 			ps.executeUpdate();
 
