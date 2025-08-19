@@ -334,10 +334,10 @@ a {
 	margin: 0;
 }
 
-/* spamタグの空白をなくすため */
-.aokisaikyou{
+/* spanタグの空白をなくすため */
+.no-space{
 display: flex;
-gap: 0				/* 子要素の感覚を0にする */
+gap: 0				/* 子要素の間隔を0にする */
 }
 
 </style>
@@ -522,7 +522,7 @@ gap: 0				/* 子要素の感覚を0にする */
 						//キーワード検索が0件の場合
 						if(keyword != null){
 					%>
-					<div class="aokisaikyou">
+					<div class="no-space">
 					<span>"<%= keyword %>"の</span>
 					<%
 						}

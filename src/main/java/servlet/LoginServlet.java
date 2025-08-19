@@ -4,7 +4,7 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/18
- * 最終更新日：2025/07/29
+ * 最終更新日：2025/08/19
  */
 
 package servlet;
@@ -20,6 +20,7 @@ import com.google.api.client.json.gson.GsonFactory;
 import bean.Account;
 import bean.User;
 import dao.AccountDAO;
+import dao.EmployeeDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -55,11 +56,11 @@ public class LoginServlet extends HttpServlet {
 		//DAO宣言
 		AccountDAO accountDAO = new AccountDAO();
 		UserDAO userDAO = new UserDAO();
+		EmployeeDAO employeeDAO = new EmployeeDAO();
 		
 		//DTO宣言
 		Account account = new Account();
 		
-		int userId = -1;
 		String name = "";
 
 		try {
@@ -80,6 +81,8 @@ public class LoginServlet extends HttpServlet {
 				//ユーザー情報からID、メールアドレスを取得
 				String accountId = payload.getSubject();
 				String email = payload.getEmail();
+				//名前の取得
+				name = (String)payload.get("name");
 				account = accountDAO.selectByAccountId(accountId);
 				
 				//アカウントが存在しない場合登録を行う
@@ -87,7 +90,7 @@ public class LoginServlet extends HttpServlet {
 					//account_infoに登録
 					accountDAO.insert(accountId, email);
 					//user.infoに登録
-					userDAO.insert(accountId);
+					userDAO.insert(accountId, name);
 					//登録したアカウント情報を取得
 					account = accountDAO.selectByAccountId(accountId);
 				}
@@ -99,13 +102,12 @@ public class LoginServlet extends HttpServlet {
 					profile = true;
 				}
 				
-				//名前の取得
-				name = (String)payload.get("name");
+				
 				
 				session.setAttribute("account", account);
 				session.setAttribute("user",user);
 				session.setAttribute("profile",profile);
-				session.setAttribute("user_id", userId);
+				session.setAttribute("user_id", user.getUserId());
 				session.setAttribute("user_name", name);
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";
 				response.getWriter().write(jsonResponse);

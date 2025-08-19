@@ -176,10 +176,6 @@ button.btn-border:active:before {
 	bottom: -1px;
 }
 
-.error{
-color:red;
-}
-
 </style>
 
 <body>
@@ -211,14 +207,14 @@ color:red;
 				</tr>
 					<td>
 					<label for="start_date"></label>
-					<input type="date" class="error-date" name="date" value="" max="9999-12-31">
+					<input type="date" class="error-date" name="date" max="9999-12-31">
 					</td>
 				<tr>
 					<td style="display: flex">社員No
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="employeeNumber" value="" size="45" placeholder="001234" class="required"></td>
+					<td><input type="text" name="employeeNumber" value="" size="45" placeholder="001234" class="num-required error-employee"></td>
 				<tr>
 					<td style="display: flex">氏名
 						<div class="warning">*</div>
@@ -242,7 +238,7 @@ color:red;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="point" value="" size="45" placeholder="10" class="required"></td>
+					<td><input type="text" name="point" value="" size="45" placeholder="10" class="num-required"></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
@@ -285,13 +281,13 @@ color:red;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="required"></td>
+					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
 				<tr>
 					<td style="display: flex">精算
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="required"></td>
+					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
 				<tr>
 					<td style="display: flex">作業場所
 						<div class="warning">*</div>
