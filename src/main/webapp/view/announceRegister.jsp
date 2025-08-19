@@ -128,7 +128,8 @@ color:red;
 
 					<div class="form_box tiny_form">
 						<label for="regist_date" class="control_label">投稿日時<span class="warning">*</span></label> 
-						<input id="regist_date" type="datetime-local" name="regist_date" />
+						<input id="regist_date" type="datetime-local" name="regist_date" max="9999-12-31 23:59"/>
+																										<!-- 現在時刻よりあとしか登録できないようにする -->
 						<%
 						if(error != null){
 						%>

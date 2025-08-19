@@ -1,46 +1,47 @@
-<!-- 社員紹介 登録機能（作：石井） -->
-<!-- 作成日：7/17　最終更新日：8/19 11:40 -->
+<!-- 社員紹介 変更確認機能（作：石井） -->
+<!-- 作成日：7/18　最終更新日：8/19 10:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="bean.Account, bean.User, dao.UserDAO, util.CommonTable, util.MyFormat, java.sql.Timestamp, java.util.Date, java.text.SimpleDateFormat"%>
+	import="bean.Account, bean.User, dao.UserDAO, util.CommonTable, util.MyFormat, java.text.SimpleDateFormat, java.util.Date, java.sql.Timestamp"%>
 
-<!-- cmdで確認画面と登録画面分ける -->
+<!-- cmdで確認画面と編集画面分ける -->
 
 <%
-// オブジェクトの生成
+//オブジェクトの生成
 Account account = new Account();
 User user = new User();
 UserDAO userDAO = new UserDAO();
 CommonTable commonTable = new CommonTable();
 
-// セッションでユーザーのデータを取得
+//セッションでユーザーのデータを取得
 account = (Account)session.getAttribute("account");
-int userId = (int)session.getAttribute("user_id");
-String name = (String)session.getAttribute("user_name");
+int userId_session = (int)session.getAttribute("user_id");
+int userId = Integer.parseInt(request.getParameter("userId"));
 
-// セッションからユーザー情報を取得
+//セッションからユーザー情報を取得
 user = userDAO.selectByUserId(userId);
 
 String employeeNumber = user.getEmployeeNumber();
+String name = user.getName();
 String nameKana = user.getNameKana();
 Date birthday = user.getBirthday();
 int departmentId = user.getDepartmentId();
 int groupId = user.getGroupId();
 Timestamp joiningDate = user.getJoiningDate();
 
-// フォーマット化し表示形式を変更
+//フォーマット化し表示形式を変更
 MyFormat myFormat = new MyFormat();
 String birthdayStr = myFormat.birthDateFormat(birthday);
 String joiningDateStr = myFormat.yearMonthFormat(joiningDate);
 
-// 疑似テーブルメソッドからデータを取得
+//疑似テーブルメソッドからデータを取得
 String department = commonTable.selectDepartment(departmentId);
 String group = commonTable.selectGroup(groupId);
 
 // cmdを取得
-String cmd = request.getParameter("cmd");
+String cmd = (String) request.getAttribute("cmd");
 
 // 変数宣言
 String photo = "";
@@ -52,8 +53,8 @@ String talent = "";
 String intro = "";
 String position = "";
 
-// 確認画面の場合と登録画面に戻った場合
-if (cmd.equals("registerConfirm") || cmd.equals("reRegister")) {
+// 確認画面の場合と戻るボタンを押して再度変更画面に戻った場合
+if (cmd.equals("updateConfirm") || cmd.equals("reUpdate")) {
 	// 入力された情報をJSPから取得
 	photo = request.getParameter("photo");
 	developer = Integer.parseInt(request.getParameter("developer"));
@@ -64,23 +65,13 @@ if (cmd.equals("registerConfirm") || cmd.equals("reRegister")) {
 	intro = request.getParameter("intro");
 	position = request.getParameter("position");
 }
-
 %>
 
 <html>
 <head>
 <!-- タイトル -->
 <%
-if (cmd.equals("register") || cmd.equals("reRegister")) {
-%>
-<title>登録 - 社員紹介</title>
-<%
-} else if (cmd.equals("registerConfirm")) {
-%>
 <title>確認画面 - 社員紹介</title>
-<%
-}
-%>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -88,26 +79,12 @@ if (cmd.equals("register") || cmd.equals("reRegister")) {
 </head>
 <style>
 /* ページ全体（div）*/
-#employeeRegister {
+#employeeUpdate {
 	position: relative;
 	width: 100%;
 	text-align: center;
 	overflow-x: hidden;
 	z-index: 10;
-}
-
-/* タイトル部分*/
-#title {
-	margin-right: auto;
-	margin-left: auto;
-	background-image: linear-gradient(90deg, #b2d5de 0 25%, #ddcfb3 25% 50%, #b3ddb4 50% 75%,
-		#ddbab3 75%);
-	background-repeat: no-repeat;
-	background-size: 100% 0.3rem;
-	background-position: bottom;
-	color: #353535;
-	font-weight: bold;
-	text-align: center;
 }
 
 #inputArea {
@@ -135,7 +112,6 @@ img {
 	height: auto;
 }
 
-
 input[type="text"], input[type="textarea"] {
 	width: 100%;
 }
@@ -151,7 +127,7 @@ input[type="date"], input[type="month"] {
 }
 
 select {
-	width: 300px;
+	width: 50px;
 	height: 40px;
 	font-size: large;
 }
@@ -176,8 +152,6 @@ textarea {
 a {
 	text-decoration: none;
 }
-
-
 </style>
 
 <body>
@@ -187,42 +161,28 @@ a {
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">
-			<div id="employeeRegister">
-				<!-- タイトル部分 -->
-				<table id="title" style="width: 80%;">
-					<tr>
-						<td style="width: 20%;">&nbsp;</td>
-						<td style="width: 40%;">
-							<h1>社員登録</h1>
-						</td>
-						<td style="width: 20%;">&nbsp;</td>
-						</a>
-					</tr>
-				</table>
 
-				<%
-				if (cmd.equals("registerConfirm")) {
-				%>
-				<h3>以下の内容で登録します</h3>
-				<%
-				}
-				%>
+			<div id="employeeUpdate">
+
+
+				<h3>以下の内容で変更します</h3>
 
 				<!-- 入力部分 -->
-				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post">
+				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post" 
+					enctype="multipart/form-data">
+					
 						<table id="inputArea">
 							<tr id="inputRow">
 								<td id="item"><label for="photo">写真</label></td>
 								<%
-								if (cmd.equals("register") || cmd.equals("reRegister")) {
+								if (cmd.equals("update") || cmd.equals("reUpdate")) {
 								%>
-								<td id="value"><input type="file" name="photo"></td>
+								<td id="value"><input type="file" name="photo" accept="image/*"></td>
 								<%
-								} else if (cmd.equals("registerConfirm")) {
+								} else if (cmd.equals("updateConfirm")) {
 								%>
-								<td id="value">
-									<img src="<%=request.getContextPath()%>/img/<%=photo%>" alt="アップロードした写真">
-								</td>
+								<td id="value"><img src="<%=request.getContextPath()%>/file/<%=photo%>" 
+									alt="アップロードした写真"></td>
 								<%
 								}
 								%>
@@ -253,8 +213,7 @@ a {
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="developer">開発経験年数</label></td>
-								<td id="value"><input id="readonlyInput" type="number" name="developer" value="<%=developer%>" style="margin-left: 0;"
-									min="0">年</td>
+								<td id="value"><input id="readonlyInput" type="number" name="developer" value="<%=developer%>" style="margin-left: 0;" min="0">年</td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="langSkill">習得技術（言語）</label></td>
@@ -283,29 +242,33 @@ a {
 						</table>
 
 						<%
-						if (cmd.equals("register") || cmd.equals("reRegister")) {
+						if (cmd.equals("update") || cmd.equals("reUpdate")) {
 						%>
-						<a href="<%= request.getContextPath() %>/employee">
+						<a href="<%=request.getContextPath()%>/detailEmployee?userId=<%= userId %>">
 							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
 						</a>
 						<%
-						} else if (cmd.equals("registerConfirm")) {
+						} else if (cmd.equals("updateConfirm")) {
 						%>
-							<input type="submit" name="registerSubmit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
+							<input type="submit" name="updateSubmit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
+							<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						}
-						if (cmd.equals("register") || cmd.equals("reRegister")) {
+						if (cmd.equals("update") || cmd.equals("reUpdate")) {
 						%>
-							<input type="submit" name="registerSubmit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+						<input type="submit" name="updateSubmit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+						<input type="hidden" name="userId" value="<%= userId %>">
 						<%
-						} else if (cmd.equals("registerConfirm")) {
+						} else if (cmd.equals("updateConfirm")) {
 						%>
-							<input type="submit"  name="registerSubmit" value="完了" style="width: 120px; height: 50px; font-size: large;">
+						<input type="submit" name="updateSubmit" value="完了" style="width: 120px; height: 50px; font-size: large;">
+						<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						}
 						%>
 					</form>
 			</div>
+
 		</div>
 	</div>
 
@@ -315,15 +278,16 @@ a {
 
 		// 必要な要素を取得
 		const readonlyInput = document.querySelectorAll("#readonlyInput");
-		const confirmButton = document.querySelectorAll("#confirmButton");
-		const hidden = document.querySelector("#hidden");
+		const form = document.querySelector("form");
 
-		if (cmd == "registerConfirm") {
+		if (cmd == "updateConfirm") {
 			for (let i = 0; i < readonlyInput.length; i++) {
 				readonlyInput[i].readOnly = true;
 			}
+
+			// formに画像データ送信のためのエンコード設定
+			form.enctype = "multipart/form-data";
 		}
 	</script>
-
 </body>
 </html>
