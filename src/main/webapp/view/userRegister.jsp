@@ -1,3 +1,5 @@
+<!-- 社員紹介 登録機能（作：占部） -->
+<!-- 作成日：8/7　最終更新日：8/19 10:00 -->
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.time.LocalDateTime,java.util.Date,java.sql.Timestamp"%>
 
@@ -162,7 +164,7 @@ button.btn-border:active:before {
 		%>
 		
 		<table id="box-mar">
-		<form action="/userRegister">
+		<form action="<%= request.getContextPath() %>/userRegister" method="post">
 		<input type="hidden" name="date" value=<%=date %>>
 		
 		<tr>
@@ -171,7 +173,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="number" placeholder="123456" required></td>
+			<td><input type="text" name="employeeNumber" placeholder="123456" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">所属
@@ -179,7 +181,15 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="Affiliation" placeholder="第1部第3グループ" required></td>
+			<td><input type="text" name="department" placeholder="1" required></td>
+		</tr>
+		<tr>
+			<td style="display: flex">グループ
+			<div class="warning">*</div>
+			</td>
+		</tr>
+		<tr>
+			<td><input type="text" name="group" placeholder="3" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">お名前
@@ -190,12 +200,12 @@ button.btn-border:active:before {
 			<td><input type="text" name="name" placeholder="青木美波" required></td>
 		</tr>
 		<tr>
-			<td style="display: flex">おなまえ
+			<td style="display: flex">ふりがな
 			<div class="warning">*</div>
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="kana" placeholder="あおきみなみ" required></td>
+			<td><input type="text" name="nameKana" placeholder="あおきみなみ" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">生年月日
@@ -235,7 +245,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="adress" placeholder="北海道目梨郡羅臼町〇〇" required></td>
+			<td><input type="text" name="address" placeholder="北海道目梨郡羅臼町〇〇" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">婚姻状況

@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：8月12日
+ * 最終更新日：8月18日
  * 
  */
 package servlet;
@@ -65,9 +65,16 @@ public class GoalConfirmServlet extends HttpServlet {
 
 
 		try {
-			//getParameterメソッドを使い、取得した値を代入する
+			// getParameterメソッドを使い、取得した値を代入する
 			cmd = (String) request.getParameter("cmd");
-			userId = (Integer) session.getAttribute("user_id");
+			
+			if (cmd.equals("manager")) {
+				userId = Integer.parseInt(request.getParameter("user_id"));
+			}
+			
+			if (cmd.equals("confirm") && cmd.equals("update")) {
+				userId = (Integer) session.getAttribute("user_id");
+			}
 			
 			// 目標を呼び出す
 			goal = goalDAO.selectByUserId(userId);
@@ -99,8 +106,9 @@ public class GoalConfirmServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/goalUpdate.jsp").forward(request, response);
 			}
 			
-			request.getRequestDispatcher("/view/goalConfirm.jsp").forward(request, response);
-			
+			if (cmd.equals("confirm") || cmd.equals("manager")) {
+				request.getRequestDispatcher("/view/goalConfirm.jsp").forward(request, response);
+			}
 		}
 	}
 }

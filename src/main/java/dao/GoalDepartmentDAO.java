@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：8月12日
+ * 最終更新日：8月18日
  * 
  */
 package dao;
@@ -21,6 +21,73 @@ import bean.GoalDepartment;
 import util.DAOconnection;
 
 public class GoalDepartmentDAO {
+	
+	/**
+	 * 全情報を取得するメソッド
+	 * 
+	 * @return 経営目標の全情報
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	public ArrayList<GoalDepartment> selectAll() {
+
+		// DB接続用変数の宣言
+		Connection con = null;
+		Statement smt = null;
+
+		// 戻り値に設定する変数の宣言
+		ArrayList<GoalDepartment> goalDepartmentList = new ArrayList<GoalDepartment>();
+
+		// SQL文
+		String sql = "SELECT "
+				+ "group_code, "
+				+ "name, "
+				+ "management_theme, "
+				+ "department_goal, "
+				+ "group_goal "
+				+ "FROM goal_department_info;";
+
+		try {
+			// DB接続
+			con = DAOconnection.getConnection();
+			smt = con.createStatement();
+
+			// SQL文発行
+			ResultSet rs = smt.executeQuery(sql);
+
+			// 結果を変数に格納する
+			while (rs.next()) {
+				GoalDepartment goalDepartment = new GoalDepartment();
+				goalDepartment.setGroupCode(rs.getString("group_code"));
+				goalDepartment.setName(rs.getString("name"));
+				goalDepartment.setManagementTheme(rs.getString("management_theme"));
+				goalDepartment.setDepartmentGoal(rs.getString("department_goal"));
+				goalDepartment.setGroupGoal(rs.getString("group_goal"));
+				goalDepartmentList.add(goalDepartment);
+			}
+
+		} catch (SQLException e) {
+			System.err.println("GoalDepartmentDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("GoalDepartmentDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (smt != null) {
+					smt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("GoalDepartmentDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("GoalDepartmentDAOの不明なエラー: " + e.getMessage());
+			}
+		}
+
+		return goalDepartmentList;
+	}
 
 	/**
 	 * 部目標を更新するメソッド
@@ -33,16 +100,31 @@ public class GoalDepartmentDAO {
 		PreparedStatement smt = null;
 		
 		boolean success = false;
-
+		
+		String groupCode = goalDepartment.getGroupCode();
+		String departmentCode = groupCode.substring(0, 3);
 
 		//SQL文
-		String sql_A = "UPDATE team_goal_info SET "
-				+ "management_theme = ?,"
-				+ "WHERE end_date = null";
+		String sql_A = "UPDATE "
+							+ "goal_department_info "
+						+ "SET "
+							+ "management_theme = ? "
+						+ "WHERE "
+							+ "end_date = null;";
 		
-		String sql_B = "";
+		String sql_B = "UPDATE "
+							+ "goal_department_info "
+						+ "SET "
+							+ "department_goal = ?"
+						+ "WHERE "
+							+ "group_code LIKE '" + departmentCode + "%';";
 		
-		String sql_C = "";
+		String sql_C = "UPDATE "
+							+ "goal_department_info "
+						+ "SET "
+							+ "group_goal = ?"
+						+ "WHERE "
+							+ "group_code = '" + groupCode + "';";
 		
 		try {
 			// DBに接続
@@ -59,9 +141,18 @@ public class GoalDepartmentDAO {
 			smt.executeBatch();
 			
 			// 2つ目のSQL文実行
+			smt = con.prepareStatement(sql_B);
 			
+			smt.setString(1, goalDepartment.getDepartmentGoal());
+			smt.addBatch();
+			smt.executeBatch();
 			
 			// 3つ目のSQL文実行
+			smt = con.prepareStatement(sql_C);
+			
+			smt.setString(1, goalDepartment.getDepartmentGoal());
+			smt.addBatch();
+			smt.executeBatch();
 			
 			con.commit();
 			success = true;
