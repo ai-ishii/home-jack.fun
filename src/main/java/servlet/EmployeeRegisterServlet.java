@@ -1,5 +1,5 @@
 //<!-- 社員紹介 登録機能（作：石井） -->
-//<!-- 作成日：7/17　最終更新日：8/12 14:00 -->
+//<!-- 作成日：7/17　最終更新日：8/19 9:40 -->
 
 package servlet;
 
@@ -69,7 +69,7 @@ public class EmployeeRegisterServlet extends HttpServlet {
 			AccountDAO accountDAO = new AccountDAO();
 			Account account = new Account();
 
-			AccountDAO.insert();
+		//	AccountDAO.insert();
 
 			userDAO.insert(userRegister);
 
