@@ -1,9 +1,10 @@
 //<!-- 社員紹介DAO（作：石井） -->
-//<!-- 作成日：　最終更新日：8/12 14:00 -->
+//<!-- 作成日：　最終更新日：8/15 14:00 -->
 
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -217,25 +218,30 @@ public class EmployeeDAO {
 
 			// 変数宣言
 			Connection con = null;
-			Statement smt = null;
+			PreparedStatement ps = null;
 			
-			String sql = "INSERT INTO employee_info(employee_id, user_id,"
-					+ " devloper, lang_skill, middle_skill, hobby, talent,"
+			String sql = "INSERT INTO employee_info(user_id,"
+					+ " developer, lang_skill, middle_skill, hobby, talent,"
 					+ " intro, position, regist_date, update_date, photo) "
-					+ "VALUES (null, " + userId + ", " + employee.getDeveloper() + ", '"
-					+ employee.getLangSkill() + "', '" + employee.getMiddleSkill() + "', '"
-					+ employee.getHobby() + "', '" + employee.getTalent() + "', '"
-					+ employee.getIntro() + "', '" + employee.getPosition() + "', '"
-					+ nowDate + "', '" + nowDate + "', '"
-					+ employee.getPhoto() + "');";
+					+ "VALUES (?,?,?,?,?,?,?,?,NOW(),NOW(),?)";
 
 			try {
 				// DBに接続
 				con = DAOconnection.getConnection();
-				smt = con.createStatement();
+				ps = con.prepareStatement(sql);
 
+				ps.setInt(1, userId);
+				ps.setInt(2, employee.getDeveloper());
+				ps.setString(3, employee.getLangSkill());
+				ps.setString(4, employee.getMiddleSkill());
+				ps.setString(5, employee.getHobby());
+				ps.setString(6, employee.getTalent());
+				ps.setString(7, employee.getIntro());
+				ps.setString(8, employee.getPosition());
+				ps.setString(9, employee.getPhoto());
+				
 				// SQL文発行
-				smt.executeUpdate(sql);
+				ps.executeUpdate();
 
 			} catch (SQLException e) {
 				System.err.println("EmployeeDAOのデータベース接続時にエラー: " + e.getMessage());
@@ -245,8 +251,8 @@ public class EmployeeDAO {
 				throw new IllegalStateException(e);
 			} finally {
 				try {
-					if (smt != null) {
-						smt.close();
+					if (ps != null) {
+						ps.close();
 					}
 					if (con != null) {
 						con.close();
