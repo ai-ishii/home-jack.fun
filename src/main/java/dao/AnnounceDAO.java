@@ -667,7 +667,7 @@ public class AnnounceDAO {
 						+ "announce_info "
 					+ "SET "
 						+ "title = '" + announce.getTitle() + "', "
-						+ "update_date = '"+ announce.getUpdateDate() + "', "
+						+ "update_date = NOW(), "
 						+ "text = '" + announce.getText() + "', "
 						+ "announce_category_id = "+ announce.getAnnounceCategoryId() + ", "
 						+ "announce_flag = " + announce.getAnnounceFlag()
