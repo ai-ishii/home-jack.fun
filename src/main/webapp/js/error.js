@@ -75,6 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
 					createError(elem, '数字を入力してください。');
 					//エラーのフラグを変更
 					errorFlag = true;
+					//値が空の場合にエラー表示する
+				} else if (elem.value.trim().length === 0) {
+					elem.classList.add("error-back");
+					createError(elem, 'スペース（空白）のみでの入力はできません。');
+					errorFlag = true;
 					//文字が入っていた場合にエラー表示する
 				} else if (isNaN(elem.value)) {
 					elem.classList.add("error-back");
@@ -87,9 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
 						//値の前後の空白文字を削除
 						const elemValue = elem.value.trim();
 						//社員番号の桁数(6)以外の場合
-						if (elemValue.length !== employeeDigit) {
+						if (elemValue.length !== employeeDigit && elemValue.length !== 11) {
 							elem.classList.add("error-back");
-							createError(elem, '社員番号の桁数が間違っています。');
+							createError(elem, '社員番号は6桁で入力してください。');
 							//エラーのフラグを変更
 							errorFlag = true;
 						}
