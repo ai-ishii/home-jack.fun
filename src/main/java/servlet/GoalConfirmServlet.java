@@ -72,7 +72,7 @@ public class GoalConfirmServlet extends HttpServlet {
 				userId = Integer.parseInt(request.getParameter("user_id"));
 			}
 			
-			if (cmd.equals("confirm") && cmd.equals("update")) {
+			if (cmd.equals("confirm") || cmd.equals("update")) {
 				userId = (Integer) session.getAttribute("user_id");
 			}
 			
