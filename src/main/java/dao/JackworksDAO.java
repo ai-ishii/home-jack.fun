@@ -349,10 +349,10 @@ public class JackworksDAO {
 	}
 
 	/**
-	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
+	 * DBのJackWorks情報を格納するjackworks_infoテーブルから情報を取得するメソッド
 	 * 戻り値としてJackWorks全情報を返す
 	 * @param　jackworksId
-	 * @return jackList
+	 * @return jack
 	 */
 	public Jackworks selectByJackworksId(int jackworksId) {
 		Connection con = null;

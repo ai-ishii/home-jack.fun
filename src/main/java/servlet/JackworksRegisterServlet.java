@@ -64,7 +64,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 					jackworksDAO.insert(jack);
 					return;
 				}
-				
+
 				//案件情報収集の場合、jackworksRegister.jspへフォワード
 				path = "/view/jackworksRegister.jsp";
 				return;
@@ -95,7 +95,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 			jack.setOther(request.getParameter("other"));
 
 			jackworksDAO.insert(jack);
-			
+
 			//セッションデータ破棄
 			session.invalidate();
 
@@ -114,13 +114,13 @@ public class JackworksRegisterServlet extends HttpServlet {
 			}
 			// ページ数を判断するためのcmdを格納
 			request.setAttribute("cmd", cmd);
-			
-			if(path.equals("/homejack_renewal/monthJackworks")) {
-			//ページ再読み込み防止のためにリダイレクト
-			response.sendRedirect(path);
-			}else {
-			// pathにフォワード
-			request.getRequestDispatcher(path).forward(request, response);
+
+			if (path.equals("/homejack_renewal/monthJackworks")) {
+				//ページ再読み込み防止のためにリダイレクト
+				response.sendRedirect(path);
+			} else {
+				// pathにフォワード
+				request.getRequestDispatcher(path).forward(request, response);
 			}
 		}
 	}

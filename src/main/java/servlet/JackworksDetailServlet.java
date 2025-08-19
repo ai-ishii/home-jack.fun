@@ -4,6 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/08
+ * 更新日 2025/08/19
  */
 
 package servlet;
@@ -34,18 +35,27 @@ public class JackworksDetailServlet extends HttpServlet {
 		Jackworks jackworks = new Jackworks();
 
 		try {
-			
+
 			//jackworksRequest.jspからcmd=requestを受け取る
 			cmd = request.getParameter("cmd");
-			
+
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
 
+			//JackWorksIdからJackWorksの情報を取得する
+			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
+
+			//削除対象の存在チェック
+			if (jackworks.getJackworksId() == 0) {
+				error = "このJackWorksは、すでに削除されています。";
+				cmd = "monthJackworks";
+			}
+
 			//取得したJackWorksの情報詳細を表示するメソッド
-			jackworks=jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
-			
+			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
+
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
-			request.setAttribute("jack_list", jackworks);
+			request.setAttribute("jackworks", jackworks);
 
 		} catch (IllegalStateException e) {
 			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";

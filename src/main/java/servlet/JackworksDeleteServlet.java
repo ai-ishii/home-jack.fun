@@ -4,6 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/09
+ * 更新日 2025/08/19
  */
 
 package servlet;
@@ -36,23 +37,25 @@ public class JackworksDeleteServlet extends HttpServlet {
 		try {
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
-			
+
+			//JackWorksIdからJackWorksの情報を取得する
 			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
-			
-			//
-			if(jackworks.getJackworksId() == 0) {
-				
+
+			//削除対象の存在チェック
+			if (jackworks.getJackworksId() == 0) {
+				error = "このJackWorksは、すでに削除されています。";
+				cmd = "monthJackworks";
 			}
-			
+
 			//jackworksRequest.jspからcmd=denialを受け取る
 			cmd = request.getParameter("cmd");
-			
-			if(cmd == null) {
-				cmd="";
+
+			if (cmd == null) {
+				cmd = "";
 			}
-			
-			if(cmd.equals("denial")) {
-				path="/jackworksRequest";
+
+			if (cmd.equals("denial")) {
+				path = "/jackworksRequest";
 			}
 
 			//取得したJackWorksの情報を削除するメソッド
