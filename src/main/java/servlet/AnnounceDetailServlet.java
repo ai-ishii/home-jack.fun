@@ -58,7 +58,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 			}
 			
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせの詳細は表示できませんでした。";
+			error = "システムの一時的な問題により、\r\nお知らせの読み込みができませんでした。";
 			//ログイン画面へ遷移
 			cmd = "logout";
 			
@@ -67,7 +67,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 			cmd = "logout";
 
 		} finally {
-			if (error != "") {
+			if (!("").equals(error)) {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);

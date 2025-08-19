@@ -9,11 +9,7 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.text.SimpleDateFormat;
 
 import bean.Announce;
 import dao.AnnounceDAO;
@@ -36,7 +32,6 @@ public class AnnounceUpdateServlet extends HttpServlet {
 		// オブジェクト生成
 		Announce announce = new Announce();
 		AnnounceDAO announceDAO = new AnnounceDAO();
-		LocalDateTime localDateTime = null;
 
 		try {
 
@@ -46,6 +41,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			String text = request.getParameter("text");
 			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
 			int categoryId = Integer.parseInt(request.getParameter("category_id"));
+			String updateDateBefore = request.getParameter("update_date");
 
 			// メソッドからSQL実行
 			announce = announceDAO.selectByAnnounceId(announceId);
@@ -56,21 +52,22 @@ public class AnnounceUpdateServlet extends HttpServlet {
 				cmd = "announce";
 				return;
 			}
-
-			// フォームから受け取った登録日時(String型)をLocalDateTimeに変換する
-			String update = request.getParameter("update_date");
-			localDateTime = LocalDateTime.parse(update);
-
-			// LocalDateTimeをTimestampに変換する(タイムゾーンを考慮)
-			ZoneId zoneId = ZoneId.of("Asia/Tokyo");
-			ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
-			Instant instant = zonedDateTime.toInstant();
-			Timestamp updateDate = Timestamp.from(instant);
+			
+			//データベース上の更新日時を取得
+			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+			String updateDateAfter = format.format(announce.getUpdateDate());
+			
+			//遷移前の更新日時とデータベース上の更新日時を比較
+			//違う場合
+			if (!updateDateBefore.equals(updateDateAfter)) {
+				error = "このデータはすでに変更されています。更新してもう一度お試しください。";
+				cmd = "announce";
+				return;
+			}
 
 			// パラメータをAnnounceに格納する
 			announce.setAnnounceId(announceId);
 			announce.setTitle(title);
-			announce.setUpdateDate(updateDate);
 			announce.setText(text);
 			announce.setAnnounceFlag(announceFlag);
 			announce.setAnnounceCategoryId(categoryId);

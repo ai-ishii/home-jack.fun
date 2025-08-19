@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/05
+ * 更新日 : 2025/08/18
  */
 package servlet;
 
@@ -139,27 +139,29 @@ public class AnnounceSearchServlet extends HttpServlet {
 			categoryList = announceDAO.selectCategoryAll();
 
 		} catch (DateTimeParseException e) {
-			error = "DB接続エラーのため、お知らせの検索結果は表示できませんでした";
-			//ログイン画面へ遷移
-			cmd = "logout";	
+			error = "時刻の読み取りに失敗しました。";
+			//お知らせ登録画面へ遷移
+			cmd = "announce";
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせの検索結果は表示できませんでした";
+			error = "システムの一時的な問題により、\r\n検索結果の読み込みができませんでした。";
 			//ログイン画面へ遷移
 			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";
 		} finally {
-			if (error != "") {
+			if (!("").equals(error)) {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
-
-			request.setAttribute("cmd", cmd);
-			request.setAttribute("announceList", announceList);
-			request.setAttribute("categoryList", categoryList);
-			request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
+			
+			if (("").equals(error)) {
+				request.setAttribute("cmd", search);
+				request.setAttribute("announceList", announceList);
+				request.setAttribute("categoryList", categoryList);
+				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
+			}
 		}
 	}
 

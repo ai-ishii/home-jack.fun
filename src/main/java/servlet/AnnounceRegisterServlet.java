@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/05
+ * 更新日 : 2025/08/18
  */
 package servlet;
 
@@ -77,12 +77,12 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			announceDAO.regist(announce);
 
 		} catch (DateTimeParseException e) {
-			error = "時刻解析に失敗しました。もう一度入力してください。";
+			error = "時刻の読み取りに失敗しました。";
 			//お知らせ登録画面へ遷移
 			cmd = "announce";
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせの登録はできませんでした。";
+			error = "システムの一時的な問題により、\r\nお知らせの登録ができませんでした。";
 			//ログイン画面へ遷移
 			cmd = "logout";
 			
@@ -91,17 +91,16 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			cmd = "logout";
 
 		} finally {
-
-			if(cmd.equals("announce")) {
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/announceRegister.jsp").forward(request, response);
-			}else if (error != "") {
+			
+			if (!("").equals(error)) {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 
-			request.getRequestDispatcher("/announce").forward(request, response);
+			if (("").equals(error)) {
+				request.getRequestDispatcher("/announce").forward(request, response);
+			}
 		}
 	}
 

@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/25
- * 更新日 : 2025/07/30
+ * 更新日 : 2025/08/19
  */
 package servlet;
 
@@ -38,7 +38,7 @@ public class AnnounceDeleteServlet extends HttpServlet {
 			
 			announce = announceDAO.selectByAnnounceId(announceId);
 			
-			if(announce.getAnnounceId() == 0) {
+			if (announce.getAnnounceId() == 0) {
 				error = "このお知らせは、すでに削除されています。";
 				//お知らせ一覧画面へ遷移
 				cmd = "announce";
@@ -49,7 +49,7 @@ public class AnnounceDeleteServlet extends HttpServlet {
 			announceDAO.delete(announceId);
 			
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせの削除はできませんでした。";
+			error = "システムの一時的な問題により、\r\nお知らせの削除ができませんでした。";
 			//ログイン画面へ遷移
 			cmd = "logout";
 			
@@ -58,12 +58,15 @@ public class AnnounceDeleteServlet extends HttpServlet {
 			cmd = "logout";
 			
 		} finally {
-			if (error != "") {
+			if (!("").equals(error)) {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
-			request.getRequestDispatcher("/announce").forward(request, response);
+
+			if (("").equals(error)) {
+				request.getRequestDispatcher("/announce").forward(request, response);
+			}
 		}
 	}
 

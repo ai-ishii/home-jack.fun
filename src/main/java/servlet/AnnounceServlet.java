@@ -57,17 +57,18 @@ public class AnnounceServlet extends HttpServlet {
 			categoryList = announceDAO.selectCategoryAll();
 		
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせは表示できませんでした。";
+			error = "システムの一時的な問題により、\r\nお知らせ一覧の読み込みができませんでした。";
 			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";
 		} finally {
-			if (error != "") {
+			if (!("").equals(error)) {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			} else {
+			}
+			if (("").equals(error)) {
 				request.setAttribute("announceList", announceList);
 				request.setAttribute("categoryList", categoryList);
 				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
