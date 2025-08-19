@@ -58,23 +58,25 @@ public class UserRegisterServlet extends HttpServlet {
 
 			String birthdayStr = request.getParameter("birthday");
 			if (birthdayStr != null && !birthdayStr.isEmpty()) {
-				Date utilDate = sdf.parse(birthdayStr);
-				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-				user.setBirthday(sqlDate);
+			java.util.Date utilDate = sdf.parse(birthdayStr);
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			user.setBirthday(sqlDate);
 			}
 
 			String joiningDateStr = request.getParameter("joiningDate");
 			if (joiningDateStr != null && !joiningDateStr.isEmpty()) {
-				Date parsedDate = sdf.parse(joiningDateStr);
-				Timestamp joiningDate = new Timestamp(parsedDate.getTime());
-				user.setJoiningDate(joiningDate);
+			java.util.Date parsedDate = sdf.parse(joiningDateStr);
+			Timestamp joiningDate = new Timestamp(parsedDate.getTime());
+			user.setJoiningDate(joiningDate);
 			}
 
 			UserDAO userDAO = new UserDAO();
 			userDAO.updateProfile(user);
 
 			session.setAttribute("isProfileComplete", true);
-			session.setAttribute("user", user);
+			session.setAttribute("user",user);
+			session.setAttribute("user_id", user.getUserId());
+			session.setAttribute("user_name", user.getName());
 
 			response.sendRedirect(request.getContextPath() + "/home");
 		} catch (Exception e) {

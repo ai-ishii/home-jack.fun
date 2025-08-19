@@ -2,6 +2,7 @@
  * プログラム名：Home-Jack.ver.2.0
  * 作成者：占部虎司郎
  * 作成日：2025/7/10
+ * 最終更新日: 2025/8/19
  */
 
 package dao;
@@ -599,17 +600,30 @@ public class UserDAO {
 	}
 
 	public void insert(String accountId) {
+		
 		Connection con = null;
-		Statement smt = null;
+		PreparedStatement ps = null;
 
-		String sql = "INSERT INTO user_info (account_id) VALUES ('" + accountId + "')";
+		String sql = "INSERT INTO "
+					+ "user_info (" 
+				+ "account_id,"
+				+ "joining_date,"
+				+ "marriage_flag,"
+				+ "display_flag,"
+				+ "rest_flag,"
+				+ "regist_date,"
+				+ "update_date" + ")"
+					+ "VALUES "
+				+ "(?, NOW(), 0, 1, 0, NOW(), NOW())";
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
-			smt = con.createStatement();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, accountId);
 
-			smt.executeUpdate(sql);
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
@@ -619,8 +633,8 @@ public class UserDAO {
 			throw new IllegalStateException(e);
 		} finally {
 			try {
-				if (smt != null) {
-					smt.close();
+				if (ps != null) {
+					ps.close();
 				}
 				if (con != null) {
 					con.close();

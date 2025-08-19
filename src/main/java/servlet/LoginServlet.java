@@ -4,7 +4,7 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/18
- * 最終更新日：2025/07/29
+ * 最終更新日：2025/08/19
  */
 
 package servlet;
@@ -59,7 +59,6 @@ public class LoginServlet extends HttpServlet {
 		//DTO宣言
 		Account account = new Account();
 		
-		int userId = -1;
 		String name = "";
 
 		try {
@@ -105,7 +104,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("account", account);
 				session.setAttribute("user",user);
 				session.setAttribute("profile",profile);
-				session.setAttribute("user_id", userId);
+				session.setAttribute("user_id", user.getUserId());
 				session.setAttribute("user_name", name);
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";
 				response.getWriter().write(jsonResponse);
