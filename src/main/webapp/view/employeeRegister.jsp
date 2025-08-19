@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：石井） -->
-<!-- 作成日：7/17　最終更新日：8/1 12:00 -->
+<!-- 作成日：7/17　最終更新日：8/19 11:40 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -18,7 +18,7 @@ CommonTable commonTable = new CommonTable();
 // セッションでユーザーのデータを取得
 account = (Account)session.getAttribute("account");
 int userId = (int)session.getAttribute("user_id");
-String name = (String)session.getAttribute("name");
+String name = (String)session.getAttribute("user_name");
 
 // セッションからユーザー情報を取得
 user = userDAO.selectByUserId(userId);
