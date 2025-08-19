@@ -207,11 +207,12 @@ button.btn-border:active:before {
 				</tr>
 			<%}else{ %>
 				<tr>
-					<td style="display: flex">画像
-						<div class="warning">*</div>
-					</td>
+					<td style="display: flex">画像</td>
 				</tr>
-				<td><input type="file" name="image" size="35" value="" required></td>
+				<td><input type="file" accept=".png, .jpg, .jpeg, .gif" name="image" size="35" value="" class="error-file"></td>
+				<tr>
+				<td>画像サイズ最大3MB / 対応ファイルはJPG,JPEG,PNG,GIF</td>
+				</tr>
 			<%} %>
 				<tr>
 					<td style="display: flex">今月のテーマ

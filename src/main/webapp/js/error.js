@@ -8,17 +8,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		const errorClassName = 'error';
 		//社員番号の桁数管理用
 		const employeeDigit = 6;
+		//ファイルサイズ指定
+		const fileLimit = 1024 * 1024 * 3;
+
+		//画像の拡張子チェック用
+		function fileNameCheck(fileName) {
+			//該当する場合trueを返す
+			const fileCheck = /\.(jpe?g|png|gif)$/i;
+			return fileCheck.test(fileName);
+		}
 
 		//requiredクラスの要素の集まり(テキストボックス/エリア用)
 		const required = document.querySelectorAll('.required');
-		//requiredクラスの要素の集まり(数字のみ：テキストボックス用)
+		//num-requiredクラスの要素の集まり(数字のみ：テキストボックス用)
 		const numRequired = document.querySelectorAll('.num-required');
-		//requiredクラスの要素の集まり(社員番号の桁数チェック)
+		//error-employeeクラスの要素の集まり(社員番号の桁数チェック)
 		const errorEmployee = document.querySelectorAll('.error-employee');
 		//errorSelectクラスの要素の集まり(セレクトボックス用)
 		const errorSelect = document.querySelectorAll('.error-select');
 		//error-dateクラスの要素の集まり(日付入力用)
 		const errorDate = document.querySelectorAll('.error-date');
+		//error-fileクラスの要素の集まり(画像入力用)
+		const errorFile = document.querySelectorAll('.error-file');
 
 		//エラーメッセージを表示する
 		//elem:要素
@@ -120,6 +131,28 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (elem.value.trim() === '') {
 					elem.classList.add("error-back");
 					createError(elem, '日付を入力してください。');
+					errorFlag = true;
+				}
+			});
+
+			//.errorFileの要素の検証
+			errorFile.forEach((elem) => {
+				const files = elem.files;
+				for (const file of files) {
+					//ファイルサイズがfileLimitより大きければエラー表示
+					if (file.size > fileLimit) {
+						createError(elem, 'ファイルサイズが3MBを超えています。');
+						errorFlag = true;
+					}
+				}
+
+				//値の前後の空白文字を削除
+				const elemValue = elem.value.trim();
+				//拡張子をチェックするメソッド
+				const filename = fileNameCheck(elemValue);
+				//falseの場合、エラー表示
+				if (!filename) {
+					createError(elem, '指定の画像ファイルを選択してください。');
 					errorFlag = true;
 				}
 			});
