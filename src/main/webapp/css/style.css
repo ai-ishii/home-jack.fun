@@ -48,11 +48,12 @@ h1, h2 {
 }
 
 .error-back {
-	border-color: #cc1111;
-	background-color: #ffe9e9;
-	border-width: 1px;
-	border-style: solid;  
-	
+    border: 1px solid #cc1111;
+    background-color: #ffe9e9; 
+}
+
+.error .warning{
+	color:red;
 }
 
 /*-----------------------------------*/
@@ -211,7 +212,7 @@ ul ul {
 
 /*タイトルロゴ*/
 #page-title {
-	padding: 10px 0px 30px 0px;
+	padding: 10px 0px 0px 0px;
 	background-color: #dd9933;
 	background-image:
 		radial-gradient(at 0 0, #ffcc55, transparent 40%),
@@ -248,9 +249,9 @@ ul ul {
 /*外部リンク*/
 #top-link {
 	position: relative;
-	margin-top: -60px;
 	z-index: 10;
 }
+
 #top-link ul {
 	display: block;
 	margin-right: 48px;
