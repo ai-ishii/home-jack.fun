@@ -1,4 +1,4 @@
-<!-- 社員紹介 変更機能（作：石井） -->
+<!-- 社員紹介 変更確認機能（作：石井） -->
 <!-- 作成日：7/18　最終更新日：8/19 10:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -41,7 +41,7 @@ String department = commonTable.selectDepartment(departmentId);
 String group = commonTable.selectGroup(groupId);
 
 // cmdを取得
-String cmd = request.getParameter("cmd");
+String cmd = (String) request.getAttribute("cmd");
 
 // 変数宣言
 String photo = "";
@@ -71,16 +71,7 @@ if (cmd.equals("updateConfirm") || cmd.equals("reUpdate")) {
 <head>
 <!-- タイトル -->
 <%
-if (cmd.equals("update") || cmd.equals("reUpdate")) {
-%>
-<title>編集 - 社員紹介</title>
-<%
-} else if (cmd.equals("updateConfirm")) {
-%>
 <title>確認画面 - 社員紹介</title>
-<%
-}
-%>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -173,13 +164,8 @@ a {
 
 			<div id="employeeUpdate">
 
-				<%
-				if (cmd.equals("updateConfirm")) {
-				%>
+
 				<h3>以下の内容で変更します</h3>
-				<%
-				}
-				%>
 
 				<!-- 入力部分 -->
 				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post" 
