@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import util.MyFormat;
 
 @WebServlet("/jackworksRegister")
 public class JackworksRegisterServlet extends HttpServlet {
@@ -36,7 +35,6 @@ public class JackworksRegisterServlet extends HttpServlet {
 		JackworksDAO jackworksDAO = new JackworksDAO();
 		Jackworks jack = new Jackworks();
 		HttpSession session = request.getSession();
-		MyFormat format = new MyFormat();
 
 		try {
 
@@ -102,11 +100,11 @@ public class JackworksRegisterServlet extends HttpServlet {
 			session.invalidate();
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、JackWorksの登録は表示できませんでした。";
-			cmd = "";
+			error = "システムの一時的な問題により、\\r\\nJackWorks情報の申請ができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			cmd = "logout";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する

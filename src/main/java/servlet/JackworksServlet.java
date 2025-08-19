@@ -75,11 +75,11 @@ public class JackworksServlet extends HttpServlet {
 			request.setAttribute("name", name);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、JackWorksは表示できませんでした。";
-			cmd = "";
+			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			cmd = "logout";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する

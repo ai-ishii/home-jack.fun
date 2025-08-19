@@ -10,6 +10,7 @@ package servlet;
 
 import java.io.IOException;
 
+import bean.Jackworks;
 import dao.JackworksDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,10 +31,18 @@ public class JackworksDeleteServlet extends HttpServlet {
 
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
+		Jackworks jackworks = new Jackworks();
 
 		try {
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
+			
+			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
+			
+			//
+			if(jackworks.getJackworksId() == 0) {
+				
+			}
 			
 			//jackworksRequest.jspからcmd=denialを受け取る
 			cmd = request.getParameter("cmd");
@@ -50,8 +59,8 @@ public class JackworksDeleteServlet extends HttpServlet {
 			jackworksDAO.delete(Integer.parseInt(jackworksId));
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、JackWorksは削除できませんでした。";
-			cmd = "home";
+			error = "システムの一時的な問題により、\\r\\nJackWorks情報の削除ができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";

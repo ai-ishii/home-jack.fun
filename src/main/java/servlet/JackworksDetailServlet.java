@@ -9,7 +9,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import bean.Jackworks;
 import dao.JackworksDAO;
@@ -32,7 +31,7 @@ public class JackworksDetailServlet extends HttpServlet {
 
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
-		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
+		Jackworks jackworks = new Jackworks();
 
 		try {
 			
@@ -43,14 +42,14 @@ public class JackworksDetailServlet extends HttpServlet {
 			String jackworksId = request.getParameter("jackworksId");
 
 			//取得したJackWorksの情報詳細を表示するメソッド
-			jackList=jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
+			jackworks=jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
 			
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
-			request.setAttribute("jack_list", jackList);
+			request.setAttribute("jack_list", jackworks);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、JackWorksは表示できませんでした。";
-			cmd = "home";
+			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";
