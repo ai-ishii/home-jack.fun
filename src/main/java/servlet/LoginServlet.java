@@ -18,6 +18,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 
 import bean.Account;
+import bean.User;
 import dao.AccountDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
@@ -91,11 +92,19 @@ public class LoginServlet extends HttpServlet {
 					account = accountDAO.selectByAccountId(accountId);
 				}
 				//ユーザーIDの取得
-				userId = userDAO.selectByAccountId(accountId).getUserId();
+				User user = userDAO.selectByAccountId(accountId);
+				
+				boolean profile = false;
+				if ( user != null && user.getEmployeeNumber() != null && user.getEmployeeNumber().isEmpty()) {
+					profile = true;
+				}
+				
 				//名前の取得
 				name = (String)payload.get("name");
 				
 				session.setAttribute("account", account);
+				session.setAttribute("user",user);
+				session.setAttribute("profile",profile);
 				session.setAttribute("user_id", userId);
 				session.setAttribute("user_name", name);
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";

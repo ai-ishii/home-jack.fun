@@ -5,11 +5,18 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/03
- * 最終更新日：2025/07/29
+ * 最終更新日：2025/08/19
  */
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%
+// header.jspにcmdを渡してヘッダーの表示内容を変更
+String cmd = "index";
+request.setAttribute("cmd", cmd);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
