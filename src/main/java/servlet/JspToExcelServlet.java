@@ -1,3 +1,12 @@
+/*
+ * 機能：JSPから受け取った内容をエクセルに反映する機能
+ * 
+ * 作成者：桑原岳
+ *  
+ * 最終更新日：2025/08/19
+ *  
+ */
+
 package servlet;
 
 import java.io.FileInputStream;
