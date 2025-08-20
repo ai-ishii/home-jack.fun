@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				for (const file of files) {
 					//ファイルサイズがfileLimitより大きければエラー表示
 					if (file.size > fileLimit) {
+						elem.classList.add("error-button");
 						createError(elem, 'ファイルサイズが3MBを超えています。');
 						errorFlag = true;
 					}
@@ -152,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				const filename = fileNameCheck(elemValue);
 				//falseの場合、エラー表示
 				if (!filename) {
+					elem.classList.add("error-button");
 					createError(elem, '指定の画像ファイルを選択してください。');
 					errorFlag = true;
 				}

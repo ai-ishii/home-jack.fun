@@ -81,11 +81,11 @@ public class MonthJackworksServlet extends HttpServlet {
 			}
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、今月のJackWorksは表示できませんでした。";
-			cmd = "";
+			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			cmd = "logout";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
@@ -189,11 +189,11 @@ public class MonthJackworksServlet extends HttpServlet {
 			session.setAttribute("monthJack", monthJack);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、今月のJackWorksは登録できませんでした。";
-			cmd = "";
+			error = "システムの一時的な問題により、\\r\\n今月のテーマ情報の登録ができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			cmd = "logout";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する

@@ -4,12 +4,12 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/08
+ * 更新日 2025/08/19
  */
 
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import bean.Jackworks;
 import dao.JackworksDAO;
@@ -32,25 +32,34 @@ public class JackworksDetailServlet extends HttpServlet {
 
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
-		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
+		Jackworks jackworks = new Jackworks();
 
 		try {
-			
+
 			//jackworksRequest.jspからcmd=requestを受け取る
 			cmd = request.getParameter("cmd");
-			
+
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
 
+			//JackWorksIdからJackWorksの情報を取得する
+			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
+
+			//削除対象の存在チェック
+			if (jackworks.getJackworksId() == 0) {
+				error = "このJackWorksは、すでに削除されています。";
+				cmd = "monthJackworks";
+			}
+
 			//取得したJackWorksの情報詳細を表示するメソッド
-			jackList=jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
-			
+			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
+
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
-			request.setAttribute("jack_list", jackList);
+			request.setAttribute("jackworks", jackworks);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、JackWorksは表示できませんでした。";
-			cmd = "home";
+			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";

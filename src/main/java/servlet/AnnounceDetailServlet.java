@@ -44,7 +44,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 			announce = announceDAO.selectByAnnounceId(announceId);
 			
 			if(announce.getAnnounceId() == 0) {
-				error = "対象のお知らせが存在しません。更新してもう一度お試しください。";
+				error = "対象のお知らせが存在しません。";
 				//お知らせ一覧画面へ遷移
 				cmd = "announce";
 				return;

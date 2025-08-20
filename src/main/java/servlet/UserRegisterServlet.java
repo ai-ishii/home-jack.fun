@@ -5,7 +5,7 @@
  * 
  * 作成日：8月18日
  * 
- * 最終更新日：8月19日
+ * 最終更新日：8月20日
  * 
  */
 package servlet;
@@ -72,7 +72,7 @@ public class UserRegisterServlet extends HttpServlet {
 			UserDAO userDAO = new UserDAO();
 			userDAO.updateProfile(user);
 
-			session.setAttribute("isProfileComplete", true);
+			session.setAttribute("profile", true);
 			session.setAttribute("user",user);
 			session.setAttribute("user_id", user.getUserId());
 			session.setAttribute("user_name", user.getName());

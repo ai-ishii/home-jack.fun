@@ -9,11 +9,11 @@ JackWorks詳細画面
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList,bean.Jackworks,util.MyFormat"%>
+<%@page import="bean.Jackworks,util.MyFormat"%>
 
 <%
 //JackWorksの全情報が格納されたjack_listを受け取る
-ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
+Jackworks jackworks = (Jackworks) request.getAttribute("jackworks");
 
 //戻るボタン後の画面遷移先を分けるためのcmdを受け取る
 String cmd = (String) request.getAttribute("cmd");
@@ -190,15 +190,13 @@ margin-top: 3%;
 		
 		<div class="mag"></div>
 		
-		<%
-				for(int i=0; i < jackList.size(); i++){
-					
+				<%
 					MyFormat myformat = new MyFormat();
-					String date = myformat.breakDateFormat(jackList.get(i).getPointsGetDate());
+					String date = myformat.breakDateFormat(jackworks.getPointsGetDate());
 				%>
 				
 				<strong>
-				<p class="cap">名前：<%=jackList.get(i).getName()%></p>
+				<p class="cap">名前：<%=jackworks.getName()%></p>
 				<p class="cap">取得日：<%= date %></p>
 				</strong>
 
@@ -210,23 +208,23 @@ margin-top: 3%;
 					<th colspan="2" >案件名</th>
 				</tr>
 				<tr>
-					<td colspan="2" class="jack-full"><div class="inner-content"><%=jackList.get(i).getProject()%></div></td>
+					<td colspan="2" class="jack-full"><div class="inner-content"><%=jackworks.getProject()%></div></td>
 				</tr>
 				<tr class="jack-double">
 					<th class="jack-left">作業時期</th>
 					<th class="jack-right">作業場所</th>
 				</tr>
 				<tr>
-					<td class="jack-left"><%=jackList.get(i).getWorkSeason()%></td>
-					<td class="jack-right"><%=jackList.get(i).getWorkPlace()%></td>
+					<td class="jack-left"><%=jackworks.getWorkSeason()%></td>
+					<td class="jack-right"><%=jackworks.getWorkPlace()%></td>
 				</tr>
 				<tr class="jack-double">
 					<th class="jack-left">単価</th>
 					<th class="jack-right">精算</th>
 				</tr>
 				<tr>
-					<td class="jack-left"><%=jackList.get(i).getPay()%></td>
-					<td class="jack-right"><%=jackList.get(i).getPrice()%></td>
+					<td class="jack-left"><%=jackworks.getPay()%></td>
+					<td class="jack-right"><%=jackworks.getPrice()%></td>
 				</tr>
 				<tr class="jack-double">
 					<div style="width:90%">
@@ -234,27 +232,27 @@ margin-top: 3%;
 					</div>
 				</tr>
 				<tr>
-					<td colspan="2"><%=jackList.get(i).getWorkContent()%></td>
+					<td colspan="2"><%=jackworks.getWorkContent()%></td>
 				</tr>
 				<tr class="jack-double">
 					<th colspan="2">フェーズ</th>
 				</tr>
 				<tr>
-					<td colspan="2"><%=jackList.get(i).getPhase()%></td>
+					<td colspan="2"><%=jackworks.getPhase()%></td>
 				</tr>
 				<tr class="jack-double">
 					<th class="jack-left">開発言語</th>
 					<th class="jack-right">必要スキル</th>
 				</tr>
 				<tr>
-					<td class="jack-left"><%=jackList.get(i).getLanguage()%></td>
-					<td class="jack-right"><%=jackList.get(i).getSkill()%></td>
+					<td class="jack-left"><%=jackworks.getLanguage()%></td>
+					<td class="jack-right"><%=jackworks.getSkill()%></td>
 				</tr>
 				<tr class="jack-double">
 					<th colspan="2" >必要人数</th>
 				</tr>
 				<tr>
-				<td colspan="2"><%=jackList.get(i).getNeedPeople() %></td>
+				<td colspan="2"><%=jackworks.getNeedPeople() %></td>
 				</tr>
 				<tr class="jack-double">
 					<th class="jack-left">営業担当者</th>
@@ -262,17 +260,15 @@ margin-top: 3%;
 				</tr>
 				<tr>
 					
-					<td class="jack-left"><%=jackList.get(i).getSeller()%></td>
-					<td class="jack-right"><%=jackList.get(i).getContact()%></td>
+					<td class="jack-left"><%=jackworks.getSeller()%></td>
+					<td class="jack-right"><%=jackworks.getContact()%></td>
 				</tr>
 				<tr class="jack-double">
 					<th colspan="2">その他</th>
 				</tr>
 				<tr>
-					<td colspan="2"><%=jackList.get(i).getOther()%></td>
+					<td colspan="2"><%=jackworks.getOther()%></td>
 				</tr>
-				
-				<%} %>
 			</table>
 			
 			<% if(cmd.equals("request")) {%>

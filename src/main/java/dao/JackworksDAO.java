@@ -349,16 +349,16 @@ public class JackworksDAO {
 	}
 
 	/**
-	 * DBのJackWorks情報を格納するjackworks_infoテーブルから全情報を取得するメソッド
+	 * DBのJackWorks情報を格納するjackworks_infoテーブルから情報を取得するメソッド
 	 * 戻り値としてJackWorks全情報を返す
 	 * @param　jackworksId
-	 * @return jackList
+	 * @return jack
 	 */
-	public ArrayList<Jackworks> selectByJackworksId(int jackworksId) {
+	public Jackworks selectByJackworksId(int jackworksId) {
 		Connection con = null;
 		Statement smt = null;
-
-		ArrayList<Jackworks> jackList = new ArrayList<>();
+		
+		Jackworks jack = new Jackworks();
 
 		try {
 			con = DAOconnection.getConnection();
@@ -368,7 +368,6 @@ public class JackworksDAO {
 			ResultSet rs = smt.executeQuery(sql);
 
 			while (rs.next()) {
-				Jackworks jack = new Jackworks();
 				jack.setJackworksId(rs.getInt("jackworks_id"));
 				jack.setUserId(rs.getInt("user_id"));
 				jack.setEmployeeNumber(rs.getString("employee_number"));
@@ -392,7 +391,6 @@ public class JackworksDAO {
 				jack.setContact(rs.getString("contact"));
 				jack.setOther(rs.getString("other"));
 				jack.setApprovalFlag(rs.getInt("approval_flag"));
-				jackList.add(jack);
 			}
 
 		} catch (Exception e) {
@@ -411,7 +409,7 @@ public class JackworksDAO {
 				}
 			}
 		}
-		return jackList;
+		return jack;
 	}
 
 	/**
