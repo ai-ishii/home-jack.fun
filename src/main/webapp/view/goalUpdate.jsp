@@ -325,13 +325,24 @@ text-decoration: none;
 color: #000;
 }
 
+/* 中央揃えのためのダミー */
+.jackDummy{
+width: 150px;
+}
+
 /* 戻るボタンの大枠 */
 .jackFlex{
 display: flex;
+justify-content: space-between;
 align-items: center;
 height: 30px;
 width: 85%;
 margin: 30px auto 0;
+}
+
+/* 矢印の枠 */
+.yoruArrow{
+width: 150px;
 }
 
 /* 矢印 */
@@ -356,6 +367,11 @@ stroke: #f9de95;
 fill: #f9de95;
 }
 
+/* プレースホルダーの色 */
+.ratioBox::placeholder{
+color: #c2c2c2;
+}
+
 /* 割合表示 (可変) */
 .ratioBoxS{
 -webkit-appearance: none; /* WebKit系のブラウザ（Chrome, Safariなど）に対応 */
@@ -374,7 +390,7 @@ color: #545454;
 -moz-appearance: none;    /* Firefoxに対応 */
 appearance: none;         /* 標準的なCSSプロパティ */
 border: none;
-width: 43px;
+width: 44px;
 padding: 0;
 font-size: 25px;
 font-family: "Yusei Magic", sans-serif;
@@ -421,6 +437,104 @@ width: 100%;
 height: 60px;
 font-size: 15px;
 font-family: "BIZ UDPGothic", sans-serif;
+}
+
+/* 更新ボタン */
+.btn, a.btn, button.btn {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.5;
+	position: relative;
+	display: inline-block;
+	padding: 5px 20px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+	letter-spacing: 1.4px;
+	color: #212529;
+	border-radius: 5px;
+	border: none;
+}
+
+button.btn-border {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	margin-bottom: 12px;
+	padding: 0;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	border-radius: 0;
+}
+
+button.btn-border span.btnUp {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	position: relative;
+	display: block;
+	padding: 6px 18px;
+	color: #000;
+	border: 2px solid #000;
+	border-radius: 5px;
+	background: #fff;
+}
+
+button.btn-border:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	position: absolute;
+	bottom: -8px;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 14px;
+	content: "";
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	border: 2px solid #000;
+	border-top: 1px solid #000;
+	border-radius: 0 0 5px 5px;
+	background-image: -webkit-repeating-linear-gradient(135deg, #000, #000 1px, transparent
+		2px, transparent 5px);
+	background-image: repeating-linear-gradient(-45deg, #000, #000 1px, transparent 2px,
+		transparent 5px);
+	background-size: 7px 7px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+button.btn-border:hover {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	-webkit-transform: translate(0, 3px);
+	transform: translate(0, 3px);
+}
+
+button.btn-border:hover:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	bottom: -5px;
+}
+
+button.btn-border:active {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	-webkit-transform: translate(0, 7px);
+	transform: translate(0, 7px);
+}
+
+button.btn-border:active:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	bottom: -1px;
 }
 
 </style>
@@ -481,8 +595,8 @@ font-family: "BIZ UDPGothic", sans-serif;
 					</div>
 					<div class="tab-4" style="min-height: 30px;" >
 					<%
-					if (goalQuarterList != null) {
-						for (int i = 0; i < goalQuarterList.size(); i++) {
+
+						for (int i = 0; i < 4; i++) {
 					%>
 							<!-- 四半期目標のタブ -->
 							<input type="radio" id="tab-<%=i%>" name="tab-group" <% if(i == 0){ %>checked<%} %>>
@@ -498,7 +612,7 @@ font-family: "BIZ UDPGothic", sans-serif;
 								</div>
 								<div class="mainText">
 								<textarea class="mainArea" name="result_comment_reviewer" 
-									placeholder="〇〇について勉強し、レポートにまとめる"><%=goalQuarterList.get(i).getSmallGoal()%></textarea>
+									placeholder="〇〇について勉強し、レポートにまとめる"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getSmallGoal()%><%}%></textarea>
 								</div>
 							
 								<!-- 四半期目標本人記入欄 -->
@@ -507,7 +621,7 @@ font-family: "BIZ UDPGothic", sans-serif;
 								</div>
 								<div class="mainText">
 								<textarea class="mainArea" name="result_comment_reviewer" 
-									placeholder="レポートの発表"><%=goalQuarterList.get(i).getJudgeMaterial()%></textarea>
+									placeholder="レポートの発表"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getJudgeMaterial()%><%}%></textarea>
 								</div>
 								
 								<div class="yorushikaBox">
@@ -515,11 +629,12 @@ font-family: "BIZ UDPGothic", sans-serif;
 									</div>
 									<div class="mainText mainFlex">
 										<div class="ratio">
-											<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%=goalQuarterList.get(i).getAchieveRate()%>">%
+											<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" 
+												value="<%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRate()%><%}%>">%
 										</div>
 										<div class="leftLine">
 										<textarea class="mainArea" name="result_comment_reviewer" 
-											placeholder="〇〇することができました。"><%=goalQuarterList.get(i).getReport()%></textarea>
+											placeholder="〇〇することができました。"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getReport()%><%}%></textarea>
 										</div>
 									</div>
 								
@@ -533,11 +648,11 @@ font-family: "BIZ UDPGothic", sans-serif;
 									</div>
 									<div class="mainText mainFlex">
 										<div class="ratio">
-											<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%=goalQuarterList.get(i).getAchieveRateReviewer()%>">%
+											<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRateReviewer()%><%}%>">%
 										</div>
 										<div class="leftLine">
 										<textarea class="mainArea" name="result_comment_reviewer" 
-											placeholder="上出来です。"><%=goalQuarterList.get(i).getEvaluation()%></textarea>
+											placeholder="上出来です。"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getEvaluation()%><%}%></textarea>
 										</div>
 									</div>
 									
@@ -545,7 +660,7 @@ font-family: "BIZ UDPGothic", sans-serif;
 	
 					<%
 						}
-					}
+					
 					%>
 					</div>
 					</div>
@@ -590,6 +705,7 @@ font-family: "BIZ UDPGothic", sans-serif;
 						</div>
 					</div>
 					<div class="jackFlex">
+						<div class="yoruArrow">
 						<a href="<%=request.getContextPath()%>/goalConfirm?cmd=confirm" class="jackReset">
 						<svg class="arrow" width="50"  height="20">
 							<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
@@ -597,8 +713,14 @@ font-family: "BIZ UDPGothic", sans-serif;
 						</svg>
 						<span class="beaf">PREV</span>
 						</a>
+						</div>
+						<div>
+						<button type="submit" class="btn btn-border">
+						<span class="btnUp">更新</span>
+						</button>
+						</div>
+						<div class="jackDummy"></div>
 					</div>
-					<input type="submit" value="更新">
 				</form>
 		</div>
 		</div>
@@ -606,36 +728,40 @@ font-family: "BIZ UDPGothic", sans-serif;
 	<script type="text/javascript">
 	//割合ボックス変動用
 	document.addEventListener('DOMContentLoaded', function() {
-		// ratioBoxクラスを持つすべてのinput要素を取得
-		const numberInputs = document.querySelectorAll('.ratioBox');
-		
-		// それぞれのinputにイベントリスナーを登録
-	    numberInputs.forEach(numberInput => {
-			numberInput.addEventListener('input', function() {
-				const value = numberInput.value;
-				const num = parseInt(value, 10);
-				
-				// 計算した値に基づいてクラスを切り替える
-				if (num === 100) {
-					numberInput.classList.add('ratioBoxL');
-					numberInput.classList.remove('ratioBoxS');
-					numberInput.classList.remove('ratioBoxM');
-				} else if (num >= 10 && num <= 99) {
-					numberInput.classList.add('ratioBoxM');
-					numberInput.classList.remove('ratioBoxS');
-					numberInput.classList.remove('ratioBoxL');
-				} else if(num < 10) { 
-					numberInput.classList.add('ratioBoxS');
-					numberInput.classList.remove('ratioBoxM');
-					numberInput.classList.remove('ratioBoxL');
-				} else {
-					numberInput.classList.add('ratioBoxL');
-					numberInput.classList.remove('ratioBoxS');
-					numberInput.classList.remove('ratioBoxM');
-				}
-			});
-		});
-	});
+    const numberInputs = document.querySelectorAll('.ratioBox');
+
+    // クラスを更新するロジックを一つの関数にまとめる
+    function updateClassByValue(inputElement) {
+        const value = inputElement.value;
+        const num = parseInt(value, 10);
+        
+        // 既存のクラスを一度全て削除
+        inputElement.classList.remove('ratioBoxS', 'ratioBoxM', 'ratioBoxL');
+
+        // 計算した値に基づいてクラスを切り替える
+        if (num === 100) {
+            inputElement.classList.add('ratioBoxL');
+        } else if (num >= 10 && num <= 99) {
+            inputElement.classList.add('ratioBoxM');
+        } else if (num >= 0 && num <= 9) {
+            inputElement.classList.add('ratioBoxS');
+        } else {
+            // 範囲外の数値が入力された場合、デフォルトのクラスを適用
+            inputElement.classList.add('ratioBoxL');
+        }
+    }
+
+    // ★修正点1: forEachループを一つにまとめる★
+    numberInputs.forEach(inputElement => {
+        // 1. 初期値に基づいてクラスを更新
+        updateClassByValue(inputElement);
+
+        // 2. inputイベントリスナーを登録
+        inputElement.addEventListener('input', function() {
+            updateClassByValue(this);
+        });
+    });
+});
 	</script>
 </body>
 </html>
