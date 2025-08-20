@@ -24,9 +24,9 @@ public class JackworksDeleteServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// エラー文を格納用
-		String error = null;
+		String error = "";
 		// 例外判定用
-		String cmd = null;
+		String cmd = "";
 		// 遷移先のパス
 		String path = "/monthJackworks";
 
@@ -37,6 +37,8 @@ public class JackworksDeleteServlet extends HttpServlet {
 		try {
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
+			//jackworksRequest.jspからcmd=denialを受け取る
+			cmd = request.getParameter("cmd");
 
 			//JackWorksIdからJackWorksの情報を取得する
 			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
@@ -45,13 +47,6 @@ public class JackworksDeleteServlet extends HttpServlet {
 			if (jackworks.getJackworksId() == 0) {
 				error = "このJackWorksは、すでに削除されています。";
 				cmd = "monthJackworks";
-			}
-
-			//jackworksRequest.jspからcmd=denialを受け取る
-			cmd = request.getParameter("cmd");
-
-			if (cmd == null) {
-				cmd = "";
 			}
 
 			if (cmd.equals("denial")) {
