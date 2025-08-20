@@ -16,14 +16,20 @@ Monthjack monthJack = (Monthjack) session.getAttribute("monthJack");
 //ログインしたアカウントの情報が格納されたaccountを受け取る
 Account account = (Account)session.getAttribute("account");
 //検索された文字列が格納されたnameを受け取る
-String name = (String) request.getAttribute("name");
+String keyword = (String) request.getAttribute("keyword");
+//検索0件メッセージを表示するためのcmdを受け取る
+String cmd = (String) request.getAttribute("cmd");
 //検索された月が格納されたmonthSearchを受け取る
 String monthSearch = (String) request.getAttribute("monthSearch");
 //検索された年が格納されたyearSearchを受け取る
 String yearSearch = (String) request.getAttribute("yearSearch");
 
-if(name == null){
-	name = "";
+if(keyword == null){
+	keyword = "";
+}
+
+if(cmd == null){
+	cmd = "";
 }
 
 //権限分け
@@ -454,6 +460,11 @@ width: 100%;
 height: 20px;
 }
 
+#search-error{
+text-align:center;
+font-size: 16px;
+}
+
 </style>
 
 <body>
@@ -652,7 +663,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							<!-- 検索を行うフォーム -->
 							<form action="<%=request.getContextPath()%>/jackworksSearch"
 									class="search-form">
-								<label><input type="text" name="name" placeholder="キーワードを入力" value="<%= name %>"></label>
+								<label><input type="text" name="keyword" placeholder="キーワードを入力" value="<%= keyword %>"></label>
 								<button type="submit" aria-label="検索"></button>
 							</form>
 						</td>
@@ -851,6 +862,12 @@ document.addEventListener("DOMContentLoaded", function() {
 				<%
 				}
 				%>
+				
+										
+				<% if(cmd.equals("no-result")) {%>
+					<p id="search-error">検索結果は0件です。内容を変更して再度検索をしてください。</p>
+				<% } %>
+				
 				
 				<!-- ページネーション -->
 				<div id="data-container"></div>
