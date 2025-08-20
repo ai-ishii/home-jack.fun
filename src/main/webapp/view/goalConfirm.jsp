@@ -1,12 +1,11 @@
 <!-- 
- 個人目標確認機能
+ 個人目標確認画面
 
  作成者：月向亮太
  更新者：占部虎司郎
 
  作成日：7月8日
-
- 最終更新日：8月18日
+ 最終更新日：8月19日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -429,7 +428,6 @@ color: #6eddb3;
 				<div class="adminTitle">
 				経営テーマ
 				</div>
-				<!-- 以下のdivタグにはリクエストスコープから取得した経営テーマが入る -->
 				<div class="adminLine"><%=managementTheme%></div>
 				
 				<!-- 部目標ボックス -->
