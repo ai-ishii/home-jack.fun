@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：占部） -->
-<!-- 作成日：8/7　最終更新日：8/19 10:00 -->
+<!-- 作成日：8/7　最終更新日：8/20 11:00 -->
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.time.LocalDateTime,java.util.Date,java.sql.Timestamp"%>
 
@@ -197,7 +197,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="name" placeholder="青木美波" required></td>
+			<td><input type="text" name="name" placeholder="山田太郎" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">ふりがな
@@ -205,7 +205,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="nameKana" placeholder="あおきみなみ" required></td>
+			<td><input type="text" name="nameKana" placeholder="やまだたろう" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">生年月日
@@ -213,7 +213,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="birthday" placeholder="2002年12月29日" required></td>
+			<td><input type="text" name="birthday" placeholder="2003年01月01日" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">性別
@@ -271,7 +271,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="joining" placeholder="2025" required></td>
+			<td><input type="text" name="joiningDate" placeholder="2025" required></td>
 		</tr>
 		<tr>
 			<!-- なくてもいいのではないかと考えています -->
@@ -310,7 +310,7 @@ button.btn-border:active:before {
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
-					<span>登録するけどね</span>
+					<span>登録</span>
 				</button>
 			</div>
 			</td>
