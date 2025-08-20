@@ -68,6 +68,12 @@ if (goalDepartment != null) {
 @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
 
+
+*, *:before, *:after {
+	-webkit-box-sizing: inherit;
+	box-sizing: inherit;
+}
+
 /*ページタイトル*/
 #contents {
 width: 90%;
