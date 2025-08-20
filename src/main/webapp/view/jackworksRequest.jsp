@@ -15,15 +15,15 @@ ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jac
 Monthjack monthJack = (Monthjack) request.getAttribute("monthJack");
 //ログインしたアカウントの情報が格納されたaccountを受け取る
 Account account = (Account)session.getAttribute("account");
-//検索された文字列が格納されたnameを受け取る
-String name = (String) request.getAttribute("name");
+//検索された文字列が格納されたkeywordを受け取る
+String keyword = (String) request.getAttribute("keyword");
 //検索された月が格納されたmonthSearchを受け取る
 String monthSearch = (String) request.getAttribute("monthSearch");
 //検索された年が格納されたyearSearchを受け取る
 String yearSearch = (String) request.getAttribute("yearSearch");
 
-if(name == null){
-	name = "";
+if(keyword == null){
+	keyword = "";
 }
 
 //権限分け
@@ -581,7 +581,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							<!-- 検索を行うフォーム -->
 							<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
 							<input type="hidden" name="cmd" value="request">
-								<label><input type="text" name="name" placeholder="キーワードを入力" value="<%= name %>"></label>
+								<label><input type="text" name="keyword" placeholder="キーワードを入力" value="<%= keyword %>"></label>
 								<button type="submit" aria-label="検索"></button>
 							</form>
 						</td>

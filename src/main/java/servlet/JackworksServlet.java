@@ -59,7 +59,7 @@ public class JackworksServlet extends HttpServlet {
 			//検索された文字(keyword)を受け取る
 			String keyword = (String) request.getAttribute("keyword");
 
-			if (cmd.equals("search") || cmd.equals("request")) {
+			if (cmd.equals("search")) {
 				//jackWorksの検索結果が格納されたjack_listを受け取る
 				jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
 			} else if (!cmd.equals("no-result")){

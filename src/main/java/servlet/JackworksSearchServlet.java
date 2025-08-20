@@ -57,12 +57,16 @@ public class JackworksSearchServlet extends HttpServlet {
 			
 			if (jackList.size() == 0) { //検索結果が0件の場合
 				cmd = "no-result";
+			}else {
+				cmd = "search";
 			}
 
-			if (cmd == null) {
-				cmd = "";
+			if (cmd.equals("request")) {
+				// JackWorksの全情報を取得するメソッド
+				jackList = jackworksDAO.selectAll();
+				path = "view/jackworks.jsp";
 			}
-
+			
 			request.setAttribute("jack_list", jackList);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("srartDate", start);
