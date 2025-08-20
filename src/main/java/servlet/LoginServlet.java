@@ -56,7 +56,6 @@ public class LoginServlet extends HttpServlet {
 		//DAO宣言
 		AccountDAO accountDAO = new AccountDAO();
 		UserDAO userDAO = new UserDAO();
-		EmployeeDAO employeeDAO = new EmployeeDAO();
 		
 		//DTO宣言
 		Account account = new Account();
@@ -83,6 +82,7 @@ public class LoginServlet extends HttpServlet {
 				String email = payload.getEmail();
 				//名前の取得
 				name = (String)payload.get("name");
+				//登録したアカウント情報を取得
 				account = accountDAO.selectByAccountId(accountId);
 				
 				//アカウントが存在しない場合登録を行う
@@ -91,22 +91,23 @@ public class LoginServlet extends HttpServlet {
 					accountDAO.insert(accountId, email);
 					//user.infoに登録
 					userDAO.insert(accountId, name);
-					//登録したアカウント情報を取得
-					account = accountDAO.selectByAccountId(accountId);
+					
 				}
 				//ユーザーIDの取得
 				User user = userDAO.selectByAccountId(accountId);
 				
 				boolean profile = false;
-				if ( user != null && user.getEmployeeNumber() != null && user.getEmployeeNumber().isEmpty()) {
+				if ( user != null && user.getEmployeeNumber() != null && !user.getEmployeeNumber().isEmpty()) {
 					profile = true;
+				}else {
+					profile = false;
 				}
+				session.setAttribute("profile",profile);
+				session.setAttribute("user",user);
 				
 				
 				
 				session.setAttribute("account", account);
-				session.setAttribute("user",user);
-				session.setAttribute("profile",profile);
 				session.setAttribute("user_id", user.getUserId());
 				session.setAttribute("user_name", name);
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";

@@ -197,7 +197,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="name" placeholder="青木美波" required></td>
+			<td><input type="text" name="name" placeholder="山田太郎" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">ふりがな
@@ -205,7 +205,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="nameKana" placeholder="あおきみなみ" required></td>
+			<td><input type="text" name="nameKana" placeholder="やまだたろう" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">生年月日
@@ -213,7 +213,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="birthday" placeholder="2002年12月29日" required></td>
+			<td><input type="text" name="birthday" placeholder="2003年01月01日" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">性別
@@ -271,7 +271,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="joining" placeholder="2025" required></td>
+			<td><input type="text" name="joiningDate" placeholder="2025" required></td>
 		</tr>
 		<tr>
 			<!-- なくてもいいのではないかと考えています -->
@@ -310,7 +310,7 @@ button.btn-border:active:before {
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
-					<span>登録するけどね</span>
+					<span>登録</span>
 				</button>
 			</div>
 			</td>

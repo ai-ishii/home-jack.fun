@@ -5,7 +5,7 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/04
- * 最終更新日：2025/07/29
+ * 最終更新日：2025/08/20
  */
 --%>
 
@@ -26,6 +26,8 @@ ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>)request.getAttribu
 AnnounceDAO announceDAO = new AnnounceDAO();
 
 MyFormat myformat = new MyFormat();
+
+Boolean profile = (Boolean) session.getAttribute("profile");
 %>
 
 <html>
@@ -215,6 +217,19 @@ ul {
 		<%@ include file="../common/header.jsp"%>
 
 		<div id="main" class="container">
+		
+		<%
+		if (Boolean.FALSE.equals(profile)){
+		%>
+			<div>
+				プロフィールが未登録です。
+				<a href="<%=request.getContextPath()%>/view/userRegister.jsp">こちらから登録してください。</a>
+			</div>
+			
+		<%
+		}
+		%>
+		
 			<div class="overflow">
 				
 				<div id="announce" class="container">

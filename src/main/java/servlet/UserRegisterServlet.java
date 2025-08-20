@@ -72,7 +72,7 @@ public class UserRegisterServlet extends HttpServlet {
 			UserDAO userDAO = new UserDAO();
 			userDAO.updateProfile(user);
 
-			session.setAttribute("isProfileComplete", true);
+			session.setAttribute("profile", true);
 			session.setAttribute("user",user);
 			session.setAttribute("user_id", user.getUserId());
 			session.setAttribute("user_name", user.getName());
