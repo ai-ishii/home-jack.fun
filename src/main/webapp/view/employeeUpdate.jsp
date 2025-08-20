@@ -1,5 +1,5 @@
 <!-- 社員紹介 変更機能（作：石井） -->
-<!-- 作成日：7/18　最終更新日：8/12 14:00 -->
+<!-- 作成日：7/18　最終更新日：8/19 10:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -42,7 +42,6 @@ String group = commonTable.selectGroup(groupId);
 
 // cmdを取得
 String cmd = request.getParameter("cmd");
-// JSPから送られてきたユーザーIDを取得
 
 // 変数宣言
 String photo = "";
@@ -182,21 +181,22 @@ a {
 				}
 				%>
 
-				<!--  enctype="multipart/form-data" -->
-
 				<!-- 入力部分 -->
-				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post">
+				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post" 
+					enctype="multipart/form-data">
+					
 						<table id="inputArea">
 							<tr id="inputRow">
 								<td id="item"><label for="photo">写真</label></td>
 								<%
 								if (cmd.equals("update") || cmd.equals("reUpdate")) {
 								%>
-								<td id="value"><input type="file" name="photo"></td>
+								<td id="value"><input type="file" name="photo" accept="image/*"></td>
 								<%
 								} else if (cmd.equals("updateConfirm")) {
 								%>
-								<td id="value"><img src="<%=request.getContextPath()%>/file/<%=photo%>" alt="アップロードした写真"></td>
+								<td id="value"><img src="<%=request.getContextPath()%>/file/<%=photo%>" 
+									alt="アップロードした写真"></td>
 								<%
 								}
 								%>

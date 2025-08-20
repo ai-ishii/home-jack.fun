@@ -3,7 +3,7 @@
 
 作成者：桑原岳
 
-最終更新日：2025/08/12
+最終更新日：2025/08/19
  --%>
 
 
@@ -149,7 +149,7 @@
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = url;
-            a.download = '住所変更届のコピー.xlsx';
+            a.download = '住所変更届エクセル.xlsx';
             document.body.appendChild(a);
             a.click();
             

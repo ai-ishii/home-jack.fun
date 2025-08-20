@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/07/30
+ * 更新日 : 2025/08/19
  */
 package servlet;
 
@@ -44,7 +44,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 			announce = announceDAO.selectByAnnounceId(announceId);
 			
 			if(announce.getAnnounceId() == 0) {
-				error = "対象のお知らせが存在しません。更新してもう一度お試しください。";
+				error = "対象のお知らせが存在しません。";
 				//お知らせ一覧画面へ遷移
 				cmd = "announce";
 				return;
@@ -58,7 +58,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 			}
 			
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーのため、お知らせの詳細は表示できませんでした。";
+			error = "システムの一時的な問題により、\r\nお知らせの読み込みができませんでした。";
 			//ログイン画面へ遷移
 			cmd = "logout";
 			
@@ -67,7 +67,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 			cmd = "logout";
 
 		} finally {
-			if (error != "") {
+			if (!("").equals(error)) {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);

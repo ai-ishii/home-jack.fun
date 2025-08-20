@@ -4,7 +4,6 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/15
- * 
  * 最終更新日：2025/08/13
  */
 
@@ -31,60 +30,50 @@ public class JackworksSearchServlet extends HttpServlet {
 		// 例外判定用
 		String cmd = "";
 		// 遷移先のパス
-		String path = "/jackworks";
+		String path = "/monthJackworks";
 
 		//オブジェクト生成
 		JackworksDAO jackworksDAO = new JackworksDAO();
 		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
-			//検索された値をnameで受け取る
-			String name = request.getParameter("name");
+			//検索された値をkeywordで受け取る
+			String keyword = request.getParameter("keyword");
 			//選択された年月を受け取る
 			String start = request.getParameter("start_date");
 			String end = request.getParameter("end_date");
+			//jackworksRequest.jspからcmd=requestを受け取る
+			cmd = request.getParameter("cmd");
 
 			if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
 				Timestamp startDate = Timestamp.valueOf(start + " 00:00:00");
 				Timestamp endDate = Timestamp.valueOf(end + " 23:59:59");
 				jackList = jackworksDAO.selectByDateFilter(startDate, endDate);
 
-			} else if (name != null && !name.isEmpty()) {
-
+			} else if (keyword != null && !keyword.isEmpty()) {
 				// --- キーワード検索 ---
-				jackList = jackworksDAO.search(name);
+				jackList = jackworksDAO.search(keyword);
 			}
-
-			if (name == null) {
-				name = "";
+			
+			if (jackList.size() == 0) { //検索結果が0件の場合
+				cmd = "no-result";
 			}
-
-			//jackworksRequest.jspからcmd=requestを受け取る
-			cmd = request.getParameter("cmd");
 
 			if (cmd == null) {
 				cmd = "";
 			}
 
-			if (!cmd.equals("request")) {
-				//検索表示させるためのcmd
-				cmd = "search";
-
-				path = "/monthJackworks";
-			}
-
-			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
-			request.setAttribute("name", name);
+			request.setAttribute("keyword", keyword);
 			request.setAttribute("srartDate", start);
 			request.setAttribute("end", end);
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
-			cmd = "";
+			error = "システムの一時的な問題により、\\r\\n検索結果の読み込みができませんでした。";
+			cmd = "logout";
 		} catch (Exception e) {
 			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			cmd = "logout";
 		} finally {
 			if (error != null) {
 				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
