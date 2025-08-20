@@ -401,17 +401,11 @@ a {
 	margin: 0;
 }
 
-<<<<<<< HEAD
-/* spamタグの空白をなくすため */
-.aokisaikyou {
-	display: flex;
-	gap: 0 /* 子要素の感覚を0にする */
-=======
+
 /* spanタグの空白をなくすため */
 .no-space{
 display: flex;
 gap: 0				/* 子要素の間隔を0にする */
->>>>>>> branch 'test' of https://github.com/ai-ishii/home-jack.fun.git
 }
 
 /* 絞り込み検索のアイコン（svg） */
