@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：占部） -->
-<!-- 作成日：8/7　最終更新日：8/19 10:00 -->
+<!-- 作成日：8/7　最終更新日：8/20 11:00 -->
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.time.LocalDateTime,java.util.Date,java.sql.Timestamp"%>
 
