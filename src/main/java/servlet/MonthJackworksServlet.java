@@ -55,9 +55,8 @@ public class MonthJackworksServlet extends HttpServlet {
 			//SearchJackworksからcmd=searchを受け取る
 			cmd = (String) request.getAttribute("cmd");
 			//画面遷移のための処理
-			//後々消す
+			//後々消す(64まで)
 			String cmd2 = request.getParameter("cmd");
-			
 			if(cmd2 != null) {
 				cmd = cmd2;
 			}else if(cmd2 == null) {

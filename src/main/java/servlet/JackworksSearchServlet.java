@@ -45,6 +45,10 @@ public class JackworksSearchServlet extends HttpServlet {
 			//jackworksRequest.jspからcmd=requestを受け取る
 			cmd = request.getParameter("cmd");
 
+			if (cmd == null) {
+				cmd = "";
+			}
+
 			if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
 				Timestamp startDate = Timestamp.valueOf(start + " 00:00:00");
 				Timestamp endDate = Timestamp.valueOf(end + " 23:59:59");
@@ -55,18 +59,16 @@ public class JackworksSearchServlet extends HttpServlet {
 				jackList = jackworksDAO.search(keyword);
 			}
 			
+			if (cmd.equals("request")) {
+				path = "/view/jackworksRequest.jsp";
+			}
+
 			if (jackList.size() == 0) { //検索結果が0件の場合
 				cmd = "no-result";
-			}else {
+			} else {
 				cmd = "search";
 			}
 
-			if (cmd.equals("request")) {
-				// JackWorksの全情報を取得するメソッド
-				jackList = jackworksDAO.selectAll();
-				path = "view/jackworks.jsp";
-			}
-			
 			request.setAttribute("jack_list", jackList);
 			request.setAttribute("keyword", keyword);
 			request.setAttribute("srartDate", start);

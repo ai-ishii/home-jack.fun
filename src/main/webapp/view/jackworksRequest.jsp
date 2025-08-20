@@ -17,6 +17,8 @@ Monthjack monthJack = (Monthjack) request.getAttribute("monthJack");
 Account account = (Account)session.getAttribute("account");
 //検索された文字列が格納されたkeywordを受け取る
 String keyword = (String) request.getAttribute("keyword");
+//検索0件メッセージを表示するためのcmdを受け取る
+String cmd = (String) request.getAttribute("cmd");
 //検索された月が格納されたmonthSearchを受け取る
 String monthSearch = (String) request.getAttribute("monthSearch");
 //検索された年が格納されたyearSearchを受け取る
@@ -24,6 +26,10 @@ String yearSearch = (String) request.getAttribute("yearSearch");
 
 if(keyword == null){
 	keyword = "";
+}
+
+if(cmd == null){
+	cmd = "";
 }
 
 //権限分け
@@ -420,6 +426,11 @@ margin-top: 3%;
 color:red;
 }
 
+#search-error{
+text-align:center;
+font-size: 16px;
+}
+
 </style>
 
 <body>
@@ -747,6 +758,10 @@ document.addEventListener("DOMContentLoaded", function() {
 				<%
 				}
 				%>
+				
+				<% if(cmd.equals("no-result")) {%>
+					<p id="search-error">検索結果は0件です。内容を変更して再度検索をしてください。</p>
+				<% } %>
 
 				<!-- ページネーション -->
 				<ol class="pagination">
