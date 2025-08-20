@@ -35,9 +35,11 @@ public class JackworksServlet extends HttpServlet {
 	public void commonProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// エラー文を格納用
+		// エラー用コマンド
 		String error = null;
-		// 例外判定用
+		// エラー文
+		String message ="";
+		// 画面遷移用コマンド
 		String cmd = "";
 		// 遷移先のパス
 		String path = "/view/jackworks.jsp";
@@ -54,13 +56,13 @@ public class JackworksServlet extends HttpServlet {
 				cmd = "";
 			}
 
-			//検索された文字(name)を受け取る
-			String name = (String) request.getAttribute("name");
+			//検索された文字(keyword)を受け取る
+			String keyword = (String) request.getAttribute("keyword");
 
 			if (cmd.equals("search") || cmd.equals("request")) {
 				//jackWorksの検索結果が格納されたjack_listを受け取る
 				jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
-			} else {
+			} else if (!cmd.equals("no-result")){
 				// JackWorksの全情報を取得するメソッド
 				jackList = jackworksDAO.selectAll();
 			}
@@ -71,8 +73,8 @@ public class JackworksServlet extends HttpServlet {
 
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
-			// 取得したnameをリクエストスコープに"name"という名前で格納する
-			request.setAttribute("name", name);
+			// 取得したkeywordをリクエストスコープに"keyword"という名前で格納する
+			request.setAttribute("keyword", keyword);
 
 		} catch (IllegalStateException e) {
 			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
