@@ -37,14 +37,27 @@ public class UserRegisterServlet extends HttpServlet {
 				response.sendRedirect("index.jsp");
 				return;
 			}
-
+			
+			String phone1 = request.getParameter("phone1");
+			String phone2 = request.getParameter("phone2");
+			String phone3 = request.getParameter("phone3");
+			String phone = phone1 + phone2 + phone3;
+			
+			String groupStr = request.getParameter("group");
+			if (groupStr.isEmpty()) {
+				request.getRequestDispatcher("/view/userRegister.jsp").forward(request, response);
+				return;
+			}else {
+				user.setGroupId(Integer.parseInt(groupStr));
+			}
+			
+			
 			user.setEmployeeNumber(request.getParameter("employeeNumber"));
 			user.setDepartmentId(Integer.parseInt(request.getParameter("department")));
-			user.setGroupId(Integer.parseInt(request.getParameter("group")));
 			user.setName(request.getParameter("name"));
 			user.setNameKana(request.getParameter("nameKana"));
 			user.setSex(request.getParameter("sex"));
-			user.setPhone(request.getParameter("phone"));
+			user.setPhone(phone);
 			user.setPost(request.getParameter("post"));
 			user.setAddress(request.getParameter("address"));
 			user.setMarriageFlag(Integer.parseInt(request.getParameter("marriage")));

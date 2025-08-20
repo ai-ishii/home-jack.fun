@@ -142,7 +142,24 @@ button.btn-border:active {
 button.btn-border:active:before {
 	bottom: -1px;
 }
+.selectbox-3 {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+}
 
+/*電話番号のCSSですぅ*/
+.phone-input-group {
+        display: flex; 
+        align-items: center;
+    }
+    .phone-input-group input {
+        width: 60px; 
+        text-align: center;
+    }
+    .phone-input-group span {
+        margin: 0 5px; 
+    }
 </style>
 
 <body>
@@ -156,6 +173,7 @@ button.btn-border:active:before {
 		<div id="link-title">
 			<h1 id="link-line">個人情報登録</h1>
 		</div>
+		
 		
 		<%
 		//現在の日時を取得
@@ -177,19 +195,34 @@ button.btn-border:active:before {
 		</tr>
 		<tr>
 			<td style="display: flex">所属
-			<div class="warning">*</div>
+			<label class="selectbox-3">
+  			  <select name="department">
+        		<option value="1">BS事業部第1部</option>
+		        <option value="2">BS事業部第2部</option>
+		        <option value="3">営業部</option>
+		        <option value="4">NEXTINOVATION部</option>
+		        <option value="5">経営管理部</option>
+		    </select>
+			</label>
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="department" placeholder="1" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">グループ
-			<div class="warning">*</div>
+			<label class="selectbox-3">
+  			  <select name="group">
+  			  	<option value="">--選択してください--</option>
+        		<option value="1">第1グループ</option>
+		        <option value="2">第2グループ</option>
+		        <option value="3">第3グループ</option>
+		        <option value="4">第4グループ</option>
+		        <option value="5">第5グループ</option>
+		    </select>
+			</label>
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="group" placeholder="3" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">お名前
@@ -197,7 +230,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="name" placeholder="山田太郎" required></td>
+			<td><input type="text" name="name" placeholder="山田太郎"  value="<%= user_name %>"required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">ふりがな
@@ -213,7 +246,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="birthday" placeholder="2003年01月01日" required></td>
+			<td><input type="date" name="birthday" placeholder="2003年01月01日" required></td>
 		</tr>
 		<tr>
 			<td style="display: flex">性別
@@ -221,7 +254,15 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="sex" placeholder="女" required></td>
+			<td>
+			<label class="selectbox-3">
+  			  <select name="sex">
+        		<option value="男">男</option>
+		        <option value="女">女</option>
+		        <option value="その他">その他</option>
+		    </select>
+			</label>
+			</td>
 		</tr>
 		<tr>
 			<td style="display: flex">電話番号
@@ -229,11 +270,20 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="phone" placeholder="00012341234" required></td>
+			<td>
+			<div class="phone-input-group">
+				<input type="text" name="phone1" placeholder="000" required>
+				-
+				<input type="text" name="phone2" placeholder="1234" required>
+				-
+				<input type="text" name="phone3" placeholder="1234" required>
+			</div>
+			</td>
+			</div>
 		</tr>
 		<tr>
 			<td style="display: flex">郵便番号
-			<div class="warning">*</div>
+			<div class="warning">*(注：ハイフン不要)</div>
 			</td>
 		</tr>
 		<tr>
@@ -271,7 +321,7 @@ button.btn-border:active:before {
 			</td>
 		</tr>
 		<tr>
-			<td><input type="text" name="joiningDate" placeholder="2025" required></td>
+			<td><input type="date" name="joiningDate" placeholder="2025" required></td>
 		</tr>
 		<tr>
 			<!-- なくてもいいのではないかと考えています -->
