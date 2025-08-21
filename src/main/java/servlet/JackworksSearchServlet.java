@@ -31,6 +31,7 @@ public class JackworksSearchServlet extends HttpServlet {
 		String message = "";
 		// 画面遷移用コマンド
 		String cmd = "";
+		String cmd2 = "";
 		// 遷移先のパス
 		String path = "/monthJackworks";
 
@@ -47,11 +48,11 @@ public class JackworksSearchServlet extends HttpServlet {
 			String end = request.getParameter("end_date");
 
 			//jackworksRequest.jspからcmd=requestを受け取る
-			cmd = request.getParameter("cmd");
+			cmd2 = request.getParameter("cmd");
 
 			//ぬるぽ対策
-			if (cmd == null) {
-				cmd = "";
+			if (cmd2 == null) {
+				cmd2 = "";
 			}
 
 			//年月検索
@@ -67,6 +68,8 @@ public class JackworksSearchServlet extends HttpServlet {
 			//検索結果が0件の場合
 			if (jackList.size() == 0) {
 				cmd = "no-result";
+			} else {
+				cmd = "search";
 			}
 
 			//検索結果の情報を格納
@@ -96,9 +99,9 @@ public class JackworksSearchServlet extends HttpServlet {
 				request.setAttribute("cmd", cmd);
 			}
 
-			//検索結果を申請画面へ表示
-			if (cmd.equals("request")) {
-				path = "";
+			//申請一覧画面へ遷移
+			if (cmd2.equals("request")) {
+				path = "/view/jackworksRequest.jsp";
 			}
 
 			request.getRequestDispatcher(path).forward(request, response);

@@ -50,12 +50,10 @@ public class MonthJackworksServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-
 			//jackWorksの検索結果が格納されたjack_listを受け取る
 			ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
 			//検索された文字(keyword)を受け取る
 			String keyword = (String) request.getAttribute("keyword");
-
 			//SearchJackworksからcmd=no-resultを受け取る
 			cmd = (String) request.getAttribute("cmd");
 
@@ -87,11 +85,7 @@ public class MonthJackworksServlet extends HttpServlet {
 			session.setAttribute("monthJack", monthJack);
 			request.setAttribute("cmd", cmd);
 			request.setAttribute("keyword", keyword);
-
-			if (jackList != null) {
-				//取得したjackListをリクエストスコープにjackListで登録
-				request.setAttribute("jack_list", jackList);
-			}
+			request.setAttribute("jack_list", jackList);
 
 		} catch (IllegalStateException e) {
 			message = "システムの一時的な問題により、JackWorksの読み込みができませんでした。";

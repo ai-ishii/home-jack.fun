@@ -661,8 +661,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td class="search-box">
 
 							<!-- 検索を行うフォーム -->
-							<form action="<%=request.getContextPath()%>/jackworksSearch"
-									class="search-form">
+							<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
 								<label><input type="text" name="keyword" placeholder="キーワードを入力" value="<%= keyword %>"></label>
 								<button type="submit" aria-label="検索"></button>
 							</form>

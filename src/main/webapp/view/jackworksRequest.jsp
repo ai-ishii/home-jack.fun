@@ -762,7 +762,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				<% if(cmd.equals("no-result")) {%>
 					<div id="search-error">
 					<p>検索結果は0件です。内容を変更して再度検索をしてください。</p>
-					<a href="<%=request.getContextPath()%>/jackworks">一覧へ戻る</a>
+					<a href="<%=request.getContextPath()%>/jackworksRequest">一覧へ戻る</a>
 					</div>
 				<% } %>
 

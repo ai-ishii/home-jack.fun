@@ -58,11 +58,6 @@ public class JackworksDeleteServlet extends HttpServlet {
 				return;
 			}
 
-			//申請一覧画面への遷移用
-			if (cmd.equals("denial")) {
-				path = "/jackworksRequest";
-			}
-
 			//取得したJackWorksの情報を削除するメソッド
 			jackworksDAO.delete(Integer.parseInt(jackworksId));
 
@@ -85,6 +80,11 @@ public class JackworksDeleteServlet extends HttpServlet {
 
 			if (("").equals(error)) {
 				request.setAttribute("cmd", cmd);
+			}
+
+			//申請一覧画面への遷移用
+			if (cmd.equals("denial")) {
+				path = "/jackworksRequest";
 			}
 
 			request.getRequestDispatcher(path).forward(request, response);
