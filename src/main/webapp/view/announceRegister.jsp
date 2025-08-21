@@ -162,18 +162,6 @@ textarea {
 	fill: #f9de95;
 }
 
-/* 登録ボタンのデザイン */
-*, *:before, *:after {
-	-webkit-box-sizing: inherit;
-	box-sizing: inherit;
-}
-
-html {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 62.5%;
-}
-
 /* 登録ボタンの配置 */
 #submitBtn {
 	text-align: center;
@@ -181,12 +169,14 @@ html {
 }
 
 .btn, a.btn, button.btn {
-	font-size: 1.4rem;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	font-size: 14px;
 	font-weight: 700;
 	line-height: 1.5;
 	position: relative;
 	display: inline-block;
-	padding: 0.5rem 2rem;
+	padding: 5px 20px;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -197,13 +187,15 @@ html {
 	text-align: center;
 	vertical-align: middle;
 	text-decoration: none;
-	letter-spacing: 0.1em;
+	letter-spacing: 1.4px;
 	color: #212529;
-	border-radius: 0.5rem;
+	border-radius: 5px;
 	border: none;
 }
 
 button.btn-border {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	padding: 0;
 	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
@@ -216,7 +208,7 @@ button.btn-border span {
 	display: block;
 	padding: 0.6rem 1.8rem;
 	color: #000;
-	border: 2px solid #000;
+	border: 2px solid #5f5f5f;
 	border-radius: 0.5rem;
 	background: #ffe0c1;
 }
@@ -226,6 +218,8 @@ button.btn-border.save span {
 }
 
 button.btn-border:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	position: absolute;
 	bottom: -8px;
 	left: 0;
@@ -235,33 +229,46 @@ button.btn-border:before {
 	content: "";
 	-webkit-transition: all 0.3s;
 	transition: all 0.3s;
-	border: 2px solid #000;
-	border-top: 1px solid #000;
+	border: 2px solid #5f5f5f;
+	border-top: 1px solid #5f5f5f;
 	border-radius: 0 0 0.5rem 0.5rem;
 	background-image: -webkit-repeating-linear-gradient(135deg, #000, #000 1px, transparent
 		2px, transparent 5px);
-	background-image: repeating-linear-gradient(-45deg, #000, #000 1px, transparent 2px,
+	background-image: repeating-linear-gradient(-45deg, #5f5f5f, #5f5f5f 1px, transparent 2px,
 		transparent 5px);
 	background-size: 7px 7px;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
+	background-color: #ffefe0;
+}
+
+button.btn-border.save:before {
+	background-color: whitesmoke;
 }
 
 button.btn-border:hover {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 3px);
 	transform: translate(0, 3px);
 }
 
 button.btn-border:hover:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	bottom: -5px;
 }
 
 button.btn-border:active {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 7px);
 	transform: translate(0, 7px);
 }
 
 button.btn-border:active:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	bottom: -1px;
 }
 
