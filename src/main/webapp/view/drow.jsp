@@ -1,23 +1,22 @@
-<!-- 
- 自分が落書きするための画面です
-
- 作成者：占部虎司郎
- 更新者：
-
- 作成日：8月21日
- 最終更新日：0月0日
- -->
- 
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <html>
 <head>
+<!-- タイトル -->
 <title>お絵描き</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
+
+/*
+お世話になっております。
+いつも教えてくれてありがとうね。
+これからも助けてくださいね。
+一緒に頑張ろうね！！
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
@@ -117,7 +116,7 @@ display: inline-block;
 vertical-align: middle;
 stroke: #fff;
 fill: #fff;
-
+transition: .5s;
 }
 
 /* 画像変更の文字 */
@@ -133,7 +132,30 @@ border-radius: 3px;
 padding: 5px 5px;
 margin: 0;
 color: #fff;
+transition: .5s;
 }
+
+/* 画像変更ボタンホバーアニメ */
+.photoFrame:hover .photoIcon{
+transform: rotateX(360deg);
+}
+
+/* ボタンクリック時のアニメ */
+.photoFrame:active .photoButton{
+	background-position: center center;
+	background-size: 100% 100%;
+	-webkit-animation: pulse 2s;
+	animation: ripple 0.4s;
+	color: #fff;
+}
+
+/* 広がる破門アニメ */
+@keyframes ripple {
+  0% {box-shadow: 0 0 0 0 #e47cae}
+  70% {box-shadow: 0 0 0 10px rgb(228 124 174 / 0%);}
+  100% {box-shadow: 0 0 0 0 rgb(228 124 174 / 0%);}
+}
+
 
 /* 編集ボタンだよ */
 /* 編集ボタンの大枠 */
@@ -194,14 +216,17 @@ fill: #6eddb3;
 color: #6eddb3;
 }
 
-
-
 </style>
+
 <body>
-<div id="wrap">
-<div id="main" class="container">
-<%@ include file="../common/header.jsp"%>
-<div class="yoruArrow">
+	<div id="wrap">
+		<!-- ヘッダー部分 -->
+		<%@ include file="../common/header.jsp"%>
+
+		<!-- メイン部分 -->
+		<div id="main" class="container">
+		
+		<div class="yoruArrow">
 	<a href="#" class="jackResetR">
 		<span class="beaf">LIST</span>
 		<svg class="arrow" viewBox="0 0 50 20" x="0px" y="0px" width="50"  height="20">
@@ -278,7 +303,12 @@ color: #6eddb3;
 <span class="editText">編集</span>
 </a>
 </div>
-</div>
-</div>
+
+<form>
+<input type="submit">
+</form>
+		
+		</div>
+	</div>
 </body>
 </html>

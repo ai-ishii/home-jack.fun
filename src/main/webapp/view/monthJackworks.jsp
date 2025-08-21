@@ -69,13 +69,14 @@ margin: 0 auto;
 /* 登録ボタンの配置 */
 #JackWorks-submit {
 	text-align: center;
+	margin-top: 20px;
 }
 
 /*  */
 .monthArea {
 	resize: none;
 	width: 100%;
-	height: 150px;
+	height: 200px;
 }
 
 /* テキストボックス */
@@ -148,8 +149,8 @@ box-sizing: border-box;
 }
 
 button.btn-border:before {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	position: absolute;
 	bottom: -8px;
 	left: 0;
@@ -172,21 +173,21 @@ box-sizing: border-box;
 }
 
 button.btn-border:hover {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 3px);
 	transform: translate(0, 3px);
 }
 
 button.btn-border:hover:before {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	bottom: -5px;
 }
 
 button.btn-border:active {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 7px);
 	transform: translate(0, 7px);
 }
@@ -195,6 +196,128 @@ button.btn-border:active:before {
 -webkit-box-sizing: border-box;
 box-sizing: border-box;
 	bottom: -1px;
+}
+
+/* ただの色付き小見出し */
+.yorushika{
+font-size: 22px;
+color: #e89b17;
+margin-left: 10px;
+margin-right: auto;
+margin-bottom: 2px;
+}
+
+/* 小見出し用の縦線 */
+.yorushikaStripe{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;
+border-left: 5px solid #ff8b4d;
+}
+
+/* 小見出し */
+.formSub{
+font-size: 21px;
+}
+
+.formText{
+font-size: 17px;
+}
+
+.tdMag{
+padding-bottom: 5px;
+}
+
+/* テーブル間隔開ける */
+.textPadd{
+padding-bottom: 15px;
+}
+
+/* ボタン位置 */
+.magButton{
+height: 90px;
+padding-bottom: 10px;
+}
+
+/* 以下画像変更ボタンのCSS */
+/* 画像変更ボタンの大枠 */
+.photoFrame{
+display: flex;
+justify-content: flex-end;
+width: 200px;
+height: 50px;
+margin-left: auto;
+}
+
+/* 画像変更ボタン */
+.photoButton{
+display: inline-block;
+display: flex;         /* 子要素をFlexboxで配置 */
+border-radius: 5px;
+text-decoration: none;			/* 下線を消す */
+cursor: pointer; 				/* マウスカーソルをポインターにする */
+border: 8px solid #e19dbe;
+height: 100%;
+align-items: center;
+}
+
+/* 画像アイコンボックス */
+.photoBox{
+display: flex;             /* Flexboxを有効にする */
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+border: 3px solid #fff;
+background-color: #e19dbe;
+height: 35px;
+border-radius: 3px;
+padding: 5px 5px;
+margin: 0;
+}
+
+/* 画像アイコン */
+.photoIcon{
+display: inline-block;
+vertical-align: middle;
+stroke: #fff;
+fill: #fff;
+transition: .5s;
+}
+
+/* 画像変更の文字 */
+.photoText{
+display: flex;             /* Flexboxを有効にする */
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+background-color: #e19dbe;
+height: 35px;
+font-size:25px;
+border: 3px solid #fff;
+border-radius: 3px;
+padding: 5px 5px;
+margin: 0;
+color: #fff;
+transition: .5s;
+}
+
+/* 画像変更ボタンホバーアニメ */
+.photoFrame:hover .photoIcon{
+transform: rotateX(360deg);
+}
+
+/* ボタンクリック時のアニメ */
+.photoFrame:active .photoButton{
+	background-position: center center;
+	background-size: 100% 100%;
+	-webkit-animation: pulse 2s;
+	animation: ripple 0.4s;
+	color: #fff;
+}
+
+/* 広がる破門アニメ */
+@keyframes ripple {
+  0% {box-shadow: 0 0 0 0 #e47cae}
+  70% {box-shadow: 0 0 0 10px rgb(228 124 174 / 0%);}
+  100% {box-shadow: 0 0 0 0 rgb(228 124 174 / 0%);}
 }
 
 </style>
@@ -209,7 +332,6 @@ box-sizing: border-box;
 		
 		<div id="contents">
 
-		<div>
 		<!-- タイトル部分 -->
 		<div id="link-title">
 			<h1 id="link-line">今月のJackWorks内容更新</h1>
@@ -222,14 +344,31 @@ box-sizing: border-box;
 			<table id="box-mar">
 			<%if(!cmd.equals("change")){ %>
 				<tr>
-					<td>
-						<a href="<%=request.getContextPath()%>/monthJackworks?cmd=change">画像変更</a>
+					<td class="magButton">
+						<div class="photoFrame">
+							<a class="photoButton" href="<%=request.getContextPath()%>/monthJackworks?cmd=change">
+								<div class="photoBox">
+									<svg xmlns="http://www.w3.org/2000/svg" x="2px" y="2px" viewBox="1 1 45 45" width="35"  height="35" class="photoIcon">
+									<defs>
+										<style>.a,.b{fill:none;}.b{stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}
+										</style>
+									</defs>
+									<title>454_ca_h</title>
+									<rect class="a" width="48" height="48"/>
+									<rect class="b" x="3" y="3" width="42" height="42" rx="4" ry="4"/>
+									<polyline class="b" points="3 36 18.09 20.91 27.57 30.39 33.88 24.08 45 35"/>
+									<circle class="b" cx="31" cy="14" r="4"/>
+									</svg>
+								</div>
+								<div class="photoText">画像変更</div>
+							</a>
+						</div>
 						<input type="hidden" name="image" value="<%=monthJack.getImage()%>">
 					</td>
 				</tr>
 			<%}else{ %>
 				<tr>
-					<td style="display: flex">画像</td>
+					<td style="display: flex" class="formSub">画像</td>
 				</tr>
 				<td><input type="file" accept=".png, .jpg, .jpeg, .gif" name="image" size="35" value="" class="error-file"></td>
 				<tr>
@@ -237,16 +376,25 @@ box-sizing: border-box;
 				</tr>
 			<%} %>
 				<tr>
-					<td style="display: flex">今月のテーマ
+					<td style="display: flex;" class="tdMag">
+						<div class="yorushikaStripe">
+							<div class="yorushika">今月のテーマ</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required monthBox"></td>
 				<tr>
-					<td style="display: flex">備考</td>
+				<td class="textPadd"><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required monthBox formText"></td>
 				</tr>
 				<tr>
-				<td><textarea class="monthArea" name="note"><%=monthJack.getNote()%></textarea></td>
+					<td style="display: flex" class="tdMag">
+						<div class="yorushikaStripe">
+							<div class="yorushika">備考</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+				<td class="textPadd"><textarea class="monthArea formText" name="note"><%=monthJack.getNote()%></textarea></td>
 				</tr>
 			</table>
 
@@ -258,7 +406,6 @@ box-sizing: border-box;
 			</div>
 		</div>
 		</form>
-		</div>
 		</div>
 	</div>
 </body>
