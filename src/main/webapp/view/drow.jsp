@@ -9,14 +9,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
-
-/*
-お世話になっております。
-いつも教えてくれてありがとうね。
-これからも助けてくださいね。
-一緒に頑張ろうね！！
-*/
-
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
