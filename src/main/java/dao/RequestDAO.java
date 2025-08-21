@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  *  
- * 最終更新日：2025/08/19
+ * 最終更新日：2025/08/20
  *  
  */
 package dao;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import bean.AddressRequestExclusive;
+import bean.LicenseName;
 import bean.LicenseRequestExclusive;
 import bean.NameRequest;
 import util.DAOconnection;
@@ -314,91 +315,93 @@ public class RequestDAO {
 	 */
 	public boolean insertAddressChange(AddressRequestExclusive addressRequestExclusive) {
 
-	    Connection con = null;
-	    PreparedStatement smt1 = null; // request_infoへのINSERT用
-	    PreparedStatement smt2 = null; // address_request_infoへのINSERT用
-	    ResultSet rs = null;           // 生成されたrequest_idを取得するため
+		Connection con = null;
+		PreparedStatement smt1 = null; // request_infoへのINSERT用
+		PreparedStatement smt2 = null; // address_request_infoへのINSERT用
+		ResultSet rs = null; // 生成されたrequest_idを取得するため
 
-	    try {
-	        // データベース接続を取得
-	        con = DAOconnection.getConnection();
+		try {
+			// データベース接続を取得
+			con = DAOconnection.getConnection();
 
-	        // トランザクションを開始
-	        con.setAutoCommit(false);
+			// トランザクションを開始
+			con.setAutoCommit(false);
 
-	        // --- 処理1：request_infoテーブルに氏名と現在日時をINSERT ---
-	     // --- 親テーブルにINSERT ---
-	     // --- 親テーブルにINSERT ---
-	        String sql1 = "INSERT INTO request_info (applicant, request_date) VALUES (?, NOW())";
-	        smt1 = con.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
-	        smt1.setString(1, addressRequestExclusive.getName());
-	        smt1.executeUpdate();
+			// --- 処理1：request_infoテーブルに氏名と現在日時をINSERT ---
+			// --- 親テーブルにINSERT ---
+			// --- 親テーブルにINSERT ---
+			String sql1 = "INSERT INTO request_info (applicant, request_date) VALUES (?, NOW())";
+			smt1 = con.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
+			smt1.setString(1, addressRequestExclusive.getName());
+			smt1.executeUpdate();
 
-	        // request_idを取得
-	        rs = smt1.getGeneratedKeys();
-	        long newRequestId = 0;
-	        if (rs.next()) {
-	            newRequestId = rs.getLong(1);
-	        } else {
-	            throw new SQLException("request_idの取得に失敗しました。");
-	        }
+			// request_idを取得
+			rs = smt1.getGeneratedKeys();
+			long newRequestId = 0;
+			if (rs.next()) {
+				newRequestId = rs.getLong(1);
+			} else {
+				throw new SQLException("request_idの取得に失敗しました。");
+			}
 
-	        // --- 子テーブルにINSERT ---
-	        String sql2 = "INSERT INTO address_request_info ("
-	                + "request_id, "
-	                + "old_post, "
-	                + "old_address, "
-	                + "new_post, "
-	                + "new_address, "
-	                + "nearest_station, "
-	                + "address_change_date) "
-	                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+			// --- 子テーブルにINSERT ---
+			String sql2 = "INSERT INTO address_request_info ("
+					+ "request_id, "
+					+ "old_post, "
+					+ "old_address, "
+					+ "new_post, "
+					+ "new_address, "
+					+ "nearest_station, "
+					+ "address_change_date) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-	        smt2 = con.prepareStatement(sql2);
-	        smt2.setLong(1, newRequestId);
-	        smt2.setString(2, addressRequestExclusive.getOldPost());
-	        smt2.setString(3, addressRequestExclusive.getOldAddress());
-	        smt2.setString(4, addressRequestExclusive.getNewPost());
-	        smt2.setString(5, addressRequestExclusive.getNewAddress());
-	        smt2.setString(6, addressRequestExclusive.getNeareststation());
+			smt2 = con.prepareStatement(sql2);
+			smt2.setLong(1, newRequestId);
+			smt2.setString(2, addressRequestExclusive.getOldPost());
+			smt2.setString(3, addressRequestExclusive.getOldAddress());
+			smt2.setString(4, addressRequestExclusive.getNewPost());
+			smt2.setString(5, addressRequestExclusive.getNewAddress());
+			smt2.setString(6, addressRequestExclusive.getNeareststation());
 
-	        // LocalDate → Timestamp に変換
-	        smt2.setTimestamp(7, Timestamp.valueOf(
-	                addressRequestExclusive.getAddressChangedDate().atStartOfDay()
-	        ));
+			// LocalDate → Timestamp に変換
+			smt2.setTimestamp(7, Timestamp.valueOf(
+					addressRequestExclusive.getAddressChangedDate().atStartOfDay()));
 
-	        int affectedRows = smt2.executeUpdate();
-	        con.commit();
-	        return affectedRows > 0;
+			int affectedRows = smt2.executeUpdate();
+			con.commit();
+			return affectedRows > 0;
 
-	    // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-	    // ★★★ catchブロックを SQLException と ClassNotFoundException に分離 ★★★
-	    // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        if (con != null) {
-	            try {
-	                con.rollback();
-	            } catch (SQLException e2) {
-	                e2.printStackTrace();
-	            }
-	        }
-	        return false;
+			// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+			// ★★★ catchブロックを SQLException と ClassNotFoundException に分離 ★★★
+			// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+		} catch (SQLException e) {
+			e.printStackTrace();
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+			}
+			return false;
 
-	    } finally {
-	        // --- 最後に必ずリソースを解放する ---
-	        try {
-	            if (rs != null) rs.close();
-	            if (smt1 != null) smt1.close();
-	            if (smt2 != null) smt2.close();
-	            if (con != null) {
-	                con.setAutoCommit(true);
-	                con.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		} finally {
+			// --- 最後に必ずリソースを解放する ---
+			try {
+				if (rs != null)
+					rs.close();
+				if (smt1 != null)
+					smt1.close();
+				if (smt2 != null)
+					smt2.close();
+				if (con != null) {
+					con.setAutoCommit(true);
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -424,28 +427,28 @@ public class RequestDAO {
 			// --- 親テーブルにINSERT ---
 			String sql1 = "INSERT INTO request_info (applicant, request_date) VALUES (?, NOW())";
 			smt1 = con.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
-			smt1.setString(1, addressRequestExclusive.getName());
+			smt1.setString(1, userInput.getName());
 			smt1.executeUpdate();
 
 			// request_idを取得
 			rs = smt1.getGeneratedKeys();
 			long newRequestId = 0;
 			if (rs.next()) {
-			    newRequestId = rs.getLong(1);
+				newRequestId = rs.getLong(1);
 			} else {
-			    throw new SQLException("request_idの取得に失敗しました。");
+				throw new SQLException("request_idの取得に失敗しました。");
 			}
 
 			// --- 子テーブルにINSERT ---
 			String sql2 = "INSERT INTO address_request_info ("
-			        + "request_id, "
-			        + "old_post, "
-			        + "old_address, "
-			        + "new_post, "
-			        + "new_address, "
-			        + "nearest_station, "
-			        + "address_change_date) "
-			        + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+					+ "request_id, "
+					+ "old_post, "
+					+ "old_address, "
+					+ "new_post, "
+					+ "new_address, "
+					+ "nearest_station, "
+					+ "address_change_date) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 			smt2 = con.prepareStatement(sql2);
 			smt2.setLong(1, newRequestId);
@@ -457,13 +460,11 @@ public class RequestDAO {
 
 			// LocalDate → Timestamp に変換
 			smt2.setTimestamp(7, Timestamp.valueOf(
-			        addressRequestExclusive.getAddressChangedDate().atStartOfDay()
-			));
+					addressRequestExclusive.getAddressChangedDate().atStartOfDay()));
 
 			int affectedRows = smt2.executeUpdate();
 			con.commit();
 			return affectedRows > 0;
-
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -492,5 +493,140 @@ public class RequestDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * useridで資格申請に必要な情報(氏名、部名、グループ名)を取り出すメソッド
+	 * @param  userId
+	 * @return 必要な情報を格納したArrayList
+	 */
+	public ArrayList<LicenseRequestExclusive> selectUserId(int userId) {
+		PreparedStatement pstmt = null;
+		ArrayList<LicenseRequestExclusive> userList = new ArrayList<>();
+
+		Connection con = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = "SELECT "
+					+ "U.name, "
+					+ "D.department_name, "
+					+ "G.group_name "
+					+ "FROM "
+					+ "user_info as U "
+					+ "INNER JOIN "
+					+ "department_info as D "
+					+ "ON "
+					+ "U.department_id = D.department_id "
+					+ "INNER JOIN "
+					+ "group_info as G "
+					+ "ON "
+					+ "U.group_id = G.group_id "
+					+ "WHERE "
+					+ "user_id = ?";
+
+			con = DAOconnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, userId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
+				licenseRequestExclusive.setApplicant(rs.getString("name"));
+				licenseRequestExclusive.setDepartmentName(rs.getString("department_name"));
+				licenseRequestExclusive.setGroupName(rs.getString("group_name"));
+				userList.add(licenseRequestExclusive);
+			}
+		} catch (SQLException e) {
+			// エラーが発生した場合の処理（例：ログ出力）
+			e.printStackTrace();
+		} finally {
+			// finallyブロック内で発生するSQLExceptionを個別に処理する
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return userList;
+	}
+
+	/**
+	 * 資格名を取り出すメソッド
+	 * 
+	 * @return 資格名を格納したArrayList
+	 */
+	public ArrayList<LicenseName> selectAllLicenseName() {
+
+	    Statement smt = null;
+	    ArrayList<LicenseName> licenseNameList = new ArrayList<>();
+	    Connection con = null;
+	    ResultSet rs = null;
+
+	    try {
+	        con = DAOconnection.getConnection();
+	        smt = con.createStatement();
+
+	        String sql = "SELECT "
+	                + "license_id, "  
+	                + "type_code, "
+	                + "license_name "
+	                + "FROM "
+	                + "license_info";
+
+	        rs = smt.executeQuery(sql);
+	        while (rs.next()) {
+	            LicenseName license = new LicenseName();
+	            license.setLicenseId(rs.getInt("license_id"));
+	            license.setTypeCode(rs.getString("type_code"));
+	            license.setLicenseName(rs.getString("license_name"));
+	            licenseNameList.add(license);
+	        }
+	    } catch (SQLException e) {
+	        // エラーが発生した場合の処理（例：ログ出力）
+	        e.printStackTrace();
+	    } finally {
+	        // finallyブロック内で発生するSQLExceptionを個別に処理する
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        try {
+	            if (smt != null) {
+	                smt.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        try {
+	            if (con != null) {
+	                con.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return licenseNameList;
 	}
 }

@@ -1,7 +1,7 @@
 <%--
 機能：資格申請フォームに入力された内容の確認画面
 作成者：桑原岳
-最終更新日：2025/08/19
+最終更新日：2025/08/20
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -51,38 +51,35 @@
             <table class="confirm-table">
                 <tr>
                     <th>氏名</th>
-                    <td><c:out value="${sessionScope.userInput.name}" /></td>
+                    <td><c:out value="${sessionScope.formValues.name}" /></td>
                 </tr>
                 <tr>
                     <th>部署名</th>
-                    <%-- ★★★★★ 変更点：表示名（departmentName）を表示 ★★★★★ --%>
-                    <td><c:out value="${sessionScope.userInput.departmentName}" /></td>
+                    <td><c:out value="${sessionScope.formValue.departmentName}" /></td>
                 </tr>
                 <tr>
                     <th>グループ名</th>
-                    <%-- ★★★★★ 変更点：表示名（groupName）を表示 ★★★★★ --%>
-                    <td><c:out value="${sessionScope.userInput.groupName}" /></td>
+                    <td><c:out value="${sessionScope.formValue.groupName}" /></td>
                 </tr>
                 <tr>
                     <th>資格名</th>
-                    <%-- ★★★★★ 変更点：表示名（licenseName）を表示 ★★★★★ --%>
-                    <td><c:out value="${sessionScope.userInput.licenseName}" /></td>
+                    <td><c:out value="${sessionScope.formValue.licenseName}" /></td>
                 </tr>
                 <tr>
                     <th>受験日</th>
-                    <td><c:out value="${sessionScope.userInput.examDate}" /></td>
+                    <td><c:out value="${sessionScope.formValue.examDate}" /></td>
                 </tr>
                 <tr>
                     <th>受験回数</th>
-                    <td><c:out value="${sessionScope.userInput.examTime}" /></td>
+                    <td><c:out value="${sessionScope.formValue.examTime}" /></td>
                 </tr>
                 <tr>
                     <th>受験料領収書</th>
-                    <td><c:out value="${sessionScope.userInput.receiptOriginalFileName}" /></td>
+                    <td><c:out value="${sessionScope.formValue.receiptOriginalFileName}" /></td>
                 </tr>
                 <tr>
                     <th>合格証</th>
-                    <td><c:out value="${sessionScope.userInput.passingOriginalFileName}" /></td>
+                    <td><c:out value="$sessionScope.formValue.passingOriginalFileName}" /></td>
                 </tr>
             </table>
 

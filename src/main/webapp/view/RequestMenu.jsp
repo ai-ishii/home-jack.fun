@@ -3,7 +3,7 @@
 
 作成者：桑原岳
 
-最終更新日：2025/08/19
+最終更新日：2025/08/20
  --%>
 
 
@@ -125,7 +125,7 @@
 						</a>
 					</div>
 					<div class="button-spacing">
-						<a href="#" class="btn btn-arrow"> <i
+						<a href="<%= request.getContextPath() %>/licenseFormPrepare" class="btn btn-arrow"> <i
 							class="fa-solid fa-envelope"></i> <span>資格申請</span> <i
 							class="fa-solid fa-chevron-right"></i>
 						</a>

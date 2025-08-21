@@ -36,32 +36,32 @@ public class UserDAO {
 
 		//SQL文の作成
 		String sql = "SELECT "
-						+ "user_id, "
-						+ "account_id, "
-						+ "name, "
-						+ "name_kana, "
-						+ "birthday, "
-						+ "address, "
-						+ "post, "
-						+ "phone, "
-						+ "nearest_station, "
-						+ "transportation, "
-						+ "sex, "
-						+ "employee_number, "
-						+ "department_id, "
-						+ "group_id, "
-						+ "joining_date, "
-						+ "work_history, "
-						+ "marriage_flag, "
-						+ "children, "
-						+ "qualification, "
-						+ "display_flag, "
-						+ "rest_flag, "
-						+ "regist_date, "
-						+ "update_date "
-					+ "FROM "
-						+ "user_info "
-					+ "ORDER BY employee_number ASC";
+				+ "user_id, "
+				+ "account_id, "
+				+ "name, "
+				+ "name_kana, "
+				+ "birthday, "
+				+ "address, "
+				+ "post, "
+				+ "phone, "
+				+ "nearest_station, "
+				+ "transportation, "
+				+ "sex, "
+				+ "employee_number, "
+				+ "department_id, "
+				+ "group_id, "
+				+ "joining_date, "
+				+ "work_history, "
+				+ "marriage_flag, "
+				+ "children, "
+				+ "qualification, "
+				+ "display_flag, "
+				+ "rest_flag, "
+				+ "regist_date, "
+				+ "update_date "
+			+ "FROM "
+				+ "user_info "
+				+ "ORDER BY employee_number ASC";
 
 		try {
 			// データベース接続
@@ -606,26 +606,26 @@ public class UserDAO {
 	 * @throws IllegalStateException メソッド内部で例外が発生した場合
 	 */
 	public void insert(String accountId, String name) {
-		
+
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		String sql = "INSERT INTO "
-					+ "user_info (" 
+				+ "user_info ("
 				+ "account_id,"
 				+ "name,"
 				+ "marriage_flag,"
 				+ "display_flag,"
 				+ "rest_flag,"
 				+ "regist_date" + ")"
-					+ "VALUES "
+			+ "VALUES "
 				+ "(? ,?, 0, 1, 0, NOW())";
 
 		try {
 			// DBに接続
 			con = DAOconnection.getConnection();
 			ps = con.prepareStatement(sql);
-			
+
 			ps.setString(1, accountId);
 			ps.setString(2, name);
 
@@ -927,28 +927,28 @@ public class UserDAO {
 
 		//SQL文の作成
 		String sql = "UPDATE "
-						+ "user_info "
-					+ "set "
-						+ "name = '" + user.getName() + "', "
-						+ "name_kana = '" + user.getNameKana()+ "', "
-						+ "birthday = '" + user.getBirthday() + "', "
-						+ "address = '" + user.getAddress() + "', "
-						+ "post = '" + user.getPost() + "', "
-						+ "phone = '" + user.getPhone() + "', "
-						+ "nearest_station = '"+ user.getNearestStation() + "', "
-						+ "transportation = '" + user.getTransportation() + "', "
-						+ "sex = '"+ user.getSex() + "',"
-						+ "employee_number = '" + user.getEmployeeNumber() + "', "
-						+ "department_id = '" + user.getDepartmentId()+ "', "
-						+ "group_id = '" + user.getGroupId() + "', "
-						+ "joining_date ='" + user.getJoiningDate() + "', "
-						+ "children = '" + user.getChildren() + "', "
-						+ "qualification = '" + user.getQualification()+ "', "
-						+ "work_history = '" + user.getWorkHistory() + "', "
-						+ "regist_date = '" + user.getRegistDate() + "', "
-						+ "update_date = '" + nowDate + "' "
-					+ "WHERE "
-						+ "user_id = '" + user.getUserId() + "'";
+				+ "user_info "
+				+ "set "
+				+ "name = '" + user.getName() + "', "
+				+ "name_kana = '" + user.getNameKana() + "', "
+				+ "birthday = '" + user.getBirthday() + "', "
+				+ "address = '" + user.getAddress() + "', "
+				+ "post = '" + user.getPost() + "', "
+				+ "phone = '" + user.getPhone() + "', "
+				+ "nearest_station = '" + user.getNearestStation() + "', "
+				+ "transportation = '" + user.getTransportation() + "', "
+				+ "sex = '" + user.getSex() + "',"
+				+ "employee_number = '" + user.getEmployeeNumber() + "', "
+				+ "department_id = '" + user.getDepartmentId() + "', "
+				+ "group_id = '" + user.getGroupId() + "', "
+				+ "joining_date ='" + user.getJoiningDate() + "', "
+				+ "children = '" + user.getChildren() + "', "
+				+ "qualification = '" + user.getQualification() + "', "
+				+ "work_history = '" + user.getWorkHistory() + "', "
+				+ "regist_date = '" + user.getRegistDate() + "', "
+				+ "update_date = '" + nowDate + "' "
+			+ "WHERE "
+				+ "user_id = '" + user.getUserId() + "'";
 
 		try {
 			//DB接続
@@ -981,4 +981,5 @@ public class UserDAO {
 
 	}
 
+	
 }

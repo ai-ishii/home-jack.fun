@@ -3,7 +3,7 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/14
+最終更新日：2025/08/20
  --%>
 
 
@@ -12,7 +12,7 @@
 String errorMessage = (String) request.getAttribute("errorMessage");
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="formValues" value="${not empty formValues ? formValues : param}" />
 <html>
 <head>
 <title>氏名変更申請フォーム</title>
