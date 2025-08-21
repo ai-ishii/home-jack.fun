@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  * 
- * 最終更新日：2025/08/01
+ * 最終更新日：2025/08/20
  * 
  * */
 
@@ -30,8 +30,8 @@ public class LicenseRequestExclusive {
 	private int licenseId; 				//資格ID
 	private Timestamp examDate; 			//受験日
 	private int examTime; 					//受験回数
-	private String receipt; 				//領収書画像
-	private String passing; 				//合格証画像
+	private byte[] receipt; 				//領収書画像
+	private byte[] passing; 				//合格証画像
 
 	
 	private String groupName; 				//グループ名 (group_infoより)
@@ -150,20 +150,20 @@ public class LicenseRequestExclusive {
 		this.examTime = examTime;
 	}
 
-	public String getReceipt() {
+	public byte[] getReceipt() {
 		return receipt;
 	}
 
-	public void setReceipt(String receipt) {
+	public void setReceipt(byte[] receipt) {
 		this.receipt = receipt;
 	}
 
 
-	public String getPassing() {
+	public byte[] getPassing() {
 		return passing;
 	}
 
-	public void setPassing(String passing) {
+	public void setPassing(byte[] passing) {
 		this.passing = passing;
 	}
 

@@ -1,7 +1,10 @@
 <%--
 今月のJackWorks登録画面
 作成者：青木美波
+更新者：占部虎司郎
+
 作成日 2025/07/11
+最終更新日 2025/08/21
  --%>
  
  
@@ -45,12 +48,12 @@ if(cmd == null){
 }
 
 #link-line {
-	padding: 1rem 0;
-	margin-bottom: 0.2rem;
+	padding: 10px 0;
+	margin-bottom: 2px;
 	background-image: linear-gradient(90deg, #b2d5de 0 25%, #ddcfb3 25% 50%, #b3ddb4 50% 75%,
 		#ddbab3 75%);
 	background-repeat: no-repeat;
-	background-size: 100% 0.3rem;
+	background-size: 100% 3px;
 	background-position: bottom;
 	color: #353535;
 	font-weight: bold;
@@ -59,7 +62,8 @@ if(cmd == null){
 }
 
 #box-mar {
-	margin: 0 auto;
+width: 60%;
+margin: 0 auto;
 }
 
 /* 登録ボタンの配置 */
@@ -67,10 +71,23 @@ if(cmd == null){
 	text-align: center;
 }
 
-textarea {
+/*  */
+.monthArea {
 	resize: none;
-	width: 270px;
-	height: 100px;
+	width: 100%;
+	height: 150px;
+}
+
+/* テキストボックス */
+.monthBox{
+width: 100%;
+height: 30px;
+}
+
+/* セルサイズ */
+.textCell{
+width: 100%;
+height: 100%;
 }
 
 /* 米印の色 */
@@ -83,25 +100,15 @@ textarea {
 	display: flex;
 }
 
-/* 登録ボタンのデザイン */
-*, *:before, *:after {
-	-webkit-box-sizing: inherit;
-	box-sizing: inherit;
-}
-
-html {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 62.5%;
-}
-
 .btn, a.btn, button.btn {
-	font-size: 1.4rem;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	font-size: 14px;
 	font-weight: 700;
 	line-height: 1.5;
 	position: relative;
 	display: inline-block;
-	padding: 0.5rem 2rem;
+	padding: 5px 20px;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -112,13 +119,15 @@ html {
 	text-align: center;
 	vertical-align: middle;
 	text-decoration: none;
-	letter-spacing: 0.1em;
+	letter-spacing: 1.4px;
 	color: #212529;
-	border-radius: 0.5rem;
+	border-radius: 5px;
 	border: none;
 }
 
 button.btn-border {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	margin-bottom: 12px;
 	padding: 0;
 	-webkit-transition: all 0.3s;
@@ -126,17 +135,21 @@ button.btn-border {
 	border-radius: 0;
 }
 
-button.btn-border span {
+button.btn-border span.btnUp {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	position: relative;
 	display: block;
-	padding: 0.6rem 1.8rem;
+	padding: 6px 18px;
 	color: #000;
 	border: 2px solid #000;
-	border-radius: 0.5rem;
+	border-radius: 5px;
 	background: #fff;
 }
 
 button.btn-border:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	position: absolute;
 	bottom: -8px;
 	left: 0;
@@ -159,20 +172,28 @@ button.btn-border:before {
 }
 
 button.btn-border:hover {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	-webkit-transform: translate(0, 3px);
 	transform: translate(0, 3px);
 }
 
 button.btn-border:hover:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	bottom: -5px;
 }
 
 button.btn-border:active {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	-webkit-transform: translate(0, 7px);
 	transform: translate(0, 7px);
 }
 
 button.btn-border:active:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	bottom: -1px;
 }
 
@@ -188,6 +209,7 @@ button.btn-border:active:before {
 		
 		<div id="contents">
 
+		<div>
 		<!-- タイトル部分 -->
 		<div id="link-title">
 			<h1 id="link-line">今月のJackWorks内容更新</h1>
@@ -219,21 +241,24 @@ button.btn-border:active:before {
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required" size="35"></td>
+				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required monthBox"></td>
 				<tr>
 					<td style="display: flex">備考</td>
 				</tr>
-				<td><textarea name="note" rows="" cols="" ><%=monthJack.getNote()%></textarea></td>
+				<tr>
+				<td><textarea class="monthArea" name="note"><%=monthJack.getNote()%></textarea></td>
+				</tr>
 			</table>
 
 			<!-- 登録ボタン -->
 			<div id="JackWorks-submit">
 				<button type="submit" class="btn btn-border">
-					<span>更新</span>
+					<span class="btnUp">更新</span>
 				</button>
 			</div>
 		</div>
 		</form>
+		</div>
 		</div>
 	</div>
 </body>

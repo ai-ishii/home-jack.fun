@@ -107,6 +107,8 @@ h1, h2 {
 
 #header-menu.open {
 	clip-path: inset(0 0 0 0);
+	overflow: auto;
+
 }
 
 #header-menu a {
