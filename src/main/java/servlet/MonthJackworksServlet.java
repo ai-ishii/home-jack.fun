@@ -2,6 +2,7 @@
  * プログラム名：Home-Jack.ver.2.0
  * 作成者：青木美波
  * 作成日：2025/7/14
+ * 更新日：2025/8/21
  */
 
 package servlet;
@@ -29,13 +30,16 @@ import jakarta.servlet.http.Part;
 
 @WebServlet("/monthJackworks")
 @MultipartConfig
-@SuppressWarnings("unchecked")
+@SuppressWarnings("unchecked") //コンパイルエラーがでなくなっているので注意
 public class MonthJackworksServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//エラー文を格納する用の変数設定
-		String error = null;
-		//例外と遷移先情報を格納する用の変数設定
+
+		// エラー用コマンド
+		String error = "";
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
 		String cmd = "";
 		//遷移先のパスを設定
 		String path = "/jackworks";
@@ -52,26 +56,33 @@ public class MonthJackworksServlet extends HttpServlet {
 			//検索された文字(keyword)を受け取る
 			String keyword = (String) request.getAttribute("keyword");
 
-			//SearchJackworksからcmd=searchを受け取る
+			//SearchJackworksからcmd=no-resultを受け取る
 			cmd = (String) request.getAttribute("cmd");
+
 			//画面遷移のための処理
 			//後々消す(64まで)
 			String cmd2 = request.getParameter("cmd");
-			if(cmd2 != null) {
+			if (cmd2 != null) {
 				cmd = cmd2;
-			}else if(cmd2 == null) {
-				cmd2 ="";
+			} else if (cmd2 == null) {
+				cmd2 = "";
 			}
-			
+			//ここまで削除
+
+			//ぬるぽ対策
 			if (cmd == null) {
 				cmd = "";
 			}
-
 
 			//画面遷移のための処理
 			//後々消す
 			if (cmd.equals("change")) {
 				path = "/view/monthJackworks.jsp";
+			}
+			
+			//検索結果がある場合、JackWorks画面へ遷移
+			if (jackList != null) {
+				path = "/view/jackworks.jsp";
 			}
 
 			//MonthJackWorksの全情報を取得するメソッド
@@ -81,28 +92,31 @@ public class MonthJackworksServlet extends HttpServlet {
 			session.setAttribute("monthJack", monthJack);
 			request.setAttribute("cmd", cmd);
 			request.setAttribute("keyword", keyword);
-
-			if (jackList != null) {
-				//取得したjackListをリクエストスコープにjackListで登録
-				request.setAttribute("jack_list", jackList);
-			} 
+			
+			//検索結果が格納されたjackListをリクエストスコープにjackListで登録
+			request.setAttribute("jack_list", jackList);
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、JackWorksの読み込みができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != null) {
-				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", error);
-				// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", cmd);
+			
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// pathにフォワード
+
+			if (("").equals(error)) {
+				request.setAttribute("cmd", cmd);
+			}
+
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 
@@ -112,9 +126,11 @@ public class MonthJackworksServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		//エラー文を格納する用の変数設定
-		String error = null;
-		//例外と遷移先情報を格納する用の変数設定
+		// エラー用コマンド
+		String error = "";
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
 		String cmd = "";
 		//遷移先のパスを設定
 		String path = "/jackworks";
@@ -125,13 +141,6 @@ public class MonthJackworksServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-
-			//SearchJackworksからcmd=changeを受け取る
-			cmd = (String) request.getParameter("cmd");
-
-			if (cmd == null) {
-				cmd = "";
-			}
 
 			//monthJackworks.jspから値を受け取る
 			String theme = request.getParameter("theme");
@@ -196,21 +205,26 @@ public class MonthJackworksServlet extends HttpServlet {
 			session.setAttribute("monthJack", monthJack);
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\n今月のテーマ情報の登録ができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、今月のテーマ情報の登録ができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != null) {
-				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", error);
-				// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", cmd);
+			
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// pathにフォワード
+
+			if (("").equals(error)) {
+				request.setAttribute("cmd", cmd);
+			}
+
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}

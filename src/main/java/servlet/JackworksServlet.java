@@ -3,7 +3,8 @@
  * 
  * 作成者：青木美波
  * 
- * 作成日 2025/07/08
+ * 作成日：2025/07/08
+ * 更新日：2025/08/21
  */
 
 package servlet;
@@ -20,7 +21,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/jackworks")
-@SuppressWarnings("unchecked") //コンパイルエラーがでなくなっているので注意
 public class JackworksServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -36,9 +36,9 @@ public class JackworksServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		// エラー用コマンド
-		String error = null;
-		// エラー文
-		String message ="";
+		String error = "";
+		// エラー文格納用
+		String message = "";
 		// 画面遷移用コマンド
 		String cmd = "";
 		// 遷移先のパス
@@ -49,47 +49,34 @@ public class JackworksServlet extends HttpServlet {
 		ArrayList<Jackworks> jackList = new ArrayList<Jackworks>();
 
 		try {
-			//SearchJackworksからcmd=search もしくはjackworksRequest.jspからcmd=requestを受け取る
-			cmd = (String) request.getAttribute("cmd");
 
-			if (cmd == null) {
-				cmd = "";
-			}
-
-			//検索された文字(keyword)を受け取る
-			String keyword = (String) request.getAttribute("keyword");
-			//jackWorksの検索結果が格納されたjack_listを受け取る
-			jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
-
-			if (cmd.equals("")){
-				// JackWorksの全情報を取得するメソッド
-				jackList = jackworksDAO.selectAll();
-			}
-
-			if (cmd.equals("request")) {
-				path = "/view/jackworksRequest.jsp";
-			}
+			// JackWorksの全情報を取得するメソッド
+			jackList = jackworksDAO.selectAll();
 
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
-			// 取得したkeywordをリクエストスコープに"keyword"という名前で格納する
-			request.setAttribute("keyword", keyword);
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、JackWorksの読み込みができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != null) {
-				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", error);
+
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			request.setAttribute("cmd", cmd);
-			// jackWorks.jspにフォワード
+
+			if (("").equals(error)) {
+				request.setAttribute("cmd", cmd);
+			}
+
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}

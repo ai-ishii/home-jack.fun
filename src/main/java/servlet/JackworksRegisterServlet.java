@@ -3,7 +3,8 @@
  * 
  * 作成者：青木美波
  * 
- * 作成日 2025/07/08
+ * 作成日：2025/07/08
+ * 更新日：2025/08/21
  */
 
 package servlet;
@@ -24,10 +25,12 @@ import jakarta.servlet.http.HttpSession;
 public class JackworksRegisterServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// エラー文を格納用
-		String error = null;
-		// 例外判定用
-		String cmd = null;
+		// エラー用コマンド
+		String error = "";
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
+		String cmd = "";
 		// 遷移先のパス
 		String path = "/homejack_renewal/monthJackworks";
 
@@ -40,7 +43,6 @@ public class JackworksRegisterServlet extends HttpServlet {
 
 			//jackworksRegister.jspからcmd=nextを受け取る
 			cmd = request.getParameter("cmd");
-
 			String category = request.getParameter("category");
 
 			if (cmd.equals("next")) {
@@ -57,6 +59,7 @@ public class JackworksRegisterServlet extends HttpServlet {
 				jack.setPoint(point);
 				jack.setNote(request.getParameter("note"));
 
+				//入力されたデータをセッションに保存する
 				session.setAttribute("jack", jack);
 
 				//案件情報収集以外の場合、登録処理を行う
@@ -100,21 +103,27 @@ public class JackworksRegisterServlet extends HttpServlet {
 			session.invalidate();
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\nJackWorks情報の申請ができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、JackWorks情報の申請ができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != null) {
-				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", error);
+			
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// ページ数を判断するためのcmdを格納
-			request.setAttribute("cmd", cmd);
 
+			if (("").equals(error)) {
+				request.setAttribute("cmd", cmd);
+			}
+
+			//画面遷移
 			if (path.equals("/homejack_renewal/monthJackworks")) {
 				//ページ再読み込み防止のためにリダイレクト
 				response.sendRedirect(path);

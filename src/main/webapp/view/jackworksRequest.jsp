@@ -744,7 +744,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<% if(jack.getApprovalFlag() == 2){ %>
 						<td data-label="備考" class="request" name="note">
 						<a href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>&cmd=denial" onclick="return confirm('本当に削除しますか?')">
-						<strong>申請が拒否されました</strong></a>
+						<strong>申請が差し戻しになりました。</strong></a>
 						</td>
 						<%} %>
 					</tr>
@@ -760,7 +760,10 @@ document.addEventListener("DOMContentLoaded", function() {
 				%>
 				
 				<% if(cmd.equals("no-result")) {%>
-					<p id="search-error">検索結果は0件です。内容を変更して再度検索をしてください。</p>
+					<div id="search-error">
+					<p>検索結果は0件です。内容を変更して再度検索をしてください。</p>
+					<a href="<%=request.getContextPath()%>/jackworks">一覧へ戻る</a>
+					</div>
 				<% } %>
 
 				<!-- ページネーション -->
