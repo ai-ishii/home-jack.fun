@@ -150,7 +150,7 @@ button.btn-border:active:before {
 	position: relative;
 }
 
-/*電話番号のCSSですぅ*/
+/*電話番号のCSSです*/
 .phone-input-group {
 	display: flex;
 	align-items: center;
