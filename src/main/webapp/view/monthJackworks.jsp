@@ -61,7 +61,7 @@ if(cmd == null){
 	text-align: center;
 }
 
-#box-mar {
+.box-mar {
 width: 60%;
 margin: 0 auto;
 }
@@ -239,6 +239,56 @@ height: 90px;
 padding-bottom: 10px;
 }
 
+/* aタグの初期CSSのリセット */
+.jackReset{
+text-decoration: none;
+color: #000;
+}
+
+/* 中央揃えのためのダミー */
+.jackDummy{
+width: 150px;
+}
+
+/* 戻るボタンの大枠 */
+.jackFlex{
+display: flex;
+justify-content: space-between;
+align-items: center;
+height: 30px;
+}
+
+/* 矢印の枠 */
+.yoruArrow{
+width: 150px;
+}
+
+/* 矢印 */
+.arrow{
+display: inline-block;
+vertical-align: middle;
+transition: transform 0.5s ease;
+overflow: visible; 				/* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf{
+height: 100%;
+font-family: "Yomogi", cursive;
+font-size: 25px;
+}
+
+/* 矢印ホバー時の動き */
+.jackReset:hover svg path {
+transform: translateX(-10px);
+stroke: #f9de95;
+fill: #f9de95;
+}
+
+.margTop{
+margin-top: 30px;
+}
+
 /* 以下画像変更ボタンのCSS */
 /* 画像変更ボタンの大枠 */
 .photoFrame{
@@ -341,7 +391,7 @@ transform: rotateX(360deg);
 		<form action="<%=request.getContextPath()%>/monthJackworks" enctype="multipart/form-data" method="post" class="error-form">
 
 			<!-- 入力フォーム -->
-			<table id="box-mar">
+			<table class="box-mar">
 			<%if(!cmd.equals("change")){ %>
 				<tr>
 					<td class="magButton">
@@ -399,10 +449,24 @@ transform: rotateX(360deg);
 			</table>
 
 			<!-- 登録ボタン -->
-			<div id="JackWorks-submit">
-				<button type="submit" class="btn btn-border">
+			<div class="box-mar">
+			<div class="margTop"/>
+			<div class="jackFlex">
+					<div class="yoruArrow">
+					<a href="<%=request.getContextPath()%>/monthJackworks" class="jackReset">
+					<svg class="arrow" width="50"  height="20">
+						<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+						<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+					</svg>
+					<span class="beaf">PREV</span>
+					</a>
+					</div>
+					<div>
+					<button type="submit" class="btn btn-border">
 					<span class="btnUp">更新</span>
-				</button>
+					</button>
+					</div>
+					<div class="jackDummy"></div>
 			</div>
 		</div>
 		</form>
