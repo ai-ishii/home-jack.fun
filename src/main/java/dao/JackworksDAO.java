@@ -367,7 +367,7 @@ public class JackworksDAO {
 			String sql = "SELECT * FROM jackworks_info WHERE jackworks_id = '" + jackworksId + "'";
 			ResultSet rs = smt.executeQuery(sql);
 
-			while (rs.next()) {
+			if (rs.next()) {
 				jack.setJackworksId(rs.getInt("jackworks_id"));
 				jack.setUserId(rs.getInt("user_id"));
 				jack.setEmployeeNumber(rs.getString("employee_number"));

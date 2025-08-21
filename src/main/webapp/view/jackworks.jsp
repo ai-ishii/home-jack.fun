@@ -661,8 +661,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td class="search-box">
 
 							<!-- 検索を行うフォーム -->
-							<form action="<%=request.getContextPath()%>/jackworksSearch"
-									class="search-form">
+							<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
 								<label><input type="text" name="keyword" placeholder="キーワードを入力" value="<%= keyword %>"></label>
 								<button type="submit" aria-label="検索"></button>
 							</form>
@@ -865,7 +864,10 @@ document.addEventListener("DOMContentLoaded", function() {
 				
 										
 				<% if(cmd.equals("no-result")) {%>
-					<p id="search-error">検索結果は0件です。内容を変更して再度検索をしてください。</p>
+					<div id="search-error">
+					<p>検索結果は0件です。内容を変更して再度検索をしてください。</p>
+					<a href="<%=request.getContextPath()%>/monthJackworks">一覧へ戻る</a>
+					</div>
 				<% } %>
 				
 				

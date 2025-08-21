@@ -1,9 +1,10 @@
 /**
- * JackWorks申請機能
+ * JackWorks申請、申請一覧機能
  * 
  * 作成者：青木美波
  * 
- * 作成日 2025/07/29
+ * 作成日：2025/07/29
+ * 更新日：2025/08/21
  */
 
 package servlet;
@@ -23,10 +24,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JackworksRequestServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// エラー文を格納用
-		String error = null;
-		// 例外判定用
-		String cmd = null;
+		// エラー用コマンド
+		String error = "";
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
+		String cmd = "";
 		// 遷移先のパス
 		String path = "/view/jackworksRequest.jsp";
 
@@ -36,10 +39,13 @@ public class JackworksRequestServlet extends HttpServlet {
 
 		try {
 
-			//jackworks.jspからcmd=agreeもしくはcmd=denialを受け取る
+			//jackworksRequest.jspからcmd=agreeもしくはcmd=denialを受け取る
 			cmd = request.getParameter("cmd");
+
+			//ぬるぽ対策
 			if (cmd == null) {
 				cmd = "";
+
 			} else {
 				//JackWorksのJackWorksIDを取得する
 				String jackworksId = request.getParameter("jackworksId");
@@ -47,26 +53,26 @@ public class JackworksRequestServlet extends HttpServlet {
 				jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
 
 				//削除対象の存在チェック
-				if (jackworks.getJackworksId() == 0) {
-					error = "このJackWorksは、すでに削除されています。";
-					cmd = "monthJackworks";
+				if (jackworks.getJackworksId() == 0 && !cmd.equals("denial")) {
+					message = "このJackWorksは、すでに削除されています。";
+					error = "monthJackworks";
 					return;
-				} else if (jackworks.getApprovalFlag() == 1) {
-					error = "このデータはすでに申請許可がされています。";
-					cmd = "monthJackworks";
+
+				} else if (jackworks.getApprovalFlag() == 1) {	//申請チェック
+					message = "このデータはすでに申請許可がされています。";
+					error = "monthJackworks";
 					return;
 				} else if (jackworks.getApprovalFlag() == 2) {
-					error = "このデータはすでに差し戻しがされています。";
-					cmd = "monthJackworks";
+					message = "このデータはすでに差し戻しがされています。";
+					error = "monthJackworks";
 					return;
 				}
 
+				//申請許可、拒否する処理
 				if (cmd.equals("agree")) {
 					//AdminFlagを申請許可に変更するメソッドの実行
 					jackworksDAO.updateApprovalFlag(Integer.parseInt(jackworksId));
-				}
-
-				if (cmd.equals("denial")) {
+				} else {
 					//AdminFlagを申請却下に変更するメソッドの実行
 					jackworksDAO.denial(Integer.parseInt(jackworksId));
 				}
@@ -74,26 +80,30 @@ public class JackworksRequestServlet extends HttpServlet {
 
 			// JackWorksの全情報を取得するメソッドの実行
 			ArrayList<Jackworks> jackList = jackworksDAO.selectAll();
-
 			// 取得したjackListリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jack_list", jackList);
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、JackWorksの読み込みができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != null) {
-				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", error);
-				// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", cmd);
+
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// pathにフォワード
+
+			if (("").equals(error)) {
+				request.setAttribute("cmd", cmd);
+			}
+
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 
