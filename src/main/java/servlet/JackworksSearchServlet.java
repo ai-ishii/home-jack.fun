@@ -57,8 +57,8 @@ public class JackworksSearchServlet extends HttpServlet {
 
 			//年月検索
 			if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
-				Timestamp startMonth = Timestamp.valueOf(start);
-				Timestamp endMonth = Timestamp.valueOf(end);
+				Timestamp startMonth = Timestamp.valueOf(start + "-1 00:00:00");
+				Timestamp endMonth = Timestamp.valueOf(end + "-31 23:99:99");
 				jackList = jackworksDAO.selectByDateFilter(startMonth, endMonth);
 			} else if (keyword != null && !keyword.isEmpty()) {
 				//キーワード検索
