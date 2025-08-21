@@ -15,15 +15,21 @@ ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jac
 Monthjack monthJack = (Monthjack) request.getAttribute("monthJack");
 //ログインしたアカウントの情報が格納されたaccountを受け取る
 Account account = (Account)session.getAttribute("account");
-//検索された文字列が格納されたnameを受け取る
-String name = (String) request.getAttribute("name");
+//検索された文字列が格納されたkeywordを受け取る
+String keyword = (String) request.getAttribute("keyword");
+//検索0件メッセージを表示するためのcmdを受け取る
+String cmd = (String) request.getAttribute("cmd");
 //検索された月が格納されたmonthSearchを受け取る
 String monthSearch = (String) request.getAttribute("monthSearch");
 //検索された年が格納されたyearSearchを受け取る
 String yearSearch = (String) request.getAttribute("yearSearch");
 
-if(name == null){
-	name = "";
+if(keyword == null){
+	keyword = "";
+}
+
+if(cmd == null){
+	cmd = "";
 }
 
 //権限分け
@@ -420,6 +426,11 @@ margin-top: 3%;
 color:red;
 }
 
+#search-error{
+text-align:center;
+font-size: 16px;
+}
+
 </style>
 
 <body>
@@ -581,7 +592,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							<!-- 検索を行うフォーム -->
 							<form action="<%=request.getContextPath()%>/jackworksSearch" class="search-form">
 							<input type="hidden" name="cmd" value="request">
-								<label><input type="text" name="name" placeholder="キーワードを入力" value="<%= name %>"></label>
+								<label><input type="text" name="keyword" placeholder="キーワードを入力" value="<%= keyword %>"></label>
 								<button type="submit" aria-label="検索"></button>
 							</form>
 						</td>
@@ -733,7 +744,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<% if(jack.getApprovalFlag() == 2){ %>
 						<td data-label="備考" class="request" name="note">
 						<a href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>&cmd=denial" onclick="return confirm('本当に削除しますか?')">
-						<strong>申請が拒否されました</strong></a>
+						<strong>申請が差し戻しになりました。</strong></a>
 						</td>
 						<%} %>
 					</tr>
@@ -747,6 +758,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				<%
 				}
 				%>
+				
+				<% if(cmd.equals("no-result")) {%>
+					<div id="search-error">
+					<p>検索結果は0件です。内容を変更して再度検索をしてください。</p>
+					<a href="<%=request.getContextPath()%>/jackworksRequest">一覧へ戻る</a>
+					</div>
+				<% } %>
 
 				<!-- ページネーション -->
 				<ol class="pagination">

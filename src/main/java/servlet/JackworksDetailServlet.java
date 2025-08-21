@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/08
- * 更新日 2025/08/19
+ * 更新日 2025/08/21
  */
 
 package servlet;
@@ -23,9 +23,11 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JackworksDetailServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// エラー文を格納用
-		String error = null;
-		// 例外判定用
+		// エラー用コマンド
+		String error = "";
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
 		String cmd = "";
 		// 遷移先のパス
 		String path = "/view/jackworksDetail.jsp";
@@ -38,7 +40,6 @@ public class JackworksDetailServlet extends HttpServlet {
 
 			//jackworksRequest.jspからcmd=requestを受け取る
 			cmd = request.getParameter("cmd");
-
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
 
@@ -47,32 +48,34 @@ public class JackworksDetailServlet extends HttpServlet {
 
 			//削除対象の存在チェック
 			if (jackworks.getJackworksId() == 0) {
-				error = "このJackWorksは、すでに削除されています。";
-				cmd = "monthJackworks";
+				message = "このJackWorksは、すでに削除されています。";
+				error = "monthJackworks";
 			}
-
-			//取得したJackWorksの情報詳細を表示するメソッド
-			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
 
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
 			request.setAttribute("jackworks", jackworks);
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、JackWorksの読み込みができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != null) {
-				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", error);
+
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// 画面遷移分けのcmdを格納する
-			request.setAttribute("cmd", cmd);
-			// pathにフォワード
+
+			if (("").equals(error)) {
+				request.setAttribute("cmd", cmd);
+			}
+
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}

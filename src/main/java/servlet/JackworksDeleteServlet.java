@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/09
- * 更新日 2025/08/19
+ * 更新日 2025/08/21
  */
 
 package servlet;
@@ -23,9 +23,11 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JackworksDeleteServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// エラー文を格納用
+		// エラー用コマンド
 		String error = "";
-		// 例外判定用
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
 		String cmd = "";
 		// 遷移先のパス
 		String path = "/monthJackworks";
@@ -35,43 +37,56 @@ public class JackworksDeleteServlet extends HttpServlet {
 		Jackworks jackworks = new Jackworks();
 
 		try {
+
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
 			//jackworksRequest.jspからcmd=denialを受け取る
 			cmd = request.getParameter("cmd");
+
+			//ぬるぽ対策
+			if (cmd == null) {
+				cmd = "";
+			}
 
 			//JackWorksIdからJackWorksの情報を取得する
 			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
 
 			//削除対象の存在チェック
 			if (jackworks.getJackworksId() == 0) {
-				error = "このJackWorksは、すでに削除されています。";
-				cmd = "monthJackworks";
-			}
-
-			if (cmd.equals("denial")) {
-				path = "/jackworksRequest";
+				message = "このJackWorksは、すでに削除されています。";
+				error = "monthJackworks";
+				return;
 			}
 
 			//取得したJackWorksの情報を削除するメソッド
 			jackworksDAO.delete(Integer.parseInt(jackworksId));
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\nJackWorks情報の削除ができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、JackWorks情報の削除ができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != null) {
-				// 例外を発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", error);
-				// 例外を発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", cmd);
+
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
-			// pathにフォワード
+
+			if (("").equals(error)) {
+				request.setAttribute("cmd", cmd);
+			}
+
+			//申請一覧画面への遷移用
+			if (cmd.equals("denial")) {
+				path = "/jackworksRequest";
+			}
+
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
