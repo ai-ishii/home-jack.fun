@@ -4,7 +4,7 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/08/20
+更新日 : 2025/08/21
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -51,7 +51,7 @@ LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDate
 <!DOCTYPE html>
 <html>
 <head>
-<title>お知らせ | Home-Jack</title>
+<title>お知らせ一覧 | Home-Jack</title>
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
