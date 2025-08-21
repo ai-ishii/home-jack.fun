@@ -4,7 +4,6 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/29
- * 更新日 2025/08/19
  */
 
 package servlet;
@@ -39,30 +38,38 @@ public class JackworksRequestServlet extends HttpServlet {
 
 			//jackworks.jspからcmd=agreeもしくはcmd=denialを受け取る
 			cmd = request.getParameter("cmd");
-			//JackWorksのJackWorksIDを取得する
-			String jackworksId = request.getParameter("jackworksId");
-
-			//JackWorksIdからJackWorksの情報を取得する
-			jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
-
-			//削除対象の存在チェック
-			if (jackworks.getJackworksId() == 0) {
-				error = "このJackWorksは、すでに削除されています。";
-				cmd = "monthJackworks";
-			}
-
 			if (cmd == null) {
 				cmd = "";
-			}
+			} else {
+				//JackWorksのJackWorksIDを取得する
+				String jackworksId = request.getParameter("jackworksId");
+				//JackWorksIdからJackWorksの情報を取得する
+				jackworks = jackworksDAO.selectByJackworksId(Integer.parseInt(jackworksId));
 
-			if (cmd.equals("agree")) {
-				//AdminFlagを申請許可に変更するメソッドの実行
-				jackworksDAO.updateApprovalFlag(Integer.parseInt(jackworksId));
-			}
+				//削除対象の存在チェック
+				if (jackworks.getJackworksId() == 0) {
+					error = "このJackWorksは、すでに削除されています。";
+					cmd = "monthJackworks";
+					return;
+				} else if (jackworks.getApprovalFlag() == 1) {
+					error = "このデータはすでに申請許可がされています。";
+					cmd = "monthJackworks";
+					return;
+				} else if (jackworks.getApprovalFlag() == 2) {
+					error = "このデータはすでに差し戻しがされています。";
+					cmd = "monthJackworks";
+					return;
+				}
 
-			if (cmd.equals("denial")) {
-				//AdminFlagを申請却下に変更するメソッドの実行
-				jackworksDAO.denial(Integer.parseInt(jackworksId));
+				if (cmd.equals("agree")) {
+					//AdminFlagを申請許可に変更するメソッドの実行
+					jackworksDAO.updateApprovalFlag(Integer.parseInt(jackworksId));
+				}
+
+				if (cmd.equals("denial")) {
+					//AdminFlagを申請却下に変更するメソッドの実行
+					jackworksDAO.denial(Integer.parseInt(jackworksId));
+				}
 			}
 
 			// JackWorksの全情報を取得するメソッドの実行

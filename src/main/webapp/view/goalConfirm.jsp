@@ -1,12 +1,11 @@
 <!-- 
- 個人目標確認機能
+ 個人目標確認画面
 
  作成者：月向亮太
  更新者：占部虎司郎
 
  作成日：7月8日
-
- 最終更新日：8月18日
+ 最終更新日：8月20日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -68,6 +67,12 @@ if (goalDepartment != null) {
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+
+
+*, *:before, *:after {
+	-webkit-box-sizing: inherit;
+	box-sizing: inherit;
+}
 
 /*ページタイトル*/
 #contents {
@@ -200,7 +205,7 @@ font-size: 15px;
 margin: 20px auto;
 width: 75%;
 padding-left: 20px;
-
+min-height: 10px;
 }
 
 /* 小見出し用の縦線 */
@@ -217,6 +222,7 @@ display: flex;
 
 .mainText > div{
 margin: auto 20px;
+min-height:20px; 
 }
 
 /* 割合表示 */
@@ -429,7 +435,6 @@ color: #6eddb3;
 				<div class="adminTitle">
 				経営テーマ
 				</div>
-				<!-- 以下のdivタグにはリクエストスコープから取得した経営テーマが入る -->
 				<div class="adminLine"><%=managementTheme%></div>
 				
 				<!-- 部目標ボックス -->
@@ -464,8 +469,7 @@ color: #6eddb3;
 				</div>
 				<div class="tab-4" style="min-height: 30px;" >
 				<%
-				if (goalQuarterList != null) {
-					for (int i = 0; i < goalQuarterList.size(); i++) {
+				for (int i = 0; i < 4; i++) {
 				%>
 						<!-- 四半期目標のタブ -->
 						<input type="radio" id="tab-<%=i%>" name="tab-group" <% if(i == 0){ %>checked<%} %>>
@@ -476,20 +480,20 @@ color: #6eddb3;
 							<div class="yorushikaBox">
 								<span class="titleBox">小目標</span>
 							</div>
-							<div class="mainText"><%=goalQuarterList.get(i).getSmallGoal()%></div>
+							<div class="mainText"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getSmallGoal()%><%}%></div>
 						
 							<!-- 四半期目標本人記入欄 -->
 							<div class="yorushikaBox">
 								<span class="titleBox">評価基準・材料</span>
 							</div>
-							<div class="mainText"><%=goalQuarterList.get(i).getJudgeMaterial()%></div>
+							<div class="mainText"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getJudgeMaterial()%><%}%></div>
 							
 							<div class="yorushikaBox">
 									<span class="titleBox">報告内容</span>
 								</div>
 								<div class="mainText mainFlex">
-									<div class="ratio"><%=goalQuarterList.get(i).getAchieveRate()%>%</div>
-									<div class="leftLine"><%=goalQuarterList.get(i).getReport()%></div>
+									<div class="ratio"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRate()%><%}%>%</div>
+									<div class="leftLine"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getReport()%><%}%></div>
 								</div>
 							
 							<!-- 四半期目標評価者記入欄 -->
@@ -501,14 +505,13 @@ color: #6eddb3;
 									<span class="titleBox">報告内容</span>
 								</div>
 								<div class="mainText mainFlex">
-									<div class="ratio"><%=goalQuarterList.get(i).getAchieveRateReviewer()%>%</div>
-									<div class="leftLine"><%=goalQuarterList.get(i).getEvaluation()%></div>
+									<div class="ratio"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRateReviewer()%><%}%>%</div>
+									<div class="leftLine"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getEvaluation()%><%}%></div>
 								</div>
 								
 						</div>
 
 				<%
-					}
 				}
 				%>
 				</div>

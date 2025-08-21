@@ -49,11 +49,14 @@ public class MonthJackworksServlet extends HttpServlet {
 
 			//jackWorksの検索結果が格納されたjack_listを受け取る
 			ArrayList<Jackworks> jackList = (ArrayList<Jackworks>) request.getAttribute("jack_list");
-			//検索された文字(name)を受け取る
-			String name = (String) request.getAttribute("name");
+			//検索された文字(keyword)を受け取る
+			String keyword = (String) request.getAttribute("keyword");
 
 			//SearchJackworksからcmd=searchを受け取る
-			cmd = (String) request.getParameter("cmd");
+			cmd = (String) request.getAttribute("cmd");
+			//画面遷移のための処理
+			//後々消す
+			cmd = request.getParameter("cmd");
 
 			if (cmd == null) {
 				cmd = "";
@@ -70,15 +73,13 @@ public class MonthJackworksServlet extends HttpServlet {
 
 			//取得したmonthJackをリクエストスコープにmonthJackで登録
 			session.setAttribute("monthJack", monthJack);
-
-			//cmdをリクエストスコープにcmdで登録
 			request.setAttribute("cmd", cmd);
-			request.setAttribute("name", name);
+			request.setAttribute("keyword", keyword);
 
-			//取得したjackListをリクエストスコープにjackListで登録
 			if (jackList != null) {
+				//取得したjackListをリクエストスコープにjackListで登録
 				request.setAttribute("jack_list", jackList);
-			}
+			} 
 
 		} catch (IllegalStateException e) {
 			error = "システムの一時的な問題により、\\r\\nJackWorksの読み込みができませんでした。";
@@ -179,7 +180,7 @@ public class MonthJackworksServlet extends HttpServlet {
 				String image = request.getParameter("image");
 				monthJack.setImage(image);
 			}
-			
+
 			//テーマ更新を行うメソッド
 			monthJackDAO.update(monthJack);
 			//MonthJackWorksの全情報を取得するメソッド
