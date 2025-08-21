@@ -67,8 +67,6 @@ public class JackworksSearchServlet extends HttpServlet {
 			//検索結果が0件の場合
 			if (jackList.size() == 0) {
 				cmd = "no-result";
-			} else {
-				cmd = "search";
 			}
 
 			//検索結果の情報を格納
@@ -100,7 +98,7 @@ public class JackworksSearchServlet extends HttpServlet {
 
 			//検索結果を申請画面へ表示
 			if (cmd.equals("request")) {
-				path = "/view/jackworksRequest.jsp";
+				path = "";
 			}
 
 			request.getRequestDispatcher(path).forward(request, response);

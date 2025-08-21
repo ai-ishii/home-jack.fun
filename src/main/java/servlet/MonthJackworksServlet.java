@@ -79,11 +79,6 @@ public class MonthJackworksServlet extends HttpServlet {
 			if (cmd.equals("change")) {
 				path = "/view/monthJackworks.jsp";
 			}
-			
-			//検索結果がある場合、JackWorks画面へ遷移
-			if (jackList != null) {
-				path = "/view/jackworks.jsp";
-			}
 
 			//MonthJackWorksの全情報を取得するメソッド
 			monthJack = monthJackDAO.selectAll();
@@ -92,9 +87,11 @@ public class MonthJackworksServlet extends HttpServlet {
 			session.setAttribute("monthJack", monthJack);
 			request.setAttribute("cmd", cmd);
 			request.setAttribute("keyword", keyword);
-			
-			//検索結果が格納されたjackListをリクエストスコープにjackListで登録
-			request.setAttribute("jack_list", jackList);
+
+			if (jackList != null) {
+				//取得したjackListをリクエストスコープにjackListで登録
+				request.setAttribute("jack_list", jackList);
+			}
 
 		} catch (IllegalStateException e) {
 			message = "システムの一時的な問題により、JackWorksの読み込みができませんでした。";
@@ -103,7 +100,7 @@ public class MonthJackworksServlet extends HttpServlet {
 			message = "予期せぬエラーが発生しました。" + e;
 			error = "logout";
 		} finally {
-			
+
 			if (!("").equals(error)) {
 				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
 				request.setAttribute("error", message);
@@ -211,7 +208,7 @@ public class MonthJackworksServlet extends HttpServlet {
 			message = "予期せぬエラーが発生しました。" + e;
 			error = "logout";
 		} finally {
-			
+
 			if (!("").equals(error)) {
 				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
 				request.setAttribute("error", message);
