@@ -751,7 +751,7 @@ box-sizing: border-box;
         }
     }
 
-    // ★修正点1: forEachループを一つにまとめる★
+    //forEachループを一つにまとめる
     numberInputs.forEach(inputElement => {
         // 1. 初期値に基づいてクラスを更新
         updateClassByValue(inputElement);
