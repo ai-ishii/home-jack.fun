@@ -601,30 +601,13 @@ document.addEventListener("DOMContentLoaded", function() {
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
 						<input type="hidden" name="cmd" value="request">
 						<td>
-							<label class="selectbox-4">
-							<select id="yearSelect" name="year-search"></select>
-							</label>
+					         <label for="start_date">開始日:</label>
+				            <input type="month" id="start_month" name="start_month" value="${startDate}">
 						</td>
-						
-						<!-- 月の検索を行うセレクトボックス -->
-						<td>
-							<label class="selectbox-4">
-								<select id="monthSearch" name="month-search">
-									<option value="01">1月</option>
-									<option value="02">2月</option>
-									<option value="03">3月</option>
-									<option value="04">4月</option>
-									<option value="05">5月</option>
-									<option value="06">6月</option>
-									<option value="07">7月</option>
-									<option value="08">8月</option>
-									<option value="09">9月</option>
-									<option value="10">10月</option>
-									<option value="11">11月</option>
-									<option value="12">12月</option>
-								</select>
-							</label>
-						</td>
+					    <td>
+							<label for="end_date">終了日:</label>
+					        <input type="month" id="end_month" name="end_month" value="${endDate}">
+					    </td>
 						<td>
 						<button type="submit" class="select-button" >検索</button>
 						</form>

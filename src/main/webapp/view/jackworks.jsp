@@ -671,11 +671,11 @@ document.addEventListener("DOMContentLoaded", function() {
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
 						<td>
 					         <label for="start_date">開始日:</label>
-				            <input type="date" id="start_date" name="start_date" value="${startDate}">
+				            <input type="month" id="start_month" name="start_month" value="${startDate}">
 						</td>
 					    <td>
 							<label for="end_date">終了日:</label>
-					        <input type="date" id="end_date" name="end_date" value="${endDate}">
+					        <input type="month" id="end_month" name="end_month" value="${endDate}">
 					    </td>
 						<td>
 						<button type="submit" class="select-button" >検索</button>
