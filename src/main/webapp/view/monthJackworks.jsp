@@ -26,7 +26,7 @@ if(cmd == null){
 <html>
 <head>
 <!-- タイトル -->
-<title>JackWorks</title>
+<title>JackWorksテーマ更新 | Home-Jack</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/error.js"></script>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
