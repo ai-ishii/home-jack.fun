@@ -370,6 +370,87 @@ transform: rotateX(360deg);
   100% {box-shadow: 0 0 0 0 rgb(228 124 174 / 0%);}
 }
 
+/* 以下ファイルアップロードのボタンです */
+/* ファイル選択ボタンを完全に非表示にする */
+input[type="file"] {
+  display: none;
+}
+
+/* ファイルボタンの大枠 */
+.fileFrame{
+display: flex;
+height: 30px;
+}
+
+/* ファイルボタン */
+.fileUp{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+padding: 0;
+border: 3px solid #000;
+color: #fff;
+text-decoration: none;
+border-radius: 5px;
+transform: skewX(-5deg); /* ボタンを傾ける */
+cursor: pointer; 
+background-color: #7f8c8d;
+transition: .5s;
+}
+
+/* ファイルアイコンのボックス */
+.fileBox{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+border-right: 8px double #000;
+height: 100%;
+width: 15%;
+padding: 0 5px 3px;
+}
+
+/* ファイルアイコン */
+.fileIcon{
+display: inline-block;
+vertical-align: middle;
+stroke: #fff;
+fill: #fff;
+transition: .5s;
+}
+
+/* ファイルのテキストボックス */
+.imageTextBox{
+display: flex;
+align-items: center;       /* 垂直方向の中央揃え */
+height: 100%;
+width: 85%;
+padding: 0 5px;
+overflow: hidden;
+}
+
+/* ファイルの文字 */
+.imageText{
+display: flex;
+font-size: 16px;
+font-style: italic;
+font-family: "Times New Roman", Times, serif;
+}
+
+.fileUp:hover{
+color: #7f8c8d;
+background-color: #fff;
+}
+
+.fileUp:hover .fileIcon{
+stroke: #7f8c8d;
+fill: #7f8c8d;
+}
+
+.fileUp:active .fileIcon{
+transform: rotateY(360deg);
+animation: rotate 3s forwards;
+}
+
 </style>
 
 <body>
@@ -418,11 +499,38 @@ transform: rotateX(360deg);
 				</tr>
 			<%}else{ %>
 				<tr>
-					<td style="display: flex" class="formSub">画像</td>
+				<td style="display: flex;" class="tdMag">
+						<div class="yorushikaStripe">
+							<div class="yorushika">画像</div>
+						</div>
+						<div class="warning">*</div>
+				</td>
 				</tr>
-				<td><input type="file" accept=".png, .jpg, .jpeg, .gif" name="image" size="35" value="" class="error-file"></td>
 				<tr>
-				<td>画像サイズ最大3MB / 対応ファイルはJPG,JPEG,PNG,GIF</td>
+				<td>
+				<div class="fileFrame">
+					<label for="file-upload" class="fileUp">
+					<div class="fileBox">
+						<svg x="0px" y="0px" viewBox="-4 4 70 40" width="22"  height="22" class="fileIcon error-file">
+							<path d="M 30 2 L 30 42" stroke-width="3" fill="none" stroke-linecap="round"/>
+							<path d="M 30 42 L 30 45" stroke-width="3" fill="none"/>
+							<path d="M 30 2 L 13 18" stroke-width="3" fill="none"/>
+							<path d="M 30 2 L 47 18" stroke-width="3" fill="none"/>
+							<path d="M 0 35 L 0 55" stroke-width="3.5" fill="none"/>
+							<path d="M 0 55 L 60 55" stroke-width="3.5" fill="none"/>
+							<path d="M 60 55 L 60 35" stroke-width="3.5" fill="none"/>
+						</svg>
+					</div>
+						<div class="imageTextBox">
+							<span id="file-name" class="imageText">Select File</span>
+						</div>
+					</label>
+				<input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" name="image" value=""/>
+				</div>
+				</td>
+				</tr>
+				<tr>
+				<td class="textPadd">画像サイズ最大3MB / 対応ファイルはJPG,JPEG,PNG,GIF</td>
 				</tr>
 			<%} %>
 				<tr>
@@ -472,5 +580,23 @@ transform: rotateX(360deg);
 		</form>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+	const fileInput = document.getElementById('file-upload');
+	const fileNameDisplay = document.getElementById('file-name');
+
+	fileInput.addEventListener('change', (e) => {
+	  // 選択されたファイルリストを取得
+	  const files = e.target.files;
+	  if (files.length > 0) {
+	    // 最初のファイル名を取得して表示要素に設定
+	    fileNameDisplay.textContent = files[0].name;
+	  } else {
+	    // ファイルが選択されていない場合は、元のテキストに戻す
+	    fileNameDisplay.textContent = 'No files selected';
+	  }
+	});
+	</script>
+	
 </body>
 </html>
