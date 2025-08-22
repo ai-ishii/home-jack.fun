@@ -74,7 +74,6 @@ justify-content: flex-end;
 width:200px;
 height: 50px;
 margin: auto;
-
 }
 
 /* 画像変更ボタン */
@@ -208,6 +207,90 @@ fill: #6eddb3;
 color: #6eddb3;
 }
 
+/* 以下ファイルアップロードのボタンです */
+/* ファイル選択ボタンを完全に非表示にする */
+input[type="file"] {
+  display: none;
+}
+
+/* ファイルボタンの大枠 */
+.fileFrame{
+display: flex;
+justify-content: flex-end;
+width: 230px;
+height: 50px;
+margin: auto;
+}
+
+/* ファイルボタン */
+.fileUp{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+padding: 0;
+border: 3px solid #000;
+color: #fff;
+text-decoration: none;
+border-radius: 5px;
+transform: skewX(-5deg); /* ボタンを傾ける */
+cursor: pointer; 
+background-color: #7f8c8d;
+transition: .5s;
+}
+
+/* ファイルアイコンのボックス */
+.fileBox{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+border-right: 8px double #000;
+height: 100%;
+width: 15%;
+padding: 0 5px;
+}
+
+/* ファイルアイコン */
+.fileIcon{
+display: inline-block;
+vertical-align: middle;
+stroke: #fff;
+fill: #fff;
+transition: .5s;
+}
+
+/* ファイルのテキストボックス */
+.imageTextBox{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+height: 100%;
+width: 85%;
+padding: 0 5px;
+}
+
+/* ファイルの文字 */
+.imageText{
+display: flex;
+font-size: 13px;
+font-style: italic;
+}
+
+.fileUp:hover{
+color: #7f8c8d;
+background-color: #fff;
+}
+
+.fileUp:hover .fileIcon{
+stroke: #7f8c8d;
+fill: #7f8c8d;
+}
+
+.fileUp:active .fileIcon{
+transform: rotateY(360deg);
+animation: rotate 3s forwards;
+}
+
+
 </style>
 
 <body>
@@ -296,9 +379,26 @@ color: #6eddb3;
 </a>
 </div>
 
-<form>
-<input type="submit">
-</form>
+<div class="fileFrame">
+<label for="file-upload" class="fileUp">
+<div class="fileBox">
+<svg x="0px" y="0px" viewBox="-4 4 70 40" width="22"  height="22" class="fileIcon">
+<path d="M 30 2 L 30 42" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M 30 42 L 30 45" stroke-width="3" fill="none"/>
+<path d="M 30 2 L 13 18" stroke-width="3" fill="none"/>
+<path d="M 30 2 L 47 18" stroke-width="3" fill="none"/>
+<path d="M 0 35 L 0 55" stroke-width="3.5" fill="none"/>
+<path d="M 0 55 L 60 55" stroke-width="3.5" fill="none"/>
+<path d="M 60 55 L 60 35" stroke-width="3.5" fill="none"/>
+</svg>
+</div>
+<div class="imageTextBox">
+<span class="imageText">画像アップロード</span>
+</div>
+</label>
+<input id="file-upload" type="file" />
+</div>
+
 		
 		</div>
 	</div>

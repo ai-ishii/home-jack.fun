@@ -4,7 +4,7 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/07/30
+更新日 : 2025/08/21
  -->
 <!DOCTYPE html>
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -17,7 +17,7 @@ String error = (String) request.getAttribute("error");
 <html>
 <head>
 <!-- タイトル -->
-<title>お知らせ</title>
+<title>お知らせ新規投稿 | Home-Jack</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
@@ -171,12 +171,12 @@ textarea {
 .btn, a.btn, button.btn {
 -webkit-box-sizing: border-box;
 box-sizing: border-box;
-	font-size: 14px;
+	font-size: 1.0rem;
 	font-weight: 700;
 	line-height: 1.5;
 	position: relative;
 	display: inline-block;
-	padding: 5px 20px;
+	padding: 0.5rem 2rem;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -187,9 +187,9 @@ box-sizing: border-box;
 	text-align: center;
 	vertical-align: middle;
 	text-decoration: none;
-	letter-spacing: 1.4px;
+	letter-spacing: 0.1em;
 	color: #212529;
-	border-radius: 5px;
+	border-radius: 8.5rem;
 	border: none;
 }
 
