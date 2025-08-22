@@ -34,6 +34,10 @@ if(cmd == null){
 	cmd = "";
 }
 
+if(message == null){
+	message = "";
+}
+
 //権限分け
 int adminFlag = 1;
 int managerFlag = 0;
@@ -48,6 +52,7 @@ int managerFlag = 0;
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 </head>
 
 <!-- 以下CSS -->
@@ -448,6 +453,7 @@ font-size: 16px;
 	visibility: hidden;
 	transition: .3s;
 	box-sizing: border-box;
+	z-index: 30;
 }
 
 /* モーダルの擬似要素の指定 */
@@ -497,12 +503,6 @@ font-size: 16px;
 	line-height: 1.8;
 	padding: 20px;
 }
-
-/* モーダルのコンテンツ部分のテキストの指定 */
-.modal-content p {
-	margin: 1em 0;
-}
-
 </style>
 
 <body>
@@ -642,6 +642,18 @@ document.addEventListener("DOMContentLoaded", function() {
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
 		<%@ include file="../common/header.jsp"%>
+		
+		<!-- モーダル本体 -->
+		<div class="modal error-modal" data-message="<%= message %>">
+			<div class="modal-container">
+				<!-- モーダルを閉じるボタン -->
+				<div class="modal-close js-modal-close">×</div>
+				<!-- モーダル内部のコンテンツ -->
+						<div class="modal-content">
+							<p id="error-message"></p>
+						</div>
+					</div>
+				</div>
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">
@@ -654,48 +666,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				</div>
 				
 				<div class="mag"></div>
-				
-				<!-- モーダル本体 -->
-				<div class="modal error-modal">
-					<div class="modal-container">
-						<!-- モーダルを閉じるボタン -->
-						<div class="modal-close js-modal-close">×</div>
-						<!-- モーダル内部のコンテンツ -->
-						<div class="modal-content">
-							<p id="error-message"></p>
-						</div>
-					</div>
-				</div>
-				
-				<script>
-				//モーダル全体の要素
-				const modal = document.querySelector('.error-modal');
-				//モーダルを閉じるための要素
-			    const close = document.querySelector('.js-modal-close');
-				//メッセージ表示するための要素
-			    const errorMessage = document.getElementById('error-message');
-
-			  //エラーメッセージがある場合表示させる
-				<%if (message != null && !message.isEmpty()) {%>
-				
-					errorMessage.textContent = "<%= message %>";
-						modal.classList.add('is-active');
-				<%}%>
-					//×ボタンをクリックでモーダルが閉じる
-						function modalClose() {
-							modal.classList.remove('is-active');
-						}
-						close.addEventListener('click', modalClose);
-
-						//モーダルの外側をクリックでモーダルが閉じる
-						function modalout(e) {
-							if (e.target == modal) {
-								modal.classList.remove('is-active');
-							}
-						}
-						modal.addEventListener('click', modalout);
-						
-				</script>
 
 				<!-- ポイント申請一覧表示 -->
 				<table class="mar">
