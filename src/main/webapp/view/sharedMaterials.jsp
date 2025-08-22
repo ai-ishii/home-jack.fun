@@ -9,7 +9,7 @@
 <html>
 <head>
 <!-- タイトル -->
-<title>共有資料</title>
+<title>共有資料 | Home-Jack</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
