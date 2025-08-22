@@ -2,7 +2,7 @@
 JackWorks申請一覧画面
 作成者：青木美波
 作成日 2025/07/28
-更新日 2025/07/29
+更新日 2025/08/22
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -19,10 +19,12 @@ Account account = (Account)session.getAttribute("account");
 String keyword = (String) request.getAttribute("keyword");
 //検索0件メッセージを表示するためのcmdを受け取る
 String cmd = (String) request.getAttribute("cmd");
-//検索された月が格納されたmonthSearchを受け取る
-String monthSearch = (String) request.getAttribute("monthSearch");
-//検索された年が格納されたyearSearchを受け取る
-String yearSearch = (String) request.getAttribute("yearSearch");
+//エラー文を表示するためのcmdを受け取る
+String message = (String) request.getAttribute("message");
+//検索された開始日が格納されたstartMonthを受け取る
+String startMonth = (String) request.getAttribute("startMonth");
+//検索された終了日が格納されたendMonthを受け取る
+String endMonth = (String) request.getAttribute("endMonth");
 
 if(keyword == null){
 	keyword = "";
@@ -30,6 +32,10 @@ if(keyword == null){
 
 if(cmd == null){
 	cmd = "";
+}
+
+if(message == null){
+	message = "";
 }
 
 //権限分け
@@ -46,6 +52,7 @@ int managerFlag = 0;
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 </head>
 
 <!-- 以下CSS -->
@@ -431,6 +438,71 @@ text-align:center;
 font-size: 16px;
 }
 
+/* モーダルと背景の指定 */
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background: rgba(0, 0, 0, 50%);
+	padding: 40px 20px;
+	overflow: auto;
+	opacity: 0;
+	visibility: hidden;
+	transition: .3s;
+	box-sizing: border-box;
+	z-index: 30;
+}
+
+/* モーダルの擬似要素の指定 */
+.modal:before {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	margin-left: -0.2em;
+}
+
+/* クラスが追加された時の指定 */
+.modal.is-active {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* モーダル内側の指定 */
+.modal-container {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 600px;
+	width: 90%;
+}
+
+/* モーダルを閉じるボタンの指定 */
+.modal-close {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: -20px;
+	right: -20px;
+	width: 40px;
+	height: 40px;
+	color: #fff;
+	background: #000;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+/* モーダルのコンテンツ部分の指定 */
+.modal-content {
+	background: #fff;
+	text-align: left;
+	line-height: 1.8;
+	padding: 20px;
+}
 </style>
 
 <body>
@@ -455,23 +527,23 @@ document.addEventListener('DOMContentLoaded', function() {
 	yearSelect.value = currentYear;
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-	const selectmonth = "<%= monthSearch %>";
+//document.addEventListener('DOMContentLoaded', function() {
+//const selectmonth = "< monthSearch ";
 
-	if(selectmonth && selectmonth != "null" && selectmonth != ""){
-	document.getElementById('monthSearch').value = selectmonth;
-	
-	}
-});
+//if(selectmonth && selectmonth != "null" && selectmonth != ""){
+//document.getElementById('monthSearch').value = selectmonth;
 
-document.addEventListener('DOMContentLoaded', function() {
-	const selectyear = "<%= yearSearch %>";
+//}
+//});
 
-	if(selectyear && selectyear != "null" && selectyear != ""){
-	document.getElementById('yearSelect').value = selectyear;
-	
-	}
-});
+//document.addEventListener('DOMContentLoaded', function() {
+//const selectyear = "< yearSearch ";
+
+//if(selectyear && selectyear != "null" && selectyear != ""){
+//document.getElementById('yearSelect').value = selectyear;
+
+//}
+//});
 
 //リンクにするjavascript
 document.addEventListener("DOMContentLoaded", function() {
@@ -570,6 +642,18 @@ document.addEventListener("DOMContentLoaded", function() {
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
 		<%@ include file="../common/header.jsp"%>
+		
+		<!-- モーダル本体 -->
+		<div class="modal error-modal" data-message="<%= message %>">
+			<div class="modal-container">
+				<!-- モーダルを閉じるボタン -->
+				<div class="modal-close js-modal-close">×</div>
+				<!-- モーダル内部のコンテンツ -->
+						<div class="modal-content">
+							<p id="error-message"></p>
+						</div>
+					</div>
+				</div>
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">
@@ -601,30 +685,13 @@ document.addEventListener("DOMContentLoaded", function() {
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
 						<input type="hidden" name="cmd" value="request">
 						<td>
-							<label class="selectbox-4">
-							<select id="yearSelect" name="year-search"></select>
-							</label>
+					         <label for="start_date">開始日:</label>
+				            <input type="month" id="start_month" name="start_month" value="${startMonth}">
 						</td>
-						
-						<!-- 月の検索を行うセレクトボックス -->
-						<td>
-							<label class="selectbox-4">
-								<select id="monthSearch" name="month-search">
-									<option value="01">1月</option>
-									<option value="02">2月</option>
-									<option value="03">3月</option>
-									<option value="04">4月</option>
-									<option value="05">5月</option>
-									<option value="06">6月</option>
-									<option value="07">7月</option>
-									<option value="08">8月</option>
-									<option value="09">9月</option>
-									<option value="10">10月</option>
-									<option value="11">11月</option>
-									<option value="12">12月</option>
-								</select>
-							</label>
-						</td>
+					    <td>
+							<label for="end_date">終了日:</label>
+					        <input type="month" id="end_month" name="end_month" value="${endMonth}">
+					    </td>
 						<td>
 						<button type="submit" class="select-button" >検索</button>
 						</form>

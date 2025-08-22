@@ -1,5 +1,5 @@
 <!-- 社員紹介 詳細機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：8/22 14:00 -->
+<!-- 作成日：7/2　最終更新日：8/22 16:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -35,16 +35,6 @@ for (int i = 0; i < userListBySameBelong.size(); i++) {
 for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 	joiningDatesBySameJoin[i] = myFormat.yearMonthFormat(userListBySameJoiningDate.get(i).getJoiningDate());
 }
-
-//--------画像の取得-----------
-// String[] sameBelong_imgList = new String[userListBySameBelong.size()];
-// String[] sameJoinTiming_imgList = new String[userListBySameJoiningDate.size()];
-// for (int i = 0; i < userListBySameBelong.size(); i++) {
-// 	sameBelong_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameBelong.get(i).getUserId());
-// }
-// for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
-// 	sameJoinTiming_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameJoiningDate.get(i).getUserId());
-// }
 
 String department = commonTable.selectDepartment(user.getDepartmentId());
 String group = commonTable.selectGroup(user.getGroupId());
@@ -400,7 +390,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 							<div id="employee_card">
 								<img id="belong_img"
 									src="<%=request.getContextPath()%>/employeePhoto
-									?userId=<%=userListBySameBelong.get(i).getUserId()%>" alt="社員画像">
+									?user_id=<%=userListBySameBelong.get(i).getUserId()%>&work=view" alt="社員画像">
 								<p id="employee_name" class="sameBelong_employeeName"><%=userListBySameBelong.get(i).getName()%></p>
 								<p id="employee_detail">
 									<%= department %> <%= group %>
@@ -442,7 +432,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 							<div id="employee_card">
 								<img id="joinTiming_img"
 									src="<%=request.getContextPath()%>/employeePhoto
-									?userId=<%=userListBySameJoiningDate.get(i).getUserId()%>" alt="社員画像">
+									?user_id=<%=userListBySameJoiningDate.get(i).getUserId()%>&work=view" alt="社員画像">
 								<p id="employee_name" class="sameJoinTiming_employeeName"><%=userListBySameJoiningDate.get(i).getName()%></p>
 								<p id="employee_detail" class="employee_belong">
 									第<%=userListBySameJoiningDate.get(i).getDepartmentId()%>事業部 第<%=userListBySameJoiningDate.get(i).getGroupId()%>グループ

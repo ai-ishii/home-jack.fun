@@ -492,7 +492,7 @@ public class JackworksDAO {
 	 * @return 検索結果のJackWorksリスト
 	 */
 	
-	public ArrayList<Jackworks> selectByDateFilter(Timestamp startDate, Timestamp endDate){
+	public ArrayList<Jackworks> selectByDateFilter(Timestamp startMonth, Timestamp endMonth){
 		
 		// 変数宣言
 		Connection con = null;
@@ -510,8 +510,8 @@ public class JackworksDAO {
 			ps = con.prepareStatement(sql);
 
 			//プレースホルダーに値をセット
-			ps.setTimestamp(1, startDate);
-            ps.setTimestamp(2, endDate);
+			ps.setTimestamp(1, startMonth);
+            ps.setTimestamp(2, endMonth);
 			
 			
 			ResultSet rs = ps.executeQuery();
