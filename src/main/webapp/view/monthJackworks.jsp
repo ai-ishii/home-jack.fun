@@ -392,7 +392,6 @@ border: 3px solid #000;
 color: #fff;
 text-decoration: none;
 border-radius: 5px;
-transform: skewX(-5deg); /* ボタンを傾ける */
 cursor: pointer; 
 background-color: #7f8c8d;
 transition: .5s;
