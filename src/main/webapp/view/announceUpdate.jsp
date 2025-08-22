@@ -17,7 +17,7 @@ int categoryId = announce.getAnnounceCategoryId();
 <html>
 <head>
 <!-- タイトル -->
-<title>お知らせ</title>
+<title>お知らせ編集 | Home-Jack</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>

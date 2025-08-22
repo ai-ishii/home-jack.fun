@@ -17,7 +17,7 @@ String error = (String) request.getAttribute("error");
 <html>
 <head>
 <!-- タイトル -->
-<title>お知らせ</title>
+<title>お知らせ新規投稿 | Home-Jack</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
