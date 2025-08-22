@@ -4,7 +4,7 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="bean.Account, bean.User, dao.UserDAO, util.CommonTable, util.MyFormat, java.text.SimpleDateFormat, java.util.Date, java.sql.Timestamp"%>
+	import="bean.Account, bean.User, bean.Employee, dao.UserDAO, util.CommonTable, util.MyFormat, java.text.SimpleDateFormat, java.util.Date, java.sql.Timestamp"%>
 
 <!-- cmdで確認画面と編集画面分ける -->
 
@@ -13,16 +13,21 @@
 Account account = new Account();
 User user = new User();
 UserDAO userDAO = new UserDAO();
+Employee employee = new Employee();
 CommonTable commonTable = new CommonTable();
 
 //セッションでユーザーのデータを取得
 account = (Account)session.getAttribute("account");
 int userId_session = (int)session.getAttribute("user_id");
-int userId = Integer.parseInt(request.getParameter("userId"));
+// int userId = Integer.parseInt(request.getAttribute("userId"));
 
 //セッションからユーザー情報を取得
-user = userDAO.selectByUserId(userId);
+// user = request.getAttribute("user");
 
+user = (User) request.getAttribute("user");
+employee = (Employee) request.getAttribute("employee");
+
+int userId = user.getUserId();
 String employeeNumber = user.getEmployeeNumber();
 String name = user.getName();
 String nameKana = user.getNameKana();
@@ -41,7 +46,7 @@ String department = commonTable.selectDepartment(departmentId);
 String group = commonTable.selectGroup(groupId);
 
 // cmdを取得
-String cmd = request.getParameter("cmd");
+String cmd = (String) request.getAttribute("cmd");
 
 // 変数宣言
 String photo = "";
@@ -182,8 +187,10 @@ a {
 				%>
 
 				<!-- 入力部分 -->
-				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post" 
+				<form action="<%= request.getContextPath() %>/employeeUpdate" method="post" 
 					enctype="multipart/form-data">
+						
+						<input type="hidden" name="work" value="update"> 
 					
 						<table id="inputArea">
 							<tr id="inputRow">
@@ -270,7 +277,7 @@ a {
 						}
 						if (cmd.equals("update") || cmd.equals("reUpdate")) {
 						%>
-						<input type="submit" name="updateSubmit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+						<input type="submit" name="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
 						<input type="hidden" name="userId" value="<%= userId %>">
 						<%
 						} else if (cmd.equals("updateConfirm")) {

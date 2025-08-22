@@ -1,5 +1,5 @@
 //<!-- 社員紹介 一覧機能（作：石井） -->
-//<!-- 作成日：7/2　最終更新日：8/1 12:00 -->
+//<!-- 作成日：7/2　最終更新日：8/20 12:00 -->
 
 package servlet;
 
@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.User;
-import dao.EmployeeDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -37,10 +36,13 @@ public class EmployeeServlet extends HttpServlet {
 	
 		// オブジェクト生成
 		UserDAO userDAO = new UserDAO();
-		EmployeeDAO employeeDAO = new EmployeeDAO();
-		// メソッドからSQL実行
-				ArrayList<User> userList = userDAO.selectAll();
+		
+		ArrayList<User> userList = new ArrayList<User>();
+		
 		try {
+			// メソッドからSQL実行
+			userList = userDAO.selectAll();
+			
 			//検索された値をnameで受け取る
 			String name = request.getParameter("name");
 		
@@ -48,14 +50,14 @@ public class EmployeeServlet extends HttpServlet {
 			}
 		
 		// 社員写真を格納する配列宣言
-		String[] photos = new String[userList.size()];
-		for (int i = 0; i < userList.size(); i++) {
-			photos[i] = employeeDAO.selectPhotoByUserId(userList.get(i).getUserId());
-		}
-		
+		// String[][] photos = new String[userList.size()][];
+		// for (int i = 0; i < userList.size(); i++) {
+		//	photos[i][i] = {employeeDAO.selectPhotoByUserId(userList.get(i).getUserId()), };
+		// }
+			
 		// 取得してきたユーザー情報をjspに送るためセットする
 		request.setAttribute("userList", userList);
-		request.setAttribute("photos", photos);
+		// request.setAttribute("photos", photos);
 			
 		} catch(IllegalStateException e) {
 			cmd = "";

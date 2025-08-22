@@ -1,15 +1,16 @@
 <!-- 社員紹介 一覧機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：8/14 12:00 -->
+<!-- 作成日：7/2　最終更新日：8/22 12:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="java.util.ArrayList, util.MyFormat, util.CommonTable, bean.User, dao.UserDAO"%>
+	import="java.util.ArrayList, util.MyFormat, util.CommonTable, bean.User, bean.Employee, dao.UserDAO"%>
 
 <%
 // サーブレットから送られてきた情報を取得
 ArrayList<User> userList = (ArrayList<User>) request.getAttribute("userList");
-String[] photos = (String[]) request.getAttribute("photos");
+ArrayList<Employee> employeeList = (ArrayList<Employee>) request.getAttribute("employeeList");
+// String[] photos = (String[]) request.getAttribute("photos");
 // フォーマットを使用するためのオブジェクト生成
 MyFormat myFormat = new MyFormat();
 // フォーマット化された入社年月を格納するための配列宣言
@@ -315,7 +316,8 @@ a:hover {
 						<a
 							href="<%=request.getContextPath()%>/detailEmployee?userId=<%=userList.get(i).getUserId()%>">
 							<div id="employee_card">
-								<img src="<%=request.getContextPath()%>/file/<%=photos[i]%>"
+								<img src="<%=request.getContextPath()%>/employeePhoto
+									?user_id=<%=userList.get(i).getUserId()%>&work=view"
 									alt="社員画像">
 								<p id="employee_name"><%=userList.get(i).getName()%></p>
 								<p id="employee_detail">
