@@ -1,5 +1,5 @@
 <!-- 社員紹介 変更確認機能（作：石井） -->
-<!-- 作成日：7/18　最終更新日：8/19 10:00 -->
+<!-- 作成日：7/18　最終更新日：8/22 14:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -18,11 +18,9 @@ CommonTable commonTable = new CommonTable();
 //セッションでユーザーのデータを取得
 account = (Account)session.getAttribute("account");
 int userId_session = (int)session.getAttribute("user_id");
-int userId = Integer.parseInt(request.getParameter("userId"));
+user = (User) request.getAttribute("user");
 
-//セッションからユーザー情報を取得
-user = userDAO.selectByUserId(userId);
-
+int userId = user.getUserId();
 String employeeNumber = user.getEmployeeNumber();
 String name = user.getName();
 String nameKana = user.getNameKana();
@@ -43,6 +41,9 @@ String group = commonTable.selectGroup(groupId);
 // cmdを取得
 String cmd = (String) request.getAttribute("cmd");
 
+// 画像のURLを取得
+// String tempFileName = (String) request.getAttribute("tempFileName");
+
 // 変数宣言
 String photo = "";
 int developer = 0;
@@ -56,7 +57,7 @@ String position = "";
 // 確認画面の場合と戻るボタンを押して再度変更画面に戻った場合
 if (cmd.equals("updateConfirm") || cmd.equals("reUpdate")) {
 	// 入力された情報をJSPから取得
-	photo = request.getParameter("photo");
+	// photo = request.getParameter("photo");
 	developer = Integer.parseInt(request.getParameter("developer"));
 	langSkill = request.getParameter("langSkill");
 	middleSkill = request.getParameter("middleSkill");
@@ -70,7 +71,6 @@ if (cmd.equals("updateConfirm") || cmd.equals("reUpdate")) {
 <html>
 <head>
 <!-- タイトル -->
-<%
 <title>確認画面 - 社員紹介</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
@@ -168,24 +168,17 @@ a {
 				<h3>以下の内容で変更します</h3>
 
 				<!-- 入力部分 -->
-				<form action="<%= request.getContextPath() %>/employeeConfirm" method="post" 
-					enctype="multipart/form-data">
+				<form action="<%= request.getContextPath() %>/employeeCommit" method="post" >
 					
 						<table id="inputArea">
 							<tr id="inputRow">
 								<td id="item"><label for="photo">写真</label></td>
-								<%
-								if (cmd.equals("update") || cmd.equals("reUpdate")) {
-								%>
-								<td id="value"><input type="file" name="photo" accept="image/*"></td>
-								<%
-								} else if (cmd.equals("updateConfirm")) {
-								%>
-								<td id="value"><img src="<%=request.getContextPath()%>/file/<%=photo%>" 
-									alt="アップロードした写真"></td>
-								<%
-								}
-								%>
+								
+								<td id="value">
+									<img src="employeePhoto?user_id=<%= user.getUserId() %>&work=confirm" 
+									alt="アップロードした写真">
+								</td>
+								
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="employeeNumber">社員番号</label></td>
@@ -241,31 +234,13 @@ a {
 							</tr>
 						</table>
 
-						<%
-						if (cmd.equals("update") || cmd.equals("reUpdate")) {
-						%>
-						<a href="<%=request.getContextPath()%>/detailEmployee?userId=<%= userId %>">
-							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
-						</a>
-						<%
-						} else if (cmd.equals("updateConfirm")) {
-						%>
-							<input type="submit" name="updateSubmit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
-							<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						}
-						if (cmd.equals("update") || cmd.equals("reUpdate")) {
-						%>
-						<input type="submit" name="updateSubmit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
+						
+						<input type="submit" name="confirm" value="編集画面に戻る" style="width: 120px; height: 50px; font-size: large;">
 						<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						} else if (cmd.equals("updateConfirm")) {
-						%>
-						<input type="submit" name="updateSubmit" value="完了" style="width: 120px; height: 50px; font-size: large;">
-						<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						}
-						%>
+						
+						<input type="hidden" name="user_id" value="<%= user.getUserId() %>">
+						<input type="submit" name="confirm" value="完了" style="width: 120px; height: 50px; font-size: large;">
+						
 					</form>
 			</div>
 

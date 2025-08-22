@@ -1,15 +1,18 @@
 /* 
  * 機能：資格申請の内容を検証し、バイト配列としてセッションに保存して確認画面に渡す 
  * 作成者：桑原岳 
- * 最終更新日：2025/08/20
+ * 最終更新日：2025/08/21
  */
 package servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import bean.LicenseRequestExclusive;
+import dao.RequestDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,43 +23,33 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 @WebServlet("/licenseConfirm")
-//	ファイルのアップロードを行う設定
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MBを超えたら一時ファイルに
-		maxFileSize = 1024 * 1024 * 10, // 1ファイル最大10MB
-		maxRequestSize = 1024 * 1024 * 20 // リクエスト全体で20MB
-)
-
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 20)
 public class LicenseConfirmServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 文字化け防止
 		request.setCharacterEncoding("UTF-8");
-
-		// セッションを取得
 		HttpSession session = request.getSession();
 
-		// フォームから送られてきた入力値を取得
+		// フォームから値を取得
 		String name = request.getParameter("name");
-		String departmentCode = request.getParameter("department");
-		String groupCode = request.getParameter("group");
-		String licenseCode = request.getParameter("license");
+		String department = request.getParameter("department");
+		String group = request.getParameter("group");
+		String license = request.getParameter("license");
 		String examDate = request.getParameter("exam-date");
 		String examTime = request.getParameter("exam-time");
 
-		// 入力チェック用のエラーフラグを用意
 		Map<String, Boolean> errors = new HashMap<>();
 		errors.put("name_error", name == null || name.trim().isEmpty());
-		errors.put("department_error", departmentCode == null || departmentCode.isEmpty());
-		errors.put("group_error", groupCode == null || groupCode.isEmpty());
-		errors.put("license_error", licenseCode == null || licenseCode.isEmpty());
+		errors.put("department_error", department == null || department.isEmpty());
+		errors.put("group_error", group == null || group.isEmpty());
+		errors.put("license_error", license == null || license.isEmpty());
 		errors.put("exam-date_error", examDate == null || examDate.isEmpty());
 
-		// 受験日が整数で入力されているか確認
 		boolean isExamTimeInvalid = true;
 		if (examTime != null && !examTime.trim().isEmpty()) {
 			try {
-				Integer.parseInt(examTime); // 数値変換できればOK
+				Integer.parseInt(examTime);
 				isExamTimeInvalid = false;
 			} catch (NumberFormatException e) {
 				isExamTimeInvalid = true;
@@ -64,72 +57,96 @@ public class LicenseConfirmServlet extends HttpServlet {
 		}
 		errors.put("exam-time_error", isExamTimeInvalid);
 
-		// 初期化
-		byte[] receiptBytes = null;
-		byte[] passingBytes = null;
-		String receiptFileName = null;
-		String passingFileName = null;
-
-		Map<String, Object> formValues = new HashMap<>();
-
-		// テキスト・日付・回数など
-		formValues.put("examDate", request.getParameter("exam-date"));
-		formValues.put("examTime", request.getParameter("exam-time"));
-
-		// アップロードされたファイルを取得
+		// アップロードファイル処理
 		Part receiptPart = request.getPart("receipt");
 		Part passingPart = request.getPart("passing");
-
-		// 領収書ファイルの有無をチェック
-		boolean receiptError = false;
-		if (receiptPart == null || receiptPart.getSize() == 0) {
-
-			receiptError = true; // 新規がなければエラー
-
-		}
+		boolean receiptError = receiptPart == null || receiptPart.getSize() == 0;
+		boolean passingError = passingPart == null || passingPart.getSize() == 0;
 		errors.put("receipt_error", receiptError);
+		errors.put("passing_error", passingError);
 
-		// 合格証ファイルの有無をチェック
-		boolean passingError = false;
-		if (passingPart == null || passingPart.getSize() == 0) {
+		Map<String, Object> formValues = new HashMap<>();
+		formValues.put("name", name);
+		formValues.put("department", department);
+		formValues.put("group", group);
+		formValues.put("license", license);
+		formValues.put("examDate", examDate);
+		formValues.put("examTime", examTime);
 
-			passingError = true;// 新規がなければエラー
+		byte[] receiptBytes = null;
+		byte[] passingBytes = null;
+		String receiptOriginalFileName = ""; // 空文字で初期化
+		String passingOriginalFileName = "";
 
-		}
-
-		// 領収書ファイルのバイト配列を保存（新規 or 過去データ）
-		if (receiptPart != null && receiptPart.getSize() > 0) {
+		if (!receiptError) {
 			try (InputStream is = receiptPart.getInputStream()) {
 				receiptBytes = is.readAllBytes();
 				formValues.put("receiptBytes", receiptBytes);
+				formValues.put("receiptOriginalFileName", receiptPart.getSubmittedFileName());
 			}
-			formValues.put("receiptOriginalFileName", receiptPart.getSubmittedFileName());
 		}
 
-		// 合格証ファイルのバイト配列を保存（新規 or 過去データ）
-		if (passingPart != null && passingPart.getSize() > 0) {
+		if (!passingError) {
 			try (InputStream is = passingPart.getInputStream()) {
 				passingBytes = is.readAllBytes();
 				formValues.put("passingBytes", passingBytes);
+				formValues.put("passingOriginalFileName", passingPart.getSubmittedFileName());
 			}
-			formValues.put("passingOriginalFileName", passingPart.getSubmittedFileName());
 		}
 
-		errors.put("passing_error", passingError);
-		session.setAttribute("formValues", formValues);
+		  // DTO作成
+        LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
+        int applicantId = (int) session.getAttribute("user_id");
+        licenseRequestExclusive.setApplicantId(applicantId);
+        licenseRequestExclusive.setApplicant(name);
 
-		// エラーがある場合は入力画面に戻す
-		if (errors.containsValue(true)) {
-			request.setAttribute("errorMessage", "入力内容に誤りがあります。");
-			request.setAttribute("errors", errors);
+        RequestDAO requestDAO = new RequestDAO();
 
-			// 入力画面に戻す
-			
-			request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
-			return;
-		}
+        // 1. 親テーブルに request_id を作成
+        long requestId = 0;
+        try {
+            requestId = requestDAO.insertLicenseRequestID(applicantId); // 親テーブル登録して request_id を取得
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "申請IDの生成に失敗しました。");
+            request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
+            return;
+        }
 
-		// 確認画面に遷移
-		request.getRequestDispatcher("/view/licenseConfirm.jsp").forward(request, response);
-	}
+        // 2. DTOに詳細情報セット
+        int departmentId = requestDAO.selectByDepartmentId(department);
+        int groupId = requestDAO.selectByGroupId(group);
+        int licenseId = requestDAO.selectByLicenseId(license);
+
+        licenseRequestExclusive.setDepartmentId(departmentId);
+        licenseRequestExclusive.setGroupId(groupId);
+        licenseRequestExclusive.setLicenseId(licenseId);
+
+        licenseRequestExclusive.setExamDate(LocalDate.parse(examDate));
+        licenseRequestExclusive.setExamTime(Integer.parseInt(examTime));
+        licenseRequestExclusive.setReceipt(receiptBytes);
+        receiptOriginalFileName = receiptPart.getSubmittedFileName(); 
+        licenseRequestExclusive.setReceiptName(receiptOriginalFileName);
+        licenseRequestExclusive.setPassing(passingBytes);
+        passingOriginalFileName = passingPart.getSubmittedFileName(); 
+        licenseRequestExclusive.setPassingName(passingOriginalFileName);
+
+        // 3. 子テーブルに登録
+        try {
+            boolean success = requestDAO.insertLicenseRequestDetails(requestId, licenseRequestExclusive);
+            if (!success) {
+                request.setAttribute("errorMessage", "資格申請の登録に失敗しました。");
+                request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "資格申請の登録中にエラーが発生しました。");
+            request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
+            return;
+        }
+
+        // 登録成功 → 確認画面へ
+        request.getRequestDispatcher("/view/licenseConfirm.jsp").forward(request, response);
+    }
 }

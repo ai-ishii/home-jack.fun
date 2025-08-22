@@ -26,7 +26,7 @@ if(cmd == null){
 <html>
 <head>
 <!-- タイトル -->
-<title>JackWorks</title>
+<title>JackWorksテーマ更新 | Home-Jack</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/error.js"></script>
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -61,7 +61,7 @@ if(cmd == null){
 	text-align: center;
 }
 
-#box-mar {
+.box-mar {
 width: 60%;
 margin: 0 auto;
 }
@@ -69,13 +69,14 @@ margin: 0 auto;
 /* 登録ボタンの配置 */
 #JackWorks-submit {
 	text-align: center;
+	margin-top: 20px;
 }
 
 /*  */
 .monthArea {
 	resize: none;
 	width: 100%;
-	height: 150px;
+	height: 200px;
 }
 
 /* テキストボックス */
@@ -148,8 +149,8 @@ box-sizing: border-box;
 }
 
 button.btn-border:before {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	position: absolute;
 	bottom: -8px;
 	left: 0;
@@ -172,21 +173,21 @@ box-sizing: border-box;
 }
 
 button.btn-border:hover {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 3px);
 	transform: translate(0, 3px);
 }
 
 button.btn-border:hover:before {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	bottom: -5px;
 }
 
 button.btn-border:active {
--webkit-box-sizing: border-box;
-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 7px);
 	transform: translate(0, 7px);
 }
@@ -195,6 +196,258 @@ button.btn-border:active:before {
 -webkit-box-sizing: border-box;
 box-sizing: border-box;
 	bottom: -1px;
+}
+
+/* ただの色付き小見出し */
+.yorushika{
+font-size: 22px;
+color: #e89b17;
+margin-left: 10px;
+margin-right: auto;
+margin-bottom: 2px;
+}
+
+/* 小見出し用の縦線 */
+.yorushikaStripe{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;
+border-left: 5px solid #ff8b4d;
+}
+
+/* 小見出し */
+.formSub{
+font-size: 21px;
+}
+
+.formText{
+font-size: 17px;
+}
+
+.tdMag{
+padding-bottom: 5px;
+}
+
+/* テーブル間隔開ける */
+.textPadd{
+padding-bottom: 15px;
+}
+
+/* ボタン位置 */
+.magButton{
+height: 90px;
+padding-bottom: 10px;
+}
+
+/* aタグの初期CSSのリセット */
+.jackReset{
+text-decoration: none;
+color: #000;
+}
+
+/* 中央揃えのためのダミー */
+.jackDummy{
+width: 150px;
+}
+
+/* 戻るボタンの大枠 */
+.jackFlex{
+display: flex;
+justify-content: space-between;
+align-items: center;
+height: 30px;
+}
+
+/* 矢印の枠 */
+.yoruArrow{
+width: 150px;
+}
+
+/* 矢印 */
+.arrow{
+display: inline-block;
+vertical-align: middle;
+transition: transform 0.5s ease;
+overflow: visible; 				/* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf{
+height: 100%;
+font-family: "Yomogi", cursive;
+font-size: 25px;
+}
+
+/* 矢印ホバー時の動き */
+.jackReset:hover svg path {
+transform: translateX(-10px);
+stroke: #f9de95;
+fill: #f9de95;
+}
+
+.margTop{
+margin-top: 30px;
+}
+
+/* 以下画像変更ボタンのCSS */
+/* 画像変更ボタンの大枠 */
+.photoFrame{
+display: flex;
+justify-content: flex-end;
+width: 200px;
+height: 50px;
+margin-left: auto;
+}
+
+/* 画像変更ボタン */
+.photoButton{
+display: inline-block;
+display: flex;         /* 子要素をFlexboxで配置 */
+border-radius: 5px;
+text-decoration: none;			/* 下線を消す */
+cursor: pointer; 				/* マウスカーソルをポインターにする */
+border: 8px solid #e19dbe;
+height: 100%;
+align-items: center;
+}
+
+/* 画像アイコンボックス */
+.photoBox{
+display: flex;             /* Flexboxを有効にする */
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+border: 3px solid #fff;
+background-color: #e19dbe;
+height: 35px;
+border-radius: 3px;
+padding: 5px 5px;
+margin: 0;
+}
+
+/* 画像アイコン */
+.photoIcon{
+display: inline-block;
+vertical-align: middle;
+stroke: #fff;
+fill: #fff;
+transition: .5s;
+}
+
+/* 画像変更の文字 */
+.photoText{
+display: flex;             /* Flexboxを有効にする */
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+background-color: #e19dbe;
+height: 35px;
+font-size:25px;
+border: 3px solid #fff;
+border-radius: 3px;
+padding: 5px 5px;
+margin: 0;
+color: #fff;
+transition: .5s;
+}
+
+/* 画像変更ボタンホバーアニメ */
+.photoFrame:hover .photoIcon{
+transform: rotateX(360deg);
+}
+
+/* ボタンクリック時のアニメ */
+.photoFrame:active .photoButton{
+	background-position: center center;
+	background-size: 100% 100%;
+	-webkit-animation: pulse 2s;
+	animation: ripple 0.4s;
+	color: #fff;
+}
+
+/* 広がる破門アニメ */
+@keyframes ripple {
+  0% {box-shadow: 0 0 0 0 #e47cae}
+  70% {box-shadow: 0 0 0 10px rgb(228 124 174 / 0%);}
+  100% {box-shadow: 0 0 0 0 rgb(228 124 174 / 0%);}
+}
+
+/* 以下ファイルアップロードのボタンです */
+/* ファイル選択ボタンを完全に非表示にする */
+input[type="file"] {
+  display: none;
+}
+
+/* ファイルボタンの大枠 */
+.fileFrame{
+display: flex;
+height: 30px;
+}
+
+/* ファイルボタン */
+.fileUp{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+padding: 0;
+border: 3px solid #000;
+color: #fff;
+text-decoration: none;
+border-radius: 5px;
+cursor: pointer; 
+background-color: #7f8c8d;
+transition: .5s;
+}
+
+/* ファイルアイコンのボックス */
+.fileBox{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;       /* 垂直方向の中央揃え */
+border-right: 8px double #000;
+height: 100%;
+width: 15%;
+padding: 0 5px 3px;
+}
+
+/* ファイルアイコン */
+.fileIcon{
+display: inline-block;
+vertical-align: middle;
+stroke: #fff;
+fill: #fff;
+transition: .5s;
+}
+
+/* ファイルのテキストボックス */
+.imageTextBox{
+display: flex;
+align-items: center;       /* 垂直方向の中央揃え */
+height: 100%;
+width: 85%;
+padding: 0 5px;
+overflow: hidden;
+}
+
+/* ファイルの文字 */
+.imageText{
+display: flex;
+font-size: 16px;
+font-style: italic;
+font-family: "Times New Roman", Times, serif;
+}
+
+.fileUp:hover{
+color: #7f8c8d;
+background-color: #fff;
+}
+
+.fileUp:hover .fileIcon{
+stroke: #7f8c8d;
+fill: #7f8c8d;
+}
+
+.fileUp:active .fileIcon{
+transform: rotateY(360deg);
+animation: rotate 3s forwards;
 }
 
 </style>
@@ -209,7 +462,6 @@ box-sizing: border-box;
 		
 		<div id="contents">
 
-		<div>
 		<!-- タイトル部分 -->
 		<div id="link-title">
 			<h1 id="link-line">今月のJackWorks内容更新</h1>
@@ -219,47 +471,131 @@ box-sizing: border-box;
 		<form action="<%=request.getContextPath()%>/monthJackworks" enctype="multipart/form-data" method="post" class="error-form">
 
 			<!-- 入力フォーム -->
-			<table id="box-mar">
+			<table class="box-mar">
 			<%if(!cmd.equals("change")){ %>
 				<tr>
-					<td>
-						<a href="<%=request.getContextPath()%>/monthJackworks?cmd=change">画像変更</a>
+					<td class="magButton">
+						<div class="photoFrame">
+							<a class="photoButton" href="<%=request.getContextPath()%>/monthJackworks?cmd=change">
+								<div class="photoBox">
+									<svg xmlns="http://www.w3.org/2000/svg" x="2px" y="2px" viewBox="1 1 45 45" width="35"  height="35" class="photoIcon">
+									<defs>
+										<style>.a,.b{fill:none;}.b{stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}
+										</style>
+									</defs>
+									<title>454_ca_h</title>
+									<rect class="a" width="48" height="48"/>
+									<rect class="b" x="3" y="3" width="42" height="42" rx="4" ry="4"/>
+									<polyline class="b" points="3 36 18.09 20.91 27.57 30.39 33.88 24.08 45 35"/>
+									<circle class="b" cx="31" cy="14" r="4"/>
+									</svg>
+								</div>
+								<div class="photoText">画像変更</div>
+							</a>
+						</div>
 						<input type="hidden" name="image" value="<%=monthJack.getImage()%>">
 					</td>
 				</tr>
 			<%}else{ %>
 				<tr>
-					<td style="display: flex">画像</td>
+				<td style="display: flex;" class="tdMag">
+						<div class="yorushikaStripe">
+							<div class="yorushika">画像</div>
+						</div>
+						<div class="warning">*</div>
+				</td>
 				</tr>
-				<td><input type="file" accept=".png, .jpg, .jpeg, .gif" name="image" size="35" value="" class="error-file"></td>
 				<tr>
-				<td>画像サイズ最大3MB / 対応ファイルはJPG,JPEG,PNG,GIF</td>
+				<td>
+				<div class="fileFrame">
+					<label for="file-upload" class="fileUp">
+					<div class="fileBox">
+						<svg x="0px" y="0px" viewBox="-4 4 70 40" width="22"  height="22" class="fileIcon error-file">
+							<path d="M 30 2 L 30 42" stroke-width="3" fill="none" stroke-linecap="round"/>
+							<path d="M 30 42 L 30 45" stroke-width="3" fill="none"/>
+							<path d="M 30 2 L 13 18" stroke-width="3" fill="none"/>
+							<path d="M 30 2 L 47 18" stroke-width="3" fill="none"/>
+							<path d="M 0 35 L 0 55" stroke-width="3.5" fill="none"/>
+							<path d="M 0 55 L 60 55" stroke-width="3.5" fill="none"/>
+							<path d="M 60 55 L 60 35" stroke-width="3.5" fill="none"/>
+						</svg>
+					</div>
+						<div class="imageTextBox">
+							<span id="file-name" class="imageText">Select File</span>
+						</div>
+					</label>
+				<input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" name="image" value=""/>
+				</div>
+				</td>
+				</tr>
+				<tr>
+				<td class="textPadd">画像サイズ最大3MB / 対応ファイルはJPG,JPEG,PNG,GIF</td>
 				</tr>
 			<%} %>
 				<tr>
-					<td style="display: flex">今月のテーマ
+					<td style="display: flex;" class="tdMag">
+						<div class="yorushikaStripe">
+							<div class="yorushika">今月のテーマ</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-				<td><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required monthBox"></td>
 				<tr>
-					<td style="display: flex">備考</td>
+				<td class="textPadd"><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required monthBox formText"></td>
 				</tr>
 				<tr>
-				<td><textarea class="monthArea" name="note"><%=monthJack.getNote()%></textarea></td>
+					<td style="display: flex" class="tdMag">
+						<div class="yorushikaStripe">
+							<div class="yorushika">備考</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+				<td class="textPadd"><textarea class="monthArea formText" name="note"><%=monthJack.getNote()%></textarea></td>
 				</tr>
 			</table>
 
 			<!-- 登録ボタン -->
-			<div id="JackWorks-submit">
-				<button type="submit" class="btn btn-border">
+			<div class="box-mar">
+			<div class="margTop"/>
+			<div class="jackFlex">
+					<div class="yoruArrow">
+					<a href="<%=request.getContextPath()%>/monthJackworks" class="jackReset">
+					<svg class="arrow" width="50"  height="20">
+						<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+						<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+					</svg>
+					<span class="beaf">PREV</span>
+					</a>
+					</div>
+					<div>
+					<button type="submit" class="btn btn-border">
 					<span class="btnUp">更新</span>
-				</button>
+					</button>
+					</div>
+					<div class="jackDummy"></div>
 			</div>
 		</div>
 		</form>
 		</div>
-		</div>
 	</div>
+	
+	<script type="text/javascript">
+	const fileInput = document.getElementById('file-upload');
+	const fileNameDisplay = document.getElementById('file-name');
+
+	fileInput.addEventListener('change', (e) => {
+	  // 選択されたファイルリストを取得
+	  const files = e.target.files;
+	  if (files.length > 0) {
+	    // 最初のファイル名を取得して表示要素に設定
+	    fileNameDisplay.textContent = files[0].name;
+	  } else {
+	    // ファイルが選択されていない場合は、元のテキストに戻す
+	    fileNameDisplay.textContent = 'No files selected';
+	  }
+	});
+	</script>
+	
 </body>
 </html>

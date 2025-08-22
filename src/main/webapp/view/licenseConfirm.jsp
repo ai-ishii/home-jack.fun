@@ -1,7 +1,7 @@
 <%--
 機能：資格申請フォームに入力された内容の確認画面
 作成者：桑原岳
-最終更新日：2025/08/20
+最終更新日：2025/08/21
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -51,41 +51,41 @@
             <table class="confirm-table">
                 <tr>
                     <th>氏名</th>
-                    <td><c:out value="${sessionScope.formValues.name}" /></td>
+                    <td><c:out value="${formValues.name}" /></td>
                 </tr>
                 <tr>
                     <th>部署名</th>
-                    <td><c:out value="${sessionScope.formValue.departmentName}" /></td>
+                    <td><c:out value="${formValues.department}" /></td>
                 </tr>
                 <tr>
                     <th>グループ名</th>
-                    <td><c:out value="${sessionScope.formValue.groupName}" /></td>
+                    <td><c:out value="${formValues.group}" /></td>
                 </tr>
                 <tr>
                     <th>資格名</th>
-                    <td><c:out value="${sessionScope.formValue.licenseName}" /></td>
+                    <td><c:out value="${formValues.license}" /></td>
                 </tr>
                 <tr>
                     <th>受験日</th>
-                    <td><c:out value="${sessionScope.formValue.examDate}" /></td>
+                    <td><c:out value="${formValues.examDate}" /></td>
                 </tr>
                 <tr>
                     <th>受験回数</th>
-                    <td><c:out value="${sessionScope.formValue.examTime}" /></td>
+                    <td><c:out value="${formValues.examTime}" /></td>
                 </tr>
                 <tr>
                     <th>受験料領収書</th>
-                    <td><c:out value="${sessionScope.formValue.receiptOriginalFileName}" /></td>
+                    <td><c:out value="${formValues.receiptOriginalFileName}" /></td>
                 </tr>
                 <tr>
                     <th>合格証</th>
-                    <td><c:out value="$sessionScope.formValue.passingOriginalFileName}" /></td>
+                    <td><c:out value="${formValues.receiptOriginalFileName}" /></td>
                 </tr>
             </table>
 
             <div class="button-area">
                 <a href="<%=request.getContextPath()%>/view/licenseForm.jsp">
-                    <button type="button">修正する</button>
+                    <button type="submit">修正する</button>
                 </a>
                 <form action="<%=request.getContextPath()%>/licenseKeep" method="post">
                     <button type="submit">この内容で確定する</button>
