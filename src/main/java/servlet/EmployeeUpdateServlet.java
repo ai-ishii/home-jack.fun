@@ -1,5 +1,5 @@
 //<!-- 社員紹介 変更機能（作：石井） -->
-//<!-- 作成日：7/18　最終更新日：8/22 14:00 -->
+//<!-- 作成日：7/18　最終更新日：8/22 16:00 -->
 
 /*
  * 更新を促す（開発経験年数）年一に更新
@@ -148,13 +148,14 @@ public class EmployeeUpdateServlet extends HttpServlet {
 			employeeDAO.registTest(employee, photoContent, photoSize, paramUserId);
 			
 			// employeeConfirm.jspで表示するコンテンツを制御する変数
-			cmd = "confirm";
+			String work = "confirm";
 			
-			// user情報を取得する
+			// 社員情報を取得する
 			user = userDAO.selectByUserId(paramUserId);
+			employee = employeeDAO.selectByUserId(paramUserId, work);
 			
 			// 社員情報をリクエストスコープに登録する
-			request.setAttribute("cmd", cmd);
+			request.setAttribute("work", work);
 			request.setAttribute("user", user);
 			request.setAttribute("employee", employee);
 
