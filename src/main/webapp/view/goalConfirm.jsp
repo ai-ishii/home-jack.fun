@@ -245,7 +245,7 @@ position: absolute;
 height: 65%;
 min-height: 20px;
 width: 3px;
-top: 50%;
+top: 50%; 
 left: 0;
 background-color: #e3e3e3;
 transform: translateY(-50%);
