@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/09
- * 更新日 2025/08/21
+ * 更新日 2025/08/22
  */
 
 package servlet;
@@ -80,11 +80,11 @@ public class JackworksDeleteServlet extends HttpServlet {
 
 			if (("").equals(error)) {
 				request.setAttribute("cmd", cmd);
-			}
 
-			//申請一覧画面への遷移用
-			if (cmd.equals("denial")) {
-				path = "/jackworksRequest";
+				//申請一覧画面への遷移用
+				if (cmd.equals("denial")) {
+					path = "/jackworksRequest";
+				}
 			}
 
 			request.getRequestDispatcher(path).forward(request, response);

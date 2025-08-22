@@ -1,5 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
 	
+	const modal = document.querySelector('.error-modal');			//モーダル全体の要素
+	const close = document.querySelector('.js-modal-close');		//モーダルを閉じるための要素
+	const errorMessage = document.getElementById('error-message');	//メッセージ表示するための要素
+	const message = modal.dataset.message;							//エラーメッセージを受け取る
+	
+	if(message != null && message.length > 0){
+		errorMessage.textContent = message;
+		modal.classList.add('is-active');
+		
+		//×ボタンをクリックでモーダルが閉じる
+		function modalClose() {
+			modal.classList.remove('is-active');
+		}
+		close.addEventListener('click', modalClose);
+	
+		//モーダルの外側をクリックでモーダルが閉じる
+		function modalout(e) {
+			if (e.target == modal) {
+				modal.classList.remove('is-active');
+			}
+		}
+		modal.addEventListener('click', modalout);
+		}
+
 	//エラーチェックを行いたいフォーム要素をすべて取得
 	const errorForm = document.querySelector('.error-form');
 	//form要素の存在チェック

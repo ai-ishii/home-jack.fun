@@ -2,7 +2,7 @@
 JackWorks画面
 作成者：青木美波
 作成日 2025/07/11
-更新日 2025/07/29
+更新日 2025/08/22
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -19,10 +19,10 @@ Account account = (Account)session.getAttribute("account");
 String keyword = (String) request.getAttribute("keyword");
 //検索0件メッセージを表示するためのcmdを受け取る
 String cmd = (String) request.getAttribute("cmd");
-//検索された月が格納されたmonthSearchを受け取る
-String monthSearch = (String) request.getAttribute("monthSearch");
-//検索された年が格納されたyearSearchを受け取る
-String yearSearch = (String) request.getAttribute("yearSearch");
+//検索された開始日が格納されたstartMonthを受け取る
+String startMonth = (String) request.getAttribute("startMonth");
+//検索された終了日が格納されたendMonthを受け取る
+String endMonth = (String) request.getAttribute("endMonth");
 
 if(keyword == null){
 	keyword = "";
@@ -489,23 +489,23 @@ document.addEventListener('DOMContentLoaded', function() {
 	yearSelect.value = currentYear;
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-	const selectmonth = "<%= monthSearch %>";
+//document.addEventListener('DOMContentLoaded', function() {
+//	const selectmonth = "< monthSearch ";
 
-	if(selectmonth && selectmonth != "null" && selectmonth != ""){
-	document.getElementById('monthSearch').value = selectmonth;
+//	if(selectmonth && selectmonth != "null" && selectmonth != ""){
+//	document.getElementById('monthSearch').value = selectmonth;
 	
-	}
-});
+//	}
+//});
 
-document.addEventListener('DOMContentLoaded', function() {
-	const selectyear = "<%= yearSearch %>";
+//document.addEventListener('DOMContentLoaded', function() {
+//	const selectyear = "< yearSearch ";
 
-	if(selectyear && selectyear != "null" && selectyear != ""){
-	document.getElementById('yearSelect').value = selectyear;
+//	if(selectyear && selectyear != "null" && selectyear != ""){
+//	document.getElementById('yearSelect').value = selectyear;
 	
-	}
-});
+//	}
+//});
 
 </script>
 
@@ -671,11 +671,11 @@ document.addEventListener("DOMContentLoaded", function() {
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
 						<td>
 					         <label for="start_date">開始日:</label>
-				            <input type="date" id="start_date" name="start_date" value="${startDate}">
+				            <input type="month" id="start_month" name="start_month" max="9999-12" value="${startMonth}">
 						</td>
 					    <td>
 							<label for="end_date">終了日:</label>
-					        <input type="date" id="end_date" name="end_date" value="${endDate}">
+					        <input type="month" id="end_month" name="end_month" max="9999-12" value="${endMonth}">
 					    </td>
 						<td>
 						<button type="submit" class="select-button" >検索</button>
