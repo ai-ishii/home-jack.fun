@@ -55,16 +55,16 @@ public class JackworksRequestServlet extends HttpServlet {
 				//削除対象の存在チェック
 				if (jackworks.getJackworksId() == 0 && !cmd.equals("denial")) {
 					message = "このJackWorksは、すでに削除されています。";
-					error = "monthJackworks";
+					path = "/view/jackworksRequest.jsp";
 					return;
 
-				} else if (jackworks.getApprovalFlag() == 1) {	//申請チェック
+				} else if (jackworks.getApprovalFlag() == 1) { //申請チェック
 					message = "このデータはすでに申請許可がされています。";
-					error = "monthJackworks";
+					path = "/view/jackworksRequest.jsp";
 					return;
 				} else if (jackworks.getApprovalFlag() == 2) {
 					message = "このデータはすでに差し戻しがされています。";
-					error = "monthJackworks";
+					error = "/view/jackworksRequest.jsp";
 					return;
 				}
 
@@ -101,6 +101,7 @@ public class JackworksRequestServlet extends HttpServlet {
 			}
 
 			if (("").equals(error)) {
+				request.setAttribute("message", message);
 				request.setAttribute("cmd", cmd);
 			}
 
