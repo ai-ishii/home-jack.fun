@@ -381,6 +381,7 @@ fill: #f9de95;
 					</a>
 					</div>
 					<div>
+					<input type="hidden" name="cmd" value="next">
 					<button type="submit" class="btn btn-border">
 					<span class="btnUp">更新</span>
 					</button>
