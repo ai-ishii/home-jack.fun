@@ -60,10 +60,13 @@ h1, h2 {
 	background-color: #ffe9e9;
 }
 
+.error {
+	font-size: small;
+}
+
 .error , .warning{
 	color:red;
 }
-
 
 /*-----------------------------------*/
 

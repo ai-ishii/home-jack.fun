@@ -170,7 +170,7 @@ String tabCmd = (String) request.getAttribute("cmd");
 					<a class="tabLink" href="<%=request.getContextPath()%>/employee"><li>社員紹介</li></a>
 					<a class="tabLink" href="<%=request.getContextPath()%>/goalConfirm?cmd=confirm"><li>個人目標</li></a>
 					<a class="tabLink" href="<%=request.getContextPath()%>/monthJackworks"><li>Jackworks</li></a>
-					<a class="tabLink" href="<%=request.getContextPath()%>/リンクどれ？？"><li>各種申請</li></a>
+					<a class="tabLink" href="<%=request.getContextPath()%>/view/RequestMenu.jsp"><li>各種申請</li></a>
 					<a class="tabLink" href="<%=request.getContextPath()%>/view/sharedMaterials.jsp"><li>共有資料</li></a>
 				</ul>
 
