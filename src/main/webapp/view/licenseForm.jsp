@@ -3,7 +3,7 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/20
+最終更新日：2025/08/21
  --%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -13,7 +13,7 @@
 ArrayList<LicenseRequestExclusive> userList = (ArrayList<LicenseRequestExclusive>) request.getAttribute("userList");
 %>
 <%
-ArrayList<LicenseName> LicenseNameList = (ArrayList<LicenseName>) request.getAttribute("LicenseNameList");
+ArrayList<LicenseName> licenseNameList = (ArrayList<LicenseName>) request.getAttribute("licenseNameList");
 %>
 <html>
 <head>
@@ -227,10 +227,10 @@ select {
 							<div class="form-select">
 								<select name="license" id="license">
 									<option value="">--資格を選択してください--</option>
-									<c:forEach var="license" items="${LicenseList}">
-										<option value="${license.code}"
-											<c:if test="${formValues.license == license.code}">selected</c:if>>
-											${license.name}</option>
+									<c:forEach var="license" items="${licenseNameList}">
+										<option value="${license.licenseName}"
+											<c:if test="${formValues.license == license.licenseName}">selected</c:if>>
+											${license.licenseName}</option>
 									</c:forEach>
 								</select>
 							</div>

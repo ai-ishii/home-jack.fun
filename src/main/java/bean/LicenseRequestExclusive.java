@@ -3,13 +3,14 @@
  * 
  * 作成者：桑原岳
  * 
- * 最終更新日：2025/08/20
+ * 最終更新日：2025/08/21
  * 
  * */
 
 package bean;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class LicenseRequestExclusive {
 
@@ -28,10 +29,12 @@ public class LicenseRequestExclusive {
 	private int groupId; 					//所属グループID
 	private int departmentId; 				//部ID
 	private int licenseId; 				//資格ID
-	private Timestamp examDate; 			//受験日
+	private LocalDate  examDate; 			//受験日
 	private int examTime; 					//受験回数
 	private byte[] receipt; 				//領収書画像
 	private byte[] passing; 				//合格証画像
+	private String receiptName; 			//領収書画像名
+	private String passingName; 			//合格証画像名
 
 	
 	private String groupName; 				//グループ名 (group_infoより)
@@ -134,11 +137,11 @@ public class LicenseRequestExclusive {
 		this.licenseId = licenseId;
 	}
 
-	public Timestamp getExamDate() {
+	public LocalDate getExamDate() {
 		return examDate;
 	}
 
-	public void setExamDate(Timestamp examDate) {
+	public void setExamDate(LocalDate examDate) {
 		this.examDate = examDate;
 	}
 
@@ -189,6 +192,22 @@ public class LicenseRequestExclusive {
 
 	public void setLicenseName(String licenseName) {
 		this.licenseName = licenseName;
+	}
+
+	public String getReceiptName() {
+		return receiptName;
+	}
+
+	public void setReceiptName(String receiptName) {
+		this.receiptName = receiptName;
+	}
+
+	public String getPassingName() {
+		return passingName;
+	}
+
+	public void setPassingName(String passingName) {
+		this.passingName = passingName;
 	}
 
 }
