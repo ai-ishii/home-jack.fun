@@ -33,8 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		const errorBack = 'error-back';		//エラー箇所の表示用クラス
 		
 		const fileLimit = 1024 * 1024 * 3;	//最大ファイルサイズ指定
+		const telDigit = [10, 11];			//電話番号の桁数
 		
 		let errorFlag = false;				//エラー状態管理用フラグ
+		
 
 		//画像の拡張子チェック用
 		function fileNameCheck(fileName) {
@@ -48,12 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		const numberClass = "error-check-number";		//空文字・空白チェック、数値チェックを行いたいフォームにつけるクラス
 		const selectClass = "error-check-select";		//セレクトボックスのチェックを行いたいフォームにつけるクラス
 		const dateClass = "error-check-date";			//日付チェックを行いたいフォームにつけるクラス
+		const telClass = "error-check-tel";				//電話番号チェックを行いたいフォームにつけるクラス
 		const digitClass = "error-check-digit";			//桁数・文字数チェックを行いたいフォームにつけるクラス
-		const telClass = "error-check-tel";
 		const fileClass = "error-check-file";			//ファイルチェックを行いたいフォームにつけるクラス
 		
 		
-		//半角変換を行いたいフォーム要素(クラス名:convert-full-to-half)をすべて取得
+		//半角変換を行いたいフォーム要素(クラス名:convert-full-to-half)をすべて取得(ほかのクラスと重複OK)
 		const convert = document.querySelectorAll('.' + convertClass);
 		
 		//空文字・空白チェックを行いたいフォーム要素(クラス名:error-check-default)をすべて取得
@@ -64,11 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		const errorSelects = document.querySelectorAll('.' + selectClass);
 		//空文字チェック、日付チェックを行いたいフォーム要素(クラス名:error-check-date)をすべて取得
 		const errorDates = document.querySelectorAll('.' + dateClass);
-		//桁数・文字数チェックを行いたいフォーム要素(クラス名:error-check-digit)をすべて取得
-		const errorDigits = document.querySelectorAll('.' + digitClass);
 		//電話番号チェックを行いたいフォーム要素(クラス名:error-check-tel)をすべて取得
+		const errorTel = document.querySelectorAll('.' + telClass);
 		
-		
+		//桁数・文字数チェックを行いたいフォーム要素(クラス名:error-check-digit)をすべて取得(ほかのクラスと重複OK)
+		const errorDigits = document.querySelectorAll('.' + digitClass);
 		
 		
 		//error-fileクラスの要素の集まり(画像入力用)
@@ -269,6 +271,41 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		});
 		
+		//error-check-telクラスのリアルタイム入力チェック
+		errorTel.forEach((elem) => {
+			elem.addEventListener('blur', () => {
+				let cmd = 'exact'
+				let flag = true;
+				let message = "";
+				//エラー文の初期化
+				removeError(elem);
+				//半角変換
+				checkConvert(elem);
+				//空文字チェック 空白チェック
+				checkSpace(elem, numberClass);
+				//数値チェック
+				checkNum(elem);
+				//エラー文がついていない場合のみチェックを行う
+				if (elem.parentNode.querySelector('.' + errorClassName) == null) {
+					telDigit.forEach((digit) => {
+						//桁数チェック
+						if(flag = checkDigit(elem, cmd, digit)){
+							removeError(elem);
+						} else {
+							flag = false;
+						}
+						message ='' + digit + '文字, ';
+					});
+					
+					if (flag) {
+						elem.classList.add(errorBack);
+						createError(elem, message + 'で入力してください。');
+						
+					}
+				}
+			});
+		});
+		
 		//error-check-digitクラスのリアルタイム入力チェック
 		errorDigits.forEach((elem) => {
 			//最大文字数、指定文字数の取得(取得できない場合は0を代入)
@@ -297,7 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			});
 		});
-		
 		
 		
 		//送信時チェック
@@ -342,6 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			});
 			
+			//error-check-dateクラスの入力チェック
 			errorDates.forEach ((elem) => {
 				//エラー文の初期化
 				removeError(elem);
@@ -365,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					cmd = 'max';
 				} else {
 					digit = equalDigit;
-					cmd = 'equal';
+					cmd = 'exact';
 				}
 				if (elem.parentNode.querySelector('.' + errorClassName) == null) {
 					if (checkDigit(elem, cmd, digit)){
