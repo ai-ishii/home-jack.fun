@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/15
- * 最終更新日：2025/08/21
+ * 最終更新日：2025/08/22
  */
 
 package servlet;
@@ -31,7 +31,6 @@ public class JackworksSearchServlet extends HttpServlet {
 		String message = "";
 		// 画面遷移用コマンド
 		String cmd = "";
-		String cmd2 = "";
 		// 遷移先のパス
 		String path = "/monthJackworks";
 
@@ -44,22 +43,27 @@ public class JackworksSearchServlet extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 
 			//選択された年月を受け取る
-			String start = request.getParameter("start_date");
-			String end = request.getParameter("end_date");
+			String start = request.getParameter("start_month");
+			String end = request.getParameter("end_month");
 
 			//jackworksRequest.jspからcmd=requestを受け取る
-			cmd2 = request.getParameter("cmd");
+			cmd = request.getParameter("cmd");
 
 			//ぬるぽ対策
-			if (cmd2 == null) {
-				cmd2 = "";
+			if (cmd == null) {
+				cmd = "";
+			}
+
+			//申請一覧画面へ遷移
+			if (cmd.equals("request")) {
+				path = "/view/jackworksRequest.jsp";
 			}
 
 			//年月検索
 			if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
-				Timestamp startDate = Timestamp.valueOf(start + " 00:00:00");
-				Timestamp endDate = Timestamp.valueOf(end + " 23:59:59");
-				jackList = jackworksDAO.selectByDateFilter(startDate, endDate);
+				Timestamp startMonth = Timestamp.valueOf(start + "-1 00:00:00");
+				Timestamp endMonth = Timestamp.valueOf(end + "-31 23:59:59");
+				jackList = jackworksDAO.selectByDateFilter(startMonth, endMonth);
 			} else if (keyword != null && !keyword.isEmpty()) {
 				//キーワード検索
 				jackList = jackworksDAO.search(keyword);
@@ -75,8 +79,8 @@ public class JackworksSearchServlet extends HttpServlet {
 			//検索結果の情報を格納
 			request.setAttribute("jack_list", jackList);
 			request.setAttribute("keyword", keyword);
-			request.setAttribute("srartDate", start);
-			request.setAttribute("end", end);
+			request.setAttribute("startMonth", start);
+			request.setAttribute("endMonth", end);
 
 		} catch (IllegalStateException e) {
 			message = "システムの一時的な問題により、検索結果の読み込みができませんでした。";
@@ -97,11 +101,6 @@ public class JackworksSearchServlet extends HttpServlet {
 
 			if (("").equals(error)) {
 				request.setAttribute("cmd", cmd);
-			}
-
-			//申請一覧画面へ遷移
-			if (cmd2.equals("request")) {
-				path = "/view/jackworksRequest.jsp";
 			}
 
 			request.getRequestDispatcher(path).forward(request, response);

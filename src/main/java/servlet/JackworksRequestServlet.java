@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日：2025/07/29
- * 更新日：2025/08/21
+ * 更新日：2025/08/22
  */
 
 package servlet;
@@ -55,17 +55,14 @@ public class JackworksRequestServlet extends HttpServlet {
 				//削除対象の存在チェック
 				if (jackworks.getJackworksId() == 0 && !cmd.equals("denial")) {
 					message = "このJackWorksは、すでに削除されています。";
-					error = "monthJackworks";
-					return;
-
-				} else if (jackworks.getApprovalFlag() == 1) {	//申請チェック
+					error = "/monthJackworks";
+					
+				} else if (jackworks.getApprovalFlag() == 1) { //申請チェック
 					message = "このデータはすでに申請許可がされています。";
-					error = "monthJackworks";
-					return;
+					path = "/view/jackworksRequest.jsp";
 				} else if (jackworks.getApprovalFlag() == 2) {
 					message = "このデータはすでに差し戻しがされています。";
-					error = "monthJackworks";
-					return;
+					error = "/view/jackworksRequest.jsp";
 				}
 
 				//申請許可、拒否する処理
@@ -101,6 +98,7 @@ public class JackworksRequestServlet extends HttpServlet {
 			}
 
 			if (("").equals(error)) {
+				request.setAttribute("message", message);
 				request.setAttribute("cmd", cmd);
 			}
 
