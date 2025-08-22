@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 public class Employee {
 
 	
-	private int employeeId;				//社員紹介ID
-	private int userId;					//ユーザー情報ID
+	private int employeeId;			//社員紹介ID
+	private int userId;				//ユーザー情報ID
 	private String employeeNumber;		//社員番号
 	private int developer;				//開発経験年数
 	private String langSkill;			//習得技術（言語）
@@ -17,7 +17,8 @@ public class Employee {
 	private String position;			//役職
 	private Timestamp registDate;		//登録日時
 	private Timestamp updateDate;		//更新日時
-	private String photo;				//社員写真
+	private byte[] photo;				//社員写真
+	private String photoName;			//社員写真の名前
 	
 	
 	public int getEmployeeId() {
@@ -92,18 +93,20 @@ public class Employee {
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
-	public String getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
-	public void setPhoto(String photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
-	
-	
+	public String getPhotoName() {
+		return photoName;
+	}
+	public void setPhotoName(String photoName) {
+		this.photoName = photoName;
+	}
 	
 
-		
-		
 }
 
 
