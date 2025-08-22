@@ -1,10 +1,10 @@
 <!-- 社員紹介 変更確認機能（作：石井） -->
-<!-- 作成日：7/18　最終更新日：8/22 14:00 -->
+<!-- 作成日：7/18　最終更新日：8/22 16:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
 <%@page
-	import="bean.Account, bean.User, dao.UserDAO, util.CommonTable, util.MyFormat, java.text.SimpleDateFormat, java.util.Date, java.sql.Timestamp"%>
+	import="bean.Account, bean.User, bean.Employee, dao.UserDAO, util.CommonTable, util.MyFormat, java.text.SimpleDateFormat, java.util.Date, java.sql.Timestamp"%>
 
 <!-- cmdで確認画面と編集画面分ける -->
 
@@ -13,12 +13,14 @@
 Account account = new Account();
 User user = new User();
 UserDAO userDAO = new UserDAO();
+Employee employee = new Employee();
 CommonTable commonTable = new CommonTable();
 
 //セッションでユーザーのデータを取得
 account = (Account)session.getAttribute("account");
 int userId_session = (int)session.getAttribute("user_id");
 user = (User) request.getAttribute("user");
+employee = (Employee) request.getAttribute("employee");
 
 int userId = user.getUserId();
 String employeeNumber = user.getEmployeeNumber();
@@ -39,33 +41,20 @@ String department = commonTable.selectDepartment(departmentId);
 String group = commonTable.selectGroup(groupId);
 
 // cmdを取得
-String cmd = (String) request.getAttribute("cmd");
+String work = (String) request.getAttribute("work");
 
 // 画像のURLを取得
 // String tempFileName = (String) request.getAttribute("tempFileName");
 
 // 変数宣言
-String photo = "";
-int developer = 0;
-String langSkill = "";
-String middleSkill = "";
-String hobby = "";
-String talent = "";
-String intro = "";
-String position = "";
+int developer = employee.getDeveloper();
+String langSkill = employee.getLangSkill();
+String middleSkill = employee.getMiddleSkill();
+String hobby = employee.getHobby();
+String talent = employee.getTalent();
+String intro = employee.getIntro();
+String position = employee.getPosition();
 
-// 確認画面の場合と戻るボタンを押して再度変更画面に戻った場合
-if (cmd.equals("updateConfirm") || cmd.equals("reUpdate")) {
-	// 入力された情報をJSPから取得
-	// photo = request.getParameter("photo");
-	developer = Integer.parseInt(request.getParameter("developer"));
-	langSkill = request.getParameter("langSkill");
-	middleSkill = request.getParameter("middleSkill");
-	hobby = request.getParameter("hobby");
-	talent = request.getParameter("talent");
-	intro = request.getParameter("intro");
-	position = request.getParameter("position");
-}
 %>
 
 <html>
@@ -175,7 +164,7 @@ a {
 								<td id="item"><label for="photo">写真</label></td>
 								
 								<td id="value">
-									<img src="employeePhoto?user_id=<%= user.getUserId() %>&work=confirm" 
+									<img src="employeePhoto?user_id=<%= user.getUserId() %>&work=<%=work%>" 
 									alt="アップロードした写真">
 								</td>
 								
@@ -249,20 +238,20 @@ a {
 
 	<script>
 	// 変数受け渡し
-	const cmd = "<%=cmd%>";
+	// const cmd = "%=cmd%>";
 
 		// 必要な要素を取得
-		const readonlyInput = document.querySelectorAll("#readonlyInput");
-		const form = document.querySelector("form");
+		// const readonlyInput = document.querySelectorAll("#readonlyInput");
+		// const form = document.querySelector("form");
 
-		if (cmd == "updateConfirm") {
-			for (let i = 0; i < readonlyInput.length; i++) {
-				readonlyInput[i].readOnly = true;
-			}
+		// if (cmd == "updateConfirm") {
+		// 	for (let i = 0; i < readonlyInput.length; i++) {
+		// 		readonlyInput[i].readOnly = true;
+		// 	}
 
 			// formに画像データ送信のためのエンコード設定
-			form.enctype = "multipart/form-data";
-		}
+		// 	form.enctype = "multipart/form-data";
+		// }
 	</script>
 </body>
 </html>
