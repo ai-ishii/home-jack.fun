@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/15
- * 最終更新日：2025/08/21
+ * 最終更新日：2025/08/22
  */
 
 package servlet;
@@ -31,7 +31,6 @@ public class JackworksSearchServlet extends HttpServlet {
 		String message = "";
 		// 画面遷移用コマンド
 		String cmd = "";
-		String cmd2 = "";
 		// 遷移先のパス
 		String path = "/monthJackworks";
 
@@ -48,17 +47,22 @@ public class JackworksSearchServlet extends HttpServlet {
 			String end = request.getParameter("end_month");
 
 			//jackworksRequest.jspからcmd=requestを受け取る
-			cmd2 = request.getParameter("cmd");
+			cmd = request.getParameter("cmd");
 
 			//ぬるぽ対策
-			if (cmd2 == null) {
-				cmd2 = "";
+			if (cmd == null) {
+				cmd = "";
+			}
+
+			//申請一覧画面へ遷移
+			if (cmd.equals("request")) {
+				path = "/view/jackworksRequest.jsp";
 			}
 
 			//年月検索
 			if (start != null && !start.isEmpty() && end != null && !end.isEmpty()) {
 				Timestamp startMonth = Timestamp.valueOf(start + "-1 00:00:00");
-				Timestamp endMonth = Timestamp.valueOf(end + "-31 23:99:99");
+				Timestamp endMonth = Timestamp.valueOf(end + "-31 23:59:59");
 				jackList = jackworksDAO.selectByDateFilter(startMonth, endMonth);
 			} else if (keyword != null && !keyword.isEmpty()) {
 				//キーワード検索
@@ -97,11 +101,6 @@ public class JackworksSearchServlet extends HttpServlet {
 
 			if (("").equals(error)) {
 				request.setAttribute("cmd", cmd);
-
-				//申請一覧画面へ遷移
-				if (cmd2.equals("request")) {
-					path = "/view/jackworksRequest.jsp";
-				}
 			}
 
 			request.getRequestDispatcher(path).forward(request, response);
