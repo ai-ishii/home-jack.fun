@@ -4,7 +4,7 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/08/22
+更新日 : 2025/08/25
  -->
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="bean.Announce"%>
@@ -302,14 +302,14 @@ button.btn-border:active:before {
 					<div class="form_box" class="container">
 						<label for="title" class="control_label">タイトル<span
 							class="warning">*</span></label> <input type="text" id="title"
-							name="title" value="<%=announce.getTitle()%>" class='required'>
+							name="title" data-maxlength="50" value="<%=announce.getTitle()%>" class='error-check-default error-check-digit'>
 					</div>
 
 					<div class="form_box tiny_form">
 						<label for="update_date" class="control_label">編集日時<span
 							class="warning">*</span></label> <input type="datetime-local"
 							id="update_date" name="update_date" max="9999-12-31 23:59"
-							value="<%=announce.getRegistDate()%>" />
+							value="<%=announce.getRegistDate()%>" class="error-check-date">
 						<!-- 現在時刻をつける -->
 					</div>
 
@@ -333,8 +333,8 @@ button.btn-border:active:before {
 					</div>
 
 					<div class="form_box check">
-						<label for="announce_flag" class="control_label">重要記事<span
-							class="warning">*</span></label> <input type="checkbox"
+						<label for="announce_flag" class="control_label">重要記事</label>
+						<input type="checkbox"
 							name="announce_flag" value="1"> <input type="hidden"
 							name="announce_flag" value="0">
 					</div>
@@ -343,12 +343,12 @@ button.btn-border:active:before {
 						<label for="text" class="control_label">本文<span
 							class="warning">*</span></label>
 						<textarea id="text" name="text" rows="5" cols="15"
-							class='required'><%=announce.getText()%></textarea>
+							class='error-check-default'><%=announce.getText()%></textarea>
 					</div>
 
 					<div class="form_box">
 						<label for="tag" class="control_label">タグ</label> <input
-							type="text" id="title" name="tag">
+							type="text" id="title" name="tag" class="convert-full-to-half">
 					</div>
 
 					<input type="hidden" name="announce_id"
