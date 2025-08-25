@@ -72,7 +72,7 @@ margin: 0 auto;
 	margin-top: 20px;
 }
 
-/*  */
+/* テキストエリア */
 .monthArea {
 	resize: none;
 	width: 100%;
@@ -83,12 +83,6 @@ margin: 0 auto;
 .monthBox{
 width: 100%;
 height: 30px;
-}
-
-/* セルサイズ */
-.textCell{
-width: 100%;
-height: 100%;
 }
 
 /* 米印の色 */
@@ -402,7 +396,6 @@ transition: .5s;
 display: flex;
 justify-content: center;   /* 水平方向の中央揃え */
 align-items: center;       /* 垂直方向の中央揃え */
-border-right: 8px double #000;
 height: 100%;
 width: 15%;
 padding: 0 5px 3px;

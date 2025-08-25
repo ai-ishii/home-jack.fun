@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  * 
- * 最終更新日：2025/08/07
+ * 最終更新日：2025/08/22
  * 
  * */
 
@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/licenseRequestDetail")
+@WebServlet("/licenseRequestDetaiApproval")
 public class LicenseRequestApprovalServlet extends HttpServlet {
 
 	//doGetメソッド

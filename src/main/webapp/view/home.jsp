@@ -6,7 +6,7 @@
  * 
  * 作成日：2025/07/04
  
- * 最終更新日：2025/08/20
+ * 最終更新日：2025/08/25
  */
 --%>
 
@@ -16,13 +16,14 @@
 <%@page import="bean.Announce"%>
 <%@page import="bean.CategoryMap"%>
 <%@page import="java.util.ArrayList"%>
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%
-ArrayList<Announce> importantList = (ArrayList<Announce>)request.getAttribute("important_list");
-ArrayList<Announce> announceList = (ArrayList<Announce>)request.getAttribute("announce_list");
-ArrayList<Announce> activityList = (ArrayList<Announce>)request.getAttribute("activity_list");
-ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>)request.getAttribute("category_list");
+ArrayList<Announce> importantList = (ArrayList<Announce>) request.getAttribute("important_list");
+ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announce_list");
+ArrayList<Announce> activityList = (ArrayList<Announce>) request.getAttribute("activity_list");
+ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("category_list");
 
 AnnounceDAO announceDAO = new AnnounceDAO();
 
@@ -34,7 +35,8 @@ Boolean profile = (Boolean) session.getAttribute("profile");
 <html>
 <head>
 <title>Home-Jack</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
@@ -66,7 +68,8 @@ Boolean profile = (Boolean) session.getAttribute("profile");
 	border-radius: 10px 10px 0 0;
 	background-color: sienna;
 	color: snow;
-	font-size: 30px;
+	font-size: 25px;
+	letter-spacing: 0.1em;
 }
 
 .overflow {
@@ -189,13 +192,64 @@ ul {
 /*一覧へのリンク横についてる右矢印アイコン*/
 .linkIcon {
 	margin-bottom: 2px;
-    margin-left: 8px;
-    width: 20px;
-    height: 15px;
-    vertical-align: bottom;
+	margin-left: 8px;
+	width: 20px;
+	height: 15px;
+	vertical-align: bottom;
 }
 
+/* aタグの初期CSSのリセット(右) */
+.jackResetR {
+	text-decoration: none;
+	color: #000;
+}
+
+/* 矢印の枠 */
+/* marginとかは自分で削ったり足したりしてくださいな */
+.yoruArrow {
+    align-items: center;
+    height: 30px;
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* 矢印 */
+.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	transition: transform 0.5s ease;
+	overflow: visible; /* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf {
+	height: 100%;
+	font-family: "Yomogi", cursive;
+	font-size: 25px;
+}
+
+/* 矢印ホバー時の動き(右) */
+.jackResetR:hover svg path {
+	transform: translateX(10px);
+	stroke: #f9de95;
+	fill: #f9de95;
+}
+
+.announceHeader {
+	width: 100%;
+}
+
+.announceHeader td {
+	width: 80%;
+}
+/*
+.announceHeader td:nth-child(2) {
+	margin-left: auto;
+}
+*/
 .announce
+
+
 
 @media screen and (max-width: 767px) {
 	.announce-list .item a {
@@ -209,7 +263,6 @@ ul {
 	}
 }
 
-
 /*-----------------------------------------------------------------------------------*/
 </style>
 
@@ -218,61 +271,75 @@ ul {
 		<%@ include file="../common/header.jsp"%>
 
 		<div id="main" class="container">
-		
-		<%
-		if (Boolean.FALSE.equals(profile)){
-		%>
+
+			<%
+			if (Boolean.FALSE.equals(profile)) {
+			%>
 			<div>
 				プロフィールが未登録です。
 				<a href="<%=request.getContextPath()%>/view/userRegister.jsp">こちらから登録してください。</a>
 			</div>
-			
-		<%
-		}
-		%>
-		
+
+			<%
+			}
+			%>
+
 			<div class="overflow">
-				
+
 				<div id="announce" class="container">
-					<a class="linkToAnnounce" href="<%= request.getContextPath() %>/announce">
-						<h2>重要なお知らせ</h2>
-					</a>
+					<table class="announceHeader">
+						<tr>
+							<td><a class="linkToAnnounce"
+								href="<%=request.getContextPath()%>/announce">
+									<h2>重要なお知らせ</h2>
+							</a></td>
+							<td>
+								<!-- LISTがあった場所 -->
+							</td>
+						</tr>
+					</table>
 					<div class="announce-list">
 						<ul>
 							<%
 							if (importantList == null || importantList.size() == 0) {
 							%>
 							<p>重要なお知らせはありません</p>
-							
+
 							<%
 							} else {
-								for (int i = 0; i < importantList.size(); i++){
+							for (int i = 0; i < importantList.size(); i++) {
 							%>
-						
-							<li class="item">
-								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= importantList.get(i).getAnnounceId() %>">
-									<p class="date"><%= myformat.dateFormat(importantList.get(i).getRegistDate()) %></p>
+
+							<li class="item"><a
+								href="<%=request.getContextPath()%>/announceDetail?cmd=detail&announceId=<%=importantList.get(i).getAnnounceId()%>">
+									<p class="date"><%=myformat.dateFormat(importantList.get(i).getRegistDate())%></p>
 									<p class="tag">
-										<span><%= CommonTable.selectCategory(importantList.get(i).getAnnounceCategoryId(), categoryList) %></span>
+										<span><%=CommonTable.selectCategory(importantList.get(i).getAnnounceCategoryId(), categoryList)%></span>
 									</p>
 									<div class="title">
-										<p class="article"><%= importantList.get(i).getTitle() %></p>
-										<p class="name"><%= importantList.get(i).getName() %></p>
+										<p class="article"><%=importantList.get(i).getTitle()%></p>
+										<p class="name"><%=importantList.get(i).getName()%></p>
 									</div>
-								</a>
-							</li>
-							
+							</a></li>
+
 							<%
-								}
+							}
 							}
 							%>
 						</ul>
-						<a class="list-link" href="<%= request.getContextPath() %>/announce">一覧へ
-						<img class="linkIcon" src="<%= request.getContextPath() %>/img/linkIcon-right.png" alt="リンク用アイコン">
-						</a>
+						<div class="yoruArrow">
+							<a href="<%= request.getContextPath() %>/announce" class="jackResetR"> <span class="beaf">LIST</span>
+								<svg class="arrow" viewBox="0 0 50 20" x="0px" y="0px"
+									width="50" height="20">
+			<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
+			<path d="M 50 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
+		</svg>
+							</a>
+						</div>
 					</div>
-					<a class="linkToAnnounce" href="<%= request.getContextPath() %>/announce">
-					<h2>最新のお知らせ</h2>
+					<a class="linkToAnnounce"
+						href="<%=request.getContextPath()%>/announce">
+						<h2>最新のお知らせ</h2>
 					</a>
 					<div class="announce-list">
 						<ul>
@@ -280,36 +347,33 @@ ul {
 							if (announceList == null || announceList.size() == 0) {
 							%>
 							<p>最新のお知らせはありません</p>
-							
+
 							<%
 							} else {
-								for (int i = 0; i < announceList.size(); i++){
+							for (int i = 0; i < announceList.size(); i++) {
 							%>
-						
-							<li class="item">
-								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= announceList.get(i).getAnnounceId() %>">
-									<p class="date"><%= myformat.dateFormat(announceList.get(i).getRegistDate()) %></p>
+
+							<li class="item"><a
+								href="<%=request.getContextPath()%>/announceDetail?cmd=detail&announceId=<%=announceList.get(i).getAnnounceId()%>">
+									<p class="date"><%=myformat.dateFormat(announceList.get(i).getRegistDate())%></p>
 									<p class="tag">
-										<span><%= CommonTable.selectCategory(announceList.get(i).getAnnounceCategoryId(), categoryList) %></span>
+										<span><%=CommonTable.selectCategory(announceList.get(i).getAnnounceCategoryId(), categoryList)%></span>
 									</p>
 									<div class="title">
-										<p class="article"><%= announceList.get(i).getTitle() %></p>
-										<p class="name"><%= announceList.get(i).getName() %></p>
+										<p class="article"><%=announceList.get(i).getTitle()%></p>
+										<p class="name"><%=announceList.get(i).getName()%></p>
 									</div>
-								</a>
-							</li>
-							
+							</a></li>
+
 							<%
-								}
+							}
 							}
 							%>
 						</ul>
-						<a class="list-link" href="<%= request.getContextPath() %>/announce">一覧へ
-						<img class="linkIcon" src="<%= request.getContextPath() %>/img/linkIcon-right.png" alt="リンク用アイコン">
-						</a>
 					</div>
-					<a class="linkToAnnounce" href="<%= request.getContextPath() %>/announce">
-					<h2>最新のチーム活動</h2>
+					<a class="linkToAnnounce"
+						href="<%=request.getContextPath()%>/announce">
+						<h2>最新のチーム活動</h2>
 					</a>
 					<div class="announce-list">
 						<ul>
@@ -317,52 +381,51 @@ ul {
 							if (activityList == null || activityList.size() == 0) {
 							%>
 							<p>最新のチーム活動はありません</p>
-							
+
 							<%
 							} else {
-								for (int i = 0; i < activityList.size(); i++){
+							for (int i = 0; i < activityList.size(); i++) {
 							%>
-						
-							<li class="item">
-								<a href="<%= request.getContextPath() %>/announceDetail?cmd=detail&announceId=<%= activityList.get(i).getAnnounceId() %>">
-									<p class="date"><%= myformat.dateFormat(activityList.get(i).getRegistDate()) %></p>
+
+							<li class="item"><a
+								href="<%=request.getContextPath()%>/announceDetail?cmd=detail&announceId=<%=activityList.get(i).getAnnounceId()%>">
+									<p class="date"><%=myformat.dateFormat(activityList.get(i).getRegistDate())%></p>
 									<p class="tag">
-										<span><%= CommonTable.selectCategory(activityList.get(i).getAnnounceCategoryId(), categoryList) %></span>
+										<span><%=CommonTable.selectCategory(activityList.get(i).getAnnounceCategoryId(), categoryList)%></span>
 									</p>
 									<div class="title">
-										<p class="article"><%= activityList.get(i).getTitle() %></p>
-										<p class="name"><%= activityList.get(i).getName() %></p>
+										<p class="article"><%=activityList.get(i).getTitle()%></p>
+										<p class="name"><%=activityList.get(i).getName()%></p>
 									</div>
-								</a>
-							</li>
+							</a></li>
 							<%
-								}
+							}
 							}
 							%>
 						</ul>
-						<a class="list-link" href="<%= request.getContextPath() %>/announce">一覧へ
-						<img class="linkIcon" src="<%= request.getContextPath() %>/img/linkIcon-right.png" alt="リンク用アイコン">
-						</a>
 					</div>
 				</div>
 				<div id="sidebar" class="container">
 					<div class="calendar">
 						<p>カレンダー</p>
-						<iframe src="https://calendar.google.com/calendar/embed?height=300&wkst=1&ctz=Asia%2FTokyo&showPrint=0&src=dGVzdXRvdS5oYWppbWVAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043" style="border:solid 5px sienna" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+						<iframe
+							src="https://calendar.google.com/calendar/embed?height=300&wkst=1&ctz=Asia%2FTokyo&showPrint=0&src=dGVzdXRvdS5oYWppbWVAZ21haWwuY29t&src=amEuamFwYW5lc2UjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039be5&color=%230b8043"
+							style="border: solid 5px sienna" width="100%" height="100%"
+							frameborder="0" scrolling="no"></iframe>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
-	
+
 	<script>
 		// 必要な要素を取得
 		const spanList = document.querySelectorAll(".tag");
 
 		// カテゴリーごとに背景色を変更
 		for (let i = 0; i < spanList.length; i++) {
-			if(spanList[i].textContent.trim() == "お知らせ") {
+			if (spanList[i].textContent.trim() == "お知らせ") {
 				spanList[i].style.backgroundColor = "olivedrab";
 			} else if (spanList[i].textContent.trim() == "チーム活動") {
 				spanList[i].style.backgroundColor = "palevioletred";

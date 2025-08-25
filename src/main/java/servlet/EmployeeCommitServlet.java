@@ -75,7 +75,7 @@ public class EmployeeCommitServlet extends HttpServlet {
 				
 				if (submit.equals("編集画面に戻る")) {
 					request.setAttribute("userId", userId);
-					request.getRequestDispatcher("/employeeConfirm").forward(request, response);
+					request.getRequestDispatcher("/employeeDetail?work=update").forward(request, response);
 				}
 			}
 		}

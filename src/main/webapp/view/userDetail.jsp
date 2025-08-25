@@ -1,10 +1,10 @@
 <%--
-個人情報詳細画面(管理者)
+個人情報詳細画面
 
-作成者:占部虎司郎
+作成者:月向亮太
 
-作成日: 2025/7/11
-更新日: 2025/7/25
+作成日: 2025/8/21
+更新日: 2025/8/25
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -13,6 +13,7 @@
 <%
 //個人情報を格納したuserを受け取る
 User user = (User) request.getAttribute("user");
+String cmd = (String) request.getAttribute("cmd");
 %>
 
 <html>
@@ -85,7 +86,10 @@ table th, table td {
 #koji-name{
 text-align: center;
 }
-
+.button-container{
+	text-align: center;
+	margin-top: 30px;
+}
 
 </style>
 </head>
@@ -103,21 +107,8 @@ text-align: center;
 				</div>
 				<br>
 				
-				<% 
-				MyFormat myFormat = new MyFormat();
-				String birthday = myFormat.breakDateFormat(user.getBirthday());
 				
-				String post = myFormat.addHyphen(user.getPost());
-				
-				String updateDate = "";
-				String registDate = "";
-				
-				if(user.getUpdateDate() != null){
-					updateDate = myFormat.dateFormat(user.getUpdateDate());
-				}else{
-					registDate = myFormat.dateFormat(user.getRegistDate());
-				}
-				%>
+				<form action="<%= request.getContextPath() %>/userConfirm" method="post">
 				
 				<h3 id="koji-name">個人情報：<%=user.getName() %></h3>
 				
@@ -140,7 +131,7 @@ text-align: center;
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">生年月日</td>
-						<td><%= birthday %></td>
+						<td><%=user.getBirthday() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">性別</td>
@@ -152,7 +143,7 @@ text-align: center;
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">郵便番号</td>
-						<td><%= post %></td>
+						<td><%=user.getPost() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">住所</td>
@@ -182,25 +173,16 @@ text-align: center;
 						<td class="table-double">資格</td>
 						<td><%=user.getQualification() %></td>
 					</tr>
-					<%
-					if(updateDate != ""){
-					%>
-					<tr class="table-single">
-						<td class="table-double">更新日</td>
-						<td><%=updateDate %></td>
-					</tr>
-					<%
-					}else{
-					%>
-					<tr>
-						<td class="table-double">登録日</td>
-						<td><%=registDate %></td>
-					</tr>
-					<%
-					}
-					%>
 				</table>
 				
+				<div class="button-container">	
+					<button type="submit" name="registerConfirm" value="変更する" class="btn btn-border">
+					変更する
+					</button>
+				
+					</form>
+				
+				</div>
 			</div>
 		</div>
 </body>

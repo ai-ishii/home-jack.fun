@@ -5,7 +5,7 @@
  * 
  * 作成日：7月8日
  * 
- * 最終更新日：8月18日
+ * 最終更新日：8月25日
  * 
  */
 package servlet;
@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import bean.Goal;
 import bean.GoalDepartment;
 import bean.GoalQuarter;
+import bean.User;
 import dao.GoalDAO;
 import dao.GoalDepartmentDAO;
 import dao.GoalQuarterDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -49,6 +51,8 @@ public class GoalConfirmServlet extends HttpServlet {
 		Integer userId = 0;
 
 		//オブジェクト宣言
+		User user = new User();
+		UserDAO userDAO = new UserDAO();
 		Goal goal = new Goal();
 		GoalDepartment goalDepartment = new GoalDepartment();
 
@@ -77,6 +81,7 @@ public class GoalConfirmServlet extends HttpServlet {
 			}
 			
 			// 目標を呼び出す
+			user = userDAO.selectByUserId(userId);
 			goal = goalDAO.selectByUserId(userId);
 			
 			// メソッドの引数となる変数をを格納する
@@ -97,7 +102,7 @@ public class GoalConfirmServlet extends HttpServlet {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 			}
 			//リクエストスコープを使ってフォワード
-			session.setAttribute("userId",userId);
+			request.setAttribute("user",user);
 			request.setAttribute("goalDepartment", goalDepartment);
 			request.setAttribute("goal", goal);
 			request.setAttribute("goalQuarterList", goalQuarterList);

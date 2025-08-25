@@ -5,23 +5,26 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月20日
+ 最終更新日：8月25日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="bean.Goal, bean.GoalQuarter, bean.GoalDepartment, java.util.ArrayList"%>
+<%@page import="bean.User, bean.Goal, bean.GoalQuarter, bean.GoalDepartment, java.util.ArrayList"%>
 
 <%
 //オブジェクト宣言
+User user = new User();
 Goal goal = new Goal();
 GoalDepartment goalDepartment = new GoalDepartment();
 
 //リクエストスコープから要素を取得する
+user = (User) request.getAttribute("user");
 goal = (Goal) request.getAttribute("goal");
 goalDepartment = (GoalDepartment) request.getAttribute("goalDepartment");
 ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goalQuarterList");
 
 //変数宣言
+String name = "";
 String managementTheme = "";
 String groupCode = "";
 String departmentGoal = "";
@@ -32,6 +35,11 @@ int result = 0;
 String resultComment = "";
 int resultReviewer = 0;
 String resultCommentReviewer = "";
+
+// userの値がnullでなければ
+if (user != null) {
+	name = user.getName();
+}
 
 //goalの値がnullでなければ
 if (goal != null) {
@@ -431,6 +439,11 @@ color: #6eddb3;
 			</div>
 			
 			<div class="seal">
+				
+				<div>
+					<p><%=name%></p>
+				</div>
+				
 				<!-- 経営テーマのボックス -->
 				<div class="adminTitle">
 				経営テーマ
