@@ -1,8 +1,11 @@
 <%--
 JackWorks画面
+
 作成者：青木美波
+更新者：占部虎司郎
+
 作成日 2025/07/11
-更新日 2025/08/22
+最終更新日 2025/08/25
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -164,20 +167,13 @@ table thead tr.jack-table{
 	font-weight: bold;
 }
 
-/* ボタン関係 */
-html {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 62.5%;
-}
-
 .btn, a.btn, button.btn {
-	font-size: 1.6rem;
+	font-size: 16px;
 	font-weight: 700;
 	line-height: 1.5;
 	position: relative;
 	display: inline-block;
-	padding: 0.5rem 2rem;
+	padding: 5px 20px;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -188,8 +184,8 @@ html {
 	text-align: center;
 	vertical-align: middle;
 	text-decoration: none;
-	letter-spacing: 0.1em;
-	border-radius: 8.5rem;
+	letter-spacing: 1.6px;;
+	border-radius: 85px;
 }
 
 /* 削除ボタン */
