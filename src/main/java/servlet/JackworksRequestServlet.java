@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日：2025/07/29
- * 更新日：2025/08/22
+ * 更新日：2025/08/25
  */
 
 package servlet;
@@ -39,8 +39,9 @@ public class JackworksRequestServlet extends HttpServlet {
 
 		try {
 
-			//jackworksRequest.jspからcmd=agreeもしくはcmd=denialを受け取る
+			//jackworksRequest.jspからcmd=agreeもしくはdenialを受け取る
 			cmd = request.getParameter("cmd");
+			message = request.getParameter("message");
 
 			//ぬるぽ対策
 			if (cmd == null) {
@@ -55,14 +56,12 @@ public class JackworksRequestServlet extends HttpServlet {
 				//削除対象の存在チェック
 				if (jackworks.getJackworksId() == 0 && !cmd.equals("denial")) {
 					message = "このJackWorksは、すでに削除されています。";
-					path = "/view/jackworksRequest.jsp";
 					
 				} else if (jackworks.getApprovalFlag() == 1) { //申請チェック
 					message = "このデータはすでに申請許可がされています。";
-					path = "/view/jackworksRequest.jsp";
+					
 				} else if (jackworks.getApprovalFlag() == 2) {
 					message = "このデータはすでに差し戻しがされています。";
-					path = "/view/jackworksRequest.jsp";
 				}
 
 				//申請許可、拒否する処理

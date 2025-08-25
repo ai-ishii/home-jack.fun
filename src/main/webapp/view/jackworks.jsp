@@ -2,7 +2,7 @@
 JackWorks画面
 作成者：青木美波
 作成日 2025/07/11
-更新日 2025/08/22
+更新日 2025/08/25
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -19,6 +19,8 @@ Account account = (Account)session.getAttribute("account");
 String keyword = (String) request.getAttribute("keyword");
 //検索0件メッセージを表示するためのcmdを受け取る
 String cmd = (String) request.getAttribute("cmd");
+//エラー文を表示するためのcmdを受け取る
+String message = (String) request.getAttribute("message");
 //検索された開始日が格納されたstartMonthを受け取る
 String startMonth = (String) request.getAttribute("startMonth");
 //検索された終了日が格納されたendMonthを受け取る
@@ -30,6 +32,10 @@ if(keyword == null){
 
 if(cmd == null){
 	cmd = "";
+}
+
+if(message == null){
+	message = "";
 }
 
 //権限分け
@@ -47,6 +53,7 @@ int managerFlag = 0;
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 </head>
 
 <!-- 以下CSS -->
@@ -465,6 +472,71 @@ text-align:center;
 font-size: 16px;
 }
 
+/* モーダルと背景の指定 */
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background: rgba(0, 0, 0, 50%);
+	padding: 40px 20px;
+	overflow: auto;
+	opacity: 0;
+	visibility: hidden;
+	transition: .3s;
+	box-sizing: border-box;
+	z-index: 30;
+}
+
+/* モーダルの擬似要素の指定 */
+.modal:before {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	margin-left: -0.2em;
+}
+
+/* クラスが追加された時の指定 */
+.modal.is-active {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* モーダル内側の指定 */
+.modal-container {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 600px;
+	width: 90%;
+}
+
+/* モーダルを閉じるボタンの指定 */
+.modal-close {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: -20px;
+	right: -20px;
+	width: 40px;
+	height: 40px;
+	color: #fff;
+	background: #000;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+/* モーダルのコンテンツ部分の指定 */
+.modal-content {
+	background: #fff;
+	text-align: left;
+	line-height: 1.8;
+	padding: 20px;
+}
 </style>
 
 <body>
@@ -591,6 +663,18 @@ document.addEventListener("DOMContentLoaded", function() {
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
 		<%@ include file="../common/header.jsp"%>
+		
+		<!-- モーダル本体 -->
+		<div class="modal error-modal" data-message="<%= message %>">
+			<div class="modal-container">
+				<!-- モーダルを閉じるボタン -->
+				<div class="modal-close js-modal-close">×</div>
+				<!-- モーダル内部のコンテンツ -->
+				<div class="modal-content">
+					<p id="error-message"></p>
+				</div>
+			</div>
+		</div>
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">

@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/09
- * 更新日 2025/08/22
+ * 更新日 2025/08/25
  */
 
 package servlet;
@@ -54,8 +54,6 @@ public class JackworksDeleteServlet extends HttpServlet {
 			//削除対象の存在チェック
 			if (jackworks.getJackworksId() == 0) {
 				message = "このJackWorksは、すでに削除されています。";
-				error = "monthJackworks";
-				return;
 			}
 
 			//取得したJackWorksの情報を削除するメソッド
@@ -79,6 +77,7 @@ public class JackworksDeleteServlet extends HttpServlet {
 			}
 
 			if (("").equals(error)) {
+				request.setAttribute("message", message);
 				request.setAttribute("cmd", cmd);
 
 				//申請一覧画面への遷移用
