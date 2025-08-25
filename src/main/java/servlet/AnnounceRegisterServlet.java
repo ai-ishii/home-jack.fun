@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/19
+ * 更新日 : 2025/08/25
  */
 package servlet;
 
@@ -34,9 +34,12 @@ public class AnnounceRegisterServlet extends HttpServlet {
 		// 受け取る文字のコードを指定
 		request.setCharacterEncoding("UTF-8");
 
-		// 変数宣言
+		// エラー用コマンド
 		String error = "";
-		String cmd = "";
+		// エラー文格納用
+		String message = "";
+		// 遷移先のパス
+		String path = "/announce";
 
 		// オブジェクト生成
 		Announce announce = new Announce();
@@ -51,7 +54,7 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			String text = request.getParameter("text");
 			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
 			int categoryId = Integer.parseInt(request.getParameter("category_id"));
-			
+
 			// セッションから情報を取得する
 			String author = (String) session.getAttribute("user_name");
 
@@ -77,30 +80,31 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			announceDAO.regist(announce);
 
 		} catch (DateTimeParseException e) {
-			error = "時刻の読み取りに失敗しました。";
+			message = "時刻の読み取りに失敗しました。";
 			//お知らせ登録画面へ遷移
-			cmd = "announce";
+			error = "announce";
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\r\nお知らせの登録ができませんでした。";
+			message = "システムの一時的な問題により、お知らせ情報の登録ができませんでした。";
 			//ログイン画面へ遷移
-			cmd = "logout";
-			
+			error = "logout";
+
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 
 		} finally {
-			
+
 			if (!("").equals(error)) {
-				request.setAttribute("cmd", cmd);
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
 			}
 
-			if (("").equals(error)) {
-				request.getRequestDispatcher("/announce").forward(request, response);
-			}
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 
