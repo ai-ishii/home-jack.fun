@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：占部） -->
-<!-- 作成日：8/7　最終更新日：8/22 17:33 -->
+<!-- 作成日：8/7　最終更新日：8/25 10:46 -->
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.time.LocalDateTime,java.util.Date,java.sql.Timestamp"%>
@@ -448,8 +448,8 @@ button.btn-border:active:before {
 								</div>
 							</td>
 						</tr>
-						</form>
 					</table>
+					</form>
 				</div>
 			</div>
 	</div>
