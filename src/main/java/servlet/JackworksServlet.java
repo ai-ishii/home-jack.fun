@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日：2025/07/08
- * 更新日：2025/08/21
+ * 更新日：2025/08/25
  */
 
 package servlet;
@@ -54,6 +54,7 @@ public class JackworksServlet extends HttpServlet {
 			String keyword = (String) request.getAttribute("keyword");
 			//SearchJackworksからcmd=searchを受け取る
 			cmd = (String) request.getAttribute("cmd");
+			message = (String) request.getAttribute("message");
 
 			if (cmd == null) {
 				cmd = "";
@@ -91,6 +92,7 @@ public class JackworksServlet extends HttpServlet {
 			}
 
 			if (("").equals(error)) {
+				request.setAttribute("message", message);
 				request.setAttribute("cmd", cmd);
 			}
 

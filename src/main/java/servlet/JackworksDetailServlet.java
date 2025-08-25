@@ -4,7 +4,7 @@
  * 作成者：青木美波
  * 
  * 作成日 2025/07/08
- * 更新日 2025/08/21
+ * 更新日 2025/08/25
  */
 
 package servlet;
@@ -40,6 +40,12 @@ public class JackworksDetailServlet extends HttpServlet {
 
 			//jackworksRequest.jspからcmd=requestを受け取る
 			cmd = request.getParameter("cmd");
+
+			//ぬるぽ対策
+			if (cmd == null) {
+				cmd = "";
+			}
+
 			//JackWorksのJackWorksIDを取得する
 			String jackworksId = request.getParameter("jackworksId");
 
@@ -49,7 +55,7 @@ public class JackworksDetailServlet extends HttpServlet {
 			//削除対象の存在チェック
 			if (jackworks.getJackworksId() == 0) {
 				message = "このJackWorksは、すでに削除されています。";
-				error = "monthJackworks";
+				path = "/monthJackworks";
 			}
 
 			// 取得したListをリクエストスコープに"jack_list"という名前で格納する
@@ -73,7 +79,12 @@ public class JackworksDetailServlet extends HttpServlet {
 			}
 
 			if (("").equals(error)) {
+				request.setAttribute("message", message);
 				request.setAttribute("cmd", cmd);
+
+				if (cmd.equals("request")) {
+					path = "/jackworksRequest";
+				}
 			}
 
 			request.getRequestDispatcher(path).forward(request, response);
