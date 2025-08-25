@@ -1,3 +1,11 @@
+/*
+ * 権限分け
+ * 
+ * 作成者：月向亮太
+ * 
+ * 作成日：2025/8/25
+ * 最終更新日: 2025/8/25
+ */
 package filter;
 
 import java.io.IOException;
