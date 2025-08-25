@@ -1,11 +1,16 @@
 <%--
 JackWorks登録画面
+
 作成者：青木美波
+更新者：占部虎司郎
+
 作成日 2025/07/10
+更新日：今日
  --%>
  
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.text.SimpleDateFormat,java.util.Date,java.sql.Timestamp,java.util.ArrayList,bean.Jackworks,bean.Monthjack"%>
+<%@page import="jakarta.servlet.http.HttpSession" %>
 
 <%
 //ページ分けを行うためのcmdを受け取る
@@ -14,12 +19,17 @@ String cmd = (String) request.getAttribute("cmd");
 if(cmd == null){
 	cmd="";
 }
+
+//PREVボタンで戻る際の値保持のためセッションから受け取る。
+HttpSession sessionJack = request.getSession();
+Jackworks jack = new Jackworks();
+jack = (Jackworks)session.getAttribute("jack");
 %>
 
 <html>
 <head>
 <!-- タイトル -->
-<title>JackWorks</title>
+<title>JackWorks申請 | Home-Jack</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="<%=request.getContextPath()%>/js/error.js"></script>
@@ -30,7 +40,7 @@ if(cmd == null){
 <style>
 
 #contents {
-	width: 90%;
+	width: 80%;
 	margin-right: auto;
 	margin-left: auto;
 }
@@ -69,7 +79,7 @@ if(cmd == null){
 
 textarea {
 	resize: none;
-	width: 336px;
+	width: 100%;
 	height: 100px;
 }
 
@@ -83,25 +93,19 @@ textarea {
 	display: flex;
 }
 
-/* 登録ボタンのデザイン */
-*, *:before, *:after {
-	-webkit-box-sizing: inherit;
-	box-sizing: inherit;
-}
-
-html {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 62.5%;
+.topSpace{
+margin-top: 24px;
 }
 
 .btn, a.btn, button.btn {
-	font-size: 1.4rem;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	font-size: 14px;
 	font-weight: 700;
 	line-height: 1.5;
 	position: relative;
 	display: inline-block;
-	padding: 0.5rem 2rem;
+	padding: 5px 20px;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -112,13 +116,15 @@ html {
 	text-align: center;
 	vertical-align: middle;
 	text-decoration: none;
-	letter-spacing: 0.1em;
+	letter-spacing: 1.4px;
 	color: #212529;
-	border-radius: 0.5rem;
+	border-radius: 5px;
 	border: none;
 }
 
 button.btn-border {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	margin-bottom: 12px;
 	padding: 0;
 	-webkit-transition: all 0.3s;
@@ -126,17 +132,21 @@ button.btn-border {
 	border-radius: 0;
 }
 
-button.btn-border span {
+button.btn-border span.btnUp {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	position: relative;
 	display: block;
-	padding: 0.6rem 1.8rem;
+	padding: 6px 18px;
 	color: #000;
 	border: 2px solid #000;
-	border-radius: 0.5rem;
+	border-radius: 5px;
 	background: #fff;
 }
 
 button.btn-border:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	position: absolute;
 	bottom: -8px;
 	left: 0;
@@ -159,21 +169,115 @@ button.btn-border:before {
 }
 
 button.btn-border:hover {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 3px);
 	transform: translate(0, 3px);
 }
 
 button.btn-border:hover:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	bottom: -5px;
 }
 
 button.btn-border:active {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	-webkit-transform: translate(0, 7px);
 	transform: translate(0, 7px);
 }
 
 button.btn-border:active:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
 	bottom: -1px;
+}
+
+/* 黒小見出し */
+.subBlack{
+font-size: 18px;
+color: #363636;
+margin-left: 10px;
+margin-right: auto;
+margin-bottom: 2px;
+}
+
+/* グレーの縦線 */
+.nintendoStripe{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;
+border-left: 5px solid #aaaaaa;
+}
+
+/* テーブル間隔開ける */
+.textPadd{
+padding-bottom: 16px;
+}
+
+/* 日付ボックス */
+.dateBox{
+height: 30px;
+font-size: 16px;
+}
+
+/* テキストボックス */
+.monthBox{
+width: 100%;
+height: 30px;
+font-size: 16px;
+}
+
+/* 少しの空間 */
+.tdMag{
+padding-bottom: 4px;
+}
+
+/* aタグの初期CSSのリセット */
+.jackReset{
+text-decoration: none;
+color: #000;
+}
+
+/* 中央揃えのためのダミー */
+.jackDummy{
+width: 150px;
+}
+
+/* 戻るボタンの大枠 */
+.jackFlex{
+display: flex;
+justify-content: space-between;
+align-items: center;
+height: 30px;
+}
+
+/* 矢印の枠 */
+.yoruArrow{
+width: 150px;
+}
+
+/* 矢印 */
+.arrow{
+display: inline-block;
+vertical-align: middle;
+transition: transform 0.5s ease;
+overflow: visible; 				/* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf{
+height: 100%;
+font-family: "Yomogi", cursive;
+font-size: 25px;
+}
+
+/* 矢印ホバー時の動き */
+.jackReset:hover svg path {
+transform: translateX(-10px);
+stroke: #f9de95;
+fill: #f9de95;
 }
 
 </style>
@@ -196,62 +300,115 @@ button.btn-border:active:before {
 		<!-- 入力された今月のJackWorksのデータを送るフォーム -->
 		<form action="<%=request.getContextPath()%>/jackworksRegister"  class="error-form">
 		
+		<div class="topSpace"></div>
+		
 		<% if(cmd.equals("")){ %>
 
 			<!-- 入力フォーム -->
 			<table id="box-mar">
 				<tr>
-					<td style="display: flex">ポイント取得日
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">ポイント取得日</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td>
+					<td class="textPadd">
 					<label for="start_date"></label>
-					<input type="date" class="error-date" name="date" max="9999-12-31">
+					<input type="date" class="error-date dateBox" name="date" max="9999-12-31" 
+						value="<%if(jack != null){%><%=jack.getPointsGetDate()%><%}%>">
 					</td>
 				<tr>
-					<td style="display: flex">社員No
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">社員No</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="employeeNumber" value="" size="45" placeholder="001234" class="num-required error-employee"></td>
+					<td class="textPadd">
+						<input type="text" name="employeeNumber" size="45" placeholder="001234" 
+							class="num-required error-employee monthBox" value="<%if(jack != null){%><%=jack.getEmployeeNumber()%><%} %>">
+					</td>
 				<tr>
-					<td style="display: flex">氏名
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">氏名</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="name" value="" size="45" placeholder="山田太郎" class="required"></td>
+					<td class="textPadd">
+						<input type="text" name="name" value="<%if(jack != null){%><%=jack.getName()%><%}%>" size="45" placeholder="山田太郎" class="required monthBox">
+					</td>
 				<tr>
-					<td style="display: flex">カテゴリ
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">カテゴリ</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="category" value="" size="45" placeholder="チーム取組み" class="required"></td>
+					<td class="textPadd">
+						<input type="text" name="category" value="<%if(jack != null){%><%=jack.getCategory()%><%} %>" 
+							size="45" placeholder="チーム取組み" class="required  monthBox">
+					</td>
 				<tr>
-					<td style="display: flex">評価項目
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">項目</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="assessment" rows="" cols="" placeholder="チーム活動報告の投稿" class="required"></textarea></td>
+					<td class="textPadd">
+						<input type="text" name="assessment" placeholder="チーム活動報告の投稿" 
+							class="required monthBox" value="<%if(jack != null){%><%=jack.getAssessment()%><%} %>">
+					</td>
 				<tr>
-					<td style="display: flex">付与ポイント
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">付与ポイント</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="point" value="" size="45" placeholder="10" class="num-required"></td>
+					<td class="textPadd">
+						<input type="text" name="point" value="<%if(jack != null){%><%=jack.getPoint()%><%} %>" 
+							size="45" placeholder="10" class="num-required monthBox">
+					</td>
 				<tr>
-					<td style="display: flex">備考</td>
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">備考</div>
+						</div>
+					</td>
 				</tr>
-					<td><textarea name="note" rows="" cols=""></textarea></td>
+					<td class="textPadd"><textarea name="note" rows="" cols=""><%if(jack != null){%><%=jack.getNote()%><%} %></textarea></td>
 				<tr>
 			</table>
 				
 				<!-- 登録ボタン -->
-				<div id="JackWorks-submit">
-					<button type="submit" class="btn btn-border">
+				<div class="box-mar">
+				<div class="jackFlex">
+					<div class="yoruArrow">
+					<a href="<%=request.getContextPath()%>/monthJackworks" class="jackReset">
+					<svg class="arrow" width="50"  height="20">
+						<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+						<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+					</svg>
+					<span class="beaf">PREV</span>
+					</a>
+					</div>
+					<div>
 					<input type="hidden" name="cmd" value="next">
-						<span>申請</span>
+					<button type="submit" class="btn btn-border">
+					<span class="btnUp">更新</span>
 					</button>
+					</div>
+					<div class="jackDummy"></div>
+				</div>
 				</div>
 		</form>
 				<% } %>
@@ -265,81 +422,136 @@ button.btn-border:active:before {
 				<!-- 入力フォーム -->
 				<table id="box-mar">
 				<tr>
-					<td style="display: flex">案件名
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">案件名</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="project" value="" size="45" class="required"></td>
 				<tr>
-					<td style="display: flex">作業時期
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">作業時期</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="workSeason" value="" size="45"  class="required"></td>
 				<tr>
-					<td style="display: flex">単価
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">単価</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
 				<tr>
-					<td style="display: flex">精算
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">精算</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
 				<tr>
-					<td style="display: flex">作業場所
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">作業場所</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="workPlace" value="" size="45" class="required"></td>
 				<tr>
-					<td style="display: flex">作業内容
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">作業内容</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><textarea name="workContent" rows="" cols="" class="required"></textarea></td>
 				<tr>
-					<td>フェーズ</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">フェーズ</div>
+						</div>
+						</td>
 				</tr>
-					<td><textarea name="phase" rows="" cols=""></textarea></td>
+					<td class="tdMag"><textarea name="phase" rows="" cols=""></textarea></td>
 				<tr>
-					<td>開発言語</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">開発言語</div>
+						</div>
+					</td>
 				</tr>
 					<td><textarea name="language" rows="" cols=""></textarea></td>
 				<tr>
-					<td>必要スキル</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">必要スキル</div>
+						</div>
+					</td>
 				</tr>
 					<td><textarea name="skill" rows="" cols=""></textarea></td>
 				<tr>
-					<td>必要人数</td>
+					<td class="tdMag"><div class="nintendoStripe">
+							<div class="subBlack">必要人数</div>
+						</div>
+					</td>
 				</tr>
 					<td><input type="text" name="needPeople" value="" size="45"></td>
 				<tr>
-					<td style="display: flex">営業担当者
+					<td style="display: flex" class="tdMag"><div class="nintendoStripe">
+							<div class="subBlack">営業担当者</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="seller" value="" size="45" class="required"></td>
 				<tr>
-					<td style="display: flex">連絡先
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">連絡先</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><textarea name="contact" rows="" cols="" class="required"></textarea></td>
 				<tr>
-					<td>その他</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">その他</div>
+						</div></td>
 				</tr>
 					<td><textarea name="other" rows="" cols=""></textarea></td>
 			</table>
 
 			<!-- 登録ボタン -->
-			<div id="JackWorks-submit">
-				<button type="submit" class="btn btn-border">
-				<input type="hidden" name="cmd" value="register">
-					<span>申請</span>
-				</button>
+			<div class="box-mar">
+			<div class="jackFlex">
+					<div class="yoruArrow">
+					<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp" class="jackReset">
+					<svg class="arrow" width="50"  height="20">
+						<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+						<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+					</svg>
+					<span class="beaf">PREV</span>
+					</a>
+					</div>
+					<div>
+					<input type="hidden" name="cmd" value="register">
+					<button type="submit" class="btn btn-border">
+					<span class="btnUp">更新</span>
+					</button>
+					</div>
+					<div class="jackDummy"/>
+				</div>
 			</div>
 			</form>
 			
