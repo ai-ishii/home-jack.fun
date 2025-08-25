@@ -2,7 +2,7 @@
  * プログラム名：Home-Jack.ver.2.0
  * 作成者：青木美波
  * 作成日：2025/7/14
- * 更新日：2025/8/21
+ * 更新日：2025/8/25
  */
 
 package servlet;
@@ -56,6 +56,7 @@ public class MonthJackworksServlet extends HttpServlet {
 			String keyword = (String) request.getAttribute("keyword");
 			//SearchJackworksからcmd=no-resultを受け取る
 			cmd = (String) request.getAttribute("cmd");
+			message = (String) request.getAttribute("message");
 
 			//画面遷移のための処理
 			//後々消す
@@ -80,6 +81,9 @@ public class MonthJackworksServlet extends HttpServlet {
 
 			//MonthJackWorksの全情報を取得するメソッド
 			monthJack = monthJackDAO.selectAll();
+			
+			//jackという名前のセッションを削除する
+			session.removeAttribute("jack");
 
 			//取得したmonthJackをリクエストスコープにmonthJackで登録
 			session.setAttribute("monthJack", monthJack);
@@ -105,6 +109,7 @@ public class MonthJackworksServlet extends HttpServlet {
 			}
 
 			if (("").equals(error)) {
+				request.setAttribute("message", message);
 				request.setAttribute("cmd", cmd);
 			}
 

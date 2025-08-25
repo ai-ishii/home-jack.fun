@@ -5,7 +5,7 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/03
- * 最終更新日：2025/08/22
+ * 最終更新日：2025/08/25
  */
 --%>
 
@@ -69,8 +69,6 @@ String tabCmd = (String) request.getAttribute("cmd");
 					<li><a
 						href="<%=request.getContextPath()%>/goalConfirm?cmd=confirm"><p
 								class="lettuce">個人目標確認</p></a></li>
-					<li><a href="<%=request.getContextPath()%>/selectboxtest"><p
-								class="lettuce">個人目標一覧（テスト用）</p></a></li>
 					<li><a href="<%=request.getContextPath()%>/monthJackworks"><p
 								class="ketchup">Jackworks</p></a></li>
 					<li>
@@ -97,6 +95,8 @@ String tabCmd = (String) request.getAttribute("cmd");
 							<li>wii</li>
 						</ul>
 					</li>
+					<li><a href="<%= request.getContextPath() %>/userDetail"><p
+								class="pickles">社員情報詳細</p></a></li>
 					<li><a href="<%=request.getContextPath()%>/home"><p
 								class="pickles">ホームに戻る</p></a>
 						<ul class="pickles-detail">

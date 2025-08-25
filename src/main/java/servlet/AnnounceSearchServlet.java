@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/18
+ * 更新日 : 2025/08/25
  */
 package servlet;
 
@@ -33,11 +33,14 @@ public class AnnounceSearchServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 変数宣言
+		// エラー用コマンド
 		String error = "";
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
 		String cmd = "";
-		
-		String search = "";
+		// 遷移先のパス
+		String path = "/view/announce.jsp";
 
 		// 日付検索の初期値の設定
 		int year = 2012;
@@ -60,32 +63,32 @@ public class AnnounceSearchServlet extends HttpServlet {
 		Timestamp endDate = new Timestamp(System.currentTimeMillis());
 
 		// フォームから送信した検索方法をを受け取る
-		search = request.getParameter("cmd");
-		
-		if(search == null) {
-			search = "";
+		cmd = request.getParameter("cmd");
+
+		if (cmd == null) {
+			cmd = "";
 		}
 
 		try {
 			//検索の場合
-			if ("keyword".equals(search)) {
+			if ("keyword".equals(cmd)) {
 				// フォームからパラメータを受け取る
 				String keyword = request.getParameter("keyword");
 
 				// メソッドを呼び出してSQL文実行
 				announceList = announceDAO.selectByKeyword(keyword);
-				
+
 				//検索結果が0件の場合
-				if(announceList.size() == 0) {
-					search = "no-result";
+				if (announceList.size() == 0) {
+					cmd = "no-result";
 				}
-				
+
 				// 検索キーワードをリクエストスコープに登録する
 				request.setAttribute("keyword", keyword);
 			}
 
 			//フィルターの場合
-			if ("filter".equals(search)) {
+			if ("filter".equals(cmd)) {
 				// フォームからパラメータを受け取る
 				String announceFlag = request.getParameter("announce_flag");
 				String strAnnounceCategoryId = request.getParameter("category_id");
@@ -128,10 +131,10 @@ public class AnnounceSearchServlet extends HttpServlet {
 				}
 
 				announceList = announceDAO.selectByFilter(announceFlag, strAnnounceCategoryId, startDate, endDate);
-				
+
 				//絞り込み結果が0件の場合
-				if(announceList.size() == 0) {
-					search = "no-result";
+				if (announceList.size() == 0) {
+					cmd = "no-result";
 				}
 
 			}
@@ -139,29 +142,34 @@ public class AnnounceSearchServlet extends HttpServlet {
 			categoryList = announceDAO.selectCategoryAll();
 
 		} catch (DateTimeParseException e) {
-			error = "時刻の読み取りに失敗しました。";
+			message = "時刻の読み取りに失敗しました。";
 			//お知らせ登録画面へ遷移
-			cmd = "announce";
+			error = "announce";
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\r\n検索結果の読み込みができませんでした。";
+			message = "システムの一時的な問題により、検索結果の読み込みができませんでした。";
 			//ログイン画面へ遷移
-			cmd = "logout";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
+			
 		} finally {
 			if (!("").equals(error)) {
-				request.setAttribute("cmd", cmd);
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
 			}
-			
+
 			if (("").equals(error)) {
-				request.setAttribute("cmd", search);
+				request.setAttribute("cmd", cmd);
 				request.setAttribute("announceList", announceList);
 				request.setAttribute("categoryList", categoryList);
-				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
 			}
+			
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 

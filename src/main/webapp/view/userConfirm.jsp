@@ -1,10 +1,10 @@
 <%--
-個人情報詳細画面
+個人情報確認画面
 
 作成者:月向亮太
 
 作成日: 2025/8/21
-更新日: 2025/8/25
+更新日: 2025/8/22
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -108,6 +108,9 @@ text-align: center;
 				<br>
 				
 				
+				
+				<h3 id = "koji-name">以下の内容で登録いたします。</h3>
+				
 				<form action="<%= request.getContextPath() %>/userConfirm" method="post">
 				
 				<h3 id="koji-name">個人情報：<%=user.getName() %></h3>
@@ -176,10 +179,14 @@ text-align: center;
 				</table>
 				
 				<div class="button-container">	
-					<button type="submit" name="registerConfirm" value="変更する" class="btn btn-border">
-					変更する
+					<button type="submit" name="registerConfirm" value="戻る" class="btn btn-border">
+					戻る
 					</button>
 				
+					<button type="submit" name="registerConfirm" value="完了" class="btn btn-border">
+					完了
+					</button>
+				</div>
 					</form>
 				
 				</div>

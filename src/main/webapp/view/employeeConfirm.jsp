@@ -60,13 +60,16 @@ String position = employee.getPosition();
 <html>
 <head>
 <!-- タイトル -->
-<title>確認画面 - 社員紹介</title>
+<title>確認画面 | Home-Jack</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap')
+	;
 /* ページ全体（div）*/
 #employeeUpdate {
 	position: relative;
@@ -141,6 +144,44 @@ textarea {
 a {
 	text-decoration: none;
 }
+
+/* 矢印の枠 */
+/* marginとかは自分で削ったり足したりしてくださいな */
+.yoruArrow {
+    display: flex;
+    height: 30px;
+    margin: 30px auto 0 100px;
+    align-items: flex-end;
+    width: 150px;
+}
+
+.yoruArrow:hover {
+	cursor: pointer;
+}
+
+/* 矢印 */
+.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	transition: transform 0.5s ease;
+	overflow: visible; /* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf {
+	all: unset;
+	height: 100%;
+	font-family: "Yomogi", cursive;
+	font-size: 25px;
+}
+
+/* 矢印ホバー時の動き(左) */
+.yoruArrow:hover svg path {
+	transform: translateX(-10px);
+	stroke: #f9de95;
+	fill: #f9de95;
+}
+
 </style>
 
 <body>
@@ -154,7 +195,7 @@ a {
 			<div id="employeeUpdate">
 
 
-				<h3>以下の内容で変更します</h3>
+				<h3>以下の内容で修正します</h3>
 
 				<!-- 入力部分 -->
 				<form action="<%= request.getContextPath() %>/employeeCommit" method="post" >
@@ -195,41 +236,48 @@ a {
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="developer">開発経験年数</label></td>
-								<td id="value"><input id="readonlyInput" type="number" name="developer" value="<%=developer%>" style="margin-left: 0;" min="0">年</td>
+								<td id="value"><input readonly id="readonlyInput" type="number" name="developer" value="<%=developer%>" style="margin-left: 0;" min="0">年</td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="langSkill">習得技術（言語）</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="langSkill" value="<%=langSkill%>"></td>
+								<td id="value"><input readonly id="readonlyInput" type="text" name="langSkill" value="<%=langSkill%>"></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="middleSkill">習得言語（ミドルウェア）</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="middleSkill" value="<%=middleSkill%>"></td>
+								<td id="value"><input readonly id="readonlyInput" type="text" name="middleSkill" value="<%=middleSkill%>"></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="hobby">趣味</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="hobby" value="<%=hobby%>"></td>
+								<td id="value"><input readonly id="readonlyInput" type="text" name="hobby" value="<%=hobby%>"></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="talent">特技</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="talent" value="<%=talent%>"></td>
+								<td id="value"><input readonly id="readonlyInput" type="text" name="talent" value="<%=talent%>"></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="intro">自己紹介</label></td>
-								<td id="value"><textarea id="readonlyInput" name="intro"><%=intro%></textarea></td>
+								<td id="value"><textarea readonly id="readonlyInput" name="intro"><%=intro%></textarea></td>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="position">役職</label></td>
-								<td id="value"><input id="readonlyInput" type="text" name="position" value="<%=position%>"></td>
+								<td id="value"><input readonly id="readonlyInput" type="text" name="position" value="<%=position%>"></td>
 							</tr>
 						</table>
 
+						<div class="yoruArrow">
+						<svg class="arrow" width="50" height="20">
+			<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
+			<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
+		</svg>
+		<input class="beaf" type="submit" name="confirm" value="BACK">
+								<input type="hidden" name="userId" value="<%= userId %>">
+						</a>
+					</div>
 						
-						<input type="submit" name="confirm" value="編集画面に戻る" style="width: 120px; height: 50px; font-size: large;">
-						<input type="hidden" name="userId" value="<%= userId %>">
-						
-						<input type="hidden" name="user_id" value="<%= user.getUserId() %>">
-						<input type="submit" name="confirm" value="完了" style="width: 120px; height: 50px; font-size: large;">
-						
+						<div id="submitBtn">
+							<input type="submit" class="btn btn-border" value="完了">
+							<input type="hidden" name="user_id" value="<%= user.getUserId() %>">
+						</div>
 					</form>
 			</div>
 

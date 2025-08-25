@@ -5,23 +5,26 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月20日
+ 最終更新日：8月25日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="bean.Goal, bean.GoalQuarter, bean.GoalDepartment, java.util.ArrayList"%>
+<%@page import="bean.User, bean.Goal, bean.GoalQuarter, bean.GoalDepartment, java.util.ArrayList"%>
 
 <%
 //オブジェクト宣言
+User user = new User();
 Goal goal = new Goal();
 GoalDepartment goalDepartment = new GoalDepartment();
 
 //リクエストスコープから要素を取得する
+user = (User) request.getAttribute("user");
 goal = (Goal) request.getAttribute("goal");
 goalDepartment = (GoalDepartment) request.getAttribute("goalDepartment");
 ArrayList<GoalQuarter> goalQuarterList = (ArrayList<GoalQuarter>) request.getAttribute("goalQuarterList");
 
 //変数宣言
+String name = "";
 String managementTheme = "";
 String groupCode = "";
 String departmentGoal = "";
@@ -32,6 +35,11 @@ int result = 0;
 String resultComment = "";
 int resultReviewer = 0;
 String resultCommentReviewer = "";
+
+// userの値がnullでなければ
+if (user != null) {
+	name = user.getName();
+}
 
 //goalの値がnullでなければ
 if (goal != null) {
@@ -53,6 +61,7 @@ if (goalDepartment != null) {
 	departmentGoal = goalDepartment.getDepartmentGoal();
 	groupGoal = goalDepartment.getGroupGoal();
 }
+
 %>
 
 <html>
@@ -402,6 +411,21 @@ color: #6eddb3;
 			
 			</div>
 			
+			<!--  セッションから権限分けを取得-->
+
+			<% 
+			String userRole = (String) session.getAttribute("userRole");
+			if (userRole != null && (userRole.equals("POS_MNGR"))){
+			%>
+			<div>
+				<a href="<%= request.getContextPath() %>/">個人目標一覧へ</a>
+			</div>
+			
+			<%
+			}
+			%>
+			
+			
 			<div class="editBox">
 			<a class="editButton" onclick="location.href='<%=request.getContextPath()%>/goalConfirm?cmd=update'">
 			<svg class="memo" version="1.1" id="_x31_0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="width: 25px; height: 25px; opacity: 1;" xml:space="preserve">
@@ -431,6 +455,11 @@ color: #6eddb3;
 			</div>
 			
 			<div class="seal">
+				
+				<div>
+					<p><%=name%></p>
+				</div>
+				
 				<!-- 経営テーマのボックス -->
 				<div class="adminTitle">
 				経営テーマ
