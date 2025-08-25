@@ -224,7 +224,7 @@ ul {
 		%>
 			<div>
 				プロフィールが未登録です。
-				<a href="<%=request.getContextPath()%>/view/userRegister.jsp">こちらから登録してください。</a>
+				<a href="<%=request.getContextPath()%>/view/userRegister.jsp?cmd=register">こちらから登録してください。</a>
 			</div>
 			
 		<%

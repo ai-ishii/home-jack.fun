@@ -26,6 +26,16 @@ public class HomeServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		commonProcess(request, response);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		commonProcess(request, response);
+	}
+
+	private void commonProcess(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		
 		String error = "";
 		String cmd = "";
