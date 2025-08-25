@@ -1,5 +1,5 @@
 <!-- 社員紹介 一覧機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：8/22 17:00 -->
+<!-- 作成日：7/2　最終更新日：8/25 14:27 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -31,7 +31,7 @@ CommonTable commonTable = new CommonTable();
 <html>
 <head>
 <!-- タイトル -->
-<title>一覧 - 社員紹介</title>
+<title>社員紹介一覧 | Home-Jack</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -84,14 +84,14 @@ table {
 }
 
 /* 社員詳細に飛ぶリンク*/
-a {
+#employee_line a {
 	text-align: center;
 	text-decoration: none;
 	/*	大きさが変わるときのスピード*/
 	transition: 0.3s;
 }
 
-a:hover {
+#employee_line a:hover {
 	/*	どれくらい大きくなるか*/
 	transform: scale(1.1);
 }
@@ -134,7 +134,6 @@ a:hover {
 	color: black;
 	font-size: 14px;
 	cursor: pointer;
-	
 }
 
 .filter_box {
@@ -221,6 +220,29 @@ a:hover {
 .modal_content p {
 	margin: 1em 0;
 }
+
+.register_box a {
+	padding: 10px 20px;
+	margin: 0 15px;
+	width: 100px;
+	height: 20px;
+	border-radius: 20px;
+	border: solid 2px orange;
+	background-color: orange;
+	text-align: center;
+	color: #fff;
+	letter-spacing: 0.1em;
+}
+
+.register_box a:hover {
+	background-color: #fff;
+	color: orange;
+	border: solid 2px orange;
+}
+
+a {
+	text-decoration: none;
+}
 </style>
 
 <body>
@@ -234,24 +256,14 @@ a:hover {
 				<!-- タイトル部分 -->
 				<table style="width: 80%;">
 					<tr>
-						
+
 						<td style="width: 20%;">
-							<form action="<%=request.getContextPath() %>/employeeSearch" class="search-form">
-							<input type="search" name="keyword"
-								style="height: 20px;"> 
-							<button type="submit" aria-label="検索"></button>
-						</form>
+							<form action="<%=request.getContextPath()%>/employeeSearch"
+								class="search-form">
+								<input type="search" name="keyword" style="height: 20px;">
+								<button type="submit" aria-label="検索"></button>
+							</form>
 						</td>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
 						<!--　絞り込み検索を作成する予定ですというメモです。
 						<td>
 						<div class="filter_box">
@@ -279,31 +291,20 @@ a:hover {
 						</td>
 						
 						-->
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
 						<td style="width: 40%;">
 							<h1>社員紹介</h1>
 						</td>
-						<td style="width: 20%;"><a
-							href="<%=request.getContextPath()%>/view/employeeRegister.jsp?cmd=register">
-								<input type="submit" value="登録"
-								style="width: 80px; height: 50px; font-size: large;">
-						</a></td>
+						<td style="width: 20%;">
+							<div class="register_box">
+								<a
+									href="<%=request.getContextPath()%>/view/employeeRegister.jsp?cmd=register"
+									class="box-link">登録</a>
+							</div>
+						</td>
 					</tr>
 				</table>
-				
-				
+
+
 
 				<div id="employee_list">
 					<!-- 社員一覧の1行分（5枚ずつ） -->
@@ -315,20 +316,22 @@ a:hover {
 								String department = commonTable.selectDepartment(user.getDepartmentId());
 								String group = commonTable.selectGroup(user.getGroupId());
 						%>
-						<a href="<%=request.getContextPath()%>/employeeDetail
+						<a
+							href="<%=request.getContextPath()%>/employeeDetail
 								?user_id=<%=userList.get(i).getUserId()%>
 								&work=detail">
 
 							<div id="employee_card">
-								<img src="<%=request.getContextPath()%>/employeePhoto
+								<img
+									src="<%=request.getContextPath()%>/employeePhoto
 									?user_id=<%=userList.get(i).getUserId()%>&work=view"
 									alt="社員画像">
 								<p id="employee_name"><%=userList.get(i).getName()%></p>
 								<p id="employee_detail">
-									<%= department %>
+									<%=department%>
 								</p>
 								<p id="employee_detail">
-									<%= group %>
+									<%=group%>
 								</p>
 								<p id="employee_detail"><%=joiningDates[i]%>入社
 								</p>
@@ -350,12 +353,12 @@ a:hover {
 			</div>
 		</div>
 	</div>
-		
+
 	<script>
-		const modal = document.querySelector('.js_modal'), 
-			open = document.querySelector('.js_modal_open'), 
-			close = document.querySelector('.js_modal_close'),
-			content = document.querySelector('.js_modal_content');
+		const modal = document.querySelector('.js_modal'), open = document
+				.querySelector('.js_modal_open'), close = document
+				.querySelector('.js_modal_close'), content = document
+				.querySelector('.js_modal_content');
 
 		function modalOpen() {
 			modal.classList.add('is-active');
@@ -371,8 +374,6 @@ a:hover {
 			modal.classList.remove('is-active');
 		}
 		addEventListener('blur', modalOut);
-
-		
 	</script>
 </body>
 </html>
