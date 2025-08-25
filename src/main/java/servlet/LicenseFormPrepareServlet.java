@@ -3,7 +3,7 @@
  * 
  * 作詞者：桑原岳
  * 
- * 最終更新日：2025/08/21
+ * 最終更新日：2025/08/22
  * 
  **/
 
@@ -44,8 +44,8 @@ public class LicenseFormPrepareServlet extends HttpServlet {
 		licenseNameList = requestDAO.selectAllLicenseName();
 		
 		// リストを licenseForm.jsp に送る
-		request.setAttribute("userList", userList);
-		request.setAttribute("licenseNameList", licenseNameList);
+		session.setAttribute("userList", userList);
+		session.setAttribute("licenseNameList", licenseNameList);
 		request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
 	}
 }

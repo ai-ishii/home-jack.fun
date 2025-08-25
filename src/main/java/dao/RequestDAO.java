@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  *  
- * 最終更新日：2025/08/21
+ * 最終更新日：2025/08/22
  *  
  */
 package dao;
@@ -536,133 +536,317 @@ public class RequestDAO {
 	}
 
 	// 親テーブルに登録して request_id を返す
-    public long insertLicenseRequestID(int applicantId) {
-        String sql = "INSERT INTO "
-        		+ "request_info "
-        		+ "(applicant_id) "
-        		+ "VALUES (?)";
+	public long insertLicenseRequestID(int applicantId) {
+		String sql = "INSERT INTO "
+				+ "request_info "
+				+ "(applicant_id) "
+				+ "VALUES (?)";
 
-        try (Connection con = DAOconnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setInt(1, applicantId);
-            int affectedRows = pstmt.executeUpdate();
+			pstmt.setInt(1, applicantId);
+			int affectedRows = pstmt.executeUpdate();
 
-            if (affectedRows == 0) {
-                return -1; // 登録失敗
-            }
+			if (affectedRows == 0) {
+				return -1; // 登録失敗
+			}
 
-            try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return rs.getLong(1);
-                } else {
-                    return -1; // request_id 取得失敗
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
+			try (ResultSet rs = pstmt.getGeneratedKeys()) {
+				if (rs.next()) {
+					return rs.getLong(1);
+				} else {
+					return -1; // request_id 取得失敗
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 
-    // 子テーブル（license_request_info）に登録
-    public boolean insertLicenseRequestDetails(long requestId, LicenseRequestExclusive licenseRequestExclusive) {
-        String sql = "INSERT INTO "
-        		+ "license_request_info ("
-                + "request_id, "
-                + "group_id, "
-                + "department_id, "
-                + "license_id, "
-                + "exam_date, "
-                + "exam_time, "
-                + "receipt, "
-                + "passing, "
-                + "receipt_name, "
-                + "passing_name) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	// 子テーブル（license_request_info）に登録
+	public boolean insertLicenseRequestDetails(long requestId, LicenseRequestExclusive licenseRequestExclusive) {
+		String sql = "INSERT INTO "
+				+ "license_request_info ("
+				+ "request_id, "
+				+ "group_id, "
+				+ "department_id, "
+				+ "license_id, "
+				+ "exam_date, "
+				+ "exam_time, "
+				+ "receipt, "
+				+ "passing, "
+				+ "receipt_name, "
+				+ "passing_name) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection con = DAOconnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-            pstmt.setLong(1, requestId);
-            pstmt.setInt(2, licenseRequestExclusive.getGroupId());
-            pstmt.setInt(3, licenseRequestExclusive.getDepartmentId());
-            pstmt.setInt(4, licenseRequestExclusive.getLicenseId());
-            pstmt.setDate(5, Date.valueOf(licenseRequestExclusive.getExamDate()));
-            pstmt.setInt(6, licenseRequestExclusive.getExamTime());
-            pstmt.setBytes(7, licenseRequestExclusive.getReceipt());
-            pstmt.setBytes(8, licenseRequestExclusive.getPassing());
-            pstmt.setString(9, licenseRequestExclusive.getReceiptName());
-            pstmt.setString(10, licenseRequestExclusive.getPassingName());
+			pstmt.setLong(1, requestId);
+			pstmt.setInt(2, licenseRequestExclusive.getGroupId());
+			pstmt.setInt(3, licenseRequestExclusive.getDepartmentId());
+			pstmt.setInt(4, licenseRequestExclusive.getLicenseId());
+			pstmt.setDate(5, Date.valueOf(licenseRequestExclusive.getExamDate()));
+			pstmt.setInt(6, licenseRequestExclusive.getExamTime());
+			pstmt.setBytes(7, licenseRequestExclusive.getReceipt());
+			pstmt.setBytes(8, licenseRequestExclusive.getPassing());
+			pstmt.setString(9, licenseRequestExclusive.getReceiptName());
+			pstmt.setString(10, licenseRequestExclusive.getPassingName());
 
-            return pstmt.executeUpdate() > 0;
+			return pstmt.executeUpdate() > 0;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
-    // 部署名から department_id を取得
-    public int selectByDepartmentId(String department) {
-        String sql = "SELECT department_id FROM department_info WHERE department_name = ?";
+	// 部署名から department_id を取得
+	public int selectByDepartmentId(String department) {
+		String sql = "SELECT department_id FROM department_info WHERE department_name = ?";
 
-        try (Connection con = DAOconnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-            pstmt.setString(1, department);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("department_id");
-                } else {
-                    return -1; // 見つからなかった場合
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
+			pstmt.setString(1, department);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("department_id");
+				} else {
+					return -1; // 見つからなかった場合
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 
-    // グループ名から group_id を取得
-    public int selectByGroupId(String group) {
-        String sql = "SELECT group_id FROM group_info WHERE group_name = ?";
+	// グループ名から group_id を取得
+	public int selectByGroupId(String group) {
+		String sql = "SELECT group_id FROM group_info WHERE group_name = ?";
 
-        try (Connection con = DAOconnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-            pstmt.setString(1, group);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("group_id");
-                } else {
-                    return -1;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
+			pstmt.setString(1, group);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("group_id");
+				} else {
+					return -1;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 
-    // 資格名から license_id を取得
-    public int selectByLicenseId(String license) {
-        String sql = "SELECT license_id FROM license_info WHERE license_name = ?";
+	// 資格名から license_id を取得
+	public int selectByLicenseId(String license) {
+		String sql = "SELECT license_id FROM license_info WHERE license_name = ?";
 
-        try (Connection con = DAOconnection.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
-            pstmt.setString(1, license);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt("license_id");
-                } else {
-                    return -1;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
+			pstmt.setString(1, license);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("license_id");
+				} else {
+					return -1;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	// 親テーブルに登録して request_id を返す
+	public long insertReceiptFileProvisional(byte[] receiptBytes, String receiptFileName) {
+		String sql = "INSERT INTO "
+				+ "license_request_test_info "
+				+ "(receipt,receipt_name) "
+				+ "VALUES (?,?)";
+
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+			pstmt.setBytes(1, receiptBytes);
+			pstmt.setString(2, receiptFileName);
+
+			int affectedRows = pstmt.executeUpdate();
+
+			if (affectedRows == 0) {
+				return -1; // 登録失敗
+			}
+
+			try (ResultSet rs = pstmt.getGeneratedKeys()) {
+				if (rs.next()) {
+					return rs.getLong(1);
+				} else {
+					return -1; // request_id 取得失敗
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	// 親テーブルに登録して request_id を返す
+		public long insertPassingFileProvisional(byte[] passingBytes, String passingFileName) {
+			String sql = "INSERT INTO "
+					+ "license_request_test_info "
+					+ "(passing,passing_name) "
+					+ "VALUES (?,?)";
+
+			try (Connection con = DAOconnection.getConnection();
+					PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+				pstmt.setBytes(1, passingBytes);
+				pstmt.setString(2, passingFileName);
+
+				int affectedRows = pstmt.executeUpdate();
+
+				if (affectedRows == 0) {
+					return -1; // 登録失敗
+				}
+
+				try (ResultSet rs = pstmt.getGeneratedKeys()) {
+					if (rs.next()) {
+						return rs.getLong(1);
+					} else {
+						return -1; // request_id 取得失敗
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return -1;
+			}
+		}
+
+
+	
+	/** 既存ファイルを更新 */
+	public void updateReceiptFile(long fileId, byte[] fileBytes, String fileName) {
+		String sql = "UPDATE "
+				+ "license_request_test_info"
+				+ " SET "
+				+ "receipt = ?, "
+				+ "receipt_name = ? "
+				+ "WHERE license_request_test_id = ?";
+		try (Connection conn = DAOconnection.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setBytes(1, fileBytes);
+			ps.setString(2, fileName);
+			ps.setLong(3, fileId);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/** 既存ファイルを更新 */
+	public void updatePassingFile(long fileId, byte[] fileBytes, String fileName) {
+		String sql = "UPDATE "
+				+ "license_request_test_info"
+				+ " SET "
+				+ "passing = ?, "
+				+ "passing_name = ? "
+				+ "WHERE license_request_test_id = ?";
+		try (Connection conn = DAOconnection.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setBytes(1, fileBytes);
+			ps.setString(2, fileName);
+			ps.setLong(3, fileId);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/** ファイルバイト取得 */
+	public byte[] getReceiptFileById(long oldReceiptId) {
+		String sql = "SELECT "
+				+ "receipt "
+				+ "FROM "
+				+ "license_request_test_info "
+				+ "WHERE license_request_test_id = ?";
+		try (Connection conn = DAOconnection.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setLong(1, oldReceiptId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					return rs.getBytes("receipt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/** ファイルバイト取得 */
+	public byte[] getPassingFileById(long oldPassingId) {
+		String sql = "SELECT "
+				+ "passing "
+				+ "FROM "
+				+ "license_request_test_info "
+				+ "WHERE license_request_test_id = ?";
+		try (Connection conn = DAOconnection.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setLong(1, oldPassingId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					return rs.getBytes("passing");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/** ファイル名取得 */
+	public String getReceiptFileNameById(long fileId) {
+		String sql = "SELECT "
+				+ "receipt_name "
+				+ "FROM "
+				+ "license_request_test_info "
+				+ "WHERE license_request_test_id = ?";
+		try (Connection conn = DAOconnection.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setLong(1, fileId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					return rs.getString("receipt_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
+	/** ファイル名取得 */
+	public String getPassingFileNameById(long fileId) {
+		String sql = "SELECT "
+				+ "passing_name "
+				+ "FROM "
+				+ "license_request_test_info "
+				+ "WHERE license_request_test_id = ?";
+		try (Connection conn = DAOconnection.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setLong(1, fileId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					return rs.getString("passing_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 }
