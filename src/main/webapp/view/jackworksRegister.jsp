@@ -10,6 +10,7 @@ JackWorks登録画面
  
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.text.SimpleDateFormat,java.util.Date,java.sql.Timestamp,java.util.ArrayList,bean.Jackworks,bean.Monthjack"%>
+<%@page import="jakarta.servlet.http.HttpSession" %>
 
 <%
 //ページ分けを行うためのcmdを受け取る
@@ -18,6 +19,11 @@ String cmd = (String) request.getAttribute("cmd");
 if(cmd == null){
 	cmd="";
 }
+
+//PREVボタンで戻る際の値保持のためセッションから受け取る。
+HttpSession sessionJack = request.getSession();
+Jackworks jack = new Jackworks();
+jack = (Jackworks)session.getAttribute("jack");
 %>
 
 <html>
@@ -310,7 +316,8 @@ fill: #f9de95;
 				</tr>
 					<td class="textPadd">
 					<label for="start_date"></label>
-					<input type="date" class="error-date dateBox" name="date" max="9999-12-31">
+					<input type="date" class="error-date dateBox" name="date" max="9999-12-31" 
+						value="<%if(jack != null){%><%=jack.getPointsGetDate()%><%}%>">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -320,7 +327,10 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td class="textPadd"><input type="text" name="employeeNumber" value="" size="45" placeholder="001234" class="num-required error-employee monthBox"></td>
+					<td class="textPadd">
+						<input type="text" name="employeeNumber" size="45" placeholder="001234" 
+							class="num-required error-employee monthBox" value="<%if(jack != null){%><%=jack.getEmployeeNumber()%><%} %>">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -329,7 +339,9 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td class="textPadd"><input type="text" name="name" value="" size="45" placeholder="山田太郎" class="required monthBox"></td>
+					<td class="textPadd">
+						<input type="text" name="name" value="<%if(jack != null){%><%=jack.getName()%><%}%>" size="45" placeholder="山田太郎" class="required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -338,7 +350,10 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td class="textPadd"><input type="text" name="category" value="" size="45" placeholder="チーム取組み" class="required  monthBox"></td>
+					<td class="textPadd">
+						<input type="text" name="category" value="<%if(jack != null){%><%=jack.getCategory()%><%} %>" 
+							size="45" placeholder="チーム取組み" class="required  monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -347,7 +362,10 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td class="textPadd"><input type="text" name="assessment" placeholder="チーム活動報告の投稿" class="required monthBox"></td>
+					<td class="textPadd">
+						<input type="text" name="assessment" placeholder="チーム活動報告の投稿" 
+							class="required monthBox" value="<%if(jack != null){%><%=jack.getAssessment()%><%} %>">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -356,7 +374,10 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td class="textPadd"><input type="text" name="point" value="" size="45" placeholder="10" class="num-required monthBox""></td>
+					<td class="textPadd">
+						<input type="text" name="point" value="<%if(jack != null){%><%=jack.getPoint()%><%} %>" 
+							size="45" placeholder="10" class="num-required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -364,7 +385,7 @@ fill: #f9de95;
 						</div>
 					</td>
 				</tr>
-					<td class="textPadd"><textarea name="note" rows="" cols=""></textarea></td>
+					<td class="textPadd"><textarea name="note" rows="" cols=""><%if(jack != null){%><%=jack.getNote()%><%} %></textarea></td>
 				<tr>
 			</table>
 				
@@ -401,71 +422,112 @@ fill: #f9de95;
 				<!-- 入力フォーム -->
 				<table id="box-mar">
 				<tr>
-					<td style="display: flex">案件名
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">案件名</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="project" value="" size="45" class="required"></td>
 				<tr>
-					<td style="display: flex">作業時期
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">作業時期</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="workSeason" value="" size="45"  class="required"></td>
 				<tr>
-					<td style="display: flex">単価
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">単価</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
 				<tr>
-					<td style="display: flex">精算
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">精算</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
 				<tr>
-					<td style="display: flex">作業場所
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">作業場所</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="workPlace" value="" size="45" class="required"></td>
 				<tr>
-					<td style="display: flex">作業内容
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">作業内容</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><textarea name="workContent" rows="" cols="" class="required"></textarea></td>
 				<tr>
-					<td>フェーズ</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">フェーズ</div>
+						</div>
+						</td>
 				</tr>
-					<td><textarea name="phase" rows="" cols=""></textarea></td>
+					<td class="tdMag"><textarea name="phase" rows="" cols=""></textarea></td>
 				<tr>
-					<td>開発言語</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">開発言語</div>
+						</div>
+					</td>
 				</tr>
 					<td><textarea name="language" rows="" cols=""></textarea></td>
 				<tr>
-					<td>必要スキル</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">必要スキル</div>
+						</div>
+					</td>
 				</tr>
 					<td><textarea name="skill" rows="" cols=""></textarea></td>
 				<tr>
-					<td>必要人数</td>
+					<td class="tdMag"><div class="nintendoStripe">
+							<div class="subBlack">必要人数</div>
+						</div>
+					</td>
 				</tr>
 					<td><input type="text" name="needPeople" value="" size="45"></td>
 				<tr>
-					<td style="display: flex">営業担当者
+					<td style="display: flex" class="tdMag"><div class="nintendoStripe">
+							<div class="subBlack">営業担当者</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><input type="text" name="seller" value="" size="45" class="required"></td>
 				<tr>
-					<td style="display: flex">連絡先
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">連絡先</div>
+						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
 					<td><textarea name="contact" rows="" cols="" class="required"></textarea></td>
 				<tr>
-					<td>その他</td>
+					<td class="tdMag">
+						<div class="nintendoStripe">
+							<div class="subBlack">その他</div>
+						</div></td>
 				</tr>
 					<td><textarea name="other" rows="" cols=""></textarea></td>
 			</table>
@@ -474,7 +536,7 @@ fill: #f9de95;
 			<div class="box-mar">
 			<div class="jackFlex">
 					<div class="yoruArrow">
-					<a href="<%=request.getContextPath()%>/monthJackworks" class="jackReset">
+					<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp" class="jackReset">
 					<svg class="arrow" width="50"  height="20">
 						<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
 						<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
@@ -488,7 +550,7 @@ fill: #f9de95;
 					<span class="btnUp">更新</span>
 					</button>
 					</div>
-					<div class="jackDummy"></div>
+					<div class="jackDummy"/>
 				</div>
 			</div>
 			</form>
