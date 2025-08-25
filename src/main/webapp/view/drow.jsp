@@ -291,6 +291,40 @@ animation: rotate 3s forwards;
 }
 
 
+/* オレンジ小見出し */
+.yorushika{
+font-size: 22px;
+color: #e89b17;
+margin-left: 10px;
+margin-right: auto;
+margin-bottom: 2px;
+}
+
+/* 小見出し用の縦線 */
+.yorushikaStripe{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;
+border-left: 5px solid #ff8b4d;
+}
+
+/* 黒小見出し */
+.subBlack{
+font-size: 22px;
+color: #363636;
+margin-left: 10px;
+margin-right: auto;
+margin-bottom: 2px;
+}
+
+/* グレーの縦線 */
+.nintendoStripe{
+display: flex;
+justify-content: center;   /* 水平方向の中央揃え */
+align-items: center;
+border-left: 5px solid #aaaaaa;
+}
+
 </style>
 
 <body>
@@ -330,6 +364,17 @@ animation: rotate 3s forwards;
 		<span class="beaf">PREV</span>
 	</a>
 </div>
+
+
+<div class="yorushikaStripe">
+	<div class="yorushika">がんばって</div>
+</div>
+
+<div class="nintendoStripe">
+	<div class="subBlack">げんきだして</div>
+</div>
+
+
 
 <div class="photoFrame">
 <a class="photoButton" href="#">

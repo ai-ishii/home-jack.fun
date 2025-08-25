@@ -3,18 +3,13 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/21
+最終更新日：2025/08/22
  --%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page
 	import="java.util.ArrayList,bean.LicenseRequestExclusive,bean.LicenseName"%>
-<%
-ArrayList<LicenseRequestExclusive> userList = (ArrayList<LicenseRequestExclusive>) request.getAttribute("userList");
-%>
-<%
-ArrayList<LicenseName> licenseNameList = (ArrayList<LicenseName>) request.getAttribute("licenseNameList");
-%>
+
 <html>
 <head>
 <title>資格申請フォーム</title>
@@ -170,7 +165,10 @@ select {
 
 <body>
 	<c:set var="formValues"
-		value="${not empty userInput ? userInput : sessionScope.userInput}" />
+		value="${not empty userInput ? userInput : param}" />
+	<c:set var="formValuesFile"
+		value="${not empty userInputFile ? userInputFile : param}" />
+
 
 	<div id="wrap">
 		<%@ include file="../common/header.jsp"%>
@@ -189,7 +187,7 @@ select {
 						<c:if test="${not empty errorMessage}">
 							<h2 style="color: red; text-align: center;">${errorMessage}</h2>
 						</c:if>
-						<c:set var="user" value="${userList[0]}" />
+						<c:set var="user" value="${sessionScope.userList[0]}" />
 
 						<div class="form-row">
 							<div class="form-label">
@@ -198,7 +196,7 @@ select {
 							<div class="form-input">
 								<input type="text" id="name" name="name"
 									class="${errors.name_error ? 'error-field' : ''}"
-									value="${userList[0].applicant}" readonly />
+									value="${sessionScope.userList[0].applicant}" readonly />
 							</div>
 						</div>
 
@@ -208,7 +206,7 @@ select {
 							</div>
 							<div class="form-input">
 								<input type="text" id="department" name="department"
-									value="${userList[0].departmentName}" readonly />
+									value="${sessionScope.userList[0].departmentName}" readonly />
 							</div>
 						</div>
 						<div class="form-row">
@@ -217,7 +215,7 @@ select {
 							</div>
 							<div class="form-input">
 								<input type="text" id="group" name="group"
-									value="${userList[0].groupName}" readonly />
+									value="${sessionScope.userList[0].groupName}" readonly />
 							</div>
 						</div>
 						<div class="form-row">
@@ -225,12 +223,13 @@ select {
 								<label for="license">資格名<span class="required">【必須】</span></label>
 							</div>
 							<div class="form-select">
-								<select name="license" id="license">
+								<select name="license" id="license" autocomplete="off">
 									<option value="">--資格を選択してください--</option>
-									<c:forEach var="license" items="${licenseNameList}">
-										<option value="${license.licenseName}"
-											<c:if test="${formValues.license == license.licenseName}">selected</c:if>>
-											${license.licenseName}</option>
+									<c:forEach items="${sessionScope.licenseNameList}"
+										var="licenseNameInfo">
+										<option value="${licenseNameInfo.licenseName}"
+											<c:if test="${formValues.license == licenseNameInfo.licenseName}">selected</c:if>>
+											${licenseNameInfo.licenseName}</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -261,13 +260,24 @@ select {
 								<label for="receipt">受験料領収書<span class="required">【必須】</span></label>
 							</div>
 							<div class="form-input">
+
+								<%-- ファイル選択ボタン --%>
 								<input type="file" name="receipt"
 									class="${errors.receipt_error ? 'error-field' : ''}">
-								<c:if test="${not empty formValues.receiptBytes}">
+
+								<%-- ファイル名がある場合、「アップロード済み」のメッセージを表示 --%>
+								<c:if test="${not empty userInput.receiptFileName}">
 									<br>
-									<span style="color: blue;">[${formValues.receiptOriginalFileName}]
+									<span style="color: blue;">[${userInput.receiptFileName}]
 										はアップロード済みです。</span>
 								</c:if>
+
+								<%--  ファイルIDがある場合、隠しフィールドにIDをセット --%>
+								<c:if test="${not empty userInputFile.licenseRequestTestId}">
+									<input type="hidden" name="receiptFileId"
+										value="${userInputFile.licenseRequestTestId}">
+								</c:if>
+
 							</div>
 						</div>
 						<div class="form-cautionary-note">
@@ -278,13 +288,24 @@ select {
 								<label for="passing">合格証<span class="required">【必須】</span></label>
 							</div>
 							<div class="form-input">
+
+								<%-- ファイル選択ボタン --%>
 								<input type="file" name="passing"
 									class="${errors.passing_error ? 'error-field' : ''}">
-								<c:if test="${not empty formValues.passingBytes}">
+
+								<%-- ファイル名がある場合、「アップロード済み」のメッセージを表示 --%>
+								<c:if test="${not empty userInput.passingFileName}">
 									<br>
-									<span style="color: blue;">[${formValues.passingOriginalFileName}]
+									<span style="color: blue;">[${userInput.passingFileName}]
 										はアップロード済みです。</span>
 								</c:if>
+
+								<%--  ファイルIDがある場合、隠しフィールドにIDをセット --%>
+								<c:if test="${not empty userInputFile.passingFileId}">
+									<input type="hidden" name="passingFileId"
+										value="${userInputFile.passingFileId}">
+								</c:if>
+
 							</div>
 						</div>
 
@@ -306,58 +327,27 @@ select {
 	<script src="https://yubinbango.github.io/yubinbango/yubinbango.js"
 		charset="UTF-8"></script>
 	<script>
-        // このセクションはlocalStorageを使った補助的な入力保持機能なので、変更なし
-        function submitForm() {
-            document.getElementById("sendform").submit();
-        }
-    
-        document.getElementById("helpBtn").addEventListener(
-                "click",
-                function() {
-                    const instructionBox = document
-                            .querySelector(".instruction-box");
-                    if (instructionBox.style.display === "none"
-                            || instructionBox.style.display === "") {
-                        instructionBox.style.display = "block";
-                        this.textContent = "×";
-                        this.classList.add("close");
-                    } else {
-                        instructionBox.style.display = "none";
-                        this.textContent = "?";
-                        this.classList.remove("close");
-                    }
-                });
+		// このセクションはlocalStorageを使った補助的な入力保持機能なので、変更なし
+		function submitForm() {
+			document.getElementById("sendform").submit();
+		}
 
-        { // スクリプトのスコープを分離
-            const savableSelects = document.querySelectorAll('.savable-select');
-            const storageKey = 'multipleSelectValues';
-
-            const saveValues = () => {
-                const values = {};
-                savableSelects.forEach(select => {
-                    values[select.id] = select.value;
-                });
-                localStorage.setItem(storageKey, JSON.stringify(values));
-                console.log('保存しました:', values);
-            };
-
-            const loadValues = () => {
-                const savedData = localStorage.getItem(storageKey);
-                if (savedData) {
-                    const values = JSON.parse(savedData);
-                    savableSelects.forEach(select => {
-                        if (select.value === "" && values[select.id]) {
-                            select.value = values[select.id];
-                        }
-                    });
-                    console.log('復元しました:', values);
-                }
-            };
-            window.addEventListener('load', loadValues);
-            savableSelects.forEach(select => {
-                select.addEventListener('change', saveValues);
-            });
-        }
-    </script>
+		document.getElementById("helpBtn").addEventListener(
+				"click",
+				function() {
+					const instructionBox = document
+							.querySelector(".instruction-box");
+					if (instructionBox.style.display === "none"
+							|| instructionBox.style.display === "") {
+						instructionBox.style.display = "block";
+						this.textContent = "×";
+						this.classList.add("close");
+					} else {
+						instructionBox.style.display = "none";
+						this.textContent = "?";
+						this.classList.remove("close");
+					}
+				});
+	</script>
 </body>
 </html>

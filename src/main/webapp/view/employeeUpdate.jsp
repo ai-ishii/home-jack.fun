@@ -1,5 +1,5 @@
 <!-- 社員紹介 変更機能（作：石井） -->
-<!-- 作成日：7/18　最終更新日：8/22 15:00 -->
+<!-- 作成日：7/18　最終更新日：8/22 17:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -59,17 +59,9 @@ String position = employee.getPosition();
 <html>
 <head>
 <!-- タイトル -->
-<%
-if (cmd.equals("update") || cmd.equals("reUpdate")) {
-%>
+
 <title>編集 - 社員紹介</title>
-<%
-} else if (cmd.equals("updateConfirm")) {
-%>
-<title>確認画面 - 社員紹介</title>
-<%
-}
-%>
+
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -162,13 +154,9 @@ a {
 
 			<div id="employeeUpdate">
 
-				<%
-				if (cmd.equals("updateConfirm")) {
-				%>
-				<h3>以下の内容で変更します</h3>
-				<%
-				}
-				%>
+				
+				<h3>社員紹介 編集画面</h3>
+				
 
 				<!-- 入力部分 -->
 				<form action="<%= request.getContextPath() %>/employeeUpdate" method="post" 
@@ -235,31 +223,16 @@ a {
 							</tr>
 						</table>
 
-						<%
-						if (cmd.equals("update") || cmd.equals("reUpdate")) {
-						%>
-						<a href="<%=request.getContextPath()%>/detailEmployee?userId=<%= userId %>">
+						<a href="<%=request.getContextPath()%>/employeeDetail
+								?user_id=<%= userId %>
+								&work=detail">
+
 							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
 						</a>
-						<%
-						} else if (cmd.equals("updateConfirm")) {
-						%>
-							<input type="submit" name="updateSubmit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
-							<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						}
-						if (cmd.equals("update") || cmd.equals("reUpdate")) {
-						%>
+						
 						<input type="submit" name="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
 						<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						} else if (cmd.equals("updateConfirm")) {
-						%>
-						<input type="submit" name="updateSubmit" value="完了" style="width: 120px; height: 50px; font-size: large;">
-						<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						}
-						%>
+						
 					</form>
 			</div>
 

@@ -343,6 +343,7 @@ margin: 30px auto 0;
 /* 矢印の枠 */
 .yoruArrow{
 width: 150px;
+padding-top: 8px;
 }
 
 /* 矢印 */

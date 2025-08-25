@@ -1,5 +1,5 @@
 <!-- 社員紹介 詳細機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：8/22 16:00 -->
+<!-- 作成日：7/2　最終更新日：8/22 17:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -12,14 +12,15 @@ EmployeeDAO employeeDAO = new EmployeeDAO();
 CommonTable commonTable = new CommonTable();
 
 //サーブレットから送られてきた情報を取得
-Employee employee = (Employee) request.getAttribute("Employee");
 User user = (User) request.getAttribute("User");
-int userId = (int) request.getAttribute("userId");
+Employee employee = (Employee) request.getAttribute("Employee");
+int userId = user.getUserId();
 ArrayList<User> userListBySameBelong = (ArrayList<User>) request.getAttribute("UserListBySameBelong");
 ArrayList<User> userListBySameJoiningDate = (ArrayList<User>) request.getAttribute("UserListBySameJoinDate");
 
 //フォーマットを使用するためのオブジェクト生成
 MyFormat myFormat = new MyFormat();
+
 //タイムスタンプ型、Date型のデータを全てフォーマット化
 String joiningDate = myFormat.yearMonthFormat(user.getJoiningDate());
 String birthday = myFormat.birthDateFormat(user.getBirthday());
@@ -273,8 +274,11 @@ String group = commonTable.selectGroup(user.getGroupId());
 					<a href="<%=request.getContextPath()%>/employee"> <input
 						id="backEmployeeList_button" type="submit" value="一覧へ"
 						style="width: 80px; height: 50px; font-size: large;">
-					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/employeeConfirm?work=update&user_id=<%= user.getUserId() %>"> <input
-						id="update_button" type="submit" value="編集"
+					</a>&nbsp;&nbsp;&nbsp; 
+					<a href="<%= request.getContextPath() %>/employeeDetail
+							?work=update
+							&user_id=<%= user.getUserId() %>"> 
+					<input id="update_button" type="submit" value="編集"
 						style="width: 80px; height: 50px; font-size: large;">
 					</a> 
 				</div>
@@ -386,7 +390,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 								department = commonTable.selectDepartment(user.getDepartmentId());
 								group = commonTable.selectGroup(user.getGroupId());
 						%>
-						<a id="belong_link" href="detailEmployee?userId=<%= userListBySameBelong.get(i).getUserId() %>">
+						<a id="belong_link" href="employeeDetail?userId=<%= userListBySameBelong.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="belong_img"
 									src="<%=request.getContextPath()%>/employeePhoto
@@ -428,7 +432,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 							}
 							for (int i = 0; i < 3 && i < userListBySameJoiningDate.size(); i++) {
 						%>
-						<a id="joinTiming_link" href="detailEmployee?userId=<%= userListBySameJoiningDate.get(i).getUserId() %>">
+						<a id="joinTiming_link" href="employeeDetail?userId=<%= userListBySameJoiningDate.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="joinTiming_img"
 									src="<%=request.getContextPath()%>/employeePhoto
