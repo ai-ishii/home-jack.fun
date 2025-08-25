@@ -207,7 +207,7 @@ MyFormat myFormat = new MyFormat();
 					for (int i = 0; i < licenseRequestExclusiveList.size(); i++) {
 					%>
 					<tr
-						onclick="location.href='<%=request.getContextPath()%>/licenseRequestDetail?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&flag=<%=licenseRequestExclusiveList.get(i).getRequestFlag()%>'">
+						onclick="location.href='<%=request.getContextPath()%>/licenseRequestApproval?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&flag=<%=licenseRequestExclusiveList.get(i).getRequestFlag()%>'">
 
 						<td class="time"><%=myFormat.dateFormat(licenseRequestExclusiveList.get(i).getRequestDate())%></td>
 						<td class="groupName"><%=licenseRequestExclusiveList.get(i).getDepartmentName()%><%=licenseRequestExclusiveList.get(i).getGroupName()%></td>

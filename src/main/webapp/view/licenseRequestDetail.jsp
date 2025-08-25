@@ -1,3 +1,8 @@
+<%--機能：申請の内容を確認し、承認・差し戻しする画面
+    作成者：桑原岳
+    最終更新日：2025/08/25
+ --%>
+
 <%@page import="util.MyFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ page import="bean.LicenseRequestExclusive,util.MyFormat"%>
@@ -262,7 +267,7 @@ a.btn--notApproved:hover {
 
 				<tr>
 					<td class="licenseexamdate">受験日</td>
-					<td class="examdate"><%=myFormat.dateFormat(licenseRequestExclusive.getExamDate())%>
+					<td class="examdate"><%=licenseRequestExclusive.getExamDate()%>
 					</td>
 				</tr>
 				<tr>
