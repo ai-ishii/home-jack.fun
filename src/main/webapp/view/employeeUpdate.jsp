@@ -1,5 +1,5 @@
 <!-- 社員紹介 変更機能（作：石井） -->
-<!-- 作成日：7/18　最終更新日：8/19 10:00 -->
+<!-- 作成日：7/18　最終更新日：8/22 17:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -19,10 +19,6 @@ CommonTable commonTable = new CommonTable();
 //セッションでユーザーのデータを取得
 account = (Account)session.getAttribute("account");
 int userId_session = (int)session.getAttribute("user_id");
-// int userId = Integer.parseInt(request.getAttribute("userId"));
-
-//セッションからユーザー情報を取得
-// user = request.getAttribute("user");
 
 user = (User) request.getAttribute("user");
 employee = (Employee) request.getAttribute("employee");
@@ -35,6 +31,7 @@ Date birthday = user.getBirthday();
 int departmentId = user.getDepartmentId();
 int groupId = user.getGroupId();
 Timestamp joiningDate = user.getJoiningDate();
+
 
 //フォーマット化し表示形式を変更
 MyFormat myFormat = new MyFormat();
@@ -49,43 +46,22 @@ String group = commonTable.selectGroup(groupId);
 String cmd = (String) request.getAttribute("cmd");
 
 // 変数宣言
-String photo = "";
-int developer = 0;
-String langSkill = "";
-String middleSkill = "";
-String hobby = "";
-String talent = "";
-String intro = "";
-String position = "";
+int developer = employee.getDeveloper();
+String langSkill = employee.getLangSkill();
+String middleSkill = employee.getMiddleSkill();
+String hobby = employee.getHobby();
+String talent = employee.getTalent();
+String intro = employee.getIntro();
+String position = employee.getPosition();
 
-// 確認画面の場合と戻るボタンを押して再度変更画面に戻った場合
-if (cmd.equals("updateConfirm") || cmd.equals("reUpdate")) {
-	// 入力された情報をJSPから取得
-	photo = request.getParameter("photo");
-	developer = Integer.parseInt(request.getParameter("developer"));
-	langSkill = request.getParameter("langSkill");
-	middleSkill = request.getParameter("middleSkill");
-	hobby = request.getParameter("hobby");
-	talent = request.getParameter("talent");
-	intro = request.getParameter("intro");
-	position = request.getParameter("position");
-}
 %>
 
 <html>
 <head>
 <!-- タイトル -->
-<%
-if (cmd.equals("update") || cmd.equals("reUpdate")) {
-%>
+
 <title>編集 - 社員紹介</title>
-<%
-} else if (cmd.equals("updateConfirm")) {
-%>
-<title>確認画面 - 社員紹介</title>
-<%
-}
-%>
+
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -178,13 +154,9 @@ a {
 
 			<div id="employeeUpdate">
 
-				<%
-				if (cmd.equals("updateConfirm")) {
-				%>
-				<h3>以下の内容で変更します</h3>
-				<%
-				}
-				%>
+				
+				<h3>社員紹介 編集画面</h3>
+				
 
 				<!-- 入力部分 -->
 				<form action="<%= request.getContextPath() %>/employeeUpdate" method="post" 
@@ -195,18 +167,7 @@ a {
 						<table id="inputArea">
 							<tr id="inputRow">
 								<td id="item"><label for="photo">写真</label></td>
-								<%
-								if (cmd.equals("update") || cmd.equals("reUpdate")) {
-								%>
 								<td id="value"><input type="file" name="photo" accept="image/*"></td>
-								<%
-								} else if (cmd.equals("updateConfirm")) {
-								%>
-								<td id="value"><img src="<%=request.getContextPath()%>/file/<%=photo%>" 
-									alt="アップロードした写真"></td>
-								<%
-								}
-								%>
 							</tr>
 							<tr id="inputRow">
 								<td id="item"><label for="employeeNumber">社員番号</label></td>
@@ -262,31 +223,16 @@ a {
 							</tr>
 						</table>
 
-						<%
-						if (cmd.equals("update") || cmd.equals("reUpdate")) {
-						%>
-						<a href="<%=request.getContextPath()%>/detailEmployee?userId=<%= userId %>">
+						<a href="<%=request.getContextPath()%>/employeeDetail
+								?user_id=<%= userId %>
+								&work=detail">
+
 							<input type="button" value="キャンセル" style="width: 120px; height: 50px; font-size: large;">
 						</a>
-						<%
-						} else if (cmd.equals("updateConfirm")) {
-						%>
-							<input type="submit" name="updateSubmit" value="戻る" style="width: 120px; height: 50px; font-size: large;">
-							<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						}
-						if (cmd.equals("update") || cmd.equals("reUpdate")) {
-						%>
+						
 						<input type="submit" name="submit" value="確認画面へ" style="width: 120px; height: 50px; font-size: large;">
 						<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						} else if (cmd.equals("updateConfirm")) {
-						%>
-						<input type="submit" name="updateSubmit" value="完了" style="width: 120px; height: 50px; font-size: large;">
-						<input type="hidden" name="userId" value="<%= userId %>">
-						<%
-						}
-						%>
+						
 					</form>
 			</div>
 

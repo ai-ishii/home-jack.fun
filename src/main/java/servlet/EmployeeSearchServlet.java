@@ -5,7 +5,7 @@
  * 
  * 作成日 2025/08/13
  * 
- * 最終更新日：2025/08/19
+ * 最終更新日：2025/08/22
  */
 
 package servlet;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.User;
-import dao.EmployeeDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,7 +34,6 @@ public class EmployeeSearchServlet extends HttpServlet {
 
 		//オブジェクト生成
 		UserDAO userDAO = new UserDAO();
-		EmployeeDAO employeeDAO = new EmployeeDAO();
 		ArrayList<User> userList = new ArrayList<User>();
 
 		try {
@@ -45,16 +43,6 @@ public class EmployeeSearchServlet extends HttpServlet {
 			}
 
 			userList = userDAO.searchEmployee(keyword);
-			
-			// 社員写真を格納する配列宣言
-			String[] photos = new String[userList.size()];
-			for (int i = 0; i < userList.size(); i++) {
-				photos[i] = employeeDAO.selectPhotoByUserId(userList.get(i).getUserId());
-			}
-			
-			
-			// 取得してきたユーザー情報をjspに送るためセットする
-			request.setAttribute("photos", photos);
 
 			//jackworksRequest.jspからcmd=requestを受け取る
 			cmd = request.getParameter("cmd");

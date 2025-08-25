@@ -1,7 +1,13 @@
+<%--機能：資格申請の一覧表示画面
+    作成者：桑原岳
+    最終更新日：2025/08/25
+ --%>
+
+
 <%@page import="util.MyFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ page
-	import="bean. LicenseRequestExclusive,bean.Request,java.util.ArrayList"%>
+	import="bean. LicenseRequestExclusive,bean.Request,java.util.ArrayList,java.time.LocalDate"%>
 <%
 ArrayList<LicenseRequestExclusive> licenseRequestExclusiveList = (ArrayList<LicenseRequestExclusive>) request
 		.getAttribute("licenseRequestExclusiveList");
@@ -207,7 +213,7 @@ MyFormat myFormat = new MyFormat();
 						<td class="groupName"><%=licenseRequestExclusiveList.get(i).getDepartmentName()%><%=licenseRequestExclusiveList.get(i).getGroupName()%></td>
 						<td class="applicant"><%=licenseRequestExclusiveList.get(i).getApplicant()%></td>
 						<td class="licenseName"><%=licenseRequestExclusiveList.get(i).getLicenseName()%></td>
-						<td class="examDate"><%=myFormat.dateFormat(licenseRequestExclusiveList.get(i).getExamDate())%></td>
+						<td class="examDate"><%=licenseRequestExclusiveList.get(i).getExamDate()%></td>
 						<td class="examTime"><%=licenseRequestExclusiveList.get(i).getExamTime()%>回</td>
 						<td class="receipt"><%=licenseRequestExclusiveList.get(i).getReceipt()%></td>
 						<td class="passing"><%=licenseRequestExclusiveList.get(i).getPassing()%></td>

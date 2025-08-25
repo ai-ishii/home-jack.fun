@@ -1,5 +1,5 @@
 <!-- 社員紹介 詳細機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：8/22 14:00 -->
+<!-- 作成日：7/2　最終更新日：8/22 17:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -12,14 +12,15 @@ EmployeeDAO employeeDAO = new EmployeeDAO();
 CommonTable commonTable = new CommonTable();
 
 //サーブレットから送られてきた情報を取得
-Employee employee = (Employee) request.getAttribute("Employee");
 User user = (User) request.getAttribute("User");
-int userId = (int) request.getAttribute("userId");
+Employee employee = (Employee) request.getAttribute("Employee");
+int userId = user.getUserId();
 ArrayList<User> userListBySameBelong = (ArrayList<User>) request.getAttribute("UserListBySameBelong");
 ArrayList<User> userListBySameJoiningDate = (ArrayList<User>) request.getAttribute("UserListBySameJoinDate");
 
 //フォーマットを使用するためのオブジェクト生成
 MyFormat myFormat = new MyFormat();
+
 //タイムスタンプ型、Date型のデータを全てフォーマット化
 String joiningDate = myFormat.yearMonthFormat(user.getJoiningDate());
 String birthday = myFormat.birthDateFormat(user.getBirthday());
@@ -35,16 +36,6 @@ for (int i = 0; i < userListBySameBelong.size(); i++) {
 for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
 	joiningDatesBySameJoin[i] = myFormat.yearMonthFormat(userListBySameJoiningDate.get(i).getJoiningDate());
 }
-
-//--------画像の取得-----------
-// String[] sameBelong_imgList = new String[userListBySameBelong.size()];
-// String[] sameJoinTiming_imgList = new String[userListBySameJoiningDate.size()];
-// for (int i = 0; i < userListBySameBelong.size(); i++) {
-// 	sameBelong_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameBelong.get(i).getUserId());
-// }
-// for (int i = 0; i < userListBySameJoiningDate.size(); i++) {
-// 	sameJoinTiming_imgList[i] = employeeDAO.selectPhotoByUserId(userListBySameJoiningDate.get(i).getUserId());
-// }
 
 String department = commonTable.selectDepartment(user.getDepartmentId());
 String group = commonTable.selectGroup(user.getGroupId());
@@ -283,8 +274,11 @@ String group = commonTable.selectGroup(user.getGroupId());
 					<a href="<%=request.getContextPath()%>/employee"> <input
 						id="backEmployeeList_button" type="submit" value="一覧へ"
 						style="width: 80px; height: 50px; font-size: large;">
-					</a>&nbsp;&nbsp;&nbsp; <a href="<%= request.getContextPath() %>/employeeConfirm?work=update&user_id=<%= user.getUserId() %>"> <input
-						id="update_button" type="submit" value="編集"
+					</a>&nbsp;&nbsp;&nbsp; 
+					<a href="<%= request.getContextPath() %>/employeeDetail
+							?work=update
+							&user_id=<%= user.getUserId() %>"> 
+					<input id="update_button" type="submit" value="編集"
 						style="width: 80px; height: 50px; font-size: large;">
 					</a> 
 				</div>
@@ -396,11 +390,11 @@ String group = commonTable.selectGroup(user.getGroupId());
 								department = commonTable.selectDepartment(user.getDepartmentId());
 								group = commonTable.selectGroup(user.getGroupId());
 						%>
-						<a id="belong_link" href="detailEmployee?userId=<%= userListBySameBelong.get(i).getUserId() %>">
+						<a id="belong_link" href="employeeDetail?userId=<%= userListBySameBelong.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="belong_img"
 									src="<%=request.getContextPath()%>/employeePhoto
-									?userId=<%=userListBySameBelong.get(i).getUserId()%>" alt="社員画像">
+									?user_id=<%=userListBySameBelong.get(i).getUserId()%>&work=view" alt="社員画像">
 								<p id="employee_name" class="sameBelong_employeeName"><%=userListBySameBelong.get(i).getName()%></p>
 								<p id="employee_detail">
 									<%= department %> <%= group %>
@@ -438,11 +432,11 @@ String group = commonTable.selectGroup(user.getGroupId());
 							}
 							for (int i = 0; i < 3 && i < userListBySameJoiningDate.size(); i++) {
 						%>
-						<a id="joinTiming_link" href="detailEmployee?userId=<%= userListBySameJoiningDate.get(i).getUserId() %>">
+						<a id="joinTiming_link" href="employeeDetail?userId=<%= userListBySameJoiningDate.get(i).getUserId() %>">
 							<div id="employee_card">
 								<img id="joinTiming_img"
 									src="<%=request.getContextPath()%>/employeePhoto
-									?userId=<%=userListBySameJoiningDate.get(i).getUserId()%>" alt="社員画像">
+									?user_id=<%=userListBySameJoiningDate.get(i).getUserId()%>&work=view" alt="社員画像">
 								<p id="employee_name" class="sameJoinTiming_employeeName"><%=userListBySameJoiningDate.get(i).getName()%></p>
 								<p id="employee_detail" class="employee_belong">
 									第<%=userListBySameJoiningDate.get(i).getDepartmentId()%>事業部 第<%=userListBySameJoiningDate.get(i).getGroupId()%>グループ

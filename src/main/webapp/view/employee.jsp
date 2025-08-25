@@ -1,5 +1,5 @@
 <!-- 社員紹介 一覧機能（作：石井） -->
-<!-- 作成日：7/2　最終更新日：8/22 12:00 -->
+<!-- 作成日：7/2　最終更新日：8/22 17:00 -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
 
@@ -10,11 +10,13 @@
 // サーブレットから送られてきた情報を取得
 ArrayList<User> userList = (ArrayList<User>) request.getAttribute("userList");
 ArrayList<Employee> employeeList = (ArrayList<Employee>) request.getAttribute("employeeList");
-// String[] photos = (String[]) request.getAttribute("photos");
+
 // フォーマットを使用するためのオブジェクト生成
 MyFormat myFormat = new MyFormat();
+
 // フォーマット化された入社年月を格納するための配列宣言
 String[] joiningDates = new String[userList.size()];
+
 // タイムスタンプ型のデータを全てフォーマット化
 for (int i = 0; i < userList.size(); i++) {
 	joiningDates[i] = myFormat.yearMonthFormat(userList.get(i).getJoiningDate());
@@ -313,8 +315,10 @@ a:hover {
 								String department = commonTable.selectDepartment(user.getDepartmentId());
 								String group = commonTable.selectGroup(user.getGroupId());
 						%>
-						<a
-							href="<%=request.getContextPath()%>/detailEmployee?userId=<%=userList.get(i).getUserId()%>">
+						<a href="<%=request.getContextPath()%>/employeeDetail
+								?user_id=<%=userList.get(i).getUserId()%>
+								&work=detail">
+
 							<div id="employee_card">
 								<img src="<%=request.getContextPath()%>/employeePhoto
 									?user_id=<%=userList.get(i).getUserId()%>&work=view"
