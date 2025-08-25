@@ -61,6 +61,7 @@ if (goalDepartment != null) {
 	departmentGoal = goalDepartment.getDepartmentGoal();
 	groupGoal = goalDepartment.getGroupGoal();
 }
+
 %>
 
 <html>
@@ -409,6 +410,21 @@ color: #6eddb3;
 <!-- 			</button> -->
 			
 			</div>
+			
+			<!--  セッションから権限分けを取得-->
+
+			<% 
+			String userRole = (String) session.getAttribute("userRole");
+			if (userRole != null && (userRole.equals("POS_MNGR"))){
+			%>
+			<div>
+				<a href="<%= request.getContextPath() %>/">個人目標一覧へ</a>
+			</div>
+			
+			<%
+			}
+			%>
+			
 			
 			<div class="editBox">
 			<a class="editButton" onclick="location.href='<%=request.getContextPath()%>/goalConfirm?cmd=update'">
