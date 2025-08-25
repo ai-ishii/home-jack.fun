@@ -258,11 +258,13 @@ a {
 					<tr>
 
 						<td style="width: 20%;">
+							<!-- 
 							<form action="<%=request.getContextPath()%>/employeeSearch"
 								class="search-form">
 								<input type="search" name="keyword" style="height: 20px;">
 								<button type="submit" aria-label="検索"></button>
 							</form>
+							 -->
 						</td>
 						<!--　絞り込み検索を作成する予定ですというメモです。
 						<td>
@@ -295,11 +297,7 @@ a {
 							<h1>社員紹介</h1>
 						</td>
 						<td style="width: 20%;">
-							<div class="register_box">
-								<a
-									href="<%=request.getContextPath()%>/view/employeeRegister.jsp?cmd=register"
-									class="box-link">登録</a>
-							</div>
+							<!-- 登録ボタン消えた -->
 						</td>
 					</tr>
 				</table>
