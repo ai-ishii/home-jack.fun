@@ -95,6 +95,7 @@ public class LoginServlet extends HttpServlet {
 				}
 				//ユーザーIDの取得
 				User user = userDAO.selectByAccountId(accountId);
+				String userRole = userDAO.authorityByAccountId(accountId);
 				
 				boolean profile = false;
 				if ( user != null && user.getEmployeeNumber() != null && !user.getEmployeeNumber().isEmpty()) {
@@ -108,6 +109,7 @@ public class LoginServlet extends HttpServlet {
 				
 				
 				session.setAttribute("account", account);
+				session.setAttribute("userRole",userRole);
 				session.setAttribute("user_id", user.getUserId());
 				session.setAttribute("user_name", name);
 				String jsonResponse = "{\"success\": true, \"redirectUrl\": \"home\"}";

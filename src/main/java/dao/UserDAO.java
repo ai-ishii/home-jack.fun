@@ -180,6 +180,57 @@ public class UserDAO {
 		}
 
 	}
+	
+	/**
+	 * 権限分けを行うメソッド
+	 * 
+	 * @param 検索するアカウントID
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	
+	public String authorityByAccountId(String accountId) {
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		String role = null;
+		
+		String sql = "SELECT a.authority_code FROM user_info u " +
+			    "JOIN authority_info a ON u.user_id = a.user_id " +
+			    "WHERE u.account_id = ?";		
+		try {
+			// DBに接続
+			con = DAOconnection.getConnection();
+			ps = con.prepareStatement(sql);
+
+			ps.setString(1, accountId);
+
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				role = rs.getString("authority_code");
+			}
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			}
+		}
+		return role;
+	}
 
 	/**
 	 * 疑似削除を行うメソッド
