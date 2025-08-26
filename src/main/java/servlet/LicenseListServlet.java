@@ -10,9 +10,10 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import bean.LicenseList;
-import dao.LicenseListDAO;
-import jakarta.servlet.RequestDispatcher;
+import bean.LicenseRequest;
+import bean.Request;
+import dao.RequestDAO;
+import dao.RequestLicenseDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,18 +28,27 @@ public class LicenseListServlet extends HttpServlet {
 
 		String error = "";
 		String cmd = "";
+		
+		// 検索するフラグを１（承認済みの申請）にする
+		int requestFlag = 1;
+		
+		// オブジェクト宣言
+		RequestDAO requestDAO = new RequestDAO();
+		RequestLicenseDAO requestLicenseDAO = new RequestLicenseDAO();
+		
+		//配列宣言
+		ArrayList<Request> requestList = new ArrayList<Request>();
+		ArrayList<LicenseRequest> licenseRequestList = new ArrayList<LicenseRequest>();
 
 		try {
-			//配列宣言
-			ArrayList<LicenseList> list = new ArrayList<LicenseList>();
 
-			//オブジェクト宣言
-			LicenseListDAO licenseDao = new LicenseListDAO();
 			//全データ呼び出し
-			list = licenseDao.selectAll();
+			requestList = requestDAO.selectLicenseListByFlag(requestFlag);
+			licenseRequestList = requestLicenseDAO.selectLicenseListByFlag(requestFlag);
 			
 			//リクエストスコープに登録
-			request.setAttribute("list", list);
+			request.setAttribute("requestList", requestList);
+			request.setAttribute("licenseRequestList", licenseRequestList);
 
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は出来ませんでした";
@@ -47,14 +57,13 @@ public class LicenseListServlet extends HttpServlet {
 			error = "予期せぬエラーが発生しました。<br>" + e;
 			cmd="";
 		} finally {
-			if (error != null) {
+			if (!error.equals("")) {
 				request.setAttribute("error", error);
 				request.setAttribute("cmd", cmd);
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 
 			} else {
-				RequestDispatcher dispatcher = 
-				request.getRequestDispatcher("/view/licenseList.jsp");dispatcher.forward(request, response);
+				request.getRequestDispatcher("/view/licenseList.jsp").forward(request, response);
 
 			}
 
