@@ -520,7 +520,7 @@ color: #6eddb3;
 						group = commonTable.selectGroup(user.getGroupId());
 						%>
 						<a id="belong_link"
-							href="employeeDetail?userId=<%=userListBySameBelong.get(i).getUserId()%>">
+							href="employeeDetail?user_id=<%=userListBySameBelong.get(i).getUserId()%>&work=detail">
 							<div id="employee_card">
 								<img id="belong_img"
 									src="<%=request.getContextPath()%>/employeePhoto
@@ -565,7 +565,7 @@ color: #6eddb3;
 						for (int i = 0; i < 3 && i < userListBySameJoiningDate.size(); i++) {
 						%>
 						<a id="joinTiming_link"
-							href="employeeDetail?userId=<%=userListBySameJoiningDate.get(i).getUserId()%>">
+							href="employeeDetail?user_id=<%=userListBySameJoiningDate.get(i).getUserId()%>&work=detail">
 							<div id="employee_card">
 								<img id="joinTiming_img"
 									src="<%=request.getContextPath()%>/employeePhoto

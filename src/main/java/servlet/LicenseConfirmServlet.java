@@ -1,7 +1,7 @@
 /* 
  * 機能：資格申請の内容を検証し、バイト配列としてセッションに保存して確認画面に渡す 
  * 作成者：桑原岳 
- * 最終更新日：2025/08/22
+ * 最終更新日：2025/08/25
  */
 package servlet;
 
@@ -116,6 +116,8 @@ public class LicenseConfirmServlet extends HttpServlet {
             userInputFile.put("passingFileId", oldPassingId);
             userInputFile.put("passingBytes", existingBytes);
         }
+        
+        
 
         // エラーがあればフォームに戻す
         if (errors.containsValue(true)) {
