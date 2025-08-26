@@ -3,6 +3,10 @@
  * 7/14
  * 川上
  * 
+ * 更新者：大北直弥
+ * 
+ * 更新日：8/26
+ * 
  */
 
 package servlet;
@@ -10,6 +14,7 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import bean.CategoryMap;
 import bean.LicenseRequest;
 import bean.Request;
 import dao.RequestDAO;
@@ -19,6 +24,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import util.CommonMethod;
 
 @WebServlet("/licenseList")
 public class LicenseListServlet extends HttpServlet {
@@ -36,9 +42,15 @@ public class LicenseListServlet extends HttpServlet {
 		RequestDAO requestDAO = new RequestDAO();
 		RequestLicenseDAO requestLicenseDAO = new RequestLicenseDAO();
 		
+		CommonMethod commonMethod = new CommonMethod();
+		
 		//配列宣言
 		ArrayList<Request> requestList = new ArrayList<Request>();
 		ArrayList<LicenseRequest> licenseRequestList = new ArrayList<LicenseRequest>();
+		
+		ArrayList<CategoryMap> departmentList = new ArrayList<CategoryMap>();
+		ArrayList<CategoryMap> groupList = new ArrayList<CategoryMap>();
+		ArrayList<CategoryMap> licenseList = new ArrayList<CategoryMap>();
 
 		try {
 
@@ -46,10 +58,18 @@ public class LicenseListServlet extends HttpServlet {
 			requestList = requestDAO.selectLicenseListByFlag(requestFlag);
 			licenseRequestList = requestLicenseDAO.selectLicenseListByFlag(requestFlag);
 			
+			departmentList = commonMethod.selectDepartment();
+			groupList = commonMethod.selectGroup();
+			licenseList = commonMethod.selectLicense();
+			
 			//リクエストスコープに登録
-			request.setAttribute("requestList", requestList);
-			request.setAttribute("licenseRequestList", licenseRequestList);
-
+			request.setAttribute("request_list", requestList);
+			request.setAttribute("licenseRequest_list", licenseRequestList);
+			
+			request.setAttribute("department_list", departmentList);
+			request.setAttribute("group_list", groupList);
+			request.setAttribute("license_list", licenseList);
+			
 		} catch (IllegalStateException e) {
 			error = "DB接続エラーの為、一覧表示は出来ませんでした";
 			cmd ="";

@@ -22,7 +22,7 @@ public class CommonMethod {
 	 * @param departmentId
 	 * @return ArrayList<CategoryMap>
 	 */
-	public ArrayList<CategoryMap> selectDepartmentName(int departmentId) {
+	public ArrayList<CategoryMap> selectDepartment() {
 		
 		// 変数宣言
 		Connection con = null;
@@ -37,17 +37,13 @@ public class CommonMethod {
 						+ "department_code, "
 						+ "department_name "
 					+ "FROM "
-						+ "department_info "
-					+ "WHERE "
-						+ "department_id = ?";
+						+ "department_info";
 		
 		try {
 			
 			// DBに接続する
 			con = DAOconnection.getConnection();
 			ps = con.prepareStatement(sql);
-			
-			ps.setInt(1, departmentId);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -91,7 +87,7 @@ public class CommonMethod {
 	 * @param departmentId
 	 * @return ArrayList<CategoryMap>
 	 */
-	public ArrayList<CategoryMap> selectGroup(int departmentId) {
+	public ArrayList<CategoryMap> selectGroup() {
 		
 		// 変数宣言
 		Connection con = null;
@@ -106,17 +102,13 @@ public class CommonMethod {
 						+ "group_code, "
 						+ "group_name "
 					+ "FROM "
-						+ "group_info "
-					+ "WHERE "
-						+ "group_id = ?";
+						+ "group_info";
 		
 		try {
 			
 			// DBに接続する
 			con = DAOconnection.getConnection();
 			ps = con.prepareStatement(sql);
-			
-			ps.setInt(1, departmentId);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -129,6 +121,71 @@ public class CommonMethod {
 				group.setName(rs.getString("group_name"));
 				
 				list.add(group);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("#" + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("#" + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("#" + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("#" + e.getMessage());
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * DBに保存されている資格情報を取得するメソッド
+	 * @param departmentId
+	 * @return ArrayList<CategoryMap>
+	 */
+	public ArrayList<CategoryMap> selectLicense() {
+		
+		// 変数宣言
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		// 戻り値を格納する変数の確認
+		ArrayList<CategoryMap> list = new ArrayList<CategoryMap>();
+
+		// SQL文発行
+		String sql = "SELECT "
+						+ "license_id, "
+						+ "type_code, "
+						+ "license_name "
+					+ "FROM "
+						+ "license_info";
+		
+		try {
+			
+			// DBに接続する
+			con = DAOconnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				
+				CategoryMap license = new CategoryMap();
+				
+				license.setId(rs.getInt("license_id"));
+				license.setCode(rs.getString("type_code"));
+				license.setName(rs.getString("license_name"));
+				
+				list.add(license);
 			}
 			
 		} catch (SQLException e) {
