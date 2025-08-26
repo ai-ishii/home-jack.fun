@@ -209,11 +209,11 @@ MyFormat myFormat = new MyFormat();
 					<tr
 						onclick="location.href='<%=request.getContextPath()%>/licenseRequestApproval?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&flag=<%=licenseRequestExclusiveList.get(i).getRequestFlag()%>'">
 
-						<td class="time"><%=myFormat.dateFormat(licenseRequestExclusiveList.get(i).getRequestDate())%></td>
+						<td class="time"><%=myFormat.datetimeSlashFormat(licenseRequestExclusiveList.get(i).getRequestDate())%></td>
 						<td class="groupName"><%=licenseRequestExclusiveList.get(i).getDepartmentName()%><%=licenseRequestExclusiveList.get(i).getGroupName()%></td>
 						<td class="applicant"><%=licenseRequestExclusiveList.get(i).getApplicant()%></td>
 						<td class="licenseName"><%=licenseRequestExclusiveList.get(i).getLicenseName()%></td>
-						<td class="examDate"><%=licenseRequestExclusiveList.get(i).getExamDate()%></td>
+						<td class="examDate"><%=myFormat.LocalDateFormat(licenseRequestExclusiveList.get(i).getExamDate())%></td>
 						<td class="examTime"><%=licenseRequestExclusiveList.get(i).getExamTime()%>回</td>
 						<td class="receipt"><%=licenseRequestExclusiveList.get(i).getReceipt()%></td>
 						<td class="passing"><%=licenseRequestExclusiveList.get(i).getPassing()%></td>
@@ -233,7 +233,7 @@ MyFormat myFormat = new MyFormat();
 						<%
 						} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {
 						%>
-						<td class="approvalDate"><%=myFormat.dateFormat(licenseRequestExclusiveList.get(i).getApprovalDate())%></td>
+						<td class="approvalDate"><%=myFormat.datetimeSlashFormat(licenseRequestExclusiveList.get(i).getApprovalDate())%></td>
 						<%
 						}
 						if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {

@@ -1,7 +1,7 @@
 /*
  * 表示形式を変換するクラス
  * 作成者 : 占部虎司郎
- * 作成日 : 2025/7/9
+ * 作成日 : 2025/8/26
  */
 
 package util;
@@ -216,4 +216,32 @@ public class MyFormat {
 
 		return date;
 	}
+	
+	/**
+	 * 引数のTimestampを"yyyy/MM/dd"の形式に変換するメソッド
+	 * @param timestamp
+	 * @return 変換された日付データ(String型)
+	 */
+	public String datetimeSlashFormat(Timestamp timestamp) {
+		//TimestampをDate型に変換する
+		Date condate = new Date(timestamp.getTime());
+
+		//SimpleDateFormatをオブジェクト化し、フォーマット指定
+		SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+		String date = datetimeFormat.format(condate);
+
+		return date;
+	}
+	/**
+	 * 引数のLocaldateを"yyyy/MM/dd"の形式に変換するメソッド
+	 * @param LocalDate
+	 * @return 変換された日付データ(String型)
+	 */
+	public static String LocalDateFormat(LocalDate date) {
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        
+        return date.format(formatter);
+    }
 }

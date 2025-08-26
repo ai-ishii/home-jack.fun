@@ -245,7 +245,7 @@ a.btn--notApproved:hover {
 				</tr>
 				<tr>
 					<td class="applicationtime">申請日時</td>
-					<td class="time"><%=myFormat.datetimeFormat(licenseRequestExclusive.getRequestDate())%>
+					<td class="time"><%=myFormat.datetimeSlashFormat(licenseRequestExclusive.getRequestDate())%>
 					</td>
 				</tr>
 				<tr>
@@ -267,7 +267,7 @@ a.btn--notApproved:hover {
 
 				<tr>
 					<td class="licenseexamdate">受験日</td>
-					<td class="examdate"><%=licenseRequestExclusive.getExamDate()%>
+					<td class="examdate"><%=myFormat.LocalDateFormat(licenseRequestExclusive.getExamDate())%>
 					</td>
 				</tr>
 				<tr>
