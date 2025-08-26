@@ -148,11 +148,11 @@ a {
 /* 矢印の枠 */
 /* marginとかは自分で削ったり足したりしてくださいな */
 .yoruArrow {
-    display: flex;
-    height: 30px;
-    margin: 30px auto 0 100px;
-    align-items: flex-end;
-    width: 150px;
+	display: flex;
+	height: 30px;
+	margin: 30px auto 0 100px;
+	align-items: flex-end;
+	width: 150px;
 }
 
 .yoruArrow:hover {
@@ -286,6 +286,25 @@ button.btn-border:active:before {
 	bottom: -1px;
 }
 
+.btnList {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.back {
+	width: 30%;
+	padding-left: 20px;
+}
+
+.complete {
+	width: 40%;
+	text-align: center;
+}
+
+.space {
+	width: 30%;
+}
 </style>
 
 <body>
@@ -302,90 +321,107 @@ button.btn-border:active:before {
 				<h3>以下の内容で修正します</h3>
 
 				<!-- 入力部分 -->
-				<form action="<%= request.getContextPath() %>/employeeCommit" method="post" >
-					
-						<table id="inputArea">
-							<tr id="inputRow">
-								<td id="item"><label for="photo">写真</label></td>
-								
-								<td id="value">
-									<img src="employeePhoto?user_id=<%= user.getUserId() %>&work=<%=work%>" 
-									alt="アップロードした写真">
-								</td>
-								
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="employeeNumber">社員番号</label></td>
-								<td id="value"><%=employeeNumber%></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="name">氏名</label></td>
-								<td id="value"><%=name%></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="nameKana">氏名（ふりがな）</label></td>
-								<td id="value"><%=nameKana%></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="birthday">生年月日</label></td>
-								<td id="value"><%=birthdayStr%></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="department">所属</label></td>
-								<td><%=department%> <%=group%></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="joiningDate">入社年月</label></td>
-								<td id="value"><%=joiningDateStr%></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="developer">開発経験年数</label></td>
-								<td id="value"><input readonly id="readonlyInput" type="number" name="developer" value="<%=developer%>" style="margin-left: 0;" min="0">年</td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="langSkill">習得技術（言語）</label></td>
-								<td id="value"><input readonly id="readonlyInput" type="text" name="langSkill" value="<%=langSkill%>"></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="middleSkill">習得言語（ミドルウェア）</label></td>
-								<td id="value"><input readonly id="readonlyInput" type="text" name="middleSkill" value="<%=middleSkill%>"></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="hobby">趣味</label></td>
-								<td id="value"><input readonly id="readonlyInput" type="text" name="hobby" value="<%=hobby%>"></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="talent">特技</label></td>
-								<td id="value"><input readonly id="readonlyInput" type="text" name="talent" value="<%=talent%>"></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="intro">自己紹介</label></td>
-								<td id="value"><textarea readonly id="readonlyInput" name="intro"><%=intro%></textarea></td>
-							</tr>
-							<tr id="inputRow">
-								<td id="item"><label for="position">役職</label></td>
-								<td id="value"><input readonly id="readonlyInput" type="text" name="position" value="<%=position%>"></td>
-							</tr>
-						</table>
+				<form action="<%= request.getContextPath() %>/employeeCommit"
+					method="post">
 
-						<div class="yoruArrow">
+					<table id="inputArea">
+						<tr id="inputRow">
+							<td id="item"><label for="photo">写真</label></td>
+
+							<td id="value"><img
+								src="employeePhoto?user_id=<%= user.getUserId() %>&work=<%=work%>"
+								alt="アップロードした写真"></td>
+
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="employeeNumber">社員番号</label></td>
+							<td id="value"><%=employeeNumber%></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="name">氏名</label></td>
+							<td id="value"><%=name%></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="nameKana">氏名（ふりがな）</label></td>
+							<td id="value"><%=nameKana%></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="birthday">生年月日</label></td>
+							<td id="value"><%=birthdayStr%></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="department">所属</label></td>
+							<td><%=department%> <%=group%></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="joiningDate">入社年月</label></td>
+							<td id="value"><%=joiningDateStr%></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="developer">開発経験年数</label></td>
+							<td id="value"><input readonly id="readonlyInput"
+								type="number" name="developer" value="<%=developer%>"
+								style="margin-left: 0;" min="0">年</td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="langSkill">習得技術（言語）</label></td>
+							<td id="value"><input readonly id="readonlyInput"
+								type="text" name="langSkill" value="<%=langSkill%>"></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="middleSkill">習得言語（ミドルウェア）</label></td>
+							<td id="value"><input readonly id="readonlyInput"
+								type="text" name="middleSkill" value="<%=middleSkill%>"></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="hobby">趣味</label></td>
+							<td id="value"><input readonly id="readonlyInput"
+								type="text" name="hobby" value="<%=hobby%>"></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="talent">特技</label></td>
+							<td id="value"><input readonly id="readonlyInput"
+								type="text" name="talent" value="<%=talent%>"></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="intro">自己紹介</label></td>
+							<td id="value"><textarea readonly id="readonlyInput"
+									name="intro"><%=intro%></textarea></td>
+						</tr>
+						<tr id="inputRow">
+							<td id="item"><label for="position">役職</label></td>
+							<td id="value"><input readonly id="readonlyInput"
+								type="text" name="position" value="<%=position%>"></td>
+						</tr>
+					</table>
+					<table class="btnList">
+					<tr>
+					<td class="back">
+					<div class="yoruArrow">
 						<svg class="arrow" width="50" height="20">
 			<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
 			<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
 		</svg>
-		<input class="beaf" type="submit" name="confirm" value="BACK">
-								<input type="hidden" name="userId" value="<%= userId %>">
-						</a>
+						<button class="beaf" type="submit" name="confirm" value="BACK">
+							<span>BACK</span> <input type="hidden" name="userId"
+								value="<%= userId %>">
+						</button>
 					</div>
-						
-						<div id="submitBtn">
-							<button type="submit" class="btn btn-border">
-								<span>完了</span>
-							</button>
-							<input type="hidden" name="user_id" value="<%= user.getUserId() %>">
-						</div>
-					</form>
-					<!-- 
+					</td>
+					<td class="complete">
+					<div id="submitBtn">
+						<button type="submit" class="btn btn-border" name="confirm"
+							value="完了">
+							<span>完了</span> <input type="hidden" name="user_id"
+								value="<%= user.getUserId() %>">
+						</button>
+					</div>
+					</td>
+					<td class="space">&nbsp;</td>
+					</tr>
+					</table>
+				</form>
+				<!-- 
 					
 							
 						
