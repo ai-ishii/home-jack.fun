@@ -18,7 +18,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import util.MyFormat;
 
 @WebServlet("/announceUpdate")
 public class AnnounceUpdateServlet extends HttpServlet {
@@ -36,7 +35,6 @@ public class AnnounceUpdateServlet extends HttpServlet {
 		// オブジェクト生成
 		Announce announce = new Announce();
 		AnnounceDAO announceDAO = new AnnounceDAO();
-		MyFormat myFormat = new MyFormat();
 
 		try {
 
@@ -46,13 +44,15 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			String text = request.getParameter("text");
 			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
 			int categoryId = Integer.parseInt(request.getParameter("category_id"));
-			String updateDateBefore = request.getParameter("update_date");
+			//遷移前の更新日時
+			String updateDate = request.getParameter("update_date");
+			java.sql.Timestamp updateDateBefore = java.sql.Timestamp.valueOf(updateDate);
 
 			// メソッドからSQL実行
 			announce = announceDAO.selectByAnnounceId(announceId);
 			
-			Timestamp timestamp = announce.getUpdateDate();
-			String updateDate = myFormat.dateTimeFormat(timestamp);
+			//データベース上の更新日時
+			Timestamp updateDateNow = announce.getUpdateDate();
 
 			if (announce.getAnnounceId() == 0) {
 				message = "対象のお知らせが存在しません。";
@@ -62,7 +62,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			
 			//遷移前の更新日時とデータベース上の更新日時を比較
 			//違う場合
-			if (!updateDateBefore.equals(updateDate)) {
+			if (!updateDateBefore.equals(updateDateNow)) {
 				message = "このデータはすでに変更されています。";
 				return;
 			}

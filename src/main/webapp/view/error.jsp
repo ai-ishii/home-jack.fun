@@ -20,6 +20,10 @@ String cmd = (String) request.getAttribute("cmd");
 // 遷移先のパス
 String path = "";
 
+if(cmd==null){
+	cmd="";
+}
+
 if (cmd.equals("announce")) {
 	path = "/announce";
 } else if (cmd.equals("employee")) {
