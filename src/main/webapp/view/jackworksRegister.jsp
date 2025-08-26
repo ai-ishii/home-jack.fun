@@ -407,7 +407,7 @@ fill: #f9de95;
 					<div>
 					<input type="hidden" name="cmd" value="next">
 					<button type="submit" class="btn btn-border">
-					<span class="btnUp">更新</span>
+					<span class="btnUp">申請</span>
 					</button>
 					</div>
 					<div class="jackDummy"></div>
@@ -575,7 +575,7 @@ fill: #f9de95;
 					<div>
 					<input type="hidden" name="cmd" value="register">
 					<button type="submit" class="btn btn-border">
-					<span class="btnUp">更新</span>
+					<span class="btnUp">申請</span>
 					</button>
 					</div>
 					<div class="jackDummy"/>
