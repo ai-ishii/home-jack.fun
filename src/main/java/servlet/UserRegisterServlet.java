@@ -5,7 +5,7 @@
  * 
  * 作成日：8月18日
  * 
- * 最終更新日：8月22日
+ * 最終更新日：8月26日
  * 
  */
 package servlet;
@@ -58,8 +58,6 @@ public class UserRegisterServlet extends HttpServlet {
 			//セッション登録
 			session.setAttribute("profile", true);
 			session.setAttribute("user", user);
-			
-			session.removeAttribute("user");
 			
 			/*
 			session.setAttribute("user_id", user.getUserId());
