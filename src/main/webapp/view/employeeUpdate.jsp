@@ -280,8 +280,7 @@ input[type="file"] {
 	cursor: pointer;
 }
 
-.confirmButton input[type="submit"] {
-	all: unset;
+.confirmButton span {
 	vertical-align: middle;
 	font-family: "Kosugi Maru", sans-serif;
 	font-size: 21px;
@@ -299,7 +298,7 @@ input[type="file"] {
 	stroke: #4682b4;
 }
 
-.confirmButton:hover input[type="submit"] {
+.confirmButton:hover span {
 	color: #4682b4;
 }
 
@@ -448,6 +447,7 @@ input[type="file"] {
 								</div>
 							</td>
 							<td class="confirm">
+							<!-- 
 								<div class="confirmButton">
 									<svg class="memo" xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 48 48" width="48px" height="48px">
@@ -463,6 +463,21 @@ input[type="file"] {
 										style="width: 120px; height: 50px; font-size: large;">
 									<input type="hidden" name="userId" value="<%=userId%>">
 								</div>
+							 -->
+							 <button class="confirmButton">
+							 <svg class="memo" xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 48 48" width="48px" height="48px">
+										<rect width="48" height="48" fill="none" />
+										<polyline class="path"
+											points="17.5 23.48 22.5 28.48 30.5 20.48" fill="none"
+											stroke="#fff" stroke-linecap="square" stroke-miterlimit="10"
+											stroke-width="2" />
+										<rect class="path" x="8" y="8" width="32" height="32" rx="2"
+											stroke-width="2" stroke="#fff" stroke-linecap="round"
+											stroke-linejoin="round" fill="none" /></svg>
+							 <span>確認画面へ</span>
+							 <input type="hidden" name="userId" value="<%=userId%>">
+							 </button>
 							</td>
 							<td class="space">&nbsp;</td>
 						</tr>
