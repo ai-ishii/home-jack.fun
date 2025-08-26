@@ -600,7 +600,7 @@ public class AnnounceDAO {
 				+ "announce_id, "
 				+ "name, "
 				+ "regist_date, "
-				+ "update_date, "
+				+ "update_date , "
 				+ "title, "
 				+ "text, "
 				+ "comment, "
@@ -613,7 +613,7 @@ public class AnnounceDAO {
 				+ announce.getName() 
 				+ "', '" 
 				+ announce.getRegistDate() 
-				+ "', null, '" 
+				+ "', NOW() , '" 
 				+ announce.getTitle() 
 				+ "', '" 
 				+ announce.getText() 
