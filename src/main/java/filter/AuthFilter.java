@@ -4,7 +4,7 @@
  * 作成者：月向亮太
  * 
  * 作成日：2025/8/25
- * 最終更新日: 2025/8/25
+ * 最終更新日: 2025/8/26
  */
 package filter;
 
@@ -31,9 +31,10 @@ public class AuthFilter implements Filter {
 		//オブジェクト宣言
 		AuthorityDAO autorityDAO = new AuthorityDAO();
 		ArrayList<AuthorityHaving> authorityList = new ArrayList<AuthorityHaving>();
-		//
+		//権限格納用
 		String userRole = "";
-		
+		//権限があればtrue、なければfalse
+		boolean flag = false;
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -47,28 +48,34 @@ public class AuthFilter implements Filter {
 		//ユーザーIDから権限リストを取得するメソッド
 		authorityList = autorityDAO.selectByUserId(userId);
 
-		for (int i = 0; i < authorityList.size(); i++) {
-			AuthorityHaving authorityHaving = authorityList.get(i);
-			userRole = authorityHaving.getAuthorityCode();
+		
+		if (authorityList == null) {
 
-			//JackWorks承認者
-			if ( (userRole.equals("APR_JACK"))) {
-				
+		} else {
+			for (int i = 0; i < authorityList.size(); i++) {
+				AuthorityHaving authorityHaving = authorityList.get(i);
+				userRole = authorityHaving.getAuthorityCode();
 
-			//JackWorks承認者とマネージャー
-			} else if (userRole != null && (userRole.equals("APR_JACK") || userRole.equals("POS_MNGR"))) {
+				//JackWorks承認者
+				if ((userRole.equals("APR_JACK"))) {
+					flag = true;
 
-
+					//JackWorks承認者とマネージャー
+				} else if ((userRole.equals("APR_JACK") || userRole.equals("POS_MNGR"))) {
+					flag = true;
+				}
 			}
 		}
-		
-		
-		request.setAttribute("cmd", cmd);
-		request.setAttribute("error", "このページにアクセスする権限がありません。");
-		request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-		
-		//アクセス許可(本来のServletへ遷移)
-				chain.doFilter(request, response);
 
+		if (flag == false) {
+			request.setAttribute("cmd", cmd);
+			request.setAttribute("error", "このページにアクセスする権限がありません。");
+			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+		}
+
+		if (flag == true) {
+			//アクセス許可(本来のServletへ遷移)
+			chain.doFilter(request, response);
+		}
 	}
 }
