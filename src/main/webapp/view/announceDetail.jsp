@@ -394,6 +394,24 @@ int announceFlag = announce.getAnnounceFlag();
 						<div>
 							<p><%=announce.getName()%></p>
 						</div>
+						
+						<%
+							timestamp = announce.getUpdateDate();
+								if(timestamp != null){
+									String updateDate = myFormat.dateTimeFormat(timestamp);
+						%>
+						
+						
+						<div>
+							<p>
+								最終更新日時：<%= updateDate %>
+							</p>
+						</div>
+						
+						<%
+								}
+						%>
+						
 					</div>
 					<div class="like_box">
 						<p>いいね！</p>
