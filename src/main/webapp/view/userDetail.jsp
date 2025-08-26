@@ -18,6 +18,10 @@ User user = (User) request.getAttribute("user");
 ArrayList<Authority> authorityList = (ArrayList<Authority>) request.getAttribute("authority_list");
 ArrayList<AuthorityHaving> authorityHavingList = (ArrayList<AuthorityHaving>) request.getAttribute("authority_having_list");
 
+MyFormat myFormat = new MyFormat();
+String birthday = myFormat.breakDateFormat(user.getBirthday());
+
+
 %>
 
 <html>
@@ -131,43 +135,43 @@ text-align: center;
 				<table id="detail-list">
 					<tr class="table-single">
 						<td class="table-double">社員番号</td>
-						<td><%=user.getEmployeeNumber() %></td>
+						<td colspan="2"><%=user.getEmployeeNumber() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">所属</td>
-						<td>第<%=user.getDepartmentId() %>部&nbsp;第<%=user.getGroupId() %>グループ</td>
+						<td colspan="2">第<%=user.getDepartmentId() %>部&nbsp;第<%=user.getGroupId() %>グループ</td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">氏名</td>
-						<td><%=user.getName() %></td>
+						<td colspan="2"><%=user.getName() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">ふりがな</td>
-						<td><%=user.getNameKana() %></td>
+						<td colspan="2"><%=user.getNameKana() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">生年月日</td>
-						<td><%=user.getBirthday() %></td>
+						<td colspan="2"><%=birthday %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">性別</td>
-						<td><%=user.getSex() %></td>
+						<td colspan="2"><%=user.getSex() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">電話番号</td>
-						<td><%=user.getPhone() %></td>
+						<td colspan="2"><%=user.getPhone() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">郵便番号</td>
-						<td><%=user.getPost() %></td>
+						<td colspan="2"><%=user.getPost() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">住所</td>
-						<td><%=user.getAddress() %></td>
+						<td colspan="2"><%=user.getAddress() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">子供</td>
-						<td>
+						<td colspan="2">
 						<%if(user.getChildren() != 0){ %>
 						<%=user.getChildren() %>人
 						<%} %>
@@ -175,19 +179,19 @@ text-align: center;
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">勤務年数</td>
-						<td><%=user.getWorkHistory() %>年</td>
+						<td colspan="2"><%=user.getWorkHistory() %>年</td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">最寄り駅</td>
-						<td><%=user.getNearestStation() %></td>
+						<td colspan="2"><%=user.getNearestStation() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">交通手段</td>
-						<td><%=user.getTransportation() %></td>
+						<td colspan="2"><%=user.getTransportation() %></td>
 					</tr>
 					<tr class="table-single">
 						<td class="table-double">資格</td>
-						<td><%=user.getQualification() %></td>
+						<td colspan="2"><%=user.getQualification() %></td>
 					
 					
 					</tr>
@@ -201,13 +205,17 @@ text-align: center;
 				                if (having.getAuthorityCode().equals(authority.getAuthorityCode())) {
 					%>
 					
-                <%= authority.getAuthorityName() %>
-						<br>
+               					 <%= authority.getAuthorityName() %>
+               					 <br>
 					<%
 								}
 							}
 						}
 					%>
+					</td>
+					<td>
+					<a href="<%=request.getContextPath()%>/view/authorityUpdate.jsp"><p>権限付与はコチラ!</p></a>
+					
 					</td>
 					</tr>
 					
