@@ -32,7 +32,7 @@ public class AuthorityDAO {
 		String sql = "SELECT "
 				+ "category_id, "
 				+ "authority_code, "
-				+ "authority_name"
+				+ "authority_name "
 				+ "FROM authority_code_info";
 
 		try {

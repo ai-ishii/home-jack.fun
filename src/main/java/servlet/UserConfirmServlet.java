@@ -5,7 +5,7 @@
  * 
  * 作成日：8月18日
  * 
- * 最終更新日：8月25日
+ * 最終更新日：8月26日
  * 
  */
 package servlet;
@@ -30,6 +30,21 @@ public class UserConfirmServlet extends HttpServlet {
 
 		String cmd = "";
 		String path = "";
+		int children = 0;
+		//電話番号の取得
+		/*
+		String phone1 = "";
+		String phone2 = "";
+		String phone3 = "";
+		String phone = "";
+		//住所の取得
+		String address1 = "";
+		String address2 = "";
+		String address3 = "";
+		String address4 = "";
+		String address = "";
+		
+		*/
 		HttpSession session = request.getSession();
 
 		User user = (User) session.getAttribute("user");
@@ -48,15 +63,22 @@ public class UserConfirmServlet extends HttpServlet {
 				String groupStr = request.getParameter("group");
 				//性別の空文字チェック
 				String sex = request.getParameter("sex");
+				
+				String childrenStr =  request.getParameter("children");
 
 				if (departmentStr == null || departmentStr == "" ||
 						groupStr == null || groupStr == "" ||
 						sex == null || sex == "") {
 					session.setAttribute("user", user);
+					
 
 					request.setAttribute("error", "（所属、グループ、性別）を入力してください。");
 					request.getRequestDispatcher("/view/userRegister.jsp").forward(request, response);
 					return;
+				}
+				
+				if (childrenStr.equals("")) {
+					user.setChildren(children);
 				}
 				/*	
 					if (user == null) {
@@ -69,17 +91,27 @@ public class UserConfirmServlet extends HttpServlet {
 				*/
 				//	if (register == "") {
 				//電話番号の取得
-				String phone1 = request.getParameter("phone1");
-				String phone2 = request.getParameter("phone2");
-				String phone3 = request.getParameter("phone3");
-				String phone = phone1 + phone2 + phone3;
+				/*
+				phone1 = request.getParameter("phone1");
+				phone2 = request.getParameter("phone2");
+				phone3 = request.getParameter("phone3");
+				if (phone1 == null || phone2 == null || phone3 == null) {
+					user.setPhone(request.getParameter("phone"));
+				}else {
+					user.setPhone(phone);
+				}
 				//住所の取得
-				String address1 = request.getParameter("prefecture");
-				String address2 = request.getParameter("address");
-				String address3 = request.getParameter("street-address");
-				String address4 = request.getParameter("build");
-				String address = address1 + address2 + address3 + address4;
-
+				address1 = request.getParameter("prefecture");
+				address2 = request.getParameter("address");
+				address3 = request.getParameter("street-address");
+				address4 = request.getParameter("build");
+				if (address1 == null || address2 == null || address3 == null || address4 == null) {
+					user.setAddress(request.getParameter("address"));
+				}else {
+					user.setAddress(address);
+				}
+				
+				*/
 				//getParameterを使って取得
 				user.setEmployeeNumber(request.getParameter("employeeNumber"));
 				user.setDepartmentId(Integer.parseInt(departmentStr));
@@ -87,12 +119,12 @@ public class UserConfirmServlet extends HttpServlet {
 				user.setName(request.getParameter("name"));
 				user.setNameKana(request.getParameter("nameKana"));
 				user.setSex(sex);
-				user.setPhone(phone);
+				user.setPhone(request.getParameter("phone"));
+				user.setAddress(request.getParameter("address"));
 				user.setPost(request.getParameter("post"));
-				user.setAddress(address);
 				user.setMarriageFlag(Integer.parseInt(request.getParameter("marriage")));
 				user.setWorkHistory(Integer.parseInt(request.getParameter("workyear")));
-				user.setChildren(Integer.parseInt(request.getParameter("children")));
+				user.setChildren(children);
 				user.setNearestStation(request.getParameter("station"));
 				user.setTransportation(request.getParameter("transportation"));
 				user.setQualification(request.getParameter("qualification"));
@@ -115,7 +147,8 @@ public class UserConfirmServlet extends HttpServlet {
 				}
 				//セッション登録
 				session.setAttribute("user", user);
-
+				
+				/*
 				session.setAttribute("phone1", phone1);
 				session.setAttribute("phone2", phone2);
 				session.setAttribute("phone3", phone3);
@@ -124,6 +157,8 @@ public class UserConfirmServlet extends HttpServlet {
 				session.setAttribute("address", address2);
 				session.setAttribute("street-address", address3);
 				session.setAttribute("build", address4);
+				
+				*/
 
 				request.setAttribute("user", user);
 				request.setAttribute("cmd", cmd);
@@ -151,8 +186,13 @@ public class UserConfirmServlet extends HttpServlet {
 			} else if ("変更する".equals(registerConfirm)) {
 				cmd = "reRegister";
 
+				
+				
+				//セッション登録
+				session.setAttribute("user", user);
+				
 				request.setAttribute("cmd", cmd);
-				request.getRequestDispatcher("/view/userRegister.jsp").forward(request, response);
+				request.getRequestDispatcher("/view/userUpdate.jsp").forward(request, response);
 			} else {
 				request.setAttribute("error", "不正な操作を検知しました。");
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
