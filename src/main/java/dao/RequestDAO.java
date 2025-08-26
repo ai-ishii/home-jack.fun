@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  *  
- * 最終更新日：2025/08/25
+ * 最終更新日：2025/08/26
  *  
  */
 package dao;
@@ -21,6 +21,7 @@ import bean.AddressRequestExclusive;
 import bean.LicenseName;
 import bean.LicenseRequestExclusive;
 import bean.NameRequest;
+import bean.User;
 import util.DAOconnection;
 
 public class RequestDAO {
@@ -539,7 +540,7 @@ public class RequestDAO {
 	 * 親テーブルにapplicantIdを登録して request_id を返すメソッド
 	 * 
 	 * 
-	 * */ 
+	 * */
 	public long insertLicenseRequestID(int applicantId) {
 		String sql = "INSERT INTO "
 				+ "request_info "
@@ -705,41 +706,39 @@ public class RequestDAO {
 			return -1;
 		}
 	}
-	
+
 	// 親テーブルに登録して request_id を返す
-		public long insertPassingFileProvisional(byte[] passingBytes, String passingFileName) {
-			String sql = "INSERT INTO "
-					+ "license_request_test_info "
-					+ "(passing,passing_name) "
-					+ "VALUES (?,?)";
+	public long insertPassingFileProvisional(byte[] passingBytes, String passingFileName) {
+		String sql = "INSERT INTO "
+				+ "license_request_test_info "
+				+ "(passing,passing_name) "
+				+ "VALUES (?,?)";
 
-			try (Connection con = DAOconnection.getConnection();
-					PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-				pstmt.setBytes(1, passingBytes);
-				pstmt.setString(2, passingFileName);
+			pstmt.setBytes(1, passingBytes);
+			pstmt.setString(2, passingFileName);
 
-				int affectedRows = pstmt.executeUpdate();
+			int affectedRows = pstmt.executeUpdate();
 
-				if (affectedRows == 0) {
-					return -1; // 登録失敗
-				}
-
-				try (ResultSet rs = pstmt.getGeneratedKeys()) {
-					if (rs.next()) {
-						return rs.getLong(1);
-					} else {
-						return -1; // request_id 取得失敗
-					}
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return -1;
+			if (affectedRows == 0) {
+				return -1; // 登録失敗
 			}
+
+			try (ResultSet rs = pstmt.getGeneratedKeys()) {
+				if (rs.next()) {
+					return rs.getLong(1);
+				} else {
+					return -1; // request_id 取得失敗
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
 		}
+	}
 
-
-	
 	/** 既存ファイルを更新 */
 	public void updateReceiptFile(long fileId, byte[] fileBytes, String fileName) {
 		String sql = "UPDATE "
@@ -758,7 +757,7 @@ public class RequestDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/** 既存ファイルを更新 */
 	public void updatePassingFile(long fileId, byte[] fileBytes, String fileName) {
 		String sql = "UPDATE "
@@ -797,7 +796,7 @@ public class RequestDAO {
 		}
 		return null;
 	}
-	
+
 	/** ファイルバイト取得 */
 	public byte[] getPassingFileById(long oldPassingId) {
 		String sql = "SELECT "
@@ -837,7 +836,7 @@ public class RequestDAO {
 		}
 		return "";
 	}
-	
+
 	/** ファイル名取得 */
 	public String getPassingFileNameById(long fileId) {
 		String sql = "SELECT "
@@ -857,4 +856,301 @@ public class RequestDAO {
 		}
 		return "";
 	}
+
+	/**
+	 * request_infoに登録してrequest_idを返すメソッド
+	 * 
+	 * @return int requestId
+	 */
+	public int insertApplicantId(int applicantId, String name) {
+		String sql = "INSERT INTO "
+				+ "request_info "
+				+ "(applicant_id,applicant) "
+				+ "VALUES (?,?)";
+
+		try (Connection con = DAOconnection.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+			pstmt.setInt(1, applicantId);
+			pstmt.setString(2, name);
+
+			int affectedRows = pstmt.executeUpdate();
+
+			if (affectedRows == 0) {
+				return -1; // 登録失敗
+			}
+
+			try (ResultSet rs = pstmt.getGeneratedKeys()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				} else {
+					return -1; // request_id 取得失敗
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	/**
+	 * license_request_test_infoに登録された情報を取り出すメソッド
+	 * 
+	 * @return licenseRequestExclusive
+	 */
+	public LicenseRequestExclusive selectRequestTestInfo(int requestId) {
+
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
+
+		try {
+			con = DAOconnection.getConnection();
+
+			String sql = "SELECT "
+					+ "group_id, "
+					+ "department_id, "
+					+ "license_id, "
+					+ "exam_date, "
+					+ "exam_time, "
+					+ "receipt, "
+					+ "passing, "
+					+ "receipt_name, "
+					+ "passing_name "
+					+ "FROM "
+					+ "license_request_test_info "
+					+ "WHERE "
+					+ "request_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, requestId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				licenseRequestExclusive.setGroupId(rs.getInt("group_id"));
+				licenseRequestExclusive.setDepartmentId(rs.getInt("department_id"));
+				licenseRequestExclusive.setLicenseId(rs.getInt("license_id"));
+				licenseRequestExclusive.setExamDate(rs.getDate("exam_date").toLocalDate());
+				licenseRequestExclusive.setExamTime(rs.getInt("exam_time"));
+				licenseRequestExclusive.setReceipt(rs.getBytes("receipt"));
+				licenseRequestExclusive.setPassing(rs.getBytes("passing"));
+				licenseRequestExclusive.setReceiptName(rs.getString("receipt_name"));
+				licenseRequestExclusive.setPassingName(rs.getString("passing_name"));
+			}
+		} catch (SQLException e) {
+			// エラーが発生した場合の処理（例：ログ出力）
+			e.printStackTrace();
+		} finally {
+			// finallyブロック内で発生するSQLExceptionを個別に処理する
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return licenseRequestExclusive;
+	}
+
+	/**
+	 * 資格申請をデータベースに登録するメソッド
+	 * @param nameRequest 登録したい申請データ
+	 * @return 登録に成功した場合は true, 失敗した場合は false
+	 */
+	public boolean insertLicenseInfo(LicenseRequestExclusive licenseRequestExclusive) {
+
+		// try-with-resources構文で、処理が終わったら自動でリソースを閉じる
+		try {
+
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			// 1. データベースへ接続
+			con = DAOconnection.getConnection();
+
+			// 2. INSERT文
+			String sql = "INSERT "
+					+ "INTO license_request_info( "
+					+ "request_id, "
+					+ "group_id, "
+					+ "department_id, "
+					+ "license_id, "
+					+ "exam_date, "
+					+ "exam_time, "
+					+ "receipt, "
+					+ "passing, "
+					+ "receipt_name, "
+					+ "passing_name) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+			pstmt = con.prepareStatement(sql);
+
+			// 3. SQL文の「?」に値をセット
+			pstmt.setInt(1, licenseRequestExclusive.getRequestId());
+			pstmt.setInt(2, licenseRequestExclusive.getGroupId());
+			pstmt.setInt(3, licenseRequestExclusive.getDepartmentId());
+			pstmt.setInt(4, licenseRequestExclusive.getLicenseId());
+			pstmt.setDate(5, Date.valueOf(licenseRequestExclusive.getExamDate()));
+			pstmt.setInt(6, licenseRequestExclusive.getExamTime());
+			pstmt.setBytes(7, licenseRequestExclusive.getReceipt());
+			pstmt.setBytes(8, licenseRequestExclusive.getPassing());
+			pstmt.setString(9, licenseRequestExclusive.getReceiptName());
+			pstmt.setString(10, licenseRequestExclusive.getPassingName());
+
+			// 4. INSERT文を実行し、結果（更新された行数）を取得
+			int affectedRows = pstmt.executeUpdate();
+
+			// 5. 1行以上更新されていれば成功とみなし true を返す
+			return affectedRows > 0;
+
+		} catch (SQLException e) {
+			// エラーが発生した場合は、コンソールにエラー内容を出力
+			e.printStackTrace();
+			// 失敗したため false を返す
+			return false;
+		}
+	}
+	/**
+	 * useridで資格申請に必要な情報(氏名、部名、グループ名)を取り出すメソッド
+	 * @param  userId
+	 * @return 必要な情報を格納したuser
+	 */
+	public User selectUserName(int userId) {
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		ResultSet rs = null;
+		
+		User user = new User();
+
+		try {
+			String sql = "SELECT "
+					+ "name, "
+					+ "name_kana "
+					+ "FROM "
+					+ "user_info  "
+					+ "WHERE "
+					+ "user_id = ?";
+
+			con = DAOconnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, userId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				user.setName(rs.getString("name"));
+				user.setNameKana(rs.getString("name_kana"));
+			}
+		} catch (SQLException e) {
+			// エラーが発生した場合の処理（例：ログ出力）
+			e.printStackTrace();
+		} finally {
+			// finallyブロック内で発生するSQLExceptionを個別に処理する
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return user;
+	}
+	/**
+	 * useridで資格申請に必要な情報(氏名、部名、グループ名)を取り出すメソッド
+	 * @param  userId
+	 * @return 必要な情報を格納したArrayList
+	 */
+	public User selectUserAddress(int userId) {
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		ResultSet rs = null;
+		
+		User user = new User();
+
+		try {
+			String sql = "SELECT "
+					+ "employee_number, "
+					+ "name, "
+					+ "post, "
+					+ "address "
+					+ "FROM "
+					+ "user_info  "
+					+ "WHERE "
+					+ "user_id = ?";
+
+			con = DAOconnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, userId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				user.setEmployeeNumber(rs.getString("employee_number"));
+				user.setName(rs.getString("name"));
+				user.setPost(rs.getString("post"));
+				user.setAddress(rs.getString("address"));
+			}
+		} catch (SQLException e) {
+			// エラーが発生した場合の処理（例：ログ出力）
+			e.printStackTrace();
+		} finally {
+			// finallyブロック内で発生するSQLExceptionを個別に処理する
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return user;
+	}
+
+
 }
