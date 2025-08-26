@@ -5,7 +5,7 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/03
- * 最終更新日：2025/08/25
+ * 最終更新日：2025/08/26
  */
 --%>
 
@@ -70,16 +70,9 @@ String tabCmd = (String) request.getAttribute("cmd");
 						href="<%=request.getContextPath()%>/goalConfirm?cmd=confirm"><p
 								class="lettuce">個人目標確認</p></a></li>
 					<li><a href="<%=request.getContextPath()%>/monthJackworks"><p
-								class="ketchup">Jackworks</p></a></li>
-					<li>
-						<p class="ketchup">申請</p>
-						<ul class="ketchup-detail">
-							<li><a
-								href="<%=request.getContextPath()%>/jackworksSearch">社員紹介</a>
-							</li>
-							<li><a
-								href="<%=request.getContextPath()%>/view/RequestMenu.jsp">申請一覧</a></li>
-						</ul>
+								>Jackworks</p></a></li>
+					<li><a href="<%=request.getContextPath()%>/view/RequestMenu.jsp"><p
+								 class="lettuce" >申請一覧</p></a></li>
 					</li>
 					<li>
 						<p class="egg">お役立ち</p>

@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：占部） -->
-<!-- 作成日：8/7　最終更新日：8/26 12:00 -->
+<!-- 作成日：8/7　最終更新日：8/25 10:46 -->
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.time.LocalDateTime,java.util.Date,java.sql.Timestamp"%>
@@ -20,16 +20,9 @@ if (cmd == null){
 
 User user = new User();
 
-String prefecture = "";
-String address = "";
-String streetAddress = "";
-String build = "";
-
-String phone1 = "";
-String phone2 = "";
-String phone3 = "";
-
 String joiningDate = "";
+
+String fullAddress = "";
 
 
 if (cmd.equals("reRegister") || cmd.equals("register")){
@@ -345,6 +338,8 @@ button.btn-border:active:before {
                 <td><input type="text" name="address" value="<%= (user.getAddress() != null) ? user.getAddress() : ""%>"
 							class="p-postal-code" placeholder="例: 1000001" required></td>
             </tr>
+						
+						<tr>
 							<td style="display: flex">婚姻状況
 								<div class="warning">*</div>
 							</td>

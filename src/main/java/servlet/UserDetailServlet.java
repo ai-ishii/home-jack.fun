@@ -5,14 +5,18 @@
  * 
  * 作成日：8月18日
  * 
- * 最終更新日：8月25日
+ * 最終更新日：8月26日
  * 
  */
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import bean.Authority;
+import bean.AuthorityHaving;
 import bean.User;
+import dao.AuthorityDAO;
 import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,6 +49,12 @@ public class UserDetailServlet extends HttpServlet {
 		//オブジェクト生成
 		User user = new User();
 		UserDAO userDAO = new UserDAO();
+		Authority authority = new Authority();
+		AuthorityDAO authorityDAO = new AuthorityDAO();
+		
+		ArrayList<Authority> authorityList = new ArrayList<Authority>();
+		ArrayList<AuthorityHaving> authorityHavingList = new ArrayList<AuthorityHaving>();
+
 	
 		
 
@@ -53,8 +63,14 @@ public class UserDetailServlet extends HttpServlet {
 			 Integer userId = (Integer) session.getAttribute("user_id");
 
 			user = userDAO.selectByUserId(userId);
+			authorityList = authorityDAO.selectAllAuthority();
+			authorityHavingList = authorityDAO.selectByUserId(userId);
+			
+			
 			
 			request.setAttribute("user", user);
+			request.setAttribute("authority_list",authorityList);
+			request.setAttribute("authority_having_list", authorityHavingList);
 			
 			request.getRequestDispatcher("/view/userDetail.jsp").forward(request,response);
 

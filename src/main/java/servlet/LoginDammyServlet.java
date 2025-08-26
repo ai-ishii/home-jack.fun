@@ -4,7 +4,7 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/18
- * 最終更新日：2025/07/29
+ * 最終更新日：2025/08/26
  */
 
 package servlet;
@@ -74,6 +74,7 @@ public class LoginDammyServlet extends HttpServlet {
 			} else {					// エラーがない場合 homeにフォワード
 				session.setAttribute("account", account);
 				session.setAttribute("user_id", user.getUserId());
+				session.setAttribute("user",user);
 				session.setAttribute("user_name", user.getName());
 				request.getRequestDispatcher("/home").forward(request, response);
 			}
