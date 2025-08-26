@@ -5,14 +5,25 @@
 	
 	更新者：大北直弥
 	
-	最終更新日：8/25
+	最終更新日：8/26
  -->
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@ page import="bean.Request, bean.LicenseRequest, java.util.ArrayList"%>
+<%@page import="bean.Request, 
+				bean.LicenseRequest, 
+				bean.CategoryMap, 
+				util.MyFormat, 
+				java.util.ArrayList"%>
 
 <%
-ArrayList<Request> requestList = (ArrayList<Request>) request.getAttribute("requestList");
-ArrayList<LicenseRequest> licenseRequestList = (ArrayList<LicenseRequest>) request.getAttribute("licenseRequestList");
+// オブジェクト生成
+MyFormat myFormat = new MyFormat();
+
+// リクエストスコープからパラメータを受け取る
+ArrayList<Request> requestList = (ArrayList<Request>) request.getAttribute("request_list");
+ArrayList<LicenseRequest> licenseRequestList = (ArrayList<LicenseRequest>) request.getAttribute("licenseRequest_list");
+ArrayList<CategoryMap> departmentList = (ArrayList<CategoryMap>) request.getAttribute("department_list");
+ArrayList<CategoryMap> groupList = (ArrayList<CategoryMap>) request.getAttribute("group_list");
+ArrayList<CategoryMap> licenseList = (ArrayList<CategoryMap>) request.getAttribute("license_list");
 %>
 
 <html>
@@ -73,21 +84,56 @@ ArrayList<LicenseRequest> licenseRequestList = (ArrayList<LicenseRequest>) reque
 				</div>
 				<!--Header ends-->
 			</div>
-			<table>
-				<th>
+			<table style="border:1px solid #000;">
+				<tr>
 					<td>名前</td>
 					<td>所属</td>
 					<td>資格名</td>
 					<td>合格日</td>
-				</th>
+				</tr>
 				<%
 				for (int i = 0; i < requestList.size() && i < licenseRequestList.size(); i++) {
 				%>
 				<tr>
+					<!-- 名前 -->
 					<td><%=requestList.get(i).getApplicant()%></td>
-					<td><%=licenseRequestList.get(i).getDepartmentId()%></td>
-					<td><%=licenseRequestList.get(i).getLicenseId()%></td>
-					<td><%=licenseRequestList.get(i).getExamDate()%></td>
+					<!-- 所属 -->
+					<td>
+					<%
+					for (int j = 0; j < departmentList.size(); j++) {
+						if (licenseRequestList.get(i).getDepartmentId() == departmentList.get(j).getId()) {
+					%>
+						<!-- 部情報 -->
+						<%=departmentList.get(j).getName()%>
+					<%
+						}
+					}
+					%>
+					<%
+					for (int j = 0; j < groupList.size(); j++) {
+						if (licenseRequestList.get(i).getGroupId() == groupList.get(j).getId()) {
+					%>
+						<!-- グループ情報 -->
+						<%=groupList.get(j).getName()%>
+					<%
+						}
+					}
+					%>
+					</td>
+					<!-- 取得資格名 -->
+					<td>
+					<%
+					for (int j = 0; j < licenseList.size(); j++) {
+						if (licenseRequestList.get(i).getLicenseId() == licenseList.get(j).getId()) {
+					%>
+						<%=licenseList.get(j).getName()%>
+					<%
+						}
+					}
+					%>
+					</td>
+					<!-- 受験日 -->
+					<td><%=myFormat.LocalDateFormat(licenseRequestList.get(i).getExamDate())%></td>
 				</tr>
 				<%
 				}
