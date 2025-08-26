@@ -401,7 +401,7 @@ color: #6eddb3;
 		<div id="main" class="container">
 		<div id = "contents">
 			<div id="link-title">
-			<h1 id="link-line">個人目標詳細</h1>
+			<h1 id="link-line">個人目標詳細：<%= name %></h1>
 			
 			
 			
@@ -455,10 +455,6 @@ color: #6eddb3;
 			</div>
 			
 			<div class="seal">
-				
-				<div>
-					<p><%=name%></p>
-				</div>
 				
 				<!-- 経営テーマのボックス -->
 				<div class="adminTitle">
