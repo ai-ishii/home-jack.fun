@@ -3,16 +3,18 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/20
+最終更新日：2025/08/26
  --%>
 
 
 <%@page contentType="text/html; charset=UTF-8"%>
+<%@ page import="bean.User"%>
 <%
 String errorMessage = (String) request.getAttribute("errorMessage");
 %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="formValues" value="${not empty formValues ? formValues : param}" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="formValues"
+	value="${not empty formValues ? formValues : param}" />
 <html>
 <head>
 <title>氏名変更申請フォーム</title>
@@ -20,8 +22,7 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<c:set var="formValues"
-	value="${not empty userInput ? userInput : param}" />
+
 <style>
 .form-wrapper-container {
 	display: flex;
@@ -92,20 +93,22 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	color: #dc3545;
 	font-weight: bold;
 }
+
 .error-field {
 	border: 2px solid red !important;
 }
 
 /* フォームを横に並べるためのスタイル */
 .button-area form {
-    display: inline-block;
-    margin: 0 10px;
+	display: inline-block;
+	margin: 0 10px;
 }
 /*申請ボタンのデザインをお願いします*/
 .application-button {
-	text-align:center;
-	padding:30px;
+	text-align: center;
+	padding: 30px;
 }
+
 .help-container {
 	/* 位置指定をこちらに移動 */
 	position: absolute;
@@ -115,8 +118,9 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 	/* 中の文字とボタンを横並びにする */
 	display: flex;
 	align-items: center;
-	gap:5px; /* 文字とボタンの間隔 */
+	gap: 5px; /* 文字とボタンの間隔 */
 }
+
 #helpBtn {
 	width: 36px;
 	height: 36px;
@@ -155,57 +159,69 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 		<div id="main" class="container">
 			<div class="form-wrapper-container">
 				<div class="form-wrapper">
-				<div class="help-container">
-							<span>手順がわからない方へ</span>
-							<button type="button" id="helpBtn">?</button>
-                       </div>
+					<div class="help-container">
+						<span>手順がわからない方へ</span>
+						<button type="button" id="helpBtn">?</button>
+					</div>
 					<h1 style="text-align: center">-氏名変更申請フォーム-</h1>
-<form id="sendform" action="<%=request.getContextPath()%>/nameChangeConfirm" method="post">
+					<form id="sendform"
+						action="<%=request.getContextPath()%>/nameChangeConfirm"
+						method="post">
+						<c:if test="${not empty errorMessage}">
+							<h2 style="color: red; text-align: center;">${errorMessage}</h2>
+						</c:if>
 
-                    <c:if test="${not empty errorMessage}">
-                        <h2 style="color: red; text-align: center;">${errorMessage}</h2>
-                    </c:if>
+						<c:set var="user" value="${sessionScope.userName}" />
 
-                    <div class="form-row">
-                        <div class="form-label"><label for="oldname">旧氏名</label></div>
-                        <div class="form-input">
-                            <input type="text" id="oldname" name="oldname"
-                                class="${errors['oldname_error'] ? 'error-field' : ''}"
-                                value="${formValues['oldname']}" />
-                        </div>
-                    </div>
+						<div class="form-row">
+							<div class="form-label">
+								<label for="oldname">旧氏名</label>
+							</div>
+							<div class="form-input">
+								<input type="text" id="oldname" name="oldname"
+									class="${errors['oldname_error'] ? 'error-field' : ''}"
+									value="${user.name}" readonly />
+							</div>
+						</div>
 
-                    <div class="form-row">
-                        <div class="form-label"><label for="oldnamekana">旧氏名(かな)</label></div>
-                        <div class="form-input">
-                            <input type="text" id="oldnamekana" name="oldnamekana"
-                                class="${errors['oldnamekana_error'] ? 'error-field' : ''}"
-                                value="${formValues['oldnamekana']}" />
-                        </div>
-                    </div>
+						<div class="form-row">
+							<div class="form-label">
+								<label for="oldnamekana">旧氏名(かな)</label>
+							</div>
+							<div class="form-input">
+								<input type="text" id="oldnamekana" name="oldnamekana"
+									class="${errors['oldnamekana_error'] ? 'error-field' : ''}"
+									value="${user.nameKana}" readonly />
+							</div>
+						</div>
 
-                    <div class="form-row">
-                        <div class="form-label"><label for="newname">新氏名<span class="required">【必須】</span></label></div>
-                        <div class="form-input">
-                            <input type="text" id="newname" name="newname"
-                                class="${errors['newname_error'] ? 'error-field' : ''}"
-                                value="${formValues['newname']}" />
-                        </div>
-                    </div>
+						<div class="form-row">
+							<div class="form-label">
+								<label for="newname">新氏名<span class="required">【必須】</span></label>
+							</div>
+							<div class="form-input">
+								<input type="text" id="newname" name="newname"
+									class="${errors['newname_error'] ? 'error-field' : ''}"
+									value="${formValues['newname']}" />
+							</div>
+						</div>
 
-                    <div class="form-row">
-                        <div class="form-label"><label for="newnamekana">新氏名(かな)<span class="required">【必須】</span></label></div>
-                        <div class="form-input">
-                            <input type="text" id="newnamekana" name="newnamekana"
-                                class="${errors['newnamekana_error'] ? 'error-field' : ''}"
-                                value="${formValues['newnamekana']}" />
-                        </div>
-                    </div>
+						<div class="form-row">
+							<div class="form-label">
+								<label for="newnamekana">新氏名(かな)<span class="required">【必須】</span></label>
+							</div>
+							<div class="form-input">
+								<input type="text" id="newnamekana" name="newnamekana"
+									class="${errors['newnamekana_error'] ? 'error-field' : ''}"
+									value="${formValues['newnamekana']}" />
+							</div>
+						</div>
 						<div class="application-button">
 							<button type="submit">申請</button>
-						</div></div>
-					</form>
-			
+						</div>
+				</div>
+				</form>
+
 				<div class="instruction-box">
 					<h2>氏名変更申請フォーム手順</h2>
 					<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
