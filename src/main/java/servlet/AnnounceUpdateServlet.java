@@ -4,12 +4,12 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/19
+ * 更新日 : 2025/08/25
  */
 package servlet;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 
 import bean.Announce;
 import dao.AnnounceDAO;
@@ -25,9 +25,12 @@ public class AnnounceUpdateServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 変数宣言
+		// エラー用コマンド
 		String error = "";
-		String cmd = "";
+		// エラー文格納用
+		String message = "";
+		// 遷移先のパス
+		String path = "/announce";
 
 		// オブジェクト生成
 		Announce announce = new Announce();
@@ -41,27 +44,26 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			String text = request.getParameter("text");
 			int announceFlag = Integer.parseInt(request.getParameter("announce_flag"));
 			int categoryId = Integer.parseInt(request.getParameter("category_id"));
-			String updateDateBefore = request.getParameter("update_date");
+			//遷移前の更新日時
+			String updateDate = request.getParameter("update_date");
+			java.sql.Timestamp updateDateBefore = java.sql.Timestamp.valueOf(updateDate);
 
 			// メソッドからSQL実行
 			announce = announceDAO.selectByAnnounceId(announceId);
+			
+			//データベース上の更新日時
+			Timestamp updateDateNow = announce.getUpdateDate();
 
 			if (announce.getAnnounceId() == 0) {
-				error = "対象のお知らせが存在しません。";
+				message = "対象のお知らせが存在しません。";
 				//お知らせ一覧画面へ遷移
-				cmd = "announce";
 				return;
 			}
 			
-			//データベース上の更新日時を取得
-			SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-			String updateDateAfter = format.format(announce.getUpdateDate());
-			
 			//遷移前の更新日時とデータベース上の更新日時を比較
 			//違う場合
-			if (!updateDateBefore.equals(updateDateAfter)) {
-				error = "このデータはすでに変更されています。";
-				cmd = "announce";
+			if (!updateDateBefore.equals(updateDateNow)) {
+				message = "このデータはすでに変更されています。";
 				return;
 			}
 
@@ -76,21 +78,30 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			announceDAO.update(announce);
 
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\\r\\nお知らせの更新ができませんでした。";
+			message = "システムの一時的な問題により、お知らせ情報の更新ができませんでした。";
 			//ログイン画面へ遷移
-			cmd = "logout";
+			error = "logout";
 
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 
 		} finally {
-			if (error != "") {
-				request.setAttribute("cmd", cmd);
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
 			}
-			request.getRequestDispatcher("/announce").forward(request, response);
+			
+			if (("").equals(error)) {
+				request.setAttribute("message", message);
+			}
+			
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 
