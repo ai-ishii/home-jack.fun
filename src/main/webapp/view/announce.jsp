@@ -4,7 +4,7 @@
 作成者 : 大北直弥
 
 作成日 : 2025/07/14
-更新日 : 2025/08/21
+更新日 : 2025/08/25
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -26,6 +26,7 @@ Timestamp timestamp = new Timestamp(millis);
 // パラメータの取得
 String cmd = (String) request.getAttribute("cmd");
 String keyword = (String) request.getAttribute("keyword");
+String message = (String) request.getAttribute("message");
 ArrayList<Announce> announceList = (ArrayList<Announce>) request.getAttribute("announceList");
 ArrayList<CategoryMap> categoryList = (ArrayList<CategoryMap>) request.getAttribute("categoryList");
 
@@ -37,6 +38,10 @@ if(strAnnounceFlag == null){
 
 if(cmd == null){
 	cmd = ""; 
+}
+
+if(message == null){
+	message = "";
 }
 
 /*
@@ -55,8 +60,11 @@ LocalDateTime localDateTimeEnd = (LocalDateTime) request.getAttribute("localDate
 
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/modal.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/error.js"></script>
 
 <style>
 .tab {
@@ -171,94 +179,7 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 	color: coral;
 }
 
-/* モーダルを開くボタン */
-.modal_open {
-	font-size: 16px;
-	width: 120px;
-	height: 50px;
-	margin: 0px 5px;
-	border: solid 1px orange;
-	color: #d9811c;
-	background: #feffe0;
-	cursor: pointer;
-}
 
-/* モーダルと背景の指定 */
-.modal {
-	display: none;
-	position: absolute;
-	top: 50px;
-	width: 200%;
-	max-height: 100%;
-	text-align: center;
-	overflow: visible;
-	transition: .3s;
-	box-sizing: border-box;
-}
-
-/* モーダルの擬似要素の指定 */
-.modal:before {
-	content: "";
-	display: inline-block;
-	vertical-align: middle;
-	height: 100%;
-	margin-left: -0.2em;
-}
-
-/* クラスが追加された時の指定 */
-.modal.is-active {
-	display: block;
-	z-index: 20;
-}
-
-/* モーダル内側の指定 */
-.modal_container {
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
-
-/* モーダルを閉じるボタンの指定 */
-.modal_close {
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	top: 0;
-	right: 0;
-	width: 40px;
-	height: 50px;
-	color: #d9811c;
-	cursor: pointer;
-	font-size: 40px;
-}
-
-/* モーダルのコンテンツ部分の指定 */
-.modal_content {
-    height: 220px;
-	background: rgba(254, 255, 224, 0.95);
-	line-height: 1.8;
-	border-radius: 5px;
-	padding: 10px;
-	margin-top: 10px;
-}
-
-.modal_content label {
-	color: #d9811c;
-}
-
-/* モーダルのコンテンツ部分のテキストの指定 */
-.modal_content p {
-	margin: 1em 0;
-}
-
-.modal_content select {
-	height: 20px;
-}
-
-.modal_content select, input {
-	color: saddlebrown;
-}
 
 input[type="checkbox"] {
 	width: 20px;
@@ -423,6 +344,18 @@ gap: 0				/* 子要素の間隔を0にする */
 
 		<!-- ヘッダー部分 -->
 		<%@include file="../common/header.jsp"%>
+
+		<!-- エラー用モーダル本体 -->
+		<div class="modal error-modal" data-message="<%= message %>">
+			<div class="modal-container">
+				<!-- モーダルを閉じるボタン -->
+				<div class="modal-close js-modal-close">×</div>
+				<!-- モーダル内部のコンテンツ -->
+				<div class="modal-content">
+					<p id="error-message"></p>
+				</div>
+			</div>
+		</div>
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">

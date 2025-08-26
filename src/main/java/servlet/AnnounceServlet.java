@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/01
+ * 更新日 : 2025/08/25
  */
 package servlet;
 
@@ -41,9 +41,12 @@ public class AnnounceServlet extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 変数宣言
+		// エラー用コマンド
 		String error = "";
-		String cmd = "";
+		// エラー文格納用
+		String message = "";
+		// 遷移先のパス
+		String path = "/view/announce.jsp";
 
 		// オブジェクト生成
 		AnnounceDAO announceDAO = new AnnounceDAO();
@@ -51,28 +54,38 @@ public class AnnounceServlet extends HttpServlet {
 		ArrayList<CategoryMap> categoryList = new ArrayList<CategoryMap>();
 
 		try {
+			//エラー文を受け取る
+			message = (String) request.getAttribute("message");
 
 			// メソッドを呼び出してSQL文実行
 			announceList = announceDAO.selectAll();
 			categoryList = announceDAO.selectCategoryAll();
-		
+
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\r\nお知らせ一覧の読み込みができませんでした。";
-			cmd = "logout";
+			message = "システムの一時的な問題により、お知らせの読み込みができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
+			
 		} finally {
+			
 			if (!("").equals(error)) {
-				request.setAttribute("cmd", cmd);
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
 			}
+			
 			if (("").equals(error)) {
 				request.setAttribute("announceList", announceList);
 				request.setAttribute("categoryList", categoryList);
-				request.getRequestDispatcher("/view/announce.jsp").forward(request, response);
+				request.setAttribute("message", message);
 			}
+			
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 

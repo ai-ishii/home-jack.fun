@@ -2,7 +2,7 @@
 JackWorks申請一覧画面
 作成者：青木美波
 作成日 2025/07/28
-更新日 2025/08/22
+更新日 2025/08/25
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -649,11 +649,11 @@ document.addEventListener("DOMContentLoaded", function() {
 				<!-- モーダルを閉じるボタン -->
 				<div class="modal-close js-modal-close">×</div>
 				<!-- モーダル内部のコンテンツ -->
-						<div class="modal-content">
-							<p id="error-message"></p>
-						</div>
-					</div>
+				<div class="modal-content">
+					<p id="error-message"></p>
 				</div>
+			</div>
+		</div>
 
 		<!-- メイン部分 -->
 		<div id="main" class="container">

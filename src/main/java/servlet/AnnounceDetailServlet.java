@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/19
+ * 更新日 : 2025/08/25
  */
 package servlet;
 
@@ -26,9 +26,14 @@ public class AnnounceDetailServlet extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 変数宣言
+		// エラー用コマンド
 		String error = "";
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
 		String cmd = "";
+		// 遷移先のパス
+		String path = "";
 
 		// オブジェクト生成
 		Announce announce = new Announce();
@@ -42,48 +47,57 @@ public class AnnounceDetailServlet extends HttpServlet {
 		try {
 			// メソッドからSQL実行
 			announce = announceDAO.selectByAnnounceId(announceId);
-			
-			if(announce.getAnnounceId() == 0) {
-				error = "対象のお知らせが存在しません。";
+
+			if (announce.getAnnounceId() == 0) {
+				message = "このお知らせは、すでに削除されています。";
 				//お知らせ一覧画面へ遷移
-				cmd = "announce";
+				path = "/announce";
 				return;
 			}
 			
 			if (cmd.equals("detail")) {
-
 				// メソッドからSQL実行
 				announceList = announceDAO.selectAll();
-
 			}
-			
+
 		} catch (IllegalStateException e) {
-			error = "システムの一時的な問題により、\r\nお知らせの読み込みができませんでした。";
+			message = "システムの一時的な問題により、お知らせの読み込みができませんでした。";
 			//ログイン画面へ遷移
-			cmd = "logout";
-			
+			error = "logout";
+
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 
 		} finally {
+
 			if (!("").equals(error)) {
-				request.setAttribute("cmd", cmd);
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
 			}
-			// お知らせ詳細画面に遷移する条件式
-			if (cmd.equals("detail")) {
-				request.setAttribute("announce", announce);
-				request.setAttribute("announceList", announceList);
-				request.getRequestDispatcher("/view/announceDetail.jsp").forward(request, response);
-			}
-			// お知らせ更新画面に遷移する条件式
-			if (cmd.equals("update")) {
-				request.setAttribute("announce", announce);
-				request.getRequestDispatcher("/view/announceUpdate.jsp").forward(request, response);
+			
+			//削除エラーの有無判定
+			if (!("").equals(path)) {
+				request.setAttribute("message", message);
+			} else {
+				// お知らせ詳細画面に遷移する条件式
+				if (cmd.equals("detail")) {
+					request.setAttribute("announce", announce);
+					request.setAttribute("announceList", announceList);
+					path = "/view/announceDetail.jsp";
+				}
+				// お知らせ更新画面に遷移する条件式
+				if (cmd.equals("update")) {
+					request.setAttribute("announce", announce);
+					path = "/view/announceUpdate.jsp";
+				}
 			}
 
+			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
 }
