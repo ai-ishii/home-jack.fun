@@ -76,6 +76,7 @@ public class LicenseConfirmServlet extends HttpServlet {
         userInput.put("examTime", examTime != null ? examTime : "");
 
         Map<String, Object> userInputFile = new HashMap<>();
+        Map<String, Object> formValues = new HashMap<>(userInput);
 
         // 受験料領収書の処理
         if (receiptPart != null && receiptPart.getSize() > 0) {
@@ -89,11 +90,15 @@ public class LicenseConfirmServlet extends HttpServlet {
             }
             userInput.put("receiptFileName", receiptPart.getSubmittedFileName());
             userInputFile.put("licenseRequestTestId", newReceiptId);
+            formValues.put("receiptFileName", receiptPart.getSubmittedFileName());
+    		formValues.put("licenseRequestTestId", newReceiptId);
             userInputFile.put("receiptBytes", receiptBytes);
         } else if (oldReceiptId != null) {
             byte[] existingBytes = requestDAO.getReceiptFileById(oldReceiptId);
             userInput.put("receiptFileName", requestDAO.getReceiptFileNameById(oldReceiptId));
             userInputFile.put("licenseRequestTestId", oldReceiptId);
+            formValues.put("passingFileName", requestDAO.getReceiptFileNameById(oldReceiptId));
+            formValues.put("licenseRequestTestId", oldReceiptId);
             userInputFile.put("receiptBytes", existingBytes);
         }
 
@@ -109,11 +114,15 @@ public class LicenseConfirmServlet extends HttpServlet {
             }
             userInput.put("passingFileName", passingPart.getSubmittedFileName());
             userInputFile.put("passingFileId", newPassingId);
+            formValues.put("passingFileName", passingPart.getSubmittedFileName());
+    		formValues.put("passingFileId", newPassingId);
             userInputFile.put("passingBytes", passingBytes);
         } else if (oldPassingId != null) {
             byte[] existingBytes = requestDAO.getPassingFileById(oldPassingId);
             userInput.put("passingFileName", requestDAO.getPassingFileNameById(oldPassingId));
             userInputFile.put("passingFileId", oldPassingId);
+            formValues.put("passingFileName", requestDAO.getPassingFileNameById(oldPassingId));
+            formValues.put("passingFileId", oldPassingId);
             userInputFile.put("passingBytes", existingBytes);
         }
         
@@ -130,7 +139,6 @@ public class LicenseConfirmServlet extends HttpServlet {
         }
 
         // formValues作成(確認画面用)
-        Map<String, Object> formValues = new HashMap<>(userInput);
         if (userInputFile.containsKey("receiptBytes")) formValues.put("receiptBytes", userInputFile.get("receiptBytes"));
         if (userInputFile.containsKey("passingBytes")) formValues.put("passingBytes", userInputFile.get("passingBytes"));
 
@@ -156,10 +164,14 @@ public class LicenseConfirmServlet extends HttpServlet {
         licenseRequestExclusive.setReceiptName(userInput.get("receiptFileName"));
         licenseRequestExclusive.setPassing((byte[]) formValues.get("passingBytes"));
 		licenseRequestExclusive.setPassingName(userInput.get("passingFileName"));
+		
 
         // 子テーブル登録
         try {
             boolean success = requestDAO.insertLicenseRequestDetails(requestId, licenseRequestExclusive);
+    		formValues.put("examDate", examDate);
+    		formValues.put("examTime", examTime);
+            formValues.put("requestId", requestId);
             if (!success) {
                 request.setAttribute("errorMessage", "資格申請登録に失敗しました。");
                 request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
@@ -171,7 +183,7 @@ public class LicenseConfirmServlet extends HttpServlet {
             request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
             return;
         }
-
+        
         request.setAttribute("formValues", formValues);
         request.getRequestDispatcher("/view/licenseConfirm.jsp").forward(request, response);
     }

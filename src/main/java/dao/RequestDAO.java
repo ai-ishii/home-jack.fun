@@ -576,7 +576,7 @@ public class RequestDAO {
 	 * */
 	public boolean insertLicenseRequestDetails(long requestId, LicenseRequestExclusive licenseRequestExclusive) {
 		String sql = "INSERT INTO "
-				+ "license_request_info ("
+				+ "license_request_test_info ("
 				+ "request_id, "
 				+ "group_id, "
 				+ "department_id, "

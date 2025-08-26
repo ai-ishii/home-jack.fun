@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 		protected void doPost(HttpServletRequest request, HttpServletResponse response)
 				throws ServletException, IOException {
 			
-			// 1. 文字コードを設定
+			//  文字コードを設定
 			request.setCharacterEncoding("UTF-8");
 
 			 // フォームから全データを受け取る
@@ -35,8 +35,10 @@ import jakarta.servlet.http.HttpServletResponse;
 	        String examTime = request.getParameter("exam-time");
 	        String receiptTempFileName = request.getParameter("receiptTempFileName");
 	        String passingTempFileName = request.getParameter("passingTempFileName");
+	        String receiptFileId = request.getParameter("receiptFileId");
+	        String passingFileId = request.getParameter("passingFileId");
 			
-			// 3. 受け取ったデータを「リクエストスコープ」に格納する
+			//  受け取ったデータを「リクエストスコープ」に格納する
 			//    こうすることで、次のJSPでこの値を表示できる
 	     // requestスコープにデータをセット
 	        request.setAttribute("name", name);
@@ -47,7 +49,10 @@ import jakarta.servlet.http.HttpServletResponse;
 	        request.setAttribute("examTime", examTime);
 	        request.setAttribute("receiptTempFileName", receiptTempFileName);
 	        request.setAttribute("passingTempFileName", passingTempFileName);
-			// 4. 確認画面JSPに処理を引き継ぐ（フォワード）
-			getServletContext().getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
+	        request.setAttribute("receiptFileId", receiptFileId);
+	        request.setAttribute("passingFileId", passingFileId);
+	        
+			//  確認画面JSPに処理を引き継ぐ（フォワード）
+	        request.getRequestDispatcher("/view/licenseForm.jsp").forward(request, response);
 		}
 	}
