@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/licenseRequestDetaiApproval")
+@WebServlet("/licenseRequestApproval")
 public class LicenseRequestApprovalServlet extends HttpServlet {
 
 	//doGetメソッド

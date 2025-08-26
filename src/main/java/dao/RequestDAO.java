@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  *  
- * 最終更新日：2025/08/22
+ * 最終更新日：2025/08/26
  *  
  */
 package dao;
@@ -21,6 +21,7 @@ import bean.AddressRequestExclusive;
 import bean.LicenseName;
 import bean.LicenseRequestExclusive;
 import bean.NameRequest;
+import bean.Request;
 import util.DAOconnection;
 
 public class RequestDAO {
@@ -327,9 +328,9 @@ public class RequestDAO {
 			// トランザクションを開始
 			con.setAutoCommit(false);
 
-			// --- 処理1：request_infoテーブルに氏名と現在日時をINSERT ---
-			// --- 親テーブルにINSERT ---
-			// --- 親テーブルにINSERT ---
+			// request_infoテーブルに氏名と現在日時をINSERT 
+			// 親テーブルにINSERT 
+			// 親テーブルにINSERT
 			String sql1 = "INSERT INTO request_info (applicant, request_date) VALUES (?, NOW())";
 			smt1 = con.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
 			smt1.setString(1, addressRequestExclusive.getName());
@@ -344,7 +345,7 @@ public class RequestDAO {
 				throw new SQLException("request_idの取得に失敗しました。");
 			}
 
-			// --- 子テーブルにINSERT ---
+			// 子テーブルにINSERT
 			String sql2 = "INSERT INTO address_request_info ("
 					+ "request_id, "
 					+ "old_post, "
@@ -382,7 +383,7 @@ public class RequestDAO {
 			return false;
 
 		} finally {
-			// --- 最後に必ずリソースを解放する ---
+			// 最後に必ずリソースを解放する
 			try {
 				if (rs != null)
 					rs.close();
@@ -535,7 +536,11 @@ public class RequestDAO {
 		return licenseNameList;
 	}
 
-	// 親テーブルに登録して request_id を返す
+	/**
+	 * 親テーブルにapplicantIdを登録して request_id を返すメソッド
+	 * 
+	 * 
+	 * */ 
 	public long insertLicenseRequestID(int applicantId) {
 		String sql = "INSERT INTO "
 				+ "request_info "
@@ -565,7 +570,11 @@ public class RequestDAO {
 		}
 	}
 
-	// 子テーブル（license_request_info）に登録
+	/**
+	 *  子テーブル（license_request_info）に登録するメソッド
+	 * 
+	 * 
+	 * */
 	public boolean insertLicenseRequestDetails(long requestId, LicenseRequestExclusive licenseRequestExclusive) {
 		String sql = "INSERT INTO "
 				+ "license_request_info ("
@@ -848,5 +857,80 @@ public class RequestDAO {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	/**
+	 * フラグごとに資格取得者一覧を表示する機能
+	 * （１．申請中  ２．承認済み ３．差戻中）
+	 * @param requestFlag
+	 * @return ArrayList<LicenseRequest> list 
+	 */
+	public ArrayList<Request> selectLicenseListByFlag(int requestFlag) {
+		
+		//変数宣言
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		// 検索結果を格納するArrayListの宣言
+		ArrayList<Request> list = 
+				new ArrayList<Request>();
+		
+		String sql = "SELECT "
+						+ "r.request_id, "
+						+ "r.applicant "
+					+ "FROM "
+						+ "request_info AS r "
+					+ "INNER JOIN "
+						+ "license_request_info AS l "
+					+ "ON "
+						+ "r.request_id = l.request_id "
+					+ "WHERE "
+						+ "r.request_flag = ?";
+		
+		try {
+			
+			// DBに接続する
+			con = DAOconnection.getConnection();
+			ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, requestFlag);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				
+				// オブジェクト生成
+				Request request = new Request();
+				
+				// 各クラス変数に値を代入する
+				request.setRequestId(rs.getInt("request_id"));
+				request.setApplicant(rs.getString("applicant"));
+				
+				// ArrayListに代入する
+				list.add(request);
+			}
+			
+		} catch (SQLException e) {
+			System.err.println("RequestLicenseDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("RequestLicenseDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("RequestLicenseDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("RequestLicenseDAOの不明なエラー: " + e.getMessage());
+			}
+		}
+		
+		return list;
 	}
 }

@@ -1,10 +1,29 @@
+<!-- 
+	資格取得者一覧画面
+	
+	作成者：K.R
+	
+	更新者：大北直弥
+	
+	最終更新日：8/26
+ -->
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@ page import="java.util.ArrayList, bean.LicenseList"%>
+<%@page import="bean.Request, 
+				bean.LicenseRequest, 
+				bean.CategoryMap, 
+				util.MyFormat, 
+				java.util.ArrayList"%>
 
 <%
-ArrayList<LicenseList> list = (ArrayList<LicenseList>) request.getAttribute("list");
-String error = (String)request.getAttribute("error");
+// オブジェクト生成
+MyFormat myFormat = new MyFormat();
 
+// リクエストスコープからパラメータを受け取る
+ArrayList<Request> requestList = (ArrayList<Request>) request.getAttribute("request_list");
+ArrayList<LicenseRequest> licenseRequestList = (ArrayList<LicenseRequest>) request.getAttribute("licenseRequest_list");
+ArrayList<CategoryMap> departmentList = (ArrayList<CategoryMap>) request.getAttribute("department_list");
+ArrayList<CategoryMap> groupList = (ArrayList<CategoryMap>) request.getAttribute("group_list");
+ArrayList<CategoryMap> licenseList = (ArrayList<CategoryMap>) request.getAttribute("license_list");
 %>
 
 <html>
@@ -19,23 +38,6 @@ String error = (String)request.getAttribute("error");
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
 	type="text/javascript"></script>
 </head>
-<style type="text/css">
-/
-------------------------------------------------------------------------------
-/
-/
-
-
-
-
-
-
-
-
-------------------------------------------------------------------------------
-/
-</style>
-
 <body>
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
@@ -45,16 +47,9 @@ String error = (String)request.getAttribute("error");
 		<div id="main" class="container">
 			<div class="license">
 
-
-
-
 				<div class="header">
-
 					<!--Content before waves-->
 					<div class="inner-header flex">
-
-
-
 
 						<center>
 							<!-- タイトル -->
@@ -88,38 +83,64 @@ String error = (String)request.getAttribute("error");
 
 				</div>
 				<!--Header ends-->
-				<% 
-			if (list != null) {
-			for (int i = 0; i < list.size();i++) {
-			
-			%>
-
+			</div>
+			<table style="border:1px solid #000;">
 				<tr>
-
-					<%=list.get(i).getLicenseListId() %>
-					<%=list.get(i).getUserId() %>
-
-
+					<td>名前</td>
+					<td>所属</td>
+					<td>資格名</td>
+					<td>合格日</td>
 				</tr>
 				<%
-			}
+				for (int i = 0; i < requestList.size() && i < licenseRequestList.size(); i++) {
+				%>
+				<tr>
+					<!-- 名前 -->
+					<td><%=requestList.get(i).getApplicant()%></td>
+					<!-- 所属 -->
+					<td>
+					<%
+					for (int j = 0; j < departmentList.size(); j++) {
+						if (licenseRequestList.get(i).getDepartmentId() == departmentList.get(j).getId()) {
+					%>
+						<!-- 部情報 -->
+						<%=departmentList.get(j).getName()%>
+					<%
+						}
+					}
+					%>
+					<%
+					for (int j = 0; j < groupList.size(); j++) {
+						if (licenseRequestList.get(i).getGroupId() == groupList.get(j).getId()) {
+					%>
+						<!-- グループ情報 -->
+						<%=groupList.get(j).getName()%>
+					<%
+						}
+					}
+					%>
+					</td>
+					<!-- 取得資格名 -->
+					<td>
+					<%
+					for (int j = 0; j < licenseList.size(); j++) {
+						if (licenseRequestList.get(i).getLicenseId() == licenseList.get(j).getId()) {
+					%>
+						<%=licenseList.get(j).getName()%>
+					<%
+						}
+					}
+					%>
+					</td>
+					<!-- 受験日 -->
+					<td><%=myFormat.LocalDateFormat(licenseRequestList.get(i).getExamDate())%></td>
+				</tr>
+				<%
+				}
+				%>
+			</table>
 			
-			}
-			
-			%>
-
-
-
-
-			</div>
-
-
-
-
-
 		</div>
-
-
 	</div>
 </body>
 </html>
