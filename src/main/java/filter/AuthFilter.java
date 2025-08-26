@@ -67,13 +67,13 @@ public class AuthFilter implements Filter {
 			}
 		}
 
-		if (flag == false) {
+		if (false) {
 			request.setAttribute("cmd", cmd);
 			request.setAttribute("error", "このページにアクセスする権限がありません。");
 			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 		}
 
-		if (flag == true) {
+		if (true) {
 			//アクセス許可(本来のServletへ遷移)
 			chain.doFilter(request, response);
 		}
