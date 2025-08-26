@@ -1,3 +1,10 @@
+/*
+ * 便利なメソッドたち
+ * 
+ * 作成者：大北直弥
+ * 
+ * 作成日：8/26
+ */
 package util;
 
 import java.sql.Connection;
