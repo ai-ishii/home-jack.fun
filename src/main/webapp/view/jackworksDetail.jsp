@@ -5,7 +5,7 @@ JackWorks詳細画面
 更新者：占部虎司郎
 
 作成日 2025/07/18
-最終更新日:2025/08/19
+最終更新日:2025/08/26
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
