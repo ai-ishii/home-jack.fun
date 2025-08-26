@@ -4,16 +4,20 @@
 作成者:月向亮太
 
 作成日: 2025/8/21
-更新日: 2025/8/25
+更新日: 2025/8/26
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page import="java.util.ArrayList, bean.User, util.MyFormat"%>
-
+<%@page import="bean.Authority"%>
+<%@page import="bean.AuthorityHaving"%>
 <%
 //個人情報を格納したuserを受け取る
 User user = (User) request.getAttribute("user");
-String cmd = (String) request.getAttribute("cmd");
+//String cmd = (String) request.getAttribute("cmd");
+ArrayList<Authority> authorityList = (ArrayList<Authority>) request.getAttribute("authority_list");
+ArrayList<AuthorityHaving> authorityHavingList = (ArrayList<AuthorityHaving>) request.getAttribute("authority_having_list");
+
 %>
 
 <html>
@@ -112,6 +116,18 @@ text-align: center;
 				
 				<h3 id="koji-name">個人情報：<%=user.getName() %></h3>
 				
+					<%
+						for (int i = 0; i < authorityHavingList.size(); i++){
+							AuthorityHaving having = authorityHavingList.get(i);
+							if (having.getAuthorityCode().equals("POS_MNGR")){	
+					%>
+					<a href="<%=request.getContextPath()%>/userList"><p>個人情報一覧はコチラ</p></a>
+					
+					<%
+							}
+						}
+					%>
+				
 				<table id="detail-list">
 					<tr class="table-single">
 						<td class="table-double">社員番号</td>
@@ -172,7 +188,31 @@ text-align: center;
 					<tr class="table-single">
 						<td class="table-double">資格</td>
 						<td><%=user.getQualification() %></td>
+					
+					
 					</tr>
+					<tr class="table-single">
+						<td class="table-double">権限</td>
+						
+					<td>
+					<%
+						for (AuthorityHaving having : authorityHavingList){
+							for (Authority authority : authorityList) {
+				                if (having.getAuthorityCode().equals(authority.getAuthorityCode())) {
+					%>
+					
+                <%= authority.getAuthorityName() %>
+						<br>
+					<%
+								}
+							}
+						}
+					%>
+					</td>
+					</tr>
+					
+					
+					
 				</table>
 				
 				<div class="button-container">	
