@@ -81,6 +81,7 @@ textarea {
 	resize: none;
 	width: 100%;
 	height: 100px;
+	font-size: 16px;
 }
 
 /* 米印の色 */
@@ -251,11 +252,13 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 height: 30px;
+margin-top: 24px;
 }
 
 /* 矢印の枠 */
 .yoruArrow{
 width: 150px;
+padding-top: 8px;
 }
 
 /* 矢印 */
@@ -404,7 +407,7 @@ fill: #f9de95;
 					<div>
 					<input type="hidden" name="cmd" value="next">
 					<button type="submit" class="btn btn-border">
-					<span class="btnUp">更新</span>
+					<span class="btnUp">申請</span>
 					</button>
 					</div>
 					<div class="jackDummy"></div>
@@ -429,7 +432,9 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="project" value="" size="45" class="required"></td>
+					<td class="textPadd">
+						<input type="text" name="project" value="" size="45" class="required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -438,7 +443,9 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="workSeason" value="" size="45"  class="required"></td>
+					<td class="textPadd">
+						<input type="text" name="workSeason" value="" size="45"  class="required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -447,7 +454,9 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
+					<td class="textPadd">
+						<input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="num-required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -456,7 +465,9 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="num-required"></td>
+					<td class="textPadd">
+						<input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="num-required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -465,7 +476,9 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="workPlace" value="" size="45" class="required"></td>
+					<td class="textPadd">
+						<input type="text" name="workPlace" value="" size="45" class="required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -474,7 +487,9 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="workContent" rows="" cols="" class="required"></textarea></td>
+					<td class="textPadd">
+						<textarea name="workContent" rows="" cols="" class="required"></textarea>
+					</td>
 				<tr>
 					<td class="tdMag">
 						<div class="nintendoStripe">
@@ -482,7 +497,9 @@ fill: #f9de95;
 						</div>
 						</td>
 				</tr>
-					<td class="tdMag"><textarea name="phase" rows="" cols=""></textarea></td>
+					<td class="textPadd">
+						<textarea name="phase" rows="" cols=""></textarea>
+					</td>
 				<tr>
 					<td class="tdMag">
 						<div class="nintendoStripe">
@@ -490,7 +507,9 @@ fill: #f9de95;
 						</div>
 					</td>
 				</tr>
-					<td><textarea name="language" rows="" cols=""></textarea></td>
+					<td class="textPadd">
+						<textarea name="language" rows="" cols=""></textarea>
+					</td>
 				<tr>
 					<td class="tdMag">
 						<div class="nintendoStripe">
@@ -498,22 +517,28 @@ fill: #f9de95;
 						</div>
 					</td>
 				</tr>
-					<td><textarea name="skill" rows="" cols=""></textarea></td>
+					<td class="textPadd"><textarea name="skill" rows="" cols=""></textarea></td>
 				<tr>
-					<td class="tdMag"><div class="nintendoStripe">
+					<td class="tdMag">
+						<div class="nintendoStripe">
 							<div class="subBlack">必要人数</div>
 						</div>
 					</td>
 				</tr>
-					<td><input type="text" name="needPeople" value="" size="45"></td>
+					<td class="textPadd">
+						<input type="text" name="needPeople" value="" size="45" class="monthBox">
+					</td>
 				<tr>
-					<td style="display: flex" class="tdMag"><div class="nintendoStripe">
+					<td style="display: flex" class="tdMag">
+						<div class="nintendoStripe">
 							<div class="subBlack">営業担当者</div>
 						</div>
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><input type="text" name="seller" value="" size="45" class="required"></td>
+					<td class="textPadd">
+						<input type="text" name="seller" value="" size="45" class="required monthBox">
+					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
 						<div class="nintendoStripe">
@@ -522,18 +547,21 @@ fill: #f9de95;
 						<div class="warning">*</div>
 					</td>
 				</tr>
-					<td><textarea name="contact" rows="" cols="" class="required"></textarea></td>
+					<td class="textPadd">
+						<textarea name="contact" rows="" cols="" class="required"></textarea>
+					</td>
 				<tr>
 					<td class="tdMag">
 						<div class="nintendoStripe">
 							<div class="subBlack">その他</div>
 						</div></td>
 				</tr>
-					<td><textarea name="other" rows="" cols=""></textarea></td>
+					<td class="textPadd">
+						<textarea name="other" rows="" cols=""></textarea>
+					</td>
 			</table>
 
 			<!-- 登録ボタン -->
-			<div class="box-mar">
 			<div class="jackFlex">
 					<div class="yoruArrow">
 					<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp" class="jackReset">
@@ -547,12 +575,11 @@ fill: #f9de95;
 					<div>
 					<input type="hidden" name="cmd" value="register">
 					<button type="submit" class="btn btn-border">
-					<span class="btnUp">更新</span>
+					<span class="btnUp">申請</span>
 					</button>
 					</div>
 					<div class="jackDummy"/>
 				</div>
-			</div>
 			</form>
 			
 			<% } %>
