@@ -42,6 +42,8 @@ public class EmployeeCommitServlet extends HttpServlet {
 		EmployeeDAO employeeDAO = new EmployeeDAO();
 		
 		String strUserId = request.getParameter("user_id");
+//		String confirm = request.getParameter("confirm");
+//		String complete = request.getParameter("complete");
 		String submit = request.getParameter("confirm");
 		
 		try {
@@ -73,7 +75,7 @@ public class EmployeeCommitServlet extends HttpServlet {
 					request.getRequestDispatcher("/employee").forward(request, response);
 				}
 				
-				if (submit.equals("編集画面に戻る")) {
+				if (submit.equals("BACK")) {
 					request.setAttribute("userId", userId);
 					request.getRequestDispatcher("/employeeDetail?work=update").forward(request, response);
 				}
