@@ -11,20 +11,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import bean.CategoryMap;
 
 public class CommonMethod {
 	
-public String selectDepartmentName(int departmentId) {
+	/**
+	 * 部情報を取得するメソッド
+	 * @param departmentId
+	 * @return ArrayList<CategoryMap>
+	 */
+	public ArrayList<CategoryMap> selectDepartmentName(int departmentId) {
 		
 		// 変数宣言
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		// 戻り値を格納する変数の確認
-		String departmentName = "";
-		
+		ArrayList<CategoryMap> list = new ArrayList<CategoryMap>();
+
 		// SQL文発行
 		String sql = "SELECT "
+						+ "department_id, "
+						+ "department_code, "
 						+ "department_name "
 					+ "FROM "
 						+ "department_info "
@@ -43,14 +53,20 @@ public String selectDepartmentName(int departmentId) {
 			
 			while (rs.next()) {
 				
-				departmentName = rs.getString("department_name");
+				CategoryMap department = new CategoryMap();
+				
+				department.setId(rs.getInt("department_id"));
+				department.setCode(rs.getString("department_code"));
+				department.setName(rs.getString("department_name"));
+				
+				list.add(department);
 			}
 			
 		} catch (SQLException e) {
-			System.err.println("RequestLicenseDAOのデータベース接続時にエラー: " + e.getMessage());
+			System.err.println("#" + e.getMessage());
 			throw new IllegalStateException(e);
 		} catch (Exception e) {
-			System.err.println("RequestLicenseDAOの不明なエラー: " + e.getMessage());
+			System.err.println("#" + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
 			try {
@@ -61,26 +77,33 @@ public String selectDepartmentName(int departmentId) {
 					con.close();
 				}
 			} catch (SQLException e) {
-				System.err.println("RequestLicenseDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				System.err.println("#" + e.getMessage());
 			} catch (Exception e) {
-				System.err.println("RequestLicenseDAOの不明なエラー: " + e.getMessage());
+				System.err.println("#" + e.getMessage());
 			}
 		}
 		
-		return departmentName;
+		return list;
 	}
 	
-	public String selectGroupName(int departmentId) {
+	/**
+	 * グループ情報を取得するメソッド
+	 * @param departmentId
+	 * @return ArrayList<CategoryMap>
+	 */
+	public ArrayList<CategoryMap> selectGroup(int departmentId) {
 		
 		// 変数宣言
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		// 戻り値を格納する変数の確認
-		String groupName = "";
-		
+		ArrayList<CategoryMap> list = new ArrayList<CategoryMap>();
+
 		// SQL文発行
 		String sql = "SELECT "
+						+ "group_id, "
+						+ "group_code, "
 						+ "group_name "
 					+ "FROM "
 						+ "group_info "
@@ -99,14 +122,20 @@ public String selectDepartmentName(int departmentId) {
 			
 			while (rs.next()) {
 				
-				groupName = rs.getString("group_name");
+				CategoryMap group = new CategoryMap();
+				
+				group.setId(rs.getInt("group_id"));
+				group.setCode(rs.getString("group_code"));
+				group.setName(rs.getString("group_name"));
+				
+				list.add(group);
 			}
 			
 		} catch (SQLException e) {
-			System.err.println("RequestLicenseDAOのデータベース接続時にエラー: " + e.getMessage());
+			System.err.println("#" + e.getMessage());
 			throw new IllegalStateException(e);
 		} catch (Exception e) {
-			System.err.println("RequestLicenseDAOの不明なエラー: " + e.getMessage());
+			System.err.println("#" + e.getMessage());
 			throw new IllegalStateException(e);
 		} finally {
 			try {
@@ -117,13 +146,13 @@ public String selectDepartmentName(int departmentId) {
 					con.close();
 				}
 			} catch (SQLException e) {
-				System.err.println("RequestLicenseDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+				System.err.println("#" + e.getMessage());
 			} catch (Exception e) {
-				System.err.println("RequestLicenseDAOの不明なエラー: " + e.getMessage());
+				System.err.println("#" + e.getMessage());
 			}
 		}
 		
-		return groupName;
+		return list;
 	}
 
 }
