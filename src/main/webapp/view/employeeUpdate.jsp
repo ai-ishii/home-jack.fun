@@ -69,7 +69,7 @@ String position = employee.getPosition();
 @import
 	url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap')
 	;
-	
+
 /* ページ全体（div）*/
 #employeeUpdate {
 	position: relative;
@@ -280,8 +280,7 @@ input[type="file"] {
 	cursor: pointer;
 }
 
-.confirmButton input[type="submit"] {
-	all: unset;
+.confirmButton span {
 	vertical-align: middle;
 	font-family: "Kosugi Maru", sans-serif;
 	font-size: 21px;
@@ -299,10 +298,29 @@ input[type="file"] {
 	stroke: #4682b4;
 }
 
-.confirmButton:hover input[type="submit"] {
+.confirmButton:hover span {
 	color: #4682b4;
 }
 
+.btnList {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.cancel {
+	width: 30%;
+	padding-left: 50px;
+}
+
+.confirm {
+	width: 40%;
+	text-align: center;
+}
+
+.space {
+	width: 30%;
+}
 </style>
 
 <body>
@@ -412,25 +430,59 @@ input[type="file"] {
 								name="position" value="<%=position%>"></td>
 						</tr>
 					</table>
-					<div class="yoruArrow">
-						<a
-							href="<%=request.getContextPath()%>/employeeDetail
+					<table class="btnList">
+						<tr>
+							<td class="cancel">
+								<div class="yoruArrow">
+									<a
+										href="<%=request.getContextPath()%>/employeeDetail
 								?user_id=<%=userId%>
 								&work=detail"
-							class="jackResetL"> <svg class="arrow" width="50" height="20">
+										class="jackResetL"> <svg class="arrow" width="50"
+											height="20">
 			<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
 			<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
 		</svg> <span class="beaf">CANCEL</span>
-						</a>
-					</div>
-					<div class="confirmButton">
-					<svg class="memo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><rect width="48" height="48" fill="none"/><polyline class="path" points="17.5 23.48 22.5 28.48 30.5 20.48" fill="none" stroke="#fff" stroke-linecap="square" stroke-miterlimit="10" stroke-width="2"/><rect class="path" x="8" y="8" width="32" height="32" rx="2" stroke-width="2" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-					<input type="submit" name="submit"
-						value="確認画面へ"
-						style="width: 120px; height: 50px; font-size: large;"> <input
-						type="hidden" name="userId" value="<%=userId%>">
-					</div>
+									</a>
+								</div>
+							</td>
+							<td class="confirm">
 							<!-- 
+								<div class="confirmButton">
+									<svg class="memo" xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 48 48" width="48px" height="48px">
+										<rect width="48" height="48" fill="none" />
+										<polyline class="path"
+											points="17.5 23.48 22.5 28.48 30.5 20.48" fill="none"
+											stroke="#fff" stroke-linecap="square" stroke-miterlimit="10"
+											stroke-width="2" />
+										<rect class="path" x="8" y="8" width="32" height="32" rx="2"
+											stroke-width="2" stroke="#fff" stroke-linecap="round"
+											stroke-linejoin="round" fill="none" /></svg>
+									<input type="submit" name="submit" value="確認画面へ"
+										style="width: 120px; height: 50px; font-size: large;">
+									<input type="hidden" name="userId" value="<%=userId%>">
+								</div>
+							 -->
+							 <button class="confirmButton">
+							 <svg class="memo" xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 48 48" width="48px" height="48px">
+										<rect width="48" height="48" fill="none" />
+										<polyline class="path"
+											points="17.5 23.48 22.5 28.48 30.5 20.48" fill="none"
+											stroke="#fff" stroke-linecap="square" stroke-miterlimit="10"
+											stroke-width="2" />
+										<rect class="path" x="8" y="8" width="32" height="32" rx="2"
+											stroke-width="2" stroke="#fff" stroke-linecap="round"
+											stroke-linejoin="round" fill="none" /></svg>
+							 <span>確認画面へ</span>
+							 <input type="hidden" name="userId" value="<%=userId%>">
+							 </button>
+							</td>
+							<td class="space">&nbsp;</td>
+						</tr>
+					</table>
+					<!-- 
 					<input type="submit" name="submit"
 						value="確認画面へ"
 						style="width: 120px; height: 50px; font-size: large;"> <input

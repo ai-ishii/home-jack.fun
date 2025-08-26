@@ -160,6 +160,8 @@ String group = commonTable.selectGroup(user.getGroupId());
 	text-align: left;
 	font-size: 30px;
 	font-weight: 500;
+	padding-left: 15px;
+	border-left: solid 5px darkorange;
 }
 
 /* 画像スライダー（div）*/
@@ -520,7 +522,7 @@ color: #6eddb3;
 						group = commonTable.selectGroup(user.getGroupId());
 						%>
 						<a id="belong_link"
-							href="employeeDetail?userId=<%=userListBySameBelong.get(i).getUserId()%>">
+							href="employeeDetail?user_id=<%=userListBySameBelong.get(i).getUserId()%>&work=detail">
 							<div id="employee_card">
 								<img id="belong_img"
 									src="<%=request.getContextPath()%>/employeePhoto
@@ -565,7 +567,7 @@ color: #6eddb3;
 						for (int i = 0; i < 3 && i < userListBySameJoiningDate.size(); i++) {
 						%>
 						<a id="joinTiming_link"
-							href="employeeDetail?userId=<%=userListBySameJoiningDate.get(i).getUserId()%>">
+							href="employeeDetail?user_id=<%=userListBySameJoiningDate.get(i).getUserId()%>&work=detail">
 							<div id="employee_card">
 								<img id="joinTiming_img"
 									src="<%=request.getContextPath()%>/employeePhoto
@@ -761,9 +763,9 @@ color: #6eddb3;
 
 	// ページが読み込まれたときに最初の情報を表示
 	document.addEventListener('DOMContentLoaded', () => {
-		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
-		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
-		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
+		//sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
+		//sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
+		//sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -773,9 +775,9 @@ color: #6eddb3;
 		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter_0] + "入社";
 		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight_0] + "入社";
 		
-		sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
-		sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
-		sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
+		//sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
+		//sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
+		//sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
@@ -805,9 +807,11 @@ color: #6eddb3;
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
-		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
-		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
+		//sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
+		//sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
+		//sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
+
+		console.log(sameBelong_nameList);
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -837,9 +841,9 @@ color: #6eddb3;
 		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
 		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
-		sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
-		sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
+		//sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
+		//sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
+		//sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
@@ -869,9 +873,9 @@ color: #6eddb3;
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
-		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
-		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
+		//sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
+		//sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
+		//sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -901,9 +905,9 @@ color: #6eddb3;
 		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
 		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
-		sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
-		sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
+		//sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
+		//sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
+		//sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];

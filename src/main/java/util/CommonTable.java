@@ -19,9 +19,9 @@ public class CommonTable {
 		
 		map.put(1, "BS事業部第1部");
 		map.put(2, "BS事業部第2部");
-		map.put(100, "営業部");
-		map.put(200, "NEXTINOVATION");
-		map.put(300, "経営管理部");
+		map.put(3, "営業部");
+		map.put(4, "NEXTINOVATION");
+		map.put(5, "経営管理部");
 			
 		return map.get(departmentId);
 		
@@ -32,11 +32,11 @@ public class CommonTable {
 		
 		Map<Integer, String> map = new HashMap<>();
 		
-		map.put(0, "");
-		map.put(1, "第1グループ");
-		map.put(2, "第2グループ");
-		map.put(3, "第3グループ");
-		map.put(4, "第4グループ");
+		map.put(1, "&nbsp;");
+		map.put(2, "第1グループ");
+		map.put(3, "第2グループ");
+		map.put(4, "第3グループ");
+		map.put(5, "第4グループ");
 		
 		return map.get(groupId);
 	}

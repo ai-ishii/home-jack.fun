@@ -1,8 +1,11 @@
 <%--
 JackWorks画面
+
 作成者：青木美波
+更新者：占部虎司郎
+
 作成日 2025/07/11
-更新日 2025/08/25
+最終更新日 2025/08/26
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -138,6 +141,10 @@ table thead{
 background-color: #ffffff;
 }
 
+.btnCell{
+min-width: 150px;
+}
+
 table thead th.jack-table{
 	font-size: .85em;
 	padding: 1em;
@@ -171,20 +178,17 @@ table thead tr.jack-table{
 	font-weight: bold;
 }
 
-/* ボタン関係 */
-html {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 62.5%;
+.textNote{
+text-align: center;
 }
 
 .btn, a.btn, button.btn {
-	font-size: 1.6rem;
+	font-size: 16px;
 	font-weight: 700;
 	line-height: 1.5;
 	position: relative;
 	display: inline-block;
-	padding: 0.5rem 2rem;
+	padding: 5px 20px;
 	cursor: pointer;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -195,8 +199,8 @@ html {
 	text-align: center;
 	vertical-align: middle;
 	text-decoration: none;
-	letter-spacing: 0.1em;
-	border-radius: 8.5rem;
+	letter-spacing: 1.6px;
+	border-radius: 85px;
 }
 
 /* 削除ボタン */
@@ -287,10 +291,10 @@ li {
 
 /*　西暦と月の検索ボックスの配置 */
 td.search-box {
+	justify-content: center;
+	align-items: center;
 	height: 100px;
 	margin-bottom: 1px;
-	display: flex;
-	align-items: center;
 }
 
 td.search-box form {
@@ -447,14 +451,13 @@ background-color:#c0c0c0;
 }
 
 .jack-fontsize{
-font-size: 16px;
+font-size: 20px;
 }
 
 .jack-button{
 height: 20px;
 margin-left: auto;
 display:inline-flex;
-gap: 6px;
 }
 
 .jack-display{
@@ -537,6 +540,75 @@ font-size: 16px;
 	line-height: 1.8;
 	padding: 20px;
 }
+
+/* 申請、登録ボタン関係 */
+a {
+	text-decoration: none;
+}
+
+/* 登録ボタン */
+.register_box a {
+	padding: 10px 20px;
+	margin: 0 15px;
+	width: 100px;
+	height: 20px;
+	border-radius: 20px;
+	border: solid 2px orange;
+	background-color: orange;
+	text-align: center;
+	color: #fff;
+	letter-spacing: 0.1em;
+}
+
+.register_box a:hover {
+	background-color: #fff;
+	color: orange;
+	border: solid 2px orange;
+}
+
+.margS{
+margin: 20px 0 10px;
+}
+
+.monthInputBox{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #feffe0;
+border-radius: 25px;
+width: 220px;
+height: 45px;
+gap: 5px;
+border: solid 2px #e9c28b;
+cursor: pointer;
+margin-top: 42px;
+}
+
+.monthInput{
+font-size: 16px;
+color: #d9811c;
+background-color: #feffe0;
+border: solid 1px #feffe0;
+cursor: pointer;
+}
+
+.labelText{
+font-size: 18px;
+color: #d9811c;
+}
+
+.tdBox{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 50px;
+gap: 24px;
+}
+
+.pad{
+margin-right: 64px;
+}
+
 </style>
 
 <body>
@@ -687,9 +759,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 				<!-- ポイント一覧 -->
 				<div class="point-text">
-					<ul>
-						<li class="jack-fontsize">＜ポイント一覧＞</li>
-					</ul>
+					<div class="jack-fontsize margS">＜ポイント一覧＞</div>
 				<div class="jack-display">
 					<li class="jack-fontsize"><strong><%=monthJack.getTheme()%></strong></li>
 					
@@ -697,14 +767,19 @@ document.addEventListener("DOMContentLoaded", function() {
 					<%
 						if(adminFlag == 1 && managerFlag == 0){
 					%>
+					
 					<!-- 今月のJackWorksを登録するボタン -->
 					<div class="jack-button">
-						<li><a href="<%=request.getContextPath()%>/view/monthJackworks.jsp"
-								class="btn btn--insert">テーマ更新</a>
+						<li>
+						<div class="register_box">
+							<a href="<%=request.getContextPath()%>/view/monthJackworks.jsp" class="box-link">テーマ更新</a>
+						</div>
 						</li>
 						<!-- Jackworksの申請一覧ボタン -->
-						<li><a href="<%=request.getContextPath()%>/jackworksRequest" 
-								class="btn btn--insert">申請一覧</a>
+						<li>
+						<div class="register_box">
+							<a href="<%=request.getContextPath()%>/jackworksRequest" class="box-link">申請一覧</a>
+						</div>
 						</li>
 					</div>
 					<% } %>
@@ -736,12 +811,12 @@ document.addEventListener("DOMContentLoaded", function() {
 				<div class="point-box"><%=monthJack.getNote()%></div>
 				<div class="mag"></div>
 
-				<p class="jack-fontsize">＜ポイント取得者一覧＞</p>
+				<div class="jack-fontsize margS">＜ポイント取得者一覧＞</div>
 
 				<!-- ポイント取得者一覧表示 -->
 				<table class="mar">
 				<thead style="margin: 0 auto">
-					<tr>
+					<tr class="btnTable">
 						<td class="search-box">
 
 							<!-- 検索を行うフォーム -->
@@ -753,14 +828,19 @@ document.addEventListener("DOMContentLoaded", function() {
 							
 						<!-- 十年間の西暦検索を行うフォーム -->
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
-						<td>
-					         <label for="start_date">開始日:</label>
-				            <input type="month" id="start_month" name="start_month" max="9999-12" value="${startMonth}">
+						<td class="tdBox">
+							<label for="start_month"class="monthInputBox">
+					         <span class="labelText">開始日:</span>
+				            <input type="month" id="start_month" class="monthInput" name="start_month" max="9999-12" value="${startMonth}">
+							</label>
+							<label for="end_month"class="monthInputBox">
+							<span class="labelText">終了日:</span>
+					        <input type="month" id="end_month" class="monthInput"  name="end_month" max="9999-12" value="${endMonth}">
+					        </label>
 						</td>
-					    <td>
-							<label for="end_date">終了日:</label>
-					        <input type="month" id="end_month" name="end_month" max="9999-12" value="${endMonth}">
-					    </td>
+						<%if(adminFlag == 0 && managerFlag == 0) {%>
+						<td><div class="pad"></div></td>
+						<%} %>
 						<td>
 						<button type="submit" class="select-button" >検索</button>
 						</form>
@@ -771,9 +851,10 @@ document.addEventListener("DOMContentLoaded", function() {
 				if(adminFlag == 1 && managerFlag == 0){
 				%>
 					<!-- JackWorkの新規登録を行うボタン -->
-					<td style="text-align: right">
-						<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
-							class="btn btn--insert">新規申請</a>
+					<td style="text-align: right" class="btnCell">
+						<div class="register_box">
+							<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp" class="box-link">新規申請</a>
+						</div>
 					</td>
 					</tr>
 				</thead>
@@ -815,7 +896,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="カテゴリ" class="text-point" name="category"><%=jack.getCategory()%></td>
 						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
-						<td data-label="備考" class="text" name="note"><%=note%></td>
+						<td data-label="備考" class="textNote" name="note"><%=note%></td>
 						<td><div style="text-align: center">
 							<a data-href="<%=request.getContextPath()%>/jackworksDelete?jackworksId=<%=jack.getJackworksId()%>" class="btn btn--delete">削除</a>
 							</div>
@@ -838,8 +919,9 @@ document.addEventListener("DOMContentLoaded", function() {
 				%>
 					<!-- JackWorkの新規登録を行うボタン -->
 					<td style="text-align: right">
-						<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp"
-							class="btn btn--insert">新規申請</a>
+						<div class="register_box">
+							<a href="<%=request.getContextPath()%>/view/jackworksRegister.jsp" class="box-link">新規申請</a>
+						</div>
 					</td>
 					</tr>
 				</thead>
@@ -881,7 +963,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="カテゴリ" class="text-point" name="category"><%=jack.getCategory()%></td>
 						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
-						<td data-label="備考" class="text" name="note"><%=note%></td>
+						<td data-label="備考" class="textNote" name="note"><%=note%></td>
 					</tr>
 
 					<%			
@@ -933,7 +1015,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="カテゴリ" class="text-point" name="category"><%=jack.getCategory()%></td>
 						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
-						<td data-label="備考" class="text" name="note"><%=note%></td>
+						<td data-label="備考" class="textNote" name="note"><%=note%></td>
 					</tr>
 
 					<%

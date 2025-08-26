@@ -162,7 +162,7 @@ a.btn--delete:hover {
 	margin: 5px;
 }
 
-.btn, a.btn, button.btn {
+.btn, button.btn {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	font-size: 1.0rem;
@@ -185,6 +185,27 @@ a.btn--delete:hover {
 	color: #212529;
 	border-radius: 8.5rem;
 	border: none;
+}
+
+a.btn {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.5;
+	position: relative;
+	display: inline-block;
+	padding: 5px 20px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+	letter-spacing: 1.6px;
+	border-radius: 85px;
 }
 
 button.btn-border {
@@ -305,13 +326,12 @@ button.btn-border:active:before {
 							name="title" data-maxlength="50" value="<%=announce.getTitle()%>" class='error-check-default error-check-digit'>
 					</div>
 
-					<div class="form_box tiny_form">
+					<!-- <div class="form_box tiny_form">
 						<label for="update_date" class="control_label">編集日時<span
 							class="warning">*</span></label> <input type="datetime-local"
 							id="update_date" name="update_date" max="9999-12-31 23:59"
-							value="<%=announce.getRegistDate()%>" class="error-check-date">
-						<!-- 現在時刻をつける -->
-					</div>
+							value="%=announce.getRegistDate()%" class="error-check-date">
+					</div> -->
 
 					<div class="form_box tiny_form">
 						<label for="category" class="control_label">カテゴリ<span
@@ -353,6 +373,9 @@ button.btn-border:active:before {
 
 					<input type="hidden" name="announce_id"
 						value="<%=announce.getAnnounceId()%>">
+						
+					<input type="hidden" name="update_date"
+						value="<%=announce.getUpdateDate()%>">
 
 					<!-- 
 					<div class="btm_box">
