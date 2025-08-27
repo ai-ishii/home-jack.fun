@@ -3,7 +3,7 @@
 
 作成者：桑原岳
 
-最終更新日：2025/08/14
+最終更新日：2025/08/26
  --%>
 
 
@@ -57,7 +57,7 @@
 				<a href="<%=request.getContextPath()%>/view/addressChangeForm.jsp">住所変更申請フォームに戻る</a>
 			</div>
 			<div class="form-link">
-				<a href="<%=request.getContextPath()%>/view/">申請メニューに戻る</a>
+				<a href="<%=request.getContextPath()%>/view/RequestMenu.jsp">申請メニューに戻る</a>
 			</div>
 			<div class="form-link">
 				<a href="<%=request.getContextPath()%>/view/">画像のアップロード</a>

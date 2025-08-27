@@ -5,7 +5,7 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月25日
+ 最終更新日：8月27日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -478,7 +478,7 @@ color: #6eddb3;
 				<div class="yorushikaBox">
 				<span class="titleBox">年間目標</span>
 				</div>
-				<div class="subhead"><%=groupGoal%></div>
+				<div class="subhead"><%=annualGoal%></div>
 				
 				<!-- 現状と課題のボックス -->
 				<div class="yorushikaBox">

@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/25
+ * 更新日 : 2025/08/26
  */
 package servlet;
 
@@ -46,7 +46,7 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			int categoryId = Integer.parseInt(request.getParameter("category_id"));
 			//遷移前の更新日時
 			String updateDate = request.getParameter("update_date");
-			java.sql.Timestamp updateDateBefore = java.sql.Timestamp.valueOf(updateDate);
+			Timestamp updateDateBefore = Timestamp.valueOf(updateDate);
 
 			// メソッドからSQL実行
 			announce = announceDAO.selectByAnnounceId(announceId);

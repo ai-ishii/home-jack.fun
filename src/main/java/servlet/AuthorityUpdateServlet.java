@@ -1,21 +1,26 @@
-//<!-- 社員紹介 一覧機能（作：石井） -->
-//<!-- 作成日：7/2　最終更新日：8/26 12:00 -->
-
+/**
+ * 権限の更新を行うサーブレット
+ * 作成者:石田允彦
+ * 
+ * 作成日:2025/08/26
+ * 更新日:2025/08/26
+ */
 package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import bean.User;
-import dao.UserDAO;
+import bean.Authority;
+import bean.AuthorityHaving;
+import dao.AuthorityDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/employee")
-public class EmployeeServlet extends HttpServlet {
+@WebServlet("/authUpdate")
+public class AuthorityUpdateServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -29,65 +34,52 @@ public class EmployeeServlet extends HttpServlet {
 
 	private void commonProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		// エラー用コマンド
-		String error = "";
-		// エラー文格納用
-		String message = "";
-		// 画面遷移用コマンド
+		
 		String cmd = "";
-		// 遷移先のパス
-		String path = "/view/employee.jsp";
-
-		// オブジェクト生成
-		UserDAO userDAO = new UserDAO();
-		ArrayList<User> userList = new ArrayList<User>();
-
+		String error = "";
+		String message = "";
+		String path = "/userList";
+		
+		ArrayList<Authority> authorityList = new ArrayList<Authority>();
+		ArrayList<AuthorityHaving> authorityHavingList = new ArrayList<AuthorityHaving>();
+		
+		AuthorityDAO authorityDAO = new AuthorityDAO();
+		
 		try {
-			// メソッドからSQL実行
-			userList = userDAO.selectAll();
-
-			//検索された値をnameで受け取る
-			String name = request.getParameter("name");
-
-			if (name != null && !name.isEmpty()) {
+			//画面から送られてきたデータを取得
+			String strUserId = request.getParameter("user_id");
+			int userId = Integer.parseInt(strUserId);
+			String[] authCodeList = request.getParameterValues("auth_list");
+			
+			for (String code : authCodeList) {
+				AuthorityHaving authorityHaving = new AuthorityHaving();
+				authorityHaving.setUserId(userId);
+				authorityHaving.setAuthorityCode(code);
+				authorityHavingList.add(authorityHaving);
 			}
-
-			// 社員写真を格納する配列宣言
-			// String[][] photos = new String[userList.size()][];
-			// for (int i = 0; i < userList.size(); i++) {
-			//	photos[i][i] = {employeeDAO.selectPhotoByUserId(userList.get(i).getUserId()), };
-			// }
-
-			// 取得してきたユーザー情報をjspに送るためセットする
-			request.setAttribute("userList", userList);
-			// request.setAttribute("photos", photos);
-
-		} catch (IllegalStateException e) {
-			message = "システムの一時的な問題により、社員紹介の読み込みができませんでした。";
+			authorityDAO.updateAuthorityHaving(userId, authorityHavingList);
+			
+		} catch(IllegalStateException e) {
+			message = "DB接続エラーのため、権限振り分け画面は表示できませんでした。";
 			error = "logout";
 		} catch (Exception e) {
 			message = "予期せぬエラーが発生しました。" + e;
 			error = "logout";
 		} finally {
-
 			if (!("").equals(error)) {
 				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
 				request.setAttribute("error", message);
 				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
 				request.setAttribute("cmd", error);
-				// error.jspにフォワード
+				// error.jspをフォワード先に指定
 				path = "/view/error.jsp";
 			}
-
 			if (("").equals(error)) {
-				request.setAttribute("message", message);
-				request.setAttribute("cmd", cmd);
+				request.setAttribute("authority_list", authorityList);
+				request.setAttribute("authority_having_list", authorityHavingList);
 			}
-
+			
 			request.getRequestDispatcher(path).forward(request, response);
-
 		}
 	}
-
 }

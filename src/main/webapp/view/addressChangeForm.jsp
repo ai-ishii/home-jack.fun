@@ -3,13 +3,13 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/12
+最終更新日：2025/08/27
  --%>
 
 
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page import="bean.User"%>
 <c:set var="formValues"
 	value="${not empty userInput ? userInput : param}" />
 
@@ -167,6 +167,7 @@
 						<c:if test="${not empty errorMessage}">
 							<h2 style="color: red; text-align: center;">${errorMessage}</h2>
 						</c:if>
+						<c:set var="user" value="${sessionScope.userAddress}" />
 
 						<div class="form-row">
 							<div class="form-label">
@@ -175,7 +176,7 @@
 							<div class="form-input">
 								<input type="text" id="employeenumber" name="employeenumber"
 									class="${errors.employeeNumber_error ? 'error-field' : ''}"
-									value="${formValues.employeenumber}" placeholder="例：000001" />
+									value="${user.employeeNumber}" />
 							</div>
 						</div>
 
@@ -186,7 +187,7 @@
 							<div class="form-input">
 								<input type="text" id="name" name="name"
 									class="${errors.name_error ? 'error-field' : ''}"
-									value="${formValues.name}" />
+									value="${user.name}" />
 							</div>
 						</div>
 
@@ -212,16 +213,17 @@
 								<div class="form-input">
 									<input type="text" id="oldpost" name="oldpost"
 										class="p-postal-code ${errors.oldPost_error ? 'error-field' : ''}"
-										value="${formValues.oldpost}" />
+										value="${user.post}" />
 								</div>
 							</div>
 							<div class="form-row">
 								<div class="form-label">
 									<label for="oldaddress">旧住所</label>
 								</div>
-								<div class="form-input-address">
-									<textarea name="oldaddress" cols="30" rows="5"
-										class="p-region p-locality p-street-address p-extended-address ${errors.oldAddress_error ? 'error-field' : ''}">${formValues.oldaddress}</textarea>
+								<div class="form-input">
+									<input type="text" id="oldaddress" name="oldaddress"
+										class="p-postal-code ${errors.oldPost_error ? 'error-field' : ''}"
+										value="${user.address}" />
 								</div>
 							</div>
 						</div>

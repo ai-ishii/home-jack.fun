@@ -3,7 +3,7 @@
 
 作成者：桑原岳
 
-最終更新日：2025/08/22
+最終更新日：2025/08/26
  --%>
 
 
@@ -136,7 +136,7 @@
 						<div class="button-spacing">
 
 							<a
-								href="<%=request.getContextPath()%>/view/addressChangeForm.jsp"
+								href="<%=request.getContextPath()%>/addressChangeFormPrepare"
 								class="btn btn-arrow"> <i class="fa-solid fa-envelope"></i>
 								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 									viewBox="5 5 40 40">
@@ -180,7 +180,7 @@
 							</a>
 						</div>
 						<div class="button-spacing">
-							<a href="<%=request.getContextPath()%>/view/nameChangeForm.jsp"
+							<a href="<%=request.getContextPath()%>/nameChangeFormPrepare"
 								class="btn btn-arrow"> <i class="fa-solid fa-envelope"></i>
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="30" height="30" style="fill: #fff; stroke: #fff;">
 								<!--!Font Awesome Pro v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc.-->

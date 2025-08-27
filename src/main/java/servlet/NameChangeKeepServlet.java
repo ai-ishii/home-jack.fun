@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  * 
- * 最終更新日：2025/08/19
+ * 最終更新日：2025/08/26
  * 
  * */
 
@@ -49,9 +49,9 @@ public class NameChangeKeepServlet extends HttpServlet {
 		// 5.確認画面JSPに処理を引き継ぐ（フォワード）
 		if (success) {
 			request.setAttribute("nameRequest", nameRequest);
-			getServletContext().getRequestDispatcher("/view/nameChangeCompletion.jsp").forward(request, response);
+			request.getRequestDispatcher("/view/nameChangeCompletion.jsp").forward(request, response);
 		}else {
-			getServletContext().getRequestDispatcher("/view/error.jsp").forward(request, response);
+			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
 		}
 	}
 }

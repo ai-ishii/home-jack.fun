@@ -50,67 +50,59 @@
 		<div id="main" class="container">
 			<h1>入力内容の確認</h1>
 			<p style="text-align: center;">以下の内容でよろしいですか？</p>
-				<table class="confirm-table">
-					<tr>
-						<th>氏名</th>
-						<td><c:out value="${formValues.name}" /></td>
-					</tr>
-					<tr>
-						<th>部署名</th>
-						<td><c:out value="${formValues.department}" /></td>
-					</tr>
-					<tr>
-						<th>グループ名</th>
-						<td><c:out value="${formValues.group}" /></td>
-					</tr>
-					<tr>
-						<th>資格名</th>
-						<td><c:out value="${formValues.license}" /></td>
-					</tr>
-					<tr>
-						<th>受験日</th>
-						<td><c:out value="${formValues.examDate}" /></td>
-					</tr>
-					<tr>
-						<th>受験回数</th>
-						<td><c:out value="${formValues.examTime}" /></td>
-					</tr>
-					<tr>
-						<th>受験料領収書</th>
-						<td><c:out value="${formValues.receiptFileName}" /></td>
-					</tr>
-					<tr>
-						<th>合格証</th>
-						<td><c:out value="${formValues.passingFileName}" /></td>
-					</tr>
-				</table>
-				<form id="confirmDataForm" method="post">
-					<input type="hidden" name="name"
-						value="<c:out value='${formValues.name}' />"> <input
-						type="hidden" name="department"
-						value="<c:out value='${formValues.department}' />"> <input
-						type="hidden" name="group"
-						value="<c:out value='${formValues.group}' />"> <input
-						type="hidden" name="license"
-						value="<c:out value='${formValues.license}' />"> <input
-						type="hidden" name="examDate"
-						value="<c:out value='${formValues.examDate}' />"> <input
-						type="hidden" name="examTime"
-						value="<c:out value='${formValues.examTime}' />"> <input
-						type="hidden" name="receiptFileName"
-						value="<c:out value='${formValues.receiptFileName}' />"> <input
-						type="hidden" name="passingFileName"
-						value="<c:out value='${formValues.passingFileName}' />">
-
-					<div class="button-area">
-						<button type="submit"
-							formaction="<%=request.getContextPath()%>/licenseRetouching">
-							修正する</button>
-						<button type="submit"
-							formaction="<%=request.getContextPath()%>/licenseKeep">
-							この内容で確定する</button>
-					</div>
-				</form>
+			<table class="confirm-table">
+				<tr>
+					<th>氏名</th>
+					<td><c:out value="${formValues.name}" /></td>
+				</tr>
+				<tr>
+					<th>部署名</th>
+					<td><c:out value="${formValues.department}" /></td>
+				</tr>
+				<tr>
+					<th>グループ名</th>
+					<td><c:out value="${formValues.group}" /></td>
+				</tr>
+				<tr>
+					<th>資格名</th>
+					<td><c:out value="${formValues.license}" /></td>
+				</tr>
+				<tr>
+					<th>受験日</th>
+					<td><c:out value="${formValues.examDate}" /></td>
+				</tr>
+				<tr>
+					<th>受験回数</th>
+					<td><c:out value="${formValues.examTime}" /></td>
+				</tr>
+				<tr>
+					<th>受験料領収書</th>
+					<td><c:out value="${formValues.receiptFileName}" /></td>
+				</tr>
+				<tr>
+					<th>合格証</th>
+					<td><c:out value="${formValues.passingFileName}" /></td>
+				</tr>
+			</table>
+			<form id="confirmDataForm" method="post">
+				<input type="hidden" name="name" value="${formValues.name}">
+				<input type="hidden" name="department" value="${formValues.department}"> 
+				<input type="hidden" name="group" value="${formValues.group}"> 
+				<input type="hidden" name="license" value="${formValues.license}">
+				<input type="hidden" name="examDate" value="${formValues.examDate}">
+				<input type="hidden" name="examTime" value="${formValues.examTime}">
+				<input type="hidden" name="receiptFileName" value="${formValues.receiptFileName}"> 
+				<input type="hidden" name="passingFileName" value="${formValues.passingFileName}">
+				<input type="hidden" name="requestId" value="${formValues.requestId}">
+				<div class="button-area">
+					<button type="submit"
+						formaction="<%=request.getContextPath()%>/licenseRetouching">
+						修正する</button>
+					<button type="submit"
+						formaction="<%=request.getContextPath()%>/licenseKeep">
+						この内容で確定する</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>
