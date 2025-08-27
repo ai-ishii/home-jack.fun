@@ -601,6 +601,108 @@ public class UserDAO {
 		}
 		return userList;
 	}
+	
+	/** 
+	 * 部・グループをもとにユーザー情報を取得するメソッド
+	 * 
+	 * @return ArrayList<User>
+	 * @throws IllegalStateException メソッド内部で例外が発生した場合
+	 */
+	public ArrayList<User> selectByDepartmentGroup(int departmentId, int groupId) {
+		Connection con = null;
+		Statement smt = null;
+
+		//戻り値用のArrayListを作成
+		ArrayList<User> userList = new ArrayList<User>();
+
+		//SQL文の作成
+		String sql = "SELECT "
+						+ "user_id, "
+						+ "account_id, "
+						+ "name, "
+						+ "name_kana, "
+						+ "birthday, "
+						+ "address, "
+						+ "post, "
+						+ "phone, "
+						+ "nearest_station, "
+						+ "transportation, "
+						+ "sex, "
+						+ "employee_number, "
+						+ "department_id, "
+						+ "group_id, "
+						+ "joining_date, "
+						+ "work_history, "
+						+ "marriage_flag, "
+						+ "children,"
+						+ " qualification, "
+						+ "display_flag, "
+						+ "rest_flag, "
+						+ "regist_date, "
+						+ "update_date "
+					+ "FROM "
+						+ "user_info "
+					+ "WHERE "
+						+ "department_id = " + departmentId 
+					+ " AND "
+						+ "group_id = " + groupId + ";";
+
+		try {
+			// データベース接続
+			con = DAOconnection.getConnection();
+			smt = con.createStatement();
+
+			ResultSet rs = smt.executeQuery(sql);
+
+			while (rs.next()) {
+				User user = new User();
+				user.setUserId(rs.getInt("user_id"));
+				user.setAccountId(rs.getString("account_id"));
+				user.setName(rs.getString("name"));
+				user.setNameKana(rs.getString("name_kana"));
+				user.setBirthday(rs.getDate("birthday"));
+				user.setAddress(rs.getString("address"));
+				user.setPost(rs.getString("post"));
+				user.setPhone(rs.getString("phone"));
+				user.setNearestStation(rs.getString("nearest_station"));
+				user.setTransportation(rs.getString("transportation"));
+				user.setSex(rs.getString("sex"));
+				user.setEmployeeNumber(rs.getString("employee_number"));
+				user.setDepartmentId(rs.getInt("department_id"));
+				user.setGroupId(rs.getInt("group_id"));
+				user.setJoiningDate(rs.getTimestamp("joining_date"));
+				user.setWorkHistory(rs.getInt("work_history"));
+				user.setMarriageFlag(rs.getInt("marriage_flag"));
+				user.setChildren(rs.getInt("children"));
+				user.setQualification(rs.getString("qualification"));
+				user.setDisplayFlag(rs.getInt("display_flag"));
+				user.setRestFlag(rs.getInt("rest_flag"));
+				user.setRegistDate(rs.getTimestamp("regist_date"));
+				user.setUpdateDate(rs.getTimestamp("update_date"));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			System.err.println("UserDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (smt != null) {
+					smt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("UserDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("UserDAOの不明なエラー: " + e.getMessage());
+			}
+		}
+		return userList;
+	}
 
 	/**
 	 * 入社年月をもとにユーザー情報を取得するメソッド

@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：占部） -->
-<!-- 作成日：8/7　最終更新日：8/26 12:00 -->
+<!-- 作成日：8/7　最終更新日：8/27 15:00 -->
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page
@@ -273,7 +273,7 @@ input[type="text"], input[type="date"], select {
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
 
-		<form class="h-adr" action="<%=request.getContextPath()%>/userConfirm"
+		<form class="h-adr" action="<%=request.getContextPath()%>/userConfirm?register=確認画面へ"
 			method="post">
 			<span class="p-country-name" style="display: none;">Japan</span>
 			<%@ include file="../common/header.jsp"%>
