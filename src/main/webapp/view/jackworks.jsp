@@ -5,7 +5,7 @@ JackWorks画面
 更新者：占部虎司郎
 
 作成日 2025/07/11
-最終更新日 2025/08/26
+最終更新日 2025/08/27
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -611,6 +611,7 @@ margin-right: 64px;
 
 .zeroResult{
 padding: 32px 0 24px;
+font-size: 18px;
 }
 
 .FFF{

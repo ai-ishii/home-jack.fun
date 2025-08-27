@@ -10,7 +10,6 @@ package filter;
 
 import java.io.IOException;
 
-import bean.User;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter({ "/jackworksRequest", "/momthJackworks" })
+@WebFilter({"/momthJackworks" })
 public class AuthFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
