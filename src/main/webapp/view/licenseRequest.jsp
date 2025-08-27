@@ -1,6 +1,6 @@
 <%--機能：資格申請の一覧表示画面
     作成者：桑原岳
-    最終更新日：2025/08/25
+    最終更新日：2025/08/27
  --%>
 
 
@@ -209,7 +209,7 @@ MyFormat myFormat = new MyFormat();
 					<tr
 						onclick="location.href='<%=request.getContextPath()%>/licenseRequestApproval?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&flag=<%=licenseRequestExclusiveList.get(i).getRequestFlag()%>'">
 
-						<td class="time"><%=myFormat.datetimeSlashFormat(licenseRequestExclusiveList.get(i).getRequestDate())%></td>
+						<td class="time"><%=myFormat.LocalDateFormat(licenseRequestExclusiveList.get(i).getRequestDate())%></td>
 						<td class="groupName"><%=licenseRequestExclusiveList.get(i).getDepartmentName()%><%=licenseRequestExclusiveList.get(i).getGroupName()%></td>
 						<td class="applicant"><%=licenseRequestExclusiveList.get(i).getApplicant()%></td>
 						<td class="licenseName"><%=licenseRequestExclusiveList.get(i).getLicenseName()%></td>

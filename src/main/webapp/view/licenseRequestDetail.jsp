@@ -1,6 +1,6 @@
 <%--機能：申請の内容を確認し、承認・差し戻しする画面
     作成者：桑原岳
-    最終更新日：2025/08/25
+    最終更新日：2025/08/27
  --%>
 
 <%@page import="util.MyFormat"%>
@@ -245,7 +245,7 @@ a.btn--notApproved:hover {
 				</tr>
 				<tr>
 					<td class="applicationtime">申請日時</td>
-					<td class="time"><%=myFormat.datetimeSlashFormat(licenseRequestExclusive.getRequestDate())%>
+					<td class="time"><%=myFormat.LocalDateFormat(licenseRequestExclusive.getRequestDate())%>
 					</td>
 				</tr>
 				<tr>

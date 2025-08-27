@@ -109,7 +109,10 @@ public class RequestDAO {
 				licenseRequestExclusive.setApproverId(rs.getInt("approver_id"));
 				licenseRequestExclusive.setApplicant(rs.getString("applicant"));
 				licenseRequestExclusive.setApprover(rs.getString("approver"));
-				licenseRequestExclusive.setRequestDate(rs.getDate("request_date").toLocalDate());
+				java.sql.Date requestDate = rs.getDate("request_date");
+				if (requestDate != null) {
+					licenseRequestExclusive.setRequestDate(requestDate.toLocalDate());
+				}
 				licenseRequestExclusive.setApprovalDate(rs.getTimestamp("approval_date"));
 				licenseRequestExclusive.setRequestFlag(rs.getInt("request_flag"));
 
@@ -118,7 +121,10 @@ public class RequestDAO {
 				licenseRequestExclusive.setGroupId(rs.getInt("group_id"));
 				licenseRequestExclusive.setDepartmentId(rs.getInt("department_id"));
 				licenseRequestExclusive.setLicenseId(rs.getInt("license_id"));
-				licenseRequestExclusive.setExamDate(rs.getDate("exam_date").toLocalDate());
+				java.sql.Date examDate = rs.getDate("exam_date");
+				if (examDate != null) {
+					licenseRequestExclusive.setExamDate(examDate.toLocalDate());
+				}
 				licenseRequestExclusive.setExamTime(rs.getInt("exam_time"));
 				licenseRequestExclusive.setReceipt(rs.getBytes("receipt"));
 				licenseRequestExclusive.setPassing(rs.getBytes("passing"));
