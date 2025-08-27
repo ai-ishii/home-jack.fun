@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  *  
- * 最終更新日：2025/08/26
+ * 最終更新日：2025/08/27
  *  
  */
 package dao;
@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import bean.AddressRequestExclusive;
@@ -108,7 +109,7 @@ public class RequestDAO {
 				licenseRequestExclusive.setApproverId(rs.getInt("approver_id"));
 				licenseRequestExclusive.setApplicant(rs.getString("applicant"));
 				licenseRequestExclusive.setApprover(rs.getString("approver"));
-				licenseRequestExclusive.setRequestDate(rs.getTimestamp("request_date"));
+				licenseRequestExclusive.setRequestDate(rs.getDate("request_date").toLocalDate());
 				licenseRequestExclusive.setApprovalDate(rs.getTimestamp("approval_date"));
 				licenseRequestExclusive.setRequestFlag(rs.getInt("request_flag"));
 
@@ -201,7 +202,7 @@ public class RequestDAO {
 				licenseRequestExclusive.setApproverId(rs.getInt("approver_id"));
 				licenseRequestExclusive.setApplicant(rs.getString("applicant"));
 				licenseRequestExclusive.setApprover(rs.getString("approver"));
-				licenseRequestExclusive.setRequestDate(rs.getTimestamp("request_date"));
+				licenseRequestExclusive.setRequestDate(rs.getDate("request_date").toLocalDate());
 				licenseRequestExclusive.setApprovalDate(rs.getTimestamp("approval_date"));
 				licenseRequestExclusive.setRequestFlag(rs.getInt("request_flag"));
 
@@ -706,6 +707,7 @@ public class RequestDAO {
 			e.printStackTrace();
 			return -1;
 		}
+
 	}
 
 	// 親テーブルに登録して request_id を返す
@@ -863,17 +865,18 @@ public class RequestDAO {
 	 * 
 	 * @return int requestId
 	 */
-	public int insertApplicantId(int applicantId, String name) {
+	public int insertApplicantId(int applicantId, String name, LocalDate localDate) {
 		String sql = "INSERT INTO "
 				+ "request_info "
-				+ "(applicant_id,applicant) "
-				+ "VALUES (?,?)";
+				+ "(applicant_id,applicant,request_date) "
+				+ "VALUES (?,?,?)";
 
 		try (Connection con = DAOconnection.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			pstmt.setInt(1, applicantId);
 			pstmt.setString(2, name);
+			pstmt.setDate(3, java.sql.Date.valueOf(localDate));
 
 			int affectedRows = pstmt.executeUpdate();
 
@@ -1028,6 +1031,7 @@ public class RequestDAO {
 			return false;
 		}
 	}
+
 	/**
 	 * useridで資格申請に必要な情報(氏名、部名、グループ名)を取り出すメソッド
 	 * @param  userId
@@ -1037,7 +1041,7 @@ public class RequestDAO {
 		PreparedStatement pstmt = null;
 		Connection con = null;
 		ResultSet rs = null;
-		
+
 		User user = new User();
 
 		try {
@@ -1088,6 +1092,7 @@ public class RequestDAO {
 
 		return user;
 	}
+
 	/**
 	 * useridで資格申請に必要な情報(氏名、部名、グループ名)を取り出すメソッド
 	 * @param  userId
@@ -1097,7 +1102,7 @@ public class RequestDAO {
 		PreparedStatement pstmt = null;
 		Connection con = null;
 		ResultSet rs = null;
-		
+
 		User user = new User();
 
 		try {
@@ -1152,7 +1157,7 @@ public class RequestDAO {
 
 		return user;
 	}
-	
+
 	/**
 	 * フラグごとに資格取得者一覧を表示する機能
 	 * （１．申請中  ２．承認済み ３．差戻中）
@@ -1160,50 +1165,49 @@ public class RequestDAO {
 	 * @return ArrayList<LicenseRequest> list 
 	 */
 	public ArrayList<Request> selectLicenseListByFlag(int requestFlag) {
-		
+
 		//変数宣言
 		Connection con = null;
 		PreparedStatement ps = null;
-		
+
 		// 検索結果を格納するArrayListの宣言
-		ArrayList<Request> list = 
-				new ArrayList<Request>();
-		
+		ArrayList<Request> list = new ArrayList<Request>();
+
 		String sql = "SELECT "
-						+ "r.request_id, "
-						+ "r.applicant "
-					+ "FROM "
-						+ "request_info AS r "
-					+ "INNER JOIN "
-						+ "license_request_info AS l "
-					+ "ON "
-						+ "r.request_id = l.request_id "
-					+ "WHERE "
-						+ "r.request_flag = ?";
-		
+				+ "r.request_id, "
+				+ "r.applicant "
+				+ "FROM "
+				+ "request_info AS r "
+				+ "INNER JOIN "
+				+ "license_request_info AS l "
+				+ "ON "
+				+ "r.request_id = l.request_id "
+				+ "WHERE "
+				+ "r.request_flag = ?";
+
 		try {
-			
+
 			// DBに接続する
 			con = DAOconnection.getConnection();
 			ps = con.prepareStatement(sql);
-			
+
 			ps.setInt(1, requestFlag);
-			
+
 			ResultSet rs = ps.executeQuery();
-			
+
 			while (rs.next()) {
-				
+
 				// オブジェクト生成
 				Request request = new Request();
-				
+
 				// 各クラス変数に値を代入する
 				request.setRequestId(rs.getInt("request_id"));
 				request.setApplicant(rs.getString("applicant"));
-				
+
 				// ArrayListに代入する
 				list.add(request);
 			}
-			
+
 		} catch (SQLException e) {
 			System.err.println("RequestLicenseDAOのデータベース接続時にエラー: " + e.getMessage());
 			throw new IllegalStateException(e);
@@ -1224,9 +1228,92 @@ public class RequestDAO {
 				System.err.println("RequestLicenseDAOの不明なエラー: " + e.getMessage());
 			}
 		}
-		
+
 		return list;
 	}
 
+	/**
+	 *license_request_test_infoに登録した仮登録情報をすべて削除する機能
+	 
+	 * */
+	public void deleteLicenseRequestTest() {
 
+		//変数宣言
+		Statement smt = null;
+		Connection con = null;
+		try {
+			String sql = "DELETE "
+					+ "FROM "
+					+ "license_request_test_info ";
+
+			con = DAOconnection.getConnection();
+			smt = con.createStatement();
+			smt.executeUpdate(sql);
+
+		} catch (SQLException e) {
+			System.err.println("RequestDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (smt != null) {
+					smt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("RequestDAOのcon，smtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 *license_request_infoに登録した仮登録情報をすべて削除する機能
+	 
+	 * */
+	public void deleteLicenseRequest(int applicantId) {
+
+		//変数宣言
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		try {
+			String sql = "DELETE "
+					+ "FROM "
+					+ "request_info "
+					+ "WHERE "
+					+ "applicant IS NULL "
+					+ "AND "
+					+ "applicant_id = ?";
+
+			con = DAOconnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, applicantId);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.err.println("RequestDAOのデータベース接続時にエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} catch (Exception e) {
+			System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
+			throw new IllegalStateException(e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				System.err.println("RequestDAOのcon，pstmtクローズ時にエラー: " + e.getMessage());
+			} catch (Exception e) {
+				System.err.println("RequestDAOの不明なエラー: " + e.getMessage());
+			}
+		}
+	}
 }
