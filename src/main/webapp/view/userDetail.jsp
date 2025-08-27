@@ -197,6 +197,33 @@ padding: 9px 25px;
 .editButton:hover .editText {
 	color: #6eddb3;
 }
+
+.authorityBox {
+    width: 30%;
+}
+
+.authorityArea {
+    display: inline-block;
+    width: 110px;
+    text-decoration: none;
+    background-color: #fcb000;
+    text-align: center;
+}
+
+.authorityArea:hover {
+	background-color: #fc9700;
+}
+
+.authorityText {
+    display: inline-block;
+    color: #fff;
+    vertical-align: super;
+}
+
+.icon{
+    display: inline-block;
+    vertical-align: sub;
+}
 </style>
 </head>
 
@@ -228,9 +255,9 @@ padding: 9px 25px;
 							%>
 							<td class="btn">
 								<!-- 詳細から一覧へ戻るボタン --> <a class="listButton"
-								href="<%=request.getContextPath()%>/userList"> <svg class="memo"
-										xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"
-										style="width: 30px; height: 30px;">
+								href="<%=request.getContextPath()%>/userList"> <svg
+										class="memo" xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 640 640" style="width: 30px; height: 30px;">
 				<!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
 				<path
 											d="M104 112C90.7 112 80 122.7 80 136L80 184C80 197.3 90.7 208 104 208L152 208C165.3 208 176 197.3 176 184L176 136C176 122.7 165.3 112 152 112L104 112zM256 128C238.3 128 224 142.3 224 160C224 177.7 238.3 192 256 192L544 192C561.7 192 576 177.7 576 160C576 142.3 561.7 128 544 128L256 128zM256 288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L256 288zM256 448C238.3 448 224 462.3 224 480C224 497.7 238.3 512 256 512L544 512C561.7 512 576 497.7 576 480C576 462.3 561.7 448 544 448L256 448zM80 296L80 344C80 357.3 90.7 368 104 368L152 368C165.3 368 176 357.3 176 344L176 296C176 282.7 165.3 272 152 272L104 272C90.7 272 80 282.7 80 296zM104 432C90.7 432 80 442.7 80 456L80 504C80 517.3 90.7 528 104 528L152 528C165.3 528 176 517.3 176 504L176 456C176 442.7 165.3 432 152 432L104 432z" /></svg>
@@ -242,7 +269,8 @@ padding: 9px 25px;
 							}
 							%>
 
-							<td class="btn"><button class="editButton" name="registerConfirm" value="変更する">
+							<td class="btn"><button class="editButton"
+									name="registerConfirm" value="変更する">
 									<svg class="memo" version="1.1" id="_x31_0"
 										xmlns="http://www.w3.org/2000/svg"
 										xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -271,8 +299,9 @@ padding: 9px 25px;
 		C243.23,288.113,239.25,287.613,235.278,287.828z M385.625,59.543l27.438-27.441l67.363,67.367l-27.438,27.437L385.625,59.543z">
 		</path>
 	</g>
-</svg> <span class="editText">編集</span>
-							</button></td>
+</svg>
+									<span class="editText">編集</span>
+								</button></td>
 						</tr>
 					</table>
 
@@ -356,9 +385,34 @@ padding: 9px 25px;
  }
  %>
 							</td>
-							<td><a
-								href="<%=request.getContextPath()%>/view/authorityUpdate.jsp"><p>権限付与はコチラ!</p></a>
-
+							<td class="authorityBox">
+									<a class="authorityArea"
+										href="<%=request.getContextPath()%>/view/authorityUpdate.jsp">
+									<div class="authorityText">権限付与</div>
+										<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+											width="32px" height="32px">
+											<defs>
+											<style>
+												.cls-1, .cls-2 {
+													fill: none;
+												}
+												
+												.cls-2 {
+													stroke: #fff;
+													stroke-linecap: round;
+													stroke-linejoin: round;
+													stroke-width: 4px;
+												}
+												</style></defs>
+											<g id="レイヤー_2" data-name="レイヤー 2">
+											<g id="Rectangle">
+											<rect id="rect" class="cls-1" width="48" height="48" /></g>
+											<g id="icon_data">
+											<path class="cls-2"
+												d="M7,15V33a2,2,0,0,0,3,1.72l14-9a2.06,2.06,0,0,0,0-3.44l-14-9A2,2,0,0,0,7,15Z" />
+											<path class="cls-2"
+												d="M22,33a2,2,0,0,0,3,1.72l14-9a2.06,2.06,0,0,0,0-3.44l-14-9A2,2,0,0,0,22,15" /></g></g></svg>
+									</a>
 							</td>
 						</tr>
 
