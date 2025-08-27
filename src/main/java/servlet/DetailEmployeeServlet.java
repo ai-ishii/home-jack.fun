@@ -1,5 +1,5 @@
 //<!-- 社員紹介 詳細機能（作：石井） -->
-//<!-- 作成日：7/11　最終更新日：8/22 17:00 -->
+//<!-- 作成日：7/11　最終更新日：8/27 14:30 -->
 
 package servlet;
 
@@ -74,11 +74,11 @@ public class DetailEmployeeServlet extends HttpServlet {
 				// 選択された社員の部・グループを取得し、メソッド実行
 				int department = user.getDepartmentId();
 				int group = user.getGroupId();
-				userListBySameBelong = userDAO.selectByDepartmentGroup(department, group);
+				userListBySameBelong = userDAO.selectByDepartmentGroup(department, group, userId);
 				
 				// 選択された社員の入社年月を取得し、メソッド実行
 				Timestamp joiningDate = user.getJoiningDate();
-				userListBySameJoinDate = userDAO.selectByJoiningDate(joiningDate);
+				userListBySameJoinDate = userDAO.selectByJoiningDate(joiningDate, userId);
 				
 				request.setAttribute("UserListBySameBelong", userListBySameBelong);
 				request.setAttribute("UserListBySameJoinDate", userListBySameJoinDate);
