@@ -387,8 +387,9 @@ int announceFlag = announce.getAnnounceFlag();
 							<p>
 								<%
 								timestamp = announce.getRegistDate();
+									String registDate = myFormat.dateTimeFormat(timestamp);
 								%>
-								<%=myFormat.dateTimeFormat(timestamp)%>
+								<%= registDate %>
 							</p>
 						</div>
 						<div>
@@ -396,11 +397,11 @@ int announceFlag = announce.getAnnounceFlag();
 						</div>
 						
 						<%
-							timestamp = announce.getUpdateDate();
-								if(timestamp != null){
-									String updateDate = myFormat.dateTimeFormat(timestamp);
+							Timestamp update = announce.getUpdateDate();
+								if(update.after(timestamp)){
+									String updateDate = myFormat.dateTimeFormat(update);
+											if(!updateDate.equals(registDate)){
 						%>
-						
 						
 						<div>
 							<p>
@@ -409,6 +410,7 @@ int announceFlag = announce.getAnnounceFlag();
 						</div>
 						
 						<%
+											}
 								}
 						%>
 						
