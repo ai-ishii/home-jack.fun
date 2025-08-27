@@ -83,7 +83,7 @@ public class JackworksDetailServlet extends HttpServlet {
 				request.setAttribute("cmd", cmd);
 
 				if (cmd.equals("request")) {
-					path = "/jackworksRequest";
+					request.setAttribute("cmd", cmd);
 				}
 			}
 

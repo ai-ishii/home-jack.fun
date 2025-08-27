@@ -656,11 +656,11 @@ box-sizing: border-box;
 									</div>
 									<div class="mainText mainFlex">
 										<div class="ratio">
-											<input type="number" name="achieve_rate_reviewer<%=i + 1%>" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" 
+											<input type="number" name="achieve_rate_reviewer<%=i + 1%>" readonly class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" 
 												value="<%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRateReviewer()%><%}%>">%
 										</div>
 										<div class="leftLine">
-										<textarea class="mainArea" name="evaluation<%=i + 1%>" 
+										<textarea class="mainArea" name="evaluation<%=i + 1%>" readonly
 											placeholder="上出来です。"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getEvaluation()%><%}%></textarea>
 										</div>
 									</div>
@@ -705,10 +705,10 @@ box-sizing: border-box;
 						</div>
 						<div class="mainText mainFlex">
 						<div class="ratio">
-						<input type="number" name="result_reviewer" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%=resultReviewer%>">%
+						<input type="number" name="result_reviewer" readonly class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%=resultReviewer%>">%
 						</div>
 						<div class="leftLine">
-							<textarea class="mainArea" name="result_comment_reviewer" 
+							<textarea class="mainArea" name="result_comment_reviewer" readonly
 								placeholder="〇〇を達成できました。"><%=resultCommentReviewer%></textarea>
 						</div>
 						</div>

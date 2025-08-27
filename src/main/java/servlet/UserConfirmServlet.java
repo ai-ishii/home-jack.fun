@@ -5,7 +5,7 @@
  * 
  * 作成日：8月18日
  * 
- * 最終更新日：8月26日
+ * 最終更新日：8月27日
  * 
  */
 package servlet;
@@ -29,7 +29,6 @@ public class UserConfirmServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String cmd = "";
-		String path = "";
 		int children = 0;
 		//電話番号の取得
 		/*
@@ -53,7 +52,6 @@ public class UserConfirmServlet extends HttpServlet {
 
 			String register = request.getParameter("register");
 			String registerConfirm = request.getParameter("registerConfirm");
-
 			if ("確認画面へ".equals(register)) {
 				cmd = "registerConfirm";
 

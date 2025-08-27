@@ -5,7 +5,7 @@
 
 　作成日：7月23日
 
-　最終更新日：8月18日
+　最終更新日：8月27日
 
 　第〇事業部第〇グループと表示させなければならないのですが、
 "第〇グループ"を表示する機能を作り忘れてました。
@@ -40,8 +40,8 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 <title>個人目標一覧 | Home-Jack</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
-<script src="${pageContext.request.contextPath}/js/script.js "></script>
-
+<script src="<%=request.getContextPath()%>/js/script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
 /* 所属している社員一覧が表示されるエリア（div） */
 .nameList {
@@ -101,6 +101,7 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 	font-size: 20px;
 	line-height: 2.0;
 }
+
 </style>
 
 </head>
@@ -223,6 +224,8 @@ ArrayList<Integer> userIdList = (ArrayList<Integer>) request.getAttribute("userI
 
 	// 必要な要素を取得
 	const tabItems = document.querySelectorAll(".tabItem");
+
+	
 
 	// インデックス
 	let index = 0;
