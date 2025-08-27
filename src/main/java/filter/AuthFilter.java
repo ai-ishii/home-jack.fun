@@ -4,7 +4,7 @@
  * 作成者：月向亮太
  * 
  * 作成日：2025/8/25
- * 最終更新日: 2025/8/26
+ * 最終更新日: 2025/8/27
  */
 package filter;
 
@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebFilter({ "/jackworksRequest", "/momthJackworks" })
+@WebFilter({"/momthJackworks" })
 public class AuthFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {

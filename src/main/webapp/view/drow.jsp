@@ -360,6 +360,23 @@ a.btn--delete:hover {
 	border-bottom: 2px solid #4a488e;
 }
 
+/* 以下許可拒否ボタン */
+/* aタグのリセット */
+.adminReset{
+text-decoration: none;
+}
+
+/* ×アイコン */
+.rejectionIcon{
+stroke: red;
+}
+
+/* チェックアイコン */
+.approvalIcon{
+stroke: green;
+}
+
+
 </style>
 
 <body>
@@ -479,10 +496,31 @@ a.btn--delete:hover {
 <input id="file-upload" type="file" />
 </div>
 
+<div>
 <a href="<%=request.getContextPath()%>/" class="btn btn--delete">削除</a>
+</div>
 
+<!-- 承認ボタン -->
+<svg x="0" y="0" viewBox="0 0 50 50" width="40" height="40" class="approvalIcon">
+<a href="#" class="adminReset">
+<g>
+<circle cx="25" cy="25" r="23" stroke-width="2" fill="#fff"/>
+<path d="M 13.5 27.5 L 23.5 36.5" stroke-width="2" fill="none"/>
+<path d="M 22.5 36.5 L 37.5 18.5" stroke-width="2" fill="none"/>
+</g>
+</a>
+</svg>
 
-
+<!-- 拒否（差し戻し）ボタン -->
+<svg x="0" y="0" viewBox="0 0 50 50" width="40" height="40" class="rejectionIcon">
+<a href="#" class="adminReset">
+<g>
+<circle cx="25" cy="25" r="23" stroke-width="2" fill="#fff"/>
+<path d="M 13.5 13.5 L 36.5 36.5" stroke-width="2" fill="none"/>
+<path d="M 13.5 36.5 L 36.5 13.5" stroke-width="2" fill="none"/>
+</g>
+</a>
+</svg>
 
 
 		
