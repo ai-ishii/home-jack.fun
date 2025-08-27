@@ -504,7 +504,7 @@ public class UserDAO {
 	 * @return ArrayList<User>
 	 * @throws IllegalStateException メソッド内部で例外が発生した場合
 	 */
-	public ArrayList<User> selectByDepartmentGroup(int departmentId, int groupId) {
+	public ArrayList<User> selectByDepartmentGroup(int departmentId, int groupId, int userId) {
 		Connection con = null;
 		Statement smt = null;
 
@@ -512,10 +512,38 @@ public class UserDAO {
 		ArrayList<User> userList = new ArrayList<User>();
 
 		//SQL文の作成
-		String sql = "SELECT user_id, account_id, name, name_kana, birthday, address, post, phone, nearest_station, "
-				+ "transportation, sex, employee_number, department_id, group_id, joining_date, work_history, marriage_flag, "
-				+ "children, qualification, display_flag, rest_flag, regist_date, update_date FROM user_info "
-				+ "WHERE department_id = " + departmentId + " AND group_id = " + groupId + ";";
+		String sql = "SELECT "
+						+ "user_id, "
+						+ "account_id, "
+						+ "name, "
+						+ "name_kana, "
+						+ "birthday, "
+						+ "address, "
+						+ "post, "
+						+ "phone, "
+						+ "nearest_station, "
+						+ "transportation, "
+						+ "sex, "
+						+ "employee_number, "
+						+ "department_id, "
+						+ "group_id, "
+						+ "joining_date, "
+						+ "work_history, "
+						+ "marriage_flag, "
+						+ "children, "
+						+ "qualification, "
+						+ "display_flag, "
+						+ "rest_flag, "
+						+ "regist_date, "
+						+ "update_date "
+					+ "FROM "
+						+ "user_info "
+					+ "WHERE"
+						+ " department_id = " + departmentId + " "
+					+ "AND "
+						+ "group_id = " + groupId + " "
+					+ "AND NOT "
+						+ "user_id = " + userId +";";
 
 		try {
 			// データベース接続
@@ -580,7 +608,7 @@ public class UserDAO {
 	 * @return ArrayList<User>
 	 * @throws IllegalStateException メソッド内部で例外が発生した場合
 	 */
-	public ArrayList<User> selectByJoiningDate(Timestamp joiningDate) {
+	public ArrayList<User> selectByJoiningDate(Timestamp joiningDate, int userId) {
 		Connection con = null;
 		Statement smt = null;
 
@@ -588,10 +616,36 @@ public class UserDAO {
 		ArrayList<User> userList = new ArrayList<User>();
 
 		//SQL文の作成
-		String sql = "SELECT user_id, account_id, name, name_kana, birthday, address, post, phone, nearest_station, "
-				+ "transportation, sex, employee_number, department_id, group_id, joining_date, work_history, marriage_flag, "
-				+ "children, qualification, display_flag, rest_flag, regist_date, update_date FROM user_info "
-				+ "WHERE joining_date = '" + joiningDate + "';";
+		String sql = "SELECT "
+						+ "user_id, "
+						+ "account_id, "
+						+ "name, "
+						+ "name_kana, "
+						+ "birthday, "
+						+ "address, "
+						+ "post, "
+						+ "phone, "
+						+ "nearest_station, "
+						+ "transportation, "
+						+ "sex, "
+						+ "employee_number, "
+						+ "department_id, "
+						+ "group_id, "
+						+ "joining_date, "
+						+ "work_history, "
+						+ "marriage_flag, "
+						+ "children, "
+						+ "qualification, "
+						+ "display_flag, "
+						+ "rest_flag, "
+						+ "regist_date, "
+						+ "update_date "
+					+ "FROM "
+						+ "user_info "
+					+ "WHERE "
+						+ "joining_date = '" + joiningDate + "' "
+					+ "AND NOT "
+						+ "user_id = " + userId + ";";
 
 		try {
 			// データベース接続
