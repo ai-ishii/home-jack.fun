@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		const errorClassName = 'error';		//エラー文用のクラス
 		const errorBack = 'error-back';		//エラー箇所の表示用クラス
+		const errorButton = 'error-button';
 		
 		const fileLimit = 1024 * 1024 * 3;	//最大ファイルサイズ指定
 		const telDigit = [10, 11];			//電話番号の桁数
@@ -210,13 +211,18 @@ document.addEventListener('DOMContentLoaded', () => {
 			
 			for (const file of files) {
 				if (file.size > fileLimit) {
-					elem.classList.add("error-button");
-						createError(elem, 'ファイルサイズが3MBを超えています。');
-						return true;
+					elem.classList.add("error-back");
+					createError(elem, 'ファイルサイズが3MBを超えています。');
+					return true;
 				}
 				
-				return !(extension.test(elem.value));
+				if (!extension.test(elem.value)) {
+					elem.classList.add(errorButton);
+					createError(elem, '指定の画像ファイルを選択してください。');
+					return true;
+				}
 			}
+			return false;
 		}
 		
 		//convert-full-to-halfクラスのリアルタイム変換
@@ -339,8 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		
 		//error-check-fileクラスのリアルタイム入力チェック
 		errorFiles.forEach((elem) => {
-			elem.addEventListener('blur', () => {
-				elem.value = elem.value.trim();
+			elem.addEventListener('change', () => {
 				//エラー文の初期化
 				removeError(elem);
 				//空文字チェック 空白チェック
@@ -466,6 +471,18 @@ document.addEventListener('DOMContentLoaded', () => {
 				elem.value = elem.value.trim();
 			});
 			
+			errorFiles.forEach((elem) => {
+				//エラー文の初期化
+				removeError(elem);
+				//空白・空文字チェック
+				if (checkSpace(elem, selectClass)) {
+					errorFlag = true;
+				}
+				if (checkFile(elem)) {
+					errorFlag = true;
+				}
+			});
+			
 			if (errorFlag) {
 				//フォームの送信を中止
 				event.preventDefault();
@@ -473,156 +490,4 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 
 	}
-	
-/*	
-	//空白チェック→半角変換を行う関数の準備
-	const convert = function(event) {
-		//フォーム要素を取得
-		const input = event.target;
-
-		//中身がない場合は終了
-		if(!input.value) {
-			return;
-		}
-
-		//半角に変換する
-		const convertedValue = input.value.normalize('NFKC');
-
-		//変換後の値を戻す
-		input.value = convertedValue;
-	}
-
-	//取得したフォーム要素にイベントリスナーを設定
-	elements.forEach(function(elem) {
-		//フォーカスが外れたタイミングでconvert(半角変換)を行う
-		elem.addEventListener ('blur', convert);
-	});
-
-
-
-
-
-
-
-		//form要素のsubmitイベントを使った送信時の処理
-		errorForm.addEventListener('submit', (e) => {
-			//エラー表示の初期化
-			const errorElems = errorForm.querySelectorAll('.' + errorClassName);
-			errorElems.forEach((elem) => {
-				elem.remove();
-			});
-
-			//エラーの有無を管理するフラグ(有:true,無:false)
-			let errorFlag = false;
-
-			//.requiredの要素を検証
-			required.forEach((elem) => {
-				elem.classList.remove("error-back");
-				//未入力の場合にエラー表示する
-				if (elem.value.length === 0) {
-					elem.classList.add("error-back");
-					createError(elem, '文字を入力してください。');
-					//エラーのフラグを変更
-					errorFlag = true;
-				} else {
-					//値の前後の空白文字を削除
-					const elemValue = elem.value.trim();
-					//値が空の場合にエラー表示する
-					if (elemValue.length === 0) {
-						elem.classList.add("error-back");
-						createError(elem, 'スペース（空白）のみでの入力はできません。');
-						errorFlag = true;
-					}
-				}
-			});
-
-			//.numRequiredの要素を検証
-			numRequired.forEach((elem) => {
-				elem.classList.remove("error-back");
-				//未入力の場合にエラー表示する
-				if (elem.value.length === 0) {
-					elem.classList.add("error-back");
-					createError(elem, '数字を入力してください。');
-					//エラーのフラグを変更
-					errorFlag = true;
-					//値が空の場合にエラー表示する
-				} else if (elem.value.trim().length === 0) {
-					elem.classList.add("error-back");
-					createError(elem, 'スペース（空白）のみでの入力はできません。');
-					errorFlag = true;
-					//文字が入っていた場合にエラー表示する
-				} else if (isNaN(elem.value)) {
-					elem.classList.add("error-back");
-					createError(elem, '文字が入力されています。数字のみを入力してください。');
-					//エラーのフラグを変更
-					errorFlag = true;
-				} else {
-					//.errorEmployeeの要素を検証
-					errorEmployee.forEach((elem) => {
-						//値の前後の空白文字を削除
-						const elemValue = elem.value.trim();
-						//社員番号の桁数(6)以外の場合
-						if (elemValue.length !== employeeDigit && elemValue.length !== 11) {
-							elem.classList.add("error-back");
-							createError(elem, '社員番号は6桁で入力してください。');
-							//エラーのフラグを変更
-							errorFlag = true;
-						}
-					});
-				}
-			});
-
-			//.errorSelectの要素の検証
-			errorSelect.forEach((elem) => {
-				elem.classList.remove("error-back");
-				//値が空かつ要素がSELECTの場合にエラー表示する
-				if (elem.value.length === 0 && elem.tagName === 'SELECT') {
-					elem.classList.add("error-back");
-					createError(elem, '選択必須項目です。');
-					errorFlag = true;
-				}
-			});
-
-			//.errorDateの要素の検証
-			errorDate.forEach((elem) => {
-				elem.classList.remove("error-back");
-				//値が空文字の場合にエラー表示する
-				if (elem.value.trim() === '') {
-					elem.classList.add("error-back");
-					createError(elem, '日付を入力してください。');
-					errorFlag = true;
-				}
-			});
-
-			//.errorFileの要素の検証
-			errorFile.forEach((elem) => {
-				const files = elem.files;
-				for (const file of files) {
-					//ファイルサイズがfileLimitより大きければエラー表示
-					if (file.size > fileLimit) {
-						elem.classList.add("error-button");
-						createError(elem, 'ファイルサイズが3MBを超えています。');
-						errorFlag = true;
-					}
-				}
-
-				//値の前後の空白文字を削除
-				const elemValue = elem.value.trim();
-				//拡張子をチェックするメソッド
-				const filename = fileNameCheck(elemValue);
-				//falseの場合、エラー表示
-				if (!filename) {
-					elem.classList.add("error-button");
-					createError(elem, '指定の画像ファイルを選択してください。');
-					errorFlag = true;
-				}
-			});
-
-			//エラーフラグがtrueのとき
-			if (errorFlag) {
-				//フォームの送信を中止
-				e.preventDefault();
-			}
-		});
-	}*/
 });
