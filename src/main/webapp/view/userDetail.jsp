@@ -4,7 +4,7 @@
 作成者:月向亮太
 
 作成日: 2025/8/21
-更新日: 2025/8/26
+更新日: 2025/8/27
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -123,7 +123,7 @@ text-align: center;
 					<%
 						for (int i = 0; i < authorityHavingList.size(); i++){
 							AuthorityHaving having = authorityHavingList.get(i);
-							if (having.getAuthorityCode().equals("POS_MNGR")){	
+							if (having.getAuthorityCode().equals("APR_ADMN")){	
 					%>
 					<a href="<%=request.getContextPath()%>/userList"><p>個人情報一覧はコチラ</p></a>
 					
