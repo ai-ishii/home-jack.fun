@@ -92,7 +92,7 @@ String group = commonTable.selectGroup(user.getGroupId());
 	width: 420px;
 	height: auto;
 	/*	縦横比を固定する*/
-	object-fit: none;
+	object-fit: contain;
 }
 
 #detailEmployee #belong_img, #joinTiming_img {
