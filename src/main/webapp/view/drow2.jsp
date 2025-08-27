@@ -191,6 +191,8 @@ a {
 .memo {
 	display: inline-block;
 	vertical-align: middle;
+	stroke: #fff;
+	fill: #fff;
 }
 
 .confirmButton {
@@ -269,5 +271,10 @@ a {
 				stroke-linejoin="round" fill="none" /></svg>
 		<span>確認画面へ</span>
 	</button>
+	<br>
+	<P>
+	編集ボタンのアイコンに色をつけると確認画面のアイコンに枠線がついてしまう事態が起きてます
+	が、干渉してるだけなので個々で使えば大丈夫かと思われます
+	</P>
 </body>
 </html>

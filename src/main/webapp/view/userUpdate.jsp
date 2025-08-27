@@ -15,7 +15,7 @@
 
 <%
 String cmd = (String) request.getAttribute("cmd");
-if (cmd == null){
+if (cmd == null) {
 	cmd = "register";
 }
 
@@ -25,15 +25,14 @@ String joiningDate = "";
 
 String fullAddress = "";
 
+if (cmd.equals("reRegister") || cmd.equals("register")) {
+	User userSession = (User) session.getAttribute("user");
 
-if (cmd.equals("reRegister") || cmd.equals("register")){
-	User userSession = (User)session.getAttribute("user");
-	
-	if(user != null){
+	if (user != null) {
 		user = userSession;
 	}
-	
-	if (user.getJoiningDate() != null){
+
+	if (user.getJoiningDate() != null) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		joiningDate = sdf.format(user.getJoiningDate());
 	}
@@ -44,11 +43,9 @@ int groupId = user.getGroupId();
 
 String sex = user.getSex();
 
-if (sex == null){
+if (sex == null) {
 	sex = "";
 }
-
-
 %>
 
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -263,6 +260,50 @@ input[type="text"], input[type="date"], select {
 .confirmButton:hover span {
 	color: #4682b4;
 }
+
+/* 以下矢印付きボタンのCSS */
+/* aタグの初期CSSのリセット(左) */
+.jackResetL {
+	text-decoration: none;
+	color: #000;
+}
+
+/* 矢印の枠 */
+/* marginとかは自分で削ったり足したりしてくださいな */
+.yoruArrow {
+	display: flex;
+	align-items: center;
+	height: 30px;
+	width: 85%;
+	margin: 30px auto 0;
+}
+
+/* 矢印 */
+.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	transition: transform 0.5s ease;
+	overflow: visible; /* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf {
+	height: 100%;
+	font-family: "Yomogi", cursive;
+	font-size: 25px;
+}
+
+/* 矢印ホバー時の動き(左) */
+.jackResetL:hover svg path {
+	transform: translateX(-10px);
+	stroke: #f9de95;
+	fill: #f9de95;
+}
+
+.btnList {
+	width: 70%;
+	text-align: center;
+}
 </style>
 
 <body>
@@ -278,7 +319,7 @@ input[type="text"], input[type="date"], select {
 			<div id="main" class="container">
 				<div id="contents">
 					<div id="link-title">
-						<h1 id="link-line">個人情報登録</h1>
+						<h1 id="link-line">個人情報更新</h1>
 					</div>
 
 
@@ -296,7 +337,7 @@ input[type="text"], input[type="date"], select {
 								<div class="warning">*</div>
 							</td>
 							<td class="value"><input type="text" name="employeeNumber"
-								value="<%= (user.getEmployeeNumber() != null) ? user.getEmployeeNumber() : "" %>"
+								value="<%=(user.getEmployeeNumber() != null) ? user.getEmployeeNumber() : ""%>"
 								placeholder="123456" required></td>
 						</tr>
 
@@ -304,24 +345,24 @@ input[type="text"], input[type="date"], select {
 							<td class="item" style="display: flex">所属 <label
 								class="selectbox-3"></td>
 							<td class="value"><select name="department">
-									<option value="" <%= (departmentId == 0) ? "selected" : "" %>>--選択してください--</option>
-									<option value="1" <%= (departmentId == 1) ? "selected" : "" %>>BS事業部第1部</option>
-									<option value="2" <%= (departmentId == 2) ? "selected" : "" %>>BS事業部第2部</option>
-									<option value="3" <%= (departmentId == 3) ? "selected" : "" %>>営業部</option>
-									<option value="4" <%= (departmentId == 4) ? "selected" : "" %>>NEXTINOVATION部</option>
-									<option value="5" <%= (departmentId == 5) ? "selected" : "" %>>経営管理部</option>
+									<option value="" <%=(departmentId == 0) ? "selected" : ""%>>--選択してください--</option>
+									<option value="1" <%=(departmentId == 1) ? "selected" : ""%>>BS事業部第1部</option>
+									<option value="2" <%=(departmentId == 2) ? "selected" : ""%>>BS事業部第2部</option>
+									<option value="3" <%=(departmentId == 3) ? "selected" : ""%>>営業部</option>
+									<option value="4" <%=(departmentId == 4) ? "selected" : ""%>>NEXTINOVATION部</option>
+									<option value="5" <%=(departmentId == 5) ? "selected" : ""%>>経営管理部</option>
 							</select> </label></td>
 						</tr>
 						<tr>
 							<td class="item" style="display: flex">グループ <label
 								class="selectbox-3"></td>
 							<td class="value"><select name="group">
-									<option value="" <%= (groupId == 0) ? "selected" : "" %>>--選択してください--</option>
-									<option value="1" <%= (groupId == 1) ? "selected" : "" %>>第1グループ</option>
-									<option value="2" <%= (groupId == 2) ? "selected" : "" %>>第2グループ</option>
-									<option value="3" <%= (groupId == 3) ? "selected" : "" %>>第3グループ</option>
-									<option value="4" <%= (groupId == 4) ? "selected" : "" %>>第4グループ</option>
-									<option value="5" <%= (groupId == 5) ? "selected" : "" %>>第5グループ</option>
+									<option value="" <%=(groupId == 0) ? "selected" : ""%>>--選択してください--</option>
+									<option value="1" <%=(groupId == 1) ? "selected" : ""%>>第1グループ</option>
+									<option value="2" <%=(groupId == 2) ? "selected" : ""%>>第2グループ</option>
+									<option value="3" <%=(groupId == 3) ? "selected" : ""%>>第3グループ</option>
+									<option value="4" <%=(groupId == 4) ? "selected" : ""%>>第4グループ</option>
+									<option value="5" <%=(groupId == 5) ? "selected" : ""%>>第5グループ</option>
 							</select> </label></td>
 
 						</tr>
@@ -337,7 +378,7 @@ input[type="text"], input[type="date"], select {
 								<div class="warning">*</div>
 							</td>
 							<td class="value"><input type="text" name="nameKana"
-								value="<%= (user.getNameKana() != null) ? user.getNameKana() :"" %>"
+								value="<%=(user.getNameKana() != null) ? user.getNameKana() : ""%>"
 								placeholder="やまだたろう" required></td>
 						</tr>
 						<tr>
@@ -345,7 +386,7 @@ input[type="text"], input[type="date"], select {
 								<div class="warning">*</div>
 							</td>
 							<td class="value"><input type="date" name="birthday"
-								value="<%= (user.getBirthday() != null) ? user.getBirthday() : ""%>"
+								value="<%=(user.getBirthday() != null) ? user.getBirthday() : ""%>"
 								placeholder="2003年01月01日" required></td>
 						</tr>
 						<tr>
@@ -354,11 +395,10 @@ input[type="text"], input[type="date"], select {
 							</td>
 							<td class="value"><label class="selectbox-3"> <select
 									name="sex">
-										<option value="" <%= (sex.equals("")) ? "selected" : "" %>>--選択してください--</option>
-										<option value="男" <%= (sex.equals("男")) ? "selected" : "" %>>男</option>
-										<option value="女" <%= (sex.equals("女")) ? "selected" : "" %>>女</option>
-										<option value="その他"
-											<%= (sex.equals("その他")) ? "selected" : "" %>>その他</option>
+										<option value="" <%=(sex.equals("")) ? "selected" : ""%>>--選択してください--</option>
+										<option value="男" <%=(sex.equals("男")) ? "selected" : ""%>>男</option>
+										<option value="女" <%=(sex.equals("女")) ? "selected" : ""%>>女</option>
+										<option value="その他" <%=(sex.equals("その他")) ? "selected" : ""%>>その他</option>
 								</select>
 							</label></td>
 						</tr>
@@ -369,20 +409,20 @@ input[type="text"], input[type="date"], select {
 							<td class="value">
 								<div class="phone-input-group">
 									<input type="text" name="phone"
-										value="<%= (user.getPhone() != null) ? user.getPhone() : ""%>"
+										value="<%=(user.getPhone() != null) ? user.getPhone() : ""%>"
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td class="item">郵便番号<span class="warning">*(ハイフン不要)</span></td>
 							<td class="value"><input type="text" name="post"
-								value="<%= (user.getPost() != null) ? user.getPost() : ""%>"
+								value="<%=(user.getPost() != null) ? user.getPost() : ""%>"
 								class="p-postal-code" placeholder="例: 1000001" required></td>
 						</tr>
 						<tr>
 							<td class="item">住所<span class="warning">*(ハイフン不要)</span></td>
 							<td class="value"><input type="text" name="address"
-								value="<%= (user.getAddress() != null) ? user.getAddress() : ""%>"
+								value="<%=(user.getAddress() != null) ? user.getAddress() : ""%>"
 								class="p-postal-code" placeholder="例: 1000001" required></td>
 						</tr>
 
@@ -397,7 +437,7 @@ input[type="text"], input[type="date"], select {
 						<tr>
 							<td class="item">子供</td>
 							<td class="value"><input type="number" name="children"
-								value="<%= (user.getChildren() != 0) ? user.getChildren() : ""%>"
+								value="<%=(user.getChildren() != 0) ? user.getChildren() : ""%>"
 								placeholder="2"></td>
 						</tr>
 						<tr>
@@ -405,7 +445,7 @@ input[type="text"], input[type="date"], select {
 								<div class="warning">*</div>
 							</td>
 							<td class="value"><input type="date" name="joiningDate"
-								value="<%= (joiningDate != null) ? joiningDate : ""%>"
+								value="<%=(joiningDate != null) ? joiningDate : ""%>"
 								placeholder="2025" required></td>
 						</tr>
 						<tr>
@@ -414,7 +454,7 @@ input[type="text"], input[type="date"], select {
 								<div class="warning">*</div>
 							</td>
 							<td class="value"><input type="text" name="workyear"
-								value="<%= (user.getWorkHistory() != 0) ? user.getWorkHistory() : ""%>"
+								value="<%=(user.getWorkHistory() != 0) ? user.getWorkHistory() : ""%>"
 								placeholder="3" required></td>
 						</tr>
 						<tr>
@@ -422,7 +462,7 @@ input[type="text"], input[type="date"], select {
 								<div class="warning">*</div>
 							</td>
 							<td class="value"><input type="text" name="station"
-								value="<%= (user.getNearestStation() != null) ? user.getNearestStation() : ""%>"
+								value="<%=(user.getNearestStation() != null) ? user.getNearestStation() : ""%>"
 								placeholder="目梨駅" required></td>
 						</tr>
 						<tr>
@@ -430,31 +470,51 @@ input[type="text"], input[type="date"], select {
 								<div class="warning">*</div>
 							</td>
 							<td class="value"><input type="text" name="transportation"
-								value="<%= (user.getTransportation() != null) ? user.getTransportation() : ""%>"
+								value="<%=(user.getTransportation() != null) ? user.getTransportation() : ""%>"
 								placeholder="電車" required></td>
 						</tr>
 						<tr>
 							<td class="item">資格</td>
 							<td class="value"><input type="text" name="qualification"
-								value="<%= (user.getQualification() != null) ? user.getQualification() : ""%>"
+								value="<%=(user.getQualification() != null) ? user.getQualification() : ""%>"
 								placeholder="英検2級 色彩検定"></td>
 						</tr>
 					</table>
 
-					<!-- 確認画面に飛ぶボタン -->
-					<button class="confirmButton">
-						<svg class="memo" xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 48 48" width="48px" height="48px">
+					<table class="btnList">
+						<tr>
+							<td>
+								<div class="yoruArrow">
+									<a
+										href="<%=request.getContextPath()%>/employeeDetail
+								?user_id=<%=userId%>
+								&work=detail"
+										class="jackResetL"> <svg class="arrow" width="50"
+											height="20">
+			<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
+			<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
+		</svg> <span class="beaf">CANCEL</span>
+									</a>
+								</div>
+							</td>
+							<td>
+								<!-- 確認画面に飛ぶボタン -->
+								<button class="confirmButton">
+									<svg class="memo" xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 48 48" width="48px" height="48px">
 										<rect width="48" height="48" fill="none" />
 										<polyline class="path"
-								points="17.5 23.48 22.5 28.48 30.5 20.48" fill="none"
-								stroke="#fff" stroke-linecap="square" stroke-miterlimit="10"
-								stroke-width="2" />
+											points="17.5 23.48 22.5 28.48 30.5 20.48" fill="none"
+											stroke="#fff" stroke-linecap="square" stroke-miterlimit="10"
+											stroke-width="2" />
 										<rect class="path" x="8" y="8" width="32" height="32" rx="2"
-								stroke-width="2" stroke="#fff" stroke-linecap="round"
-								stroke-linejoin="round" fill="none" /></svg>
-						<span>確認画面へ</span>
-					</button>
+											stroke-width="2" stroke="#fff" stroke-linecap="round"
+											stroke-linejoin="round" fill="none" /></svg>
+									<span>確認画面へ</span>
+								</button>
+							</td>
+						</tr>
+					</table>
 		</form>
 	</div>
 	</div>
