@@ -124,7 +124,7 @@ public class UserConfirmServlet extends HttpServlet {
 				user.setPost(request.getParameter("post"));
 				user.setMarriageFlag(Integer.parseInt(request.getParameter("marriage")));
 				user.setWorkHistory(Integer.parseInt(request.getParameter("workyear")));
-				user.setChildren(children);
+				user.setChildren(Integer.parseInt(childrenStr));
 				user.setNearestStation(request.getParameter("station"));
 				user.setTransportation(request.getParameter("transportation"));
 				user.setQualification(request.getParameter("qualification"));
