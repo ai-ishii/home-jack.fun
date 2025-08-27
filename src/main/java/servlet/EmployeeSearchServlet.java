@@ -25,10 +25,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class EmployeeSearchServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// エラー文を格納用
+		// エラー用コマンド
 		String error = "";
-		// 例外判定用
+		// エラー文格納用
+		String message = "";
+		// 画面遷移用コマンド
 		String cmd = "";
+		// 遷移先のパス
+		String path = "/view/employee.jsp";
 		//検索用の変数
 		String keyword = "";
 
@@ -38,6 +42,7 @@ public class EmployeeSearchServlet extends HttpServlet {
 
 		try {
 			keyword = request.getParameter("keyword");
+
 			if (keyword == null) {
 				keyword = "";
 			}
@@ -52,24 +57,31 @@ public class EmployeeSearchServlet extends HttpServlet {
 			}
 
 		} catch (IllegalStateException e) {
-			error = "DB接続エラーの為、JackWorks検索結果は表示できませんでした。";
-			cmd = "";
+			message = "システムの一時的な問題により、検索結果の読み込みができませんでした。";
+			error = "logout";
 		} catch (Exception e) {
-			error = "予期せぬエラーが発生しました。" + e;
-			cmd = "";
+			message = "予期せぬエラーが発生しました。" + e;
+			error = "logout";
 		} finally {
-			if (error != "") {
-				request.setAttribute("cmd", cmd);
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-			}
-			// cmdをリクエストスコープに"cmd"という名前で格納する
-			request.setAttribute("cmd", cmd);
-			request.setAttribute("userList", userList);
-			request.setAttribute("keyword", keyword);
 
-			// pathにフォワード
-			request.getRequestDispatcher("/view/employee.jsp").forward(request, response);
+			if (!("").equals(error)) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("error", message);
+				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
+				request.setAttribute("cmd", error);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
+			}
+
+			if (("").equals(error)) {
+				// cmdをリクエストスコープに"cmd"という名前で格納する
+				request.setAttribute("cmd", cmd);
+				request.setAttribute("userList", userList);
+				request.setAttribute("keyword", keyword);
+			}
+
+			request.getRequestDispatcher(path).forward(request, response);
+
 		}
 	}
 
