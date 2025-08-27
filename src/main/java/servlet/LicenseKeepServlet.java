@@ -1,11 +1,13 @@
 /*
  * 機能:確定ボタンを押したときに確定情報をDBに登録する機能
  * 作成者：桑原岳
- * 最終更新日：2025/08/26
+ * 最終更新日：2025/08/27
  */
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import bean.LicenseRequestExclusive;
 import dao.RequestDAO;
@@ -34,9 +36,13 @@ public class LicenseKeepServlet extends HttpServlet {
 		
 		// オブジェクト化
 		LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
+
+		// 現在時刻を取得し、licenseRequestExclusiveにセットする
+		LocalDateTime nowDate = LocalDateTime.now();
+		LocalDate localDate = nowDate.toLocalDate();
 		
 		//request_infoにuser_idとnameを登録してrequest_idを発行する
-		int licenseRequestId = requestDAO.insertApplicantId(applicantId,name);
+		int licenseRequestId = requestDAO.insertApplicantId(applicantId,name,localDate);
 		
 		// license_request_test_infoからrequestIdと一致する情報を取り出す
 		licenseRequestExclusive = requestDAO.selectRequestTestInfo(requestId);
@@ -46,6 +52,10 @@ public class LicenseKeepServlet extends HttpServlet {
 		
 		// license_request_test_infoから取り出した情報をlicense_request_infoに登録する
 		boolean success = requestDAO.insertLicenseInfo(licenseRequestExclusive);
+		
+		// 仮登録した情報を全削除する
+		requestDAO.deleteLicenseRequestTest();
+		requestDAO.deleteLicenseRequest(applicantId);
 		
 		// エラーがなければ完了画面に、エラーがあればエラー画面に遷移する
 		if (success) {

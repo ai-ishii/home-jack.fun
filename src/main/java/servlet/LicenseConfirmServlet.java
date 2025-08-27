@@ -1,7 +1,7 @@
 /* 
  * 機能：資格申請の内容を検証し、バイト配列としてセッションに保存して確認画面に渡す 
  * 作成者：桑原岳 
- * 最終更新日：2025/08/26
+ * 最終更新日：2025/08/27
  */
 package servlet;
 
@@ -27,8 +27,13 @@ public class LicenseConfirmServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+    	
         request.setCharacterEncoding("UTF-8");
+        
+        // セッション
         HttpSession session = request.getSession();
+        
+        // DAOのオブジェクト化
         RequestDAO requestDAO = new RequestDAO();
 
         // フォーム値取得
@@ -45,7 +50,7 @@ public class LicenseConfirmServlet extends HttpServlet {
         Long oldPassingId = request.getParameter("passingFileId") != null && !request.getParameter("passingFileId").isEmpty() ?
                 Long.parseLong(request.getParameter("passingFileId")) : null;
 
-        // 入力値チェック
+        // 入力値のnullチェック
         Map<String, Boolean> errors = new HashMap<>();
         errors.put("name_error", name == null || name.trim().isEmpty());
         errors.put("department_error", department == null || department.isEmpty());
@@ -60,7 +65,7 @@ public class LicenseConfirmServlet extends HttpServlet {
         }
         errors.put("exam-time_error", isExamTimeInvalid);
 
-        // ファイル部分
+        // ファイル部分のnullチェック
         Part receiptPart = request.getPart("receipt");
         Part passingPart = request.getPart("passing");
         errors.put("receipt_error", (receiptPart == null || receiptPart.getSize() == 0) && oldReceiptId == null);
@@ -82,9 +87,13 @@ public class LicenseConfirmServlet extends HttpServlet {
         if (receiptPart != null && receiptPart.getSize() > 0) {
             byte[] receiptBytes = receiptPart.getInputStream().readAllBytes();
             long newReceiptId;
+            
+            // 修正時の申請(ファイルの変更)の処理
             if (oldReceiptId != null) {
                 requestDAO.updateReceiptFile(oldReceiptId, receiptBytes, receiptPart.getSubmittedFileName());
                 newReceiptId = oldReceiptId;
+                
+            //  新規の申請の処理
             } else {
                 newReceiptId = requestDAO.insertReceiptFileProvisional(receiptBytes, receiptPart.getSubmittedFileName());
             }
@@ -93,11 +102,13 @@ public class LicenseConfirmServlet extends HttpServlet {
             formValues.put("receiptFileName", receiptPart.getSubmittedFileName());
     		formValues.put("licenseRequestTestId", newReceiptId);
             userInputFile.put("receiptBytes", receiptBytes);
+            
+            // 修正の申請で変更がない(ファイルの変更がない)場合
         } else if (oldReceiptId != null) {
             byte[] existingBytes = requestDAO.getReceiptFileById(oldReceiptId);
             userInput.put("receiptFileName", requestDAO.getReceiptFileNameById(oldReceiptId));
             userInputFile.put("licenseRequestTestId", oldReceiptId);
-            formValues.put("passingFileName", requestDAO.getReceiptFileNameById(oldReceiptId));
+            formValues.put("receiptFileName", requestDAO.getReceiptFileNameById(oldReceiptId));
             formValues.put("licenseRequestTestId", oldReceiptId);
             userInputFile.put("receiptBytes", existingBytes);
         }
@@ -106,6 +117,8 @@ public class LicenseConfirmServlet extends HttpServlet {
         if (passingPart != null && passingPart.getSize() > 0) {
             byte[] passingBytes = passingPart.getInputStream().readAllBytes();
             long newPassingId;
+            
+         // 修正時の申請(ファイルの変更)の処理
             if (oldPassingId != null) {
                 requestDAO.updatePassingFile(oldPassingId, passingBytes, passingPart.getSubmittedFileName());
                 newPassingId = oldPassingId;

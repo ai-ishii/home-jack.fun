@@ -3,7 +3,7 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/26
+最終更新日：2025/08/27
  --%>
 
 
@@ -180,7 +180,7 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 							<div class="form-input">
 								<input type="text" id="oldname" name="oldname"
 									class="${errors['oldname_error'] ? 'error-field' : ''}"
-									value="${user.name}" readonly />
+									value="${user.name}" />
 							</div>
 						</div>
 
@@ -191,7 +191,7 @@ String errorMessage = (String) request.getAttribute("errorMessage");
 							<div class="form-input">
 								<input type="text" id="oldnamekana" name="oldnamekana"
 									class="${errors['oldnamekana_error'] ? 'error-field' : ''}"
-									value="${user.nameKana}" readonly />
+									value="${user.nameKana}" />
 							</div>
 						</div>
 
