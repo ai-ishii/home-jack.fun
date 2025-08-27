@@ -3,7 +3,7 @@
 
 作成者：桑原岳
 
-最終更新日：2025/08/20
+最終更新日：2025/08/26
  --%>
 
 
@@ -34,7 +34,7 @@
 		<div id="main" class="container">
 			<h1 style="text-align: center;">内容を確定しました。</h1>
 			<div class="form-link">
-				<a href="<%=request.getContextPath()%>/view/nameChangeForm.jsp">申請メニューに戻る</a>
+				<a href="<%=request.getContextPath()%>/view/RequestMenu.jsp">申請メニューに戻る</a>
 			</div>
 		</div>
 	</div>
