@@ -215,41 +215,27 @@ MyFormat myFormat = new MyFormat();
 						<td class="licenseName"><%=licenseRequestExclusiveList.get(i).getLicenseName()%></td>
 						<td class="examDate"><%=myFormat.LocalDateFormat(licenseRequestExclusiveList.get(i).getExamDate())%></td>
 						<td class="examTime"><%=licenseRequestExclusiveList.get(i).getExamTime()%>回</td>
-						<td class="receipt"><%=licenseRequestExclusiveList.get(i).getReceipt()%></td>
-						<td class="passing"><%=licenseRequestExclusiveList.get(i).getPassing()%></td>
-						<%
-						if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {
-						%>
+						<td><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&type=receipt"><%=licenseRequestExclusiveList.get(i).getReceiptName()%>
+									<img class="receipt" src="<%=licenseRequestExclusiveList.get(i).getReceipt()%>"></a></td>
+						<td><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&type=passing"><%=licenseRequestExclusiveList.get(i).getPassingName()%>
+									<img class="passing" src="<%=licenseRequestExclusiveList.get(i).getPassing()%>"></a></td>
+						<%if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {%>
 						<td class="approver">――</td>
-						<%
-						} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {
-						%>
+						<%} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {%>
 						<td class="approver"><%=licenseRequestExclusiveList.get(i).getApprover()%></td>
-						<%
-						}
-						if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {
-						%>
+						<%}
+                     if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {%>
 						<td class="approvalDate">――</td>
-						<%
-						} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {
-						%>
+						<%} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {%>
 						<td class="approvalDate"><%=myFormat.datetimeSlashFormat(licenseRequestExclusiveList.get(i).getApprovalDate())%></td>
-						<%
-						}
-						if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {
-						%>
+						<%}
+                     if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {%>
 						<td class="request_flag1">承認待ち</td>
-						<%
-						} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {
-						%>
+						<%} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {%>
 						<td class="request_flag2">承認済み</td>
-						<%
-						}
-						%>
+						<%}%>
 					</tr>
-					<%
-					}
-					%>
+					<%}%>
 				</tbody>
 			</table>
 

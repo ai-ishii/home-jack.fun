@@ -44,8 +44,8 @@ h1 {
 }
 
 .license {
-	width: 70%;
-	height: 80%;
+	width: 60%;
+	height: 90%
 	margin: 0 auto;
 }
 
@@ -277,11 +277,15 @@ a.btn--notApproved:hover {
 				</tr>
 				<tr>
 					<td class="submitreceipt">領収書</td>
-					<td class="receipt"><%=licenseRequestExclusive.getReceipt()%></td>
+					<td class="receipt"><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusive.getRequestId()%>&type=receipt"><%=licenseRequestExclusive.getReceiptName()%></a>
+					
+					</td>
 				</tr>
 				<tr>
 					<td class="certificateofpassing">合格証</td>
-					<td class="passing"><%=licenseRequestExclusive.getPassing()%></td>
+					<td class="passing"><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusive.getRequestId()%>&type=passing"><%=licenseRequestExclusive.getPassingName()%></a>
+					
+					</td>
 				</tr>
 
 

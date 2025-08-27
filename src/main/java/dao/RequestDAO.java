@@ -48,6 +48,8 @@ public class RequestDAO {
 					+ "LR.receipt,"
 					+ "LR.license_id, "
 					+ "LR.passing, "
+					+ "LR.receipt_name, "
+					+ "LR.passing_name, "
 					+ "G.group_name, "
 					+ "D.department_name, "
 					+ "LI.license_name "
@@ -93,8 +95,8 @@ public class RequestDAO {
 			//SQL文(request_infoとlicense_request_infoとgroup_infoとdepartment_infoとlicense_info)
 			String sql = licenseRequestSql
 					+ "ORDER BY "
-					+ "r.request_flag ASC, "
-					+ "r.request_date DESC;";
+					+ "R.request_flag ASC, "
+					+ "R.request_id DESC;";
 
 			ResultSet rs = smt.executeQuery(sql);
 
@@ -128,6 +130,8 @@ public class RequestDAO {
 				licenseRequestExclusive.setExamTime(rs.getInt("exam_time"));
 				licenseRequestExclusive.setReceipt(rs.getBytes("receipt"));
 				licenseRequestExclusive.setPassing(rs.getBytes("passing"));
+				licenseRequestExclusive.setReceiptName(rs.getString("receipt_name"));
+				licenseRequestExclusive.setPassingName(rs.getString("passing_name"));
 
 				//group_info
 				licenseRequestExclusive.setGroupName(rs.getString("group_name"));
@@ -189,8 +193,8 @@ public class RequestDAO {
 					+ "WHERE"
 					+ " r.request_id = ? "
 					+ "ORDER BY "
-					+ "r.request_flag ASC, "
-					+ "r.request_date DESC";
+					+ "R.request_flag ASC, "
+					+ "R.request_id DESC";
 
 			//オートコミットを無効化
 			con.setAutoCommit(false);
@@ -221,7 +225,10 @@ public class RequestDAO {
 				licenseRequestExclusive.setExamTime(rs.getInt("exam_time"));
 				licenseRequestExclusive.setReceipt(rs.getBytes("receipt"));
 				licenseRequestExclusive.setPassing(rs.getBytes("passing"));
+				licenseRequestExclusive.setReceiptName(rs.getString("receipt_name"));
+				licenseRequestExclusive.setPassingName(rs.getString("passing_name"));
 
+				
 				//group_info
 				licenseRequestExclusive.setGroupName(rs.getString("group_name"));
 
@@ -1322,4 +1329,69 @@ public class RequestDAO {
 			}
 		}
 	}
+	/**
+	 * requestIdで領収書画像、領収書画像名、合格証画像、合格証画像名を取り出すメソッド
+	 * @param  requestId
+	 * @return licenseRequestExclusive
+	 */
+	public LicenseRequestExclusive selectPhotoByRequestId(int requestId) {
+		PreparedStatement pstmt = null;
+		Connection con = null;
+		ResultSet rs = null;
+
+		LicenseRequestExclusive licenseRequestExclusive = new LicenseRequestExclusive();
+
+		try {
+			String sql = "SELECT "
+					+ "receipt, "
+					+ "passing, "
+					+ "receipt_name, "
+					+ "passing_name "
+					+ "FROM "
+					+ "license_request_info  "
+					+ "WHERE "
+					+ "request_id = ?";
+
+			con = DAOconnection.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, requestId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				licenseRequestExclusive.setReceipt(rs.getBytes("receipt"));
+				licenseRequestExclusive.setPassing(rs.getBytes("passing"));
+				licenseRequestExclusive.setReceiptName(rs.getString("receipt_name"));
+				licenseRequestExclusive.setPassingName(rs.getString("passing_name"));
+			}
+		} catch (SQLException e) {
+			// エラーが発生した場合の処理（例：ログ出力）
+			e.printStackTrace();
+		} finally {
+			// finallyブロック内で発生するSQLExceptionを個別に処理する
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return licenseRequestExclusive;
+	}
+	
 }
