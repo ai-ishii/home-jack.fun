@@ -13,7 +13,13 @@
 	
 <%
 // エラー文を受け取る
-String error = (String) request.getAttribute("error");
+String error = (String) request.getAttribute("message");
+
+//後で消す
+if(error == null){
+	error = (String) request.getAttribute("error");
+}
+
 //cmd(エラー種類)を受け取る
 String cmd = (String) request.getAttribute("cmd");
 

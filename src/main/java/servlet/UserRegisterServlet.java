@@ -5,14 +5,12 @@
  * 
  * 作成日：8月18日
  * 
- * 最終更新日：8月26日
+ * 最終更新日：8月27日
  * 
  */
 package servlet;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 import bean.User;
 import dao.UserDAO;
@@ -39,39 +37,60 @@ public class UserRegisterServlet extends HttpServlet {
 	private void commonProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
+		// エラー用フラグ
+		boolean error = false;
+		// 画面遷移用コマンド
+		String cmd = "";
+		// エラー文格納用
+		String message = "";
+		// 遷移先のパス
+		String path = "/home";
 
 		//オブジェクトの生成
 		UserDAO userDAO = new UserDAO();
+		HttpSession session = request.getSession();
 
 		try {
+			//セッションからユーザー情報を取得
 			User user = (User) session.getAttribute("user");
-			
 
+			//ユーザー情報がなければ
 			if (user == null) {
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
-
+				path = "/index.jsp";
 			}
 
+			//ユーザー情報の更新処理
 			userDAO.updateProfile(user);
 
 			//セッション登録
 			session.setAttribute("profile", true);
 			session.setAttribute("user", user);
-			
+
 			/*
 			session.setAttribute("user_id", user.getUserId());
 			session.setAttribute("user_name", user.getName());
-
 			*/
 
-			request.getRequestDispatcher("/home").forward(request, response);
-	
+		} catch (IllegalStateException e) {
+			error = true;
+			cmd = "logout";
+			message = "システムの一時的な問題により、個人情報の登録ができませんでした。";
 		} catch (Exception e) {
-			e.printStackTrace();
-			request.setAttribute("error", "登録処理中にエラーが発生しました。");
-			request.getRequestDispatcher("/view/error.jsp").forward(request, response);
-		}
+			error = true;
+			cmd = "logout";
+			message = "予期せぬエラーが発生しました。" + e;
+		} finally {
 
+			if (error) {
+				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
+				request.setAttribute("message", message);
+				// error.jspにフォワード
+				path = "/view/error.jsp";
+			}
+
+			request.setAttribute("cmd", cmd);
+			// pathにフォワード
+			request.getRequestDispatcher(path).forward(request, response);
+		}
 	}
 }

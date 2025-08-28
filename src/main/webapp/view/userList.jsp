@@ -16,6 +16,12 @@ ArrayList<User> list = (ArrayList<User>) request.getAttribute("userList");
 
 //リクエストスコープからキーワードを受け取る
 String keyword = (String)request.getAttribute("keyword");
+//リクエストスコープから検索0件の場合のcmdを受け取る
+String cmd = (String)request.getAttribute("cmd");
+
+if(keyword == null){
+	keyword = "";
+}
 %>
 
 <html>
@@ -260,6 +266,11 @@ button {
 	border: none;
 }
 
+#search-error{
+text-align:center;
+font-size: 16px;
+}
+
 </style>
 
 
@@ -302,6 +313,7 @@ button {
 		<th></th>
 	</tr>
 	</thead>
+
 	<tbody>
 
 <%
@@ -336,9 +348,19 @@ button {
 %>
 	</tbody>
 	</table>
+	
+	<% if(cmd.equals("no-result")) {%>
+		<div id="search-error">
+			<p>検索結果は0件です。内容を変更して再度検索をしてください。</p>
+			<a href="<%=request.getContextPath()%>/userList">一覧へ戻る</a>
+		</div>
+	<% } %>
+	
 	</div>
 	</div>
 	</div>
+	
+	
 	
 	<script>
 	//javascriptで使用するためのコンテキストパスを準備
