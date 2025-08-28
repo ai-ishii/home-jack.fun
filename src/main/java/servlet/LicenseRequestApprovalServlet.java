@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  * 
- * 最終更新日：2025/08/22
+ * 最終更新日：2025/08/27
  * 
  * */
 
@@ -55,7 +55,7 @@ public class LicenseRequestApprovalServlet extends HttpServlet {
 			error = "予期せぬエラーが発生しました。" + e;
 			cmd = "logout";
 		}
-		//エラーがない場合は、RequestList.jspに遷移する
+		//エラーがない場合は、requestDetail.jspに遷移する
 		if (error == null) {
 			request.setAttribute("licenseRequestExclusive", licenseRequestExclusive);
 			request.setAttribute("flag", flag);

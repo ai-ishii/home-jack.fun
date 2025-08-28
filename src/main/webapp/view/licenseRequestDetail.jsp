@@ -1,6 +1,6 @@
 <%--機能：申請の内容を確認し、承認・差し戻しする画面
     作成者：桑原岳
-    最終更新日：2025/08/25
+    最終更新日：2025/08/27
  --%>
 
 <%@page import="util.MyFormat"%>
@@ -44,8 +44,8 @@ h1 {
 }
 
 .license {
-	width: 70%;
-	height: 80%;
+	width: 60%;
+	height: 90%
 	margin: 0 auto;
 }
 
@@ -245,7 +245,7 @@ a.btn--notApproved:hover {
 				</tr>
 				<tr>
 					<td class="applicationtime">申請日時</td>
-					<td class="time"><%=myFormat.datetimeSlashFormat(licenseRequestExclusive.getRequestDate())%>
+					<td class="time"><%=myFormat.LocalDateFormat(licenseRequestExclusive.getRequestDate())%>
 					</td>
 				</tr>
 				<tr>
@@ -277,11 +277,15 @@ a.btn--notApproved:hover {
 				</tr>
 				<tr>
 					<td class="submitreceipt">領収書</td>
-					<td class="receipt"><%=licenseRequestExclusive.getReceipt()%></td>
+					<td class="receipt"><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusive.getRequestId()%>&type=receipt"><%=licenseRequestExclusive.getReceiptName()%></a>
+					
+					</td>
 				</tr>
 				<tr>
 					<td class="certificateofpassing">合格証</td>
-					<td class="passing"><%=licenseRequestExclusive.getPassing()%></td>
+					<td class="passing"><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusive.getRequestId()%>&type=passing"><%=licenseRequestExclusive.getPassingName()%></a>
+					
+					</td>
 				</tr>
 
 
