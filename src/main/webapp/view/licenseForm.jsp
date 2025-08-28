@@ -3,7 +3,7 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/27
+最終更新日：2025/08/28
  --%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -191,31 +191,31 @@ select {
 
 						<div class="form-row">
 							<div class="form-label">
-								<label for="name">氏名<span class="required">【必須】</span></label>
+								<label for="name" >氏名</label>
 							</div>
 							<div class="form-input">
 								<input type="text" id="name" name="name"
 									class="${errors.name_error ? 'error-field' : ''}"
-									value="${sessionScope.userList[0].applicant}" />
+									value="${sessionScope.userList[0].applicant}" readonly/>
 							</div>
 						</div>
 
 						<div class="form-row">
-							<div class="form-label">
-								<label for="department">部署名<span class="required">【必須】</span></label>
+							<div class="form-label" >
+								<label for="department" >部署名</label>
 							</div>
 							<div class="form-input">
 								<input type="text" id="department" name="department"
-									value="${sessionScope.userList[0].departmentName}" />
+									value="${sessionScope.userList[0].departmentName}" readonly/>
 							</div>
 						</div>
 						<div class="form-row">
 							<div class="form-label">
-								<label for="group">グループ名<span class="required">【必須】</span></label>
+								<label for="group">グループ名</label>
 							</div>
 							<div class="form-input">
 								<input type="text" id="group" name="group"
-									value="${sessionScope.userList[0].groupName}" />
+									value="${sessionScope.userList[0].groupName}" readonly />
 							</div>
 						</div>
 						<div class="form-row">
