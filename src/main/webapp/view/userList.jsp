@@ -8,7 +8,8 @@
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
-<%@page import="java.util.ArrayList, bean.User"%>
+<%@page import="java.util.ArrayList, util.CommonTable, bean.User, dao.UserDAO"%>
+
 
 <%
 //個人情報を格納したListを受け取る
