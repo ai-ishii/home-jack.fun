@@ -50,6 +50,7 @@ public class AnnounceDetailServlet extends HttpServlet {
 
 			
 			if (announce.getAnnounceId() == 0) {
+				error = true;
 				message = "このお知らせは、すでに削除されています。";
 				//お知らせ一覧画面へ遷移先を指定
 				path = "/announce";
