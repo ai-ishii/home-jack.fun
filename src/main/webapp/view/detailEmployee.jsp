@@ -471,7 +471,7 @@ color: #6eddb3;
 								<p>
 									特技
 									<%
-								if (employee.getTalent() != null) {
+								if (!employee.getTalent().equals("null")) {
 								%>
 									<%=employee.getTalent()%>
 									<%
