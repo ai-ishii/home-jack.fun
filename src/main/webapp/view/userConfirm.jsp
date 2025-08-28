@@ -91,6 +91,56 @@ text-align: center;
 	margin-top: 30px;
 }
 
+.None{
+display: none;
+}
+
+/* 以下矢印付きボタンのCSS */
+/* aタグの初期CSSのリセット(左) */
+.jackResetL{
+text-decoration: none;
+color: #000;
+}
+
+/* 矢印の枠 */
+/* marginとかは自分で削ったり足したりしてくださいな */
+.yoruArrow{
+display: flex;
+align-items: center;
+height: 30px;
+width: 85%;
+margin: 30px auto 0;
+}
+
+/* 矢印 */
+.arrow{
+display: inline-block;
+vertical-align: middle;
+transition: transform 0.5s ease;
+overflow: visible; 				/* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf{
+height: 100%;
+font-family: "Yomogi", cursive;
+font-size: 25px;
+}
+
+/* 矢印ホバー時の動き(左) */
+.jackResetL:hover svg path {
+transform: translateX(-10px);
+stroke: #f9de95;
+fill: #f9de95;
+}
+
+/* 矢印ホバー時の動き(右) */
+.jackResetR:hover svg path {
+transform: translateX(10px);
+stroke: #f9de95;
+fill: #f9de95;
+}
+
 </style>
 </head>
 
@@ -103,7 +153,7 @@ text-align: center;
 		<div id="main" class="container">
 			<div id="contents">
 				<div id="link-title">
-					<h1 id="link-line">個人情報詳細</h1>
+					<h1 id="link-line">個人情報確認</h1>
 				</div>
 				<br>
 				
@@ -179,7 +229,16 @@ text-align: center;
 				</table>
 				
 				<div class="button-container">	
-					<button type="submit" name="registerConfirm" value="戻る" class="btn btn-border">
+						<div class="yoruArrow">
+							<label for="back" class="jackResetL">
+								<svg class="arrow" width="50"  height="20">
+									<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+									<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+								</svg>
+								<span class="beaf">CANCEL</span>
+							</label>
+						</div>
+					<button id="back" type="submit" name="registerConfirm" value="戻る" class="None">
 					戻る
 					</button>
 				

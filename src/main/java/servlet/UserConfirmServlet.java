@@ -115,7 +115,7 @@ public class UserConfirmServlet extends HttpServlet {
 			} else if ("戻る".equals(registerConfirm)) {
 
 				cmd = "reRegister";
-				path = "/view/userRegister.jsp";
+				path = "/view/userUpdate.jsp";
 
 			} else if ("変更する".equals(registerConfirm)) {
 
