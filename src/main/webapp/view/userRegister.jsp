@@ -305,7 +305,11 @@ input[type="text"], input[type="date"], select {
 						</tr>
 
 						<tr>
-							<td style="display: flex">所属 <div class="warning">*</div><label class="selectbox-3">
+							<td style="display: flex">所属 
+							<div class="warning">*</div>
+							</td>
+							<td class="value">
+							<label class="selectbox-3">
 									<select name="department">
 										<option value="" <%= (departmentId == 0) ? "selected" : "" %> >--選択してください--</option>
 										<option value="1" <%= (departmentId == 1) ? "selected" : "" %> >BS事業部第1部</option>
@@ -320,7 +324,11 @@ input[type="text"], input[type="date"], select {
 						<tr>
 						</tr>
 						<tr>
-							<td style="display: flex">グループ <div class="warning">*</div><label class="selectbox-3">
+							<td style="display: flex">グループ 
+							<div class="warning">*</div>
+							</td>
+							<td class="value">
+							<label class="selectbox-3">
 									<select name="group">
 										<option value="" <%= (groupId == 0) ? "selected" : "" %> >--選択してください--</option>
 										<option value="1" <%= (groupId == 1) ? "selected" : "" %> >第1グループ</option>
@@ -406,7 +414,7 @@ input[type="text"], input[type="date"], select {
 							<td class="item">子供</td>
 							<td class="value"><input type="number" name="children"
 								value="<%=(user.getChildren() != 0) ? user.getChildren() : ""%>"
-								placeholder="2"></td>
+								placeholder="2" min="0"></td>
 						</tr>
 						<tr>
 							<td class="item" style="display: flex">入社年月
