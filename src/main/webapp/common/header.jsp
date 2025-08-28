@@ -93,10 +93,10 @@ String tabCmd = (String) request.getAttribute("cmd");
 							<li>wii</li>
 						</ul>
 					</li>
-					<li><a href="<%= request.getContextPath() %>/userDetail"><p
-								class="pickles">社員情報詳細</p></a></li>
 					<li><a href="<%= request.getContextPath() %>/userList"><p
 								class="pickles">社員情報一覧</p></a></li>
+					<li><a href="<%= request.getContextPath() %>/userDetail"><p
+								class="pickles">社員情報詳細</p></a></li>
 					<li><a href="<%=request.getContextPath()%>/home"><p
 								class="pickles">ホームに戻る</p></a>
 						<ul class="pickles-detail">
