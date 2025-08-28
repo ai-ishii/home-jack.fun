@@ -46,7 +46,7 @@ public class UserListServlet extends HttpServlet {
 			cmd = (String) request.getParameter("cmd");
 
 			//cmdのエラー回避
-			if (cmd == null) {
+			if (cmd == null || cmd.equals("delete")) {
 				cmd = "";
 				//全情報取得メソッドの実行
 				userList = userDAO.selectAll();
