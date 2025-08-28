@@ -616,7 +616,7 @@ color: #6eddb3;
 						<svg class="arrow" width="50" height="20">
 							<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
 							<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
-						</svg> <span class="beaf">BACK</span>
+						</svg> <span class="beaf">List</span>
 						</a>
 						</div>
 			</td>

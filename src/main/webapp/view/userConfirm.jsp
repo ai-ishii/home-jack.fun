@@ -4,7 +4,7 @@
 作成者:月向亮太
 
 作成日: 2025/8/21
-更新日: 2025/8/22
+更新日: 2025/8/28
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -19,7 +19,7 @@ String cmd = (String) request.getAttribute("cmd");
 <html>
 <head>
 <!-- タイトル -->
-<title>個人情報詳細 | HomeJack</title>
+<title>個人情報確認 | HomeJack</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/style.css">
 <script src="<%=request.getContextPath()%>/js/script.js"></script>
@@ -108,7 +108,7 @@ color: #000;
 display: flex;
 align-items: center;
 height: 30px;
-width: 85%;
+width: 60%;
 margin: 30px auto 0;
 }
 
@@ -118,6 +118,7 @@ display: inline-block;
 vertical-align: middle;
 transition: transform 0.5s ease;
 overflow: visible; 				/* はみ出た内容を表示させる */
+cursor: pointer;
 }
 
 /* 矢印文字 */
@@ -125,6 +126,7 @@ overflow: visible; 				/* はみ出た内容を表示させる */
 height: 100%;
 font-family: "Yomogi", cursive;
 font-size: 25px;
+cursor: pointer;
 }
 
 /* 矢印ホバー時の動き(左) */
@@ -139,6 +141,103 @@ fill: #f9de95;
 transform: translateX(10px);
 stroke: #f9de95;
 fill: #f9de95;
+}
+
+.btn, a.btn, button.btn {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.5;
+	position: relative;
+	display: inline-block;
+	padding: 5px 20px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+	letter-spacing: 1.4px;
+	color: #212529;
+	border-radius: 5px;
+	border: none;
+}
+
+button.btn-border {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	margin-bottom: 12px;
+	padding: 0;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	border-radius: 0;
+}
+
+button.btn-border span.btnUp {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	position: relative;
+	display: block;
+	padding: 6px 18px;
+	color: #000;
+	border: 2px solid #000;
+	border-radius: 5px;
+	background: #fff;
+}
+
+button.btn-border:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	position: absolute;
+	bottom: -8px;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 14px;
+	content: "";
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	border: 2px solid #000;
+	border-top: 1px solid #000;
+	border-radius: 0 0 0.5rem 0.5rem;
+	background-image: -webkit-repeating-linear-gradient(135deg, #000, #000 1px, transparent
+		2px, transparent 5px);
+	background-image: repeating-linear-gradient(-45deg, #000, #000 1px, transparent 2px,
+		transparent 5px);
+	background-size: 7px 7px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+button.btn-border:hover {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transform: translate(0, 3px);
+	transform: translate(0, 3px);
+}
+
+button.btn-border:hover:before {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	bottom: -5px;
+}
+
+button.btn-border:active {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transform: translate(0, 7px);
+	transform: translate(0, 7px);
+}
+
+button.btn-border:active:before {
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+	bottom: -1px;
 }
 
 </style>
@@ -239,11 +338,10 @@ fill: #f9de95;
 							</label>
 						</div>
 					<button id="back" type="submit" name="registerConfirm" value="戻る" class="None">
-					戻る
 					</button>
-				
+					
 					<button type="submit" name="registerConfirm" value="完了" class="btn btn-border">
-					完了
+					<span class="btnUp">登録</span>
 					</button>
 				</div>
 					</form>
