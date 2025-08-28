@@ -191,22 +191,22 @@ select {
 
 						<div class="form-row">
 							<div class="form-label">
-								<label for="name" >氏名</label>
+								<label for="name">氏名</label>
 							</div>
 							<div class="form-input">
 								<input type="text" id="name" name="name"
 									class="${errors.name_error ? 'error-field' : ''}"
-									value="${sessionScope.userList[0].applicant}" readonly/>
+									value="${sessionScope.userList[0].applicant}" readonly />
 							</div>
 						</div>
 
 						<div class="form-row">
-							<div class="form-label" >
-								<label for="department" >部署名</label>
+							<div class="form-label">
+								<label for="department">部署名</label>
 							</div>
 							<div class="form-input">
 								<input type="text" id="department" name="department"
-									value="${sessionScope.userList[0].departmentName}" readonly/>
+									value="${sessionScope.userList[0].departmentName}" readonly />
 							</div>
 						</div>
 						<div class="form-row">
@@ -223,7 +223,8 @@ select {
 								<label for="license">資格名<span class="required">【必須】</span></label>
 							</div>
 							<div class="form-select">
-								<select class="${errors.license_error ? 'error-field' : ''}" name="license" id="license" autocomplete="off">
+								<select class="${errors.license_error ? 'error-field' : ''}"
+									name="license" id="license" autocomplete="off">
 									<option value="">--資格を選択してください--</option>
 									<c:forEach items="${sessionScope.licenseNameList}"
 										var="licenseNameInfo">
@@ -305,10 +306,14 @@ select {
 									<input type="hidden" name="passingFileId"
 										value="${userInputFile.passingFileId}">
 								</c:if>
+								
 
 							</div>
 						</div>
-
+<div class="form-cautionary-note">
+									<h4>※画像は領収書と合格証で合わせて1MB以内で申請してください。</h4>
+									
+								</div>
 						<div class="application-button">
 							<button type="submit">申請</button>
 						</div>
@@ -317,6 +322,7 @@ select {
 				<div class="instruction-box">
 					<h2>資格申請フォーム手順</h2>
 					<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
+					<h3>　※領収書と合格証の画像は合わせて1MB以内になるようにしてください。</h3>
 					<h3>2. 入力後、「申請」ボタンを押して内容確認をします。</h3>
 					<h3>3. 確認してよければ「この内容で確定する」ボタンを押します。</h3>
 				</div>

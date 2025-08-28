@@ -84,7 +84,7 @@ MyFormat myFormat = new MyFormat();
 }
 
 .requestFlag {
-	width: 7%;
+	width: 6%;
 }
 
 .display {
@@ -92,42 +92,42 @@ MyFormat myFormat = new MyFormat();
 	margin: 0 auto;
 }
 
-.display tr:nth-child(even) {
+.list tr:nth-child(even) {
 	background-color: white;
 }
 
-.display tr:nth-child(odd) {
+.list tr:nth-child(odd) {
 	background-color: #f0f0e6;
 }
 
-.display td {
+.list td {
 	text-align: center;
 	font-size: 12px;
 	height: 60px;
 }
 
 .time td {
-	width: 10%;
+	width: 9%;
 	height: 60px;
 }
 
 .groupName td {
-	width: 10%;
+	width: 12%;
 	height: 60px;
 }
 
 .applicant td {
-	width: 8%;
+	width: 7%;
 	height: 60px;
 }
 
 .licenseName td {
-	width: 10%;
+	width: 14%;
 	height: 60px;
 }
 
 .examDate td {
-	width: 10%;
+	width: 9%;
 	height: 60px;
 }
 
@@ -137,27 +137,27 @@ MyFormat myFormat = new MyFormat();
 }
 
 .receipt td {
-	width: 10%;
+	width: 11%;
 	height: 60px;
 }
 
 .passing td {
-	width: 10%;
+	width: 11%;
 	height: 60px;
 }
 
 .approver td {
-	width: 10%;
+	width: 7%;
 	height: 60px;
 }
 
 .approvalDate td {
-	width: 10%;
+	width: 9%;
 	height: 60px;
 }
 
 .requestFlag td {
-	width: 7%;
+	width: 6%;
 	height: 60px;
 }
 /* 行全体ホバーで色だけ変える（リンク風ではない） */
@@ -165,7 +165,7 @@ MyFormat myFormat = new MyFormat();
 	background-color: #eef;
 }
 
-.display tbody tr:hover {
+.list tbody tr:hover {
 	background-color: #f2f2f2; /* マウスオーバー時の背景色 */
 	cursor: pointer; /* カーソルを指の形に変更 */
 }
@@ -199,8 +199,6 @@ MyFormat myFormat = new MyFormat();
 
 					</tr>
 				</thead>
-			</table>
-			<table class="display">
 
 				<tbody>
 					<%
@@ -216,9 +214,9 @@ MyFormat myFormat = new MyFormat();
 						<td class="examDate"><%=myFormat.LocalDateFormat(licenseRequestExclusiveList.get(i).getExamDate())%></td>
 						<td class="examTime"><%=licenseRequestExclusiveList.get(i).getExamTime()%>回</td>
 						<td><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&type=receipt"><%=licenseRequestExclusiveList.get(i).getReceiptName()%>
-									<img class="receipt" src="<%=licenseRequestExclusiveList.get(i).getReceipt()%>"></a></td>
+									</a></td>
 						<td><a href="<%=request.getContextPath()%>/licenseRequestPhoto?requestId=<%=licenseRequestExclusiveList.get(i).getRequestId()%>&type=passing"><%=licenseRequestExclusiveList.get(i).getPassingName()%>
-									<img class="passing" src="<%=licenseRequestExclusiveList.get(i).getPassing()%>"></a></td>
+									</a></td>
 						<%if (licenseRequestExclusiveList.get(i).getRequestFlag() == 0) {%>
 						<td class="approver">――</td>
 						<%} else if (licenseRequestExclusiveList.get(i).getRequestFlag() == 1) {%>
