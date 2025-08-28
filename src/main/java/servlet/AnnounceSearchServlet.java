@@ -33,12 +33,12 @@ public class AnnounceSearchServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// エラー用コマンド
-		String error = "";
-		// エラー文格納用
-		String message = "";
+		// エラー用フラグ
+		boolean error = false;
 		// 画面遷移用コマンド
 		String cmd = "";
+		// エラー文格納用
+		String message = "";
 		// 遷移先のパス
 		String path = "/view/announce.jsp";
 
@@ -49,27 +49,27 @@ public class AnnounceSearchServlet extends HttpServlet {
 		int hour = 0;
 		int minute = 0;
 		int second = 0;
-
+		
 		// オブジェクト生成
 		AnnounceDAO announceDAO = new AnnounceDAO();
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
 		ArrayList<CategoryMap> categoryList = new ArrayList<CategoryMap>();
 		LocalDateTime localDateTimeStart = null;
 		LocalDateTime localDateTimeEnd = null;
-
-		// 時系列検索の際の初期値
-		LocalDateTime defaultStart = LocalDateTime.of(year, month, day, hour, minute, second);
-		Timestamp startDate = Timestamp.valueOf(defaultStart);
-		Timestamp endDate = new Timestamp(System.currentTimeMillis());
-
-		// フォームから送信した検索方法をを受け取る
-		cmd = request.getParameter("cmd");
-
-		if (cmd == null) {
-			cmd = "";
-		}
-
 		try {
+
+			// 時系列検索の際の初期値
+			LocalDateTime defaultStart = LocalDateTime.of(year, month, day, hour, minute, second);
+			Timestamp startDate = Timestamp.valueOf(defaultStart);
+			Timestamp endDate = new Timestamp(System.currentTimeMillis());
+
+			// フォームから送信した検索方法をを受け取る
+			cmd = request.getParameter("cmd");
+
+			if (cmd == null) {
+				cmd = "";
+			}
+			
 			//検索の場合
 			if ("keyword".equals(cmd)) {
 				// フォームからパラメータを受け取る
@@ -142,28 +142,35 @@ public class AnnounceSearchServlet extends HttpServlet {
 			categoryList = announceDAO.selectCategoryAll();
 
 		} catch (DateTimeParseException e) {
-			message = "時刻の読み取りに失敗しました。";
+			error = true;
 			//お知らせ登録画面へ遷移
-			error = "announce";
+			cmd = "announce";
+			message = "時刻の読み取りに失敗しました。";
+		} catch (NumberFormatException e) {
+			error = true;
+			cmd = "logout";
+			message = "不正な操作を検知しました。";
 		} catch (IllegalStateException e) {
-			message = "システムの一時的な問題により、検索結果の読み込みができませんでした。";
+			error = true;
 			//ログイン画面へ遷移
-			error = "logout";
+			cmd = "logout";
+			message = "システムの一時的な問題により、検索結果の読み込みができませんでした。";
 		} catch (Exception e) {
+			error = true;
+			cmd = "logout";
 			message = "予期せぬエラーが発生しました。" + e;
-			error = "logout";
 			
 		} finally {
-			if (!("").equals(error)) {
+			if (error) {
 				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
 				request.setAttribute("error", message);
 				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", error);
+				request.setAttribute("cmd", cmd);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
 
-			if (("").equals(error)) {
+			if (!error) {
 				request.setAttribute("cmd", cmd);
 				request.setAttribute("announceList", announceList);
 				request.setAttribute("categoryList", categoryList);

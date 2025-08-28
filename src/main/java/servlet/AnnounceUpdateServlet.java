@@ -25,8 +25,10 @@ public class AnnounceUpdateServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// エラー用コマンド
-		String error = "";
+		// エラー用フラグ
+		boolean error = false;
+		// 画面遷移用コマンド
+		String cmd = "";
 		// エラー文格納用
 		String message = "";
 		// 遷移先のパス
@@ -55,6 +57,8 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			Timestamp updateDateNow = announce.getUpdateDate();
 
 			if (announce.getAnnounceId() == 0) {
+				error = true;
+				cmd = "announce";
 				message = "対象のお知らせが存在しません。";
 				//お知らせ一覧画面へ遷移
 				return;
@@ -63,6 +67,8 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			//遷移前の更新日時とデータベース上の更新日時を比較
 			//違う場合
 			if (!updateDateBefore.equals(updateDateNow)) {
+				error = true;
+				cmd = "announce";
 				message = "このデータはすでに変更されています。";
 				return;
 			}
@@ -77,29 +83,34 @@ public class AnnounceUpdateServlet extends HttpServlet {
 			// メソッドを呼び出してSQL文実行
 			announceDAO.update(announce);
 
+		} catch (NumberFormatException e) {
+			error = true;
+			cmd = "announce";
+			message = "不正な操作を検知しました。";
 		} catch (IllegalStateException e) {
-			message = "システムの一時的な問題により、お知らせ情報の更新ができませんでした。";
+			error = true;
 			//ログイン画面へ遷移
-			error = "logout";
+			cmd = "logout";
+			message = "システムの一時的な問題により、お知らせ情報の更新ができませんでした。";
 
 		} catch (Exception e) {
+			error = true;
+			cmd= "logout";
 			message = "予期せぬエラーが発生しました。" + e;
-			error = "logout";
 
 		} finally {
 			
-			if (!("").equals(error)) {
-				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", message);
+			if (error) {
+				if (!"announce".equals(cmd)) {
+					// error.jspにフォワード先を指定
+					path = "/view/error.jsp";
+				}
+				
 				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", error);
-				// error.jspにフォワード
-				path = "/view/error.jsp";
+				request.setAttribute("cmd", cmd);
+				
 			}
-			
-			if (("").equals(error)) {
-				request.setAttribute("message", message);
-			}
+			request.setAttribute("message", message);
 			
 			request.getRequestDispatcher(path).forward(request, response);
 		}
