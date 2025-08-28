@@ -224,6 +224,11 @@ input[type="file"] {
 	animation: rotate 3s forwards;
 }
 
+input[readonly] {
+	background-color: transparent;
+	border: none;
+}
+
 /* 以下矢印付きボタンのCSS */
 /* aタグの初期CSSのリセット(左) */
 .jackResetL {
@@ -398,7 +403,7 @@ input[type="file"] {
 							<td id="item"><label for="developer">開発経験年数</label></td>
 							<td id="value"><input id="readonlyInput" type="number"
 								name="developer" value="<%=developer%>" style="margin-left: 0;"
-								min="0">年</td>
+								min="0" readonly>年</td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="langSkill">習得技術（言語）</label></td>
