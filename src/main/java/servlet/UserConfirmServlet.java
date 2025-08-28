@@ -104,14 +104,14 @@ public class UserConfirmServlet extends HttpServlet {
 			}
 
 			if ("完了".equals(registerConfirm)) {
-				
+
 				user = (User) session.getAttribute("user");
-				
+
 				cmd = "register";
 				path = "/userRegister";
 
 				request.setAttribute("user", user);
-				
+
 			} else if ("戻る".equals(registerConfirm)) {
 
 				cmd = "reRegister";
@@ -121,11 +121,15 @@ public class UserConfirmServlet extends HttpServlet {
 
 				cmd = "reRegister";
 				path = "/view/userUpdate.jsp";
-				
+
 				//セッション登録
 				session.setAttribute("user", user);
 			}
 
+		} catch (NumberFormatException e) {
+			error = true;
+			cmd = "announce";
+			message = "不正な操作を検知しました。";
 		} catch (IllegalStateException e) {
 			error = true;
 			cmd = "logout";
