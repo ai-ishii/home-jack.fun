@@ -5,7 +5,7 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月27日
+ 最終更新日：8月28日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -101,7 +101,7 @@ text-align: center;
 .seal{
 /*width:860px;*/
 width:90%;
-margin: 30px auto 40px;
+margin: 10px auto 40px;
 padding:10px 0 50px;
 background-color: #fff;
 border-radius: 40px; 
@@ -579,7 +579,7 @@ box-sizing: border-box;
 				<div class="yorushikaBox">
 				<span class="titleBox">年間目標</span>
 				</div>
-				<div class="subhead">
+				<div class="editSubhead">
 				<textarea class="subHeadArea" name="annual_goal" 
 					placeholder="AIの作成"><%=annualGoal%></textarea></div>
 				
@@ -590,9 +590,9 @@ box-sizing: border-box;
 				<div class="editSubhead">
 				<textarea class="subHeadArea" name="situation_challenge" 
 					placeholder="〇〇について知識不足"><%=situationChallenge%></textarea>
-				<input type="hidden" name="goal_id" value="<%=goalId%>"
+				<input type="hidden" name="goal_id" value="<%=goalId%>"></div>
 				</div>
-				</div>
+				
 				
 					<div class="seal">
 					<!-- 4半期目標のボックス -->
@@ -714,6 +714,7 @@ box-sizing: border-box;
 						</div>
 					</div>
 					<div class="jackFlex">
+						
 						<div class="yoruArrow">
 						<a href="<%=request.getContextPath()%>/goalConfirm?cmd=confirm" class="jackReset">
 						<svg class="arrow" width="50"  height="20">
@@ -728,9 +729,12 @@ box-sizing: border-box;
 						<span class="btnUp">更新</span>
 						</button>
 						</div>
+						
 						<div class="jackDummy"></div>
 					</div>
+					
 				</form>
+				
 		</div>
 		</div>
 	</div>
