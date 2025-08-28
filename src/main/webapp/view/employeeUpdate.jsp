@@ -52,6 +52,21 @@ String hobby = employee.getHobby();
 String talent = employee.getTalent();
 String intro = employee.getIntro();
 String position = employee.getPosition();
+if (langSkill == null) {
+	langSkill = "";
+}
+if (middleSkill == null) {
+	middleSkill = "";
+}
+if (hobby == null) {
+	hobby = "";
+}
+if (talent == null) {
+	talent = "";
+}
+if (intro == null) {
+	intro = "";
+}
 if (position == null) {
 	position = "";
 }
