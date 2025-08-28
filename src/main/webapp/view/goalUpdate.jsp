@@ -5,7 +5,7 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月20日
+ 最終更新日：8月27日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -32,11 +32,13 @@ int result = 0;
 String resultComment = "";
 int resultReviewer = 0;
 String resultCommentReviewer = "";
+int goalId = 0;
 
 //goalの値がnullでなければ
 if (goal != null) {
 
 	//ゲッターメソッドを使って値を取得する
+	goalId = goal.getGoalId();
 	groupCode = goal.getGroupCode();
 	annualGoal = goal.getAnnualGoal();
 	situationChallenge = goal.getSituationChallenge();
@@ -268,7 +270,7 @@ display: none;
 }
 
 /* なくても動作はするががあった方が良い */
-.tab-4 > input,
+.tab-4 > input[type="radio"],
 .tab-4 > label,
 .tab-4 > .tab-content {
 order: 2; /* すべての子要素はデフォルトで2に設定 */
@@ -577,15 +579,18 @@ box-sizing: border-box;
 				<div class="yorushikaBox">
 				<span class="titleBox">年間目標</span>
 				</div>
-				<div class="subhead"><%=groupGoal%></div>
+				<div class="subhead">
+				<textarea class="subHeadArea" name="annual_goal" 
+					placeholder="AIの作成"><%=annualGoal%></textarea></div>
 				
 				<!-- 現状と課題のボックス -->
 				<div class="yorushikaBox">
 				<span class="titleBox">現状と課題</span>
 				</div>
 				<div class="editSubhead">
-				<textarea class="subHeadArea" name="result_comment_reviewer" 
+				<textarea class="subHeadArea" name="situation_challenge" 
 					placeholder="〇〇について知識不足"><%=situationChallenge%></textarea>
+				<input type="hidden" name="goal_id" value="<%=goalId%>"
 				</div>
 				</div>
 				
@@ -612,8 +617,10 @@ box-sizing: border-box;
 									<span class="titleBox">小目標</span>
 								</div>
 								<div class="mainText">
-								<textarea class="mainArea" name="result_comment_reviewer" 
+								<textarea class="mainArea" name="small_goal<%=i + 1%>" 
 									placeholder="〇〇について勉強し、レポートにまとめる"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getSmallGoal()%><%}%></textarea>
+									<input type="hidden" name="quarter_goal_id<%=i + 1%>" value="<%=goalQuarterList.get(i).getGoalQuarterId()%>">
+									<input type="hidden" name="quarterly_flag<%=i + 1%>" value="<%=goalQuarterList.get(i).getQuarterlyFlag()%>">
 								</div>
 							
 								<!-- 四半期目標本人記入欄 -->
@@ -621,7 +628,7 @@ box-sizing: border-box;
 									<span class="titleBox">評価基準・材料</span>
 								</div>
 								<div class="mainText">
-								<textarea class="mainArea" name="result_comment_reviewer" 
+								<textarea class="mainArea" name="judge_material<%=i + 1%>" 
 									placeholder="レポートの発表"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getJudgeMaterial()%><%}%></textarea>
 								</div>
 								
@@ -630,11 +637,11 @@ box-sizing: border-box;
 									</div>
 									<div class="mainText mainFlex">
 										<div class="ratio">
-											<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" 
+											<input type="number" name="achieve_rate<%=i + 1%>" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" 
 												value="<%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRate()%><%}%>">%
 										</div>
 										<div class="leftLine">
-										<textarea class="mainArea" name="result_comment_reviewer" 
+										<textarea class="mainArea" name="report<%=i + 1%>" 
 											placeholder="〇〇することができました。"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getReport()%><%}%></textarea>
 										</div>
 									</div>
@@ -649,10 +656,11 @@ box-sizing: border-box;
 									</div>
 									<div class="mainText mainFlex">
 										<div class="ratio">
-											<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRateReviewer()%><%}%>">%
+											<input type="number" name="achieve_rate_reviewer<%=i + 1%>" readonly class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" 
+												value="<%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getAchieveRateReviewer()%><%}%>">%
 										</div>
 										<div class="leftLine">
-										<textarea class="mainArea" name="result_comment_reviewer" 
+										<textarea class="mainArea" name="evaluation<%=i + 1%>" readonly
 											placeholder="上出来です。"><%if(goalQuarterList.size() != 0){%><%=goalQuarterList.get(i).getEvaluation()%><%}%></textarea>
 										</div>
 									</div>
@@ -682,7 +690,7 @@ box-sizing: border-box;
 						<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%=result%>">%
 						</div>
 						<div class="leftLine">
-							<textarea class="mainArea" name="result_comment_reviewer" 
+							<textarea class="mainArea" name="result_comment" 
 								placeholder="これからも期待してます。"><%=resultComment%></textarea>
 						</div>
 						</div>
@@ -697,10 +705,10 @@ box-sizing: border-box;
 						</div>
 						<div class="mainText mainFlex">
 						<div class="ratio">
-						<input type="number" name="result" class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%=resultReviewer%>">%
+						<input type="number" name="result_reviewer" readonly class="ratioBox ratioBoxS" placeholder="100" min="0" max="100" value="<%=resultReviewer%>">%
 						</div>
 						<div class="leftLine">
-							<textarea class="mainArea" name="result_comment_reviewer" 
+							<textarea class="mainArea" name="result_comment_reviewer" readonly
 								placeholder="〇〇を達成できました。"><%=resultCommentReviewer%></textarea>
 						</div>
 						</div>

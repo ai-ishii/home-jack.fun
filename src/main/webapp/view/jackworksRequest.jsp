@@ -1,8 +1,11 @@
 <%--
 JackWorks申請一覧画面
+
 作成者：青木美波
+更新者：占部虎司郎
+
 作成日 2025/07/28
-更新日 2025/08/25
+更新日 2025/08/27
  --%>
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -150,62 +153,6 @@ table thead tr.jack-table{
 	font-weight: bold;
 }
 
-/* ボタン関係 */
-html {
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	font-size: 62.5%;
-}
-
-.btn, a.btn, button.btn {
-	font-size: 1.6rem;
-	font-weight: 700;
-	line-height: 1.5;
-	position: relative;
-	display: inline-block;
-	padding: 0.5rem 2rem;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-transition: all 0.3s;
-	transition: all 0.3s;
-	text-align: center;
-	vertical-align: middle;
-	text-decoration: none;
-	letter-spacing: 0.1em;
-	border-radius: 8.5rem;
-}
-
-/* 承認不承認ボタン */
-a.btn--delete {
-	color: #000;
-	background-color: #bbc8e6;
-	border-bottom: 5px solid #8491c3;
-}
-
-a.btn--delete:hover {
-	margin-top: 3px;
-	color: #000;
-	background: #706caa;
-	border-bottom: 2px solid #4a488e;
-}
-
-/* 一覧に戻るボタン */
-a.btn--insert {
-	color: #000;
-	background-color: #fef263;
-	border-bottom: 5px solid #e6b422;
-}
-
-a.btn--insert:hover {
-	margin-top: 3px;
-	color: #000;
-	background: #e9bc00;
-	border-bottom: 2px solid #72640c;
-}
-
 ul {
 	padding-left: 0;
 }
@@ -267,9 +214,8 @@ li {
 /*　西暦と月の検索ボックスの配置 */
 td.search-box {
 	height: 100px;
-	margin-bottom: 1px;
-	display: flex;
-	align-items: center;
+	padding: 0 0 0 16px;
+	widht: 90px;
 }
 
 td.search-box form {
@@ -503,6 +449,157 @@ font-size: 16px;
 	line-height: 1.8;
 	padding: 20px;
 }
+
+.adminBox{
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 16px;
+}
+
+/* 以下許可拒否ボタン */
+/* aタグのリセット */
+.adminReset{
+text-decoration: none;
+cursor: pointer;
+}
+
+/* ×アイコン */
+.rejectionIcon{
+stroke: red;
+}
+
+/* チェックアイコン */
+.approvalIcon{
+stroke: green;
+}
+
+/* aタグの初期CSSのリセット */
+.jackReset{
+text-decoration: none;
+color: #000;
+}
+
+/* 戻るボタンの大枠 */
+.jackFlex{
+display: flex;
+align-items: center;
+height: 30px;
+width: 90%;
+margin: 30px 0 0;
+}
+
+/* 矢印 */
+.arrow{
+display: inline-block;
+vertical-align: middle;
+transition: transform 0.5s ease;
+overflow: visible; 					/* はみ出た内容を表示させる */
+}
+
+/* 矢印文字 */
+.beaf{
+height: 100%;
+font-family: "Yomogi", cursive;
+font-weight: 700;
+font-size: 25px;
+}
+
+/* 矢印ホバー時の動き */
+.jackReset:hover svg path {
+transform: translateX(-10px);
+stroke: #f9de95;
+fill: #f9de95;
+}
+
+.monthInputBox{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #feffe0;
+border-radius: 25px;
+width: 220px;
+height: 45px;
+gap: 5px;
+border: solid 2px #e9c28b;
+cursor: pointer;
+margin-top: 42px;
+}
+
+.monthInput{
+font-size: 16px;
+color: #d9811c;
+background-color: #feffe0;
+border: solid 1px #feffe0;
+cursor: pointer;
+}
+
+.labelText{
+font-size: 18px;
+color: #d9811c;
+}
+
+.tdBox{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 50px;
+gap: 24px;
+padding-right: 240px;
+}
+
+.zeroResult{
+padding: 32px 0 24px;
+font-size: 18px;
+}
+
+.FFF{
+background-color: #fff;
+padding-bottom: 32px;
+}
+
+/* アイコン */
+.memo {
+	display: inline-block;
+	vertical-align: middle;
+	stroke: #fff;
+	fill: #fff;
+}
+
+/* ボタンの文字 */
+.listText {
+	vertical-align: middle;
+	font-family: "Kosugi Maru", sans-serif;
+	font-size: 21px;
+	font-weight: 300;
+	color: #fff;
+}
+
+.listButton {
+	display: inline-block;
+	padding: 8px 16px;
+	background-color: #fdd35c;
+	border: 3px solid #fdd35c;
+	border-radius: 5px;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+}
+
+.listButton:hover {
+	background-color: #fff;
+	border: 3px solid #fdd35c;
+}
+
+.listButton:hover .memo {
+	stroke: #fdd35c;
+	fill: #fdd35c;
+}
+
+.listButton:hover .listText {
+	color: #fdd35c;
+}
+
 </style>
 
 <body>
@@ -684,24 +781,19 @@ document.addEventListener("DOMContentLoaded", function() {
 						<!-- 十年間の西暦検索を行うフォーム -->
 						<form action="<%=request.getContextPath()%>/jackworksSearch">
 						<input type="hidden" name="cmd" value="request">
-						<td>
-					         <label for="start_date">開始日:</label>
-				            <input type="month" id="start_month" name="start_month" value="${startMonth}">
-						</td>
-					    <td>
-							<label for="end_date">終了日:</label>
-					        <input type="month" id="end_month" name="end_month" value="${endMonth}">
-					    </td>
+						<td class="tdBox">
+							<label for="start_month"class="monthInputBox">
+					         <span class="labelText">開始日:</span>
+				            <input type="month" id="start_month" class="monthInput" name="start_month" max="9999-12" value="${startMonth}">
+							</label>
+							<label for="end_month"class="monthInputBox">
+							<span class="labelText">終了日:</span>
+					        <input type="month" id="end_month" class="monthInput"  name="end_month" max="9999-12" value="${endMonth}">
+					        </label>
 						<td>
 						<button type="submit" class="select-button" >検索</button>
 						</form>
 						</td>
-
-					<!-- JackWork一覧に戻るボタン -->
-					<td style="text-align: right">
-						<a href="<%=request.getContextPath()%>/monthJackworks"
-							class="btn btn--insert">一覧に戻る</a>
-					</td>
 					</tr>
 				</thead>
 				</table>
@@ -721,7 +813,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							<th scope="col" class="jack-table">評価項目</th>
 							<th scope="col" class="jack-table">付与ポイント</th>
 							<th scope="col" class="jack-table">備考</th>
-							<th scope="col" class="jack-table"></th>
+							<th scope="col" class="jack-table">承認　/　差し戻し</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -747,9 +839,32 @@ document.addEventListener("DOMContentLoaded", function() {
 						<td data-label="評価項目" class="text" name="assessment"><%=jack.getAssessment()%></td>
 						<td data-label="付与ポイント" class="num-point" name="point"><%=jack.getPoint()%></td>
 						<td data-label="備考" class="text" name="note"><%=note%></td>
-						<td><div style="text-align: center">
-							<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=agree" class="btn btn--delete agree">承認</a>
-							<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=denial" class="btn btn--delete denial">不承認</a>
+						<td><div class="adminBox">
+							<!-- 承認ボタン -->
+							<span>
+							<svg x="0" y="0" viewBox="0 0 50 50" width="40" height="40" class="approvalIcon">
+								<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=agree" class="adminReset agree">
+									<g>
+									<circle cx="25" cy="25" r="23" stroke-width="2" fill="#fff"/>
+									<path d="M 13.5 27.5 L 23.5 36.5" stroke-width="2" fill="none"/>
+									<path d="M 22.5 36.5 L 37.5 18.5" stroke-width="2" fill="none"/>
+									</g>
+								</a>
+							</svg>
+							</span>
+							
+							<!-- 拒否（差し戻し）ボタン -->
+							<span>
+							<svg x="0" y="0" viewBox="0 0 50 50" width="40" height="40" class="rejectionIcon">
+								<a data-href="<%=request.getContextPath()%>/jackworksRequest?jackworksId=<%=jack.getJackworksId()%>&cmd=denial" class="adminReset denial">
+									<g>
+									<circle cx="25" cy="25" r="23" stroke-width="2" fill="#fff"/>
+									<path d="M 13.5 13.5 L 36.5 36.5" stroke-width="2" fill="none"/>
+									<path d="M 13.5 36.5 L 36.5 13.5" stroke-width="2" fill="none"/>
+									</g>
+								</a>
+							</svg>
+							</span>
 							</div>
 						</td>
 					</tr>
@@ -827,13 +942,44 @@ document.addEventListener("DOMContentLoaded", function() {
 				%>
 				
 				<% if(cmd.equals("no-result")) {%>
-					<div id="search-error">
-					<p>検索結果は0件です。内容を変更して再度検索をしてください。</p>
-					<a href="<%=request.getContextPath()%>/jackworksRequest">一覧へ戻る</a>
-					</div>
+				
+				<div id="search-error" class="FFF">
+					<div class="zeroResult">検索結果は0件です。内容を変更して再度検索をしてください。</div>
+					<a class="listButton" href="<%=request.getContextPath()%>/jackworksRequest">
+						<svg class="memo" xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 640 640" style="width: 30px; height: 30px;">
+							<!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+							<path
+								d="M104 112C90.7 112 80 122.7 80 136L80 184C80 197.3 90.7 208 104 208L152
+								 208C165.3 208 176 197.3 176 184L176 136C176 122.7 165.3 112 152 112L104
+								  112zM256 128C238.3 128 224 142.3 224 160C224 177.7 238.3 192 256 192L544 
+								  192C561.7 192 576 177.7 576 160C576 142.3 561.7 128 544 128L256 128zM256 
+								  288C238.3 288 224 302.3 224 320C224 337.7 238.3 352 256 352L544 352C561.7 
+								  352 576 337.7 576 320C576 302.3 561.7 288 544 288L256 288zM256 448C238.3 
+								  448 224 462.3 224 480C224 497.7 238.3 512 256 512L544 512C561.7 512 576 
+								  497.7 576 480C576 462.3 561.7 448 544 448L256 448zM80 296L80 344C80 357.3 
+								  90.7 368 104 368L152 368C165.3 368 176 357.3 176 344L176 296C176 282.7 165.3 
+								  272 152 272L104 272C90.7 272 80 282.7 80 296zM104 432C90.7 432 80 442.7 80
+								   456L80 504C80 517.3 90.7 528 104 528L152 528C165.3 528 176 517.3 176 504L176
+								    456C176 442.7 165.3 432 152 432L104 432z" />
+						</svg>
+							<span class="listText">一覧へ</span>
+					</a>
+				</div>
 				<% } %>
+				
+				<div class="jackFlex">
+					<a href="<%=request.getContextPath()%>/monthJackworks" class="jackReset">
+						<svg class="arrow" width="50"  height="20">
+							<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none"/>
+							<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none"/>
+						</svg>
+						<span class="beaf">PREV</span>
+					</a>
+				</div>
 
 				<!-- ページネーション -->
+				<!-- 
 				<ol class="pagination">
     				<li class="prev"><a href="#">前へ</a></li>
     				<li><a href="<%=request.getContextPath()%>/monthJackworks">1</a></li>
@@ -843,6 +989,7 @@ document.addEventListener("DOMContentLoaded", function() {
     				<li><a href="#">5</a></li>
     				<li class="next"><a href="#">次へ</a></li>
 				</ol>
+				-->
 			</div>
 		</div>
 	</div>

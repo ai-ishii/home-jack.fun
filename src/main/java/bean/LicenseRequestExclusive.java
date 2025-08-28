@@ -3,7 +3,7 @@
  * 
  * 作成者：桑原岳
  * 
- * 最終更新日：2025/08/21
+ * 最終更新日：2025/08/27
  * 
  * */
 
@@ -20,7 +20,7 @@ public class LicenseRequestExclusive {
 	private int approverId; 				//承認者ID
 	private String applicant; 				//申請者名
 	private String approver; 				//承認者名
-	private Timestamp requestDate; 			//申請日時
+	private LocalDate requestDate; 			//申請日時
 	private Timestamp approvalDate; 		//承認日時
 	private int requestFlag; 				//申請フラグ(0,申請中 1,承認済み 2,申請拒否)
 
@@ -81,11 +81,11 @@ public class LicenseRequestExclusive {
 		this.approver = approver;
 	}
 
-	public Timestamp getRequestDate() {
+	public LocalDate getRequestDate() {
 		return requestDate;
 	}
 
-	public void setRequestDate(Timestamp requestDate) {
+	public void setRequestDate(LocalDate requestDate) {
 		this.requestDate = requestDate;
 	}
 

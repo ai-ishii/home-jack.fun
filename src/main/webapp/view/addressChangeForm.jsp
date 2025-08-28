@@ -3,7 +3,7 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/26
+最終更新日：2025/08/27
  --%>
 
 
@@ -176,7 +176,7 @@
 							<div class="form-input">
 								<input type="text" id="employeenumber" name="employeenumber"
 									class="${errors.employeeNumber_error ? 'error-field' : ''}"
-									value="${user.employeeNumber}" readonly />
+									value="${user.employeeNumber}" />
 							</div>
 						</div>
 
@@ -187,7 +187,7 @@
 							<div class="form-input">
 								<input type="text" id="name" name="name"
 									class="${errors.name_error ? 'error-field' : ''}"
-									value="${user.name}" readonly />
+									value="${user.name}" />
 							</div>
 						</div>
 
@@ -213,7 +213,7 @@
 								<div class="form-input">
 									<input type="text" id="oldpost" name="oldpost"
 										class="p-postal-code ${errors.oldPost_error ? 'error-field' : ''}"
-										value="${user.post}" readonly />
+										value="${user.post}" />
 								</div>
 							</div>
 							<div class="form-row">
@@ -223,7 +223,7 @@
 								<div class="form-input">
 									<input type="text" id="oldaddress" name="oldaddress"
 										class="p-postal-code ${errors.oldPost_error ? 'error-field' : ''}"
-										value="${user.address}" readonly />
+										value="${user.address}" />
 								</div>
 							</div>
 						</div>

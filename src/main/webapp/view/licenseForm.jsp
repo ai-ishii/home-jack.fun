@@ -3,7 +3,7 @@
  
 制作者：桑原岳
 
-最終更新日：2025/08/22
+最終更新日：2025/08/27
  --%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -196,7 +196,7 @@ select {
 							<div class="form-input">
 								<input type="text" id="name" name="name"
 									class="${errors.name_error ? 'error-field' : ''}"
-									value="${sessionScope.userList[0].applicant}" readonly />
+									value="${sessionScope.userList[0].applicant}" />
 							</div>
 						</div>
 
@@ -206,7 +206,7 @@ select {
 							</div>
 							<div class="form-input">
 								<input type="text" id="department" name="department"
-									value="${sessionScope.userList[0].departmentName}" readonly />
+									value="${sessionScope.userList[0].departmentName}" />
 							</div>
 						</div>
 						<div class="form-row">
@@ -215,7 +215,7 @@ select {
 							</div>
 							<div class="form-input">
 								<input type="text" id="group" name="group"
-									value="${sessionScope.userList[0].groupName}" readonly />
+									value="${sessionScope.userList[0].groupName}" />
 							</div>
 						</div>
 						<div class="form-row">
@@ -223,7 +223,7 @@ select {
 								<label for="license">資格名<span class="required">【必須】</span></label>
 							</div>
 							<div class="form-select">
-								<select name="license" id="license" autocomplete="off">
+								<select class="${errors.license_error ? 'error-field' : ''}" name="license" id="license" autocomplete="off">
 									<option value="">--資格を選択してください--</option>
 									<c:forEach items="${sessionScope.licenseNameList}"
 										var="licenseNameInfo">
@@ -238,7 +238,7 @@ select {
 							<div class="form-label">
 								<label for="exam-date">受験日<span class="required">【必須】</span></label>
 							</div>
-							<div class="form-input">
+							<div class="form-input-date">
 								<input type="date" id="exam-date" name="exam-date"
 									class="${errors['exam-date_error'] ? 'error-field' : ''}"
 									value="${formValues.examDate}" />
@@ -315,7 +315,7 @@ select {
 					</form>
 				</div>
 				<div class="instruction-box">
-					<h2>資格変更申請フォーム手順</h2>
+					<h2>資格申請フォーム手順</h2>
 					<h3>1. 入力欄をすべて記入します（空欄があると再入力になります）。</h3>
 					<h3>2. 入力後、「申請」ボタンを押して内容確認をします。</h3>
 					<h3>3. 確認してよければ「この内容で確定する」ボタンを押します。</h3>

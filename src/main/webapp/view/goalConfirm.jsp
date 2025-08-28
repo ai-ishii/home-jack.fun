@@ -5,7 +5,7 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月25日
+ 最終更新日：8月27日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -389,7 +389,38 @@ fill: #6eddb3;
 color: #6eddb3;
 }
 
+.yoruArrow {
+	display: flex;
+	align-items: center;
+	height: 30px;
+	width: 85%;
+	margin: 30px auto 0;
+}
 
+/* 矢印 */
+.arrow {
+	display: inline-block;
+	vertical-align: middle;
+	transition: transform 0.5s ease;
+	overflow: visible; /* はみ出た内容を表示させる */
+}
+
+
+.jackResetL {
+	text-decoration: none;
+	color: #000;
+}
+
+.beaf {
+	height: 100%;
+	font-family: "Yomogi", cursive;
+	font-size: 25px;
+}
+
+.btnList {
+	width: 70%;
+	text-align: center;
+}
 </style>
 
 <body>
@@ -424,8 +455,24 @@ color: #6eddb3;
 			<%
 			}
 			%>
+			<table class="btnList">
+				<tr>
+				<td>
+					<div class="yoruArrow">
+						<a
+							href="<%=request.getContextPath()%>/goal
+							?user_id=<%=user.getUserId()%>
+							&work=detail"
+							class="jackResetL"> 
+						<svg class="arrow" width="50" height="20">
+							<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
+							<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
+						</svg> <span class="beaf">CANCEL</span>
+						</a>
+				</div>
+			</td>
 			
-			
+			<td>
 			<div class="editBox">
 			<a class="editButton" onclick="location.href='<%=request.getContextPath()%>/goalConfirm?cmd=update'">
 			<svg class="memo" version="1.1" id="_x31_0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="width: 25px; height: 25px; opacity: 1;" xml:space="preserve">
@@ -453,6 +500,9 @@ color: #6eddb3;
 			<span class="editText">編集</span>
 			</a>
 			</div>
+			</td>
+			</tr>
+			</table>
 			
 			<div class="seal">
 				
@@ -478,7 +528,7 @@ color: #6eddb3;
 				<div class="yorushikaBox">
 				<span class="titleBox">年間目標</span>
 				</div>
-				<div class="subhead"><%=groupGoal%></div>
+				<div class="subhead"><%=annualGoal%></div>
 				
 				<!-- 現状と課題のボックス -->
 				<div class="yorushikaBox">

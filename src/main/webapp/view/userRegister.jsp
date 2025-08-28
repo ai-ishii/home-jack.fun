@@ -1,5 +1,5 @@
 <!-- 社員紹介 登録機能（作：占部） -->
-<!-- 作成日：8/7　最終更新日：8/26 12:00 -->
+<!-- 作成日：8/7　最終更新日：8/27 15:00 -->
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@page
@@ -273,7 +273,7 @@ input[type="text"], input[type="date"], select {
 	<div id="wrap">
 		<!-- ヘッダー部分 -->
 
-		<form class="h-adr" action="<%=request.getContextPath()%>/userConfirm"
+		<form class="h-adr" action="<%=request.getContextPath()%>/userConfirm?register=確認画面へ"
 			method="post">
 			<span class="p-country-name" style="display: none;">Japan</span>
 			<%@ include file="../common/header.jsp"%>
@@ -305,30 +305,33 @@ input[type="text"], input[type="date"], select {
 						</tr>
 
 						<tr>
-							<td class="item" style="display: flex">所属 <label
-								class="selectbox-3"></td>
-							<td class="value"><select name="department">
-									<option value="" <%=(departmentId == 0) ? "selected" : ""%>>--選択してください--</option>
-									<option value="1" <%=(departmentId == 1) ? "selected" : ""%>>BS事業部第1部</option>
-									<option value="2" <%=(departmentId == 2) ? "selected" : ""%>>BS事業部第2部</option>
-									<option value="3" <%=(departmentId == 3) ? "selected" : ""%>>営業部</option>
-									<option value="4" <%=(departmentId == 4) ? "selected" : ""%>>NEXTINOVATION部</option>
-									<option value="5" <%=(departmentId == 5) ? "selected" : ""%>>経営管理部</option>
-							</select> </label></td>
+							<td style="display: flex">所属 <div class="warning">*</div><label class="selectbox-3">
+									<select name="department">
+										<option value="" <%= (departmentId == 0) ? "selected" : "" %> >--選択してください--</option>
+										<option value="1" <%= (departmentId == 1) ? "selected" : "" %> >BS事業部第1部</option>
+								        <option value="2" <%= (departmentId == 2) ? "selected" : "" %> >BS事業部第2部</option>
+								        <option value="3" <%= (departmentId == 3) ? "selected" : "" %> >営業部</option>
+								        <option value="4" <%= (departmentId == 4) ? "selected" : "" %> >NEXTINOVATION部</option>
+								        <option value="5" <%= (departmentId == 5) ? "selected" : "" %> >経営管理部</option>
+								    </select>
+							</label>
+							</td>
 						</tr>
 						<tr>
 						</tr>
 						<tr>
-							<td class="item" style="display: flex">グループ <label
-								class="selectbox-3"></td>
-							<td class="value"><select name="group">
-									<option value="" <%=(groupId == 0) ? "selected" : ""%>>--選択してください--</option>
-									<option value="1" <%=(groupId == 1) ? "selected" : ""%>>第1グループ</option>
-									<option value="2" <%=(groupId == 2) ? "selected" : ""%>>第2グループ</option>
-									<option value="3" <%=(groupId == 3) ? "selected" : ""%>>第3グループ</option>
-									<option value="4" <%=(groupId == 4) ? "selected" : ""%>>第4グループ</option>
-									<option value="5" <%=(groupId == 5) ? "selected" : ""%>>第5グループ</option>
-							</select> </label></td>
+							<td style="display: flex">グループ <div class="warning">*</div><label class="selectbox-3">
+									<select name="group">
+										<option value="" <%= (groupId == 0) ? "selected" : "" %> >--選択してください--</option>
+										<option value="1" <%= (groupId == 1) ? "selected" : "" %> >第1グループ</option>
+										<option value="2" <%= (groupId == 2) ? "selected" : "" %> >第2グループ</option>
+										<option value="3" <%= (groupId == 3) ? "selected" : "" %> >第3グループ</option>
+										<option value="4" <%= (groupId == 4) ? "selected" : "" %> >第4グループ</option>
+										<option value="5" <%= (groupId == 5) ? "selected" : "" %> >第5グループ</option>
+									</select>
+							</label>
+							</td>
+
 						</tr>
 						<tr>
 						</tr>

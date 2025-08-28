@@ -7,7 +7,7 @@
  * 
  * 作成日：7月14日
  * 
- * 最終更新日：8月18日
+ * 最終更新日：8月27日
  * 
  */
 package servlet;
@@ -56,26 +56,31 @@ public class GoalUpdateServlet extends HttpServlet {
 			GoalQuarterDAO GoalQuarterDAO = new GoalQuarterDAO();
 
 			//getParameterメソッドを使い、取得した値を代入する
+		
+			/*
 			String groupCode = request.getParameter("group_code");
 			String departmentGoal = request.getParameter("department_goal");
 			String groupGoal = request.getParameter("group_goal");
-			String strGoalId = request.getParameter("goal_id");
+			*/
 			String annualGoal = request.getParameter("annual_goal");
 			String situationChallenge = request.getParameter("situation_challenge");
+			
+			String strGoalId = request.getParameter("goal_id");
 			String strResult = request.getParameter("result");
 			String resultComment = request.getParameter("result_comment");
 			String strResultReviewer = request.getParameter("result_reviewer");
 			String resultCommentReviewer = request.getParameter("result_comment_reviewer");
-			
+
 			// int型で格納する変数をパースする
 			int goalId = Integer.parseInt(strGoalId);	
 			int result = Integer.parseInt(strResult);
 			int resultReviewer = Integer.parseInt(strResultReviewer);
-
 			// セッターメソッドを呼び出す
+			/*
 			goalDepartment.setGroupCode(groupCode);
 			goalDepartment.setDepartmentGoal(departmentGoal);
 			goalDepartment.setGroupGoal(groupGoal);
+			 */
 			goal.setGoalId(goalId);
 			goal.setAnnualGoal(annualGoal);
 			goal.setSituationChallenge(situationChallenge);
@@ -85,7 +90,7 @@ public class GoalUpdateServlet extends HttpServlet {
 			goal.setResultCommentReviewer(resultCommentReviewer);
 			
 			// updateメソッドを呼び出す
-			goalDepartmentDAO.update(goalDepartment);
+			// goalDepartmentDAO.update(goalDepartment);
 			goalDAO.update(goal);
 
 			for (int i = 1; i <= 4; i++) {
@@ -97,9 +102,9 @@ public class GoalUpdateServlet extends HttpServlet {
 				String smallGoal = request.getParameter("small_goal" + (i));
 				String judgeMaterial = request.getParameter("judge_material" + (i));
 				String strAchieveRate = request.getParameter("achieve_rate" + (i));
-				String Report = request.getParameter("report" + (i));
+				String report = request.getParameter("report" + (i));
 				String strAchieveRateReviewer = request.getParameter("achieve_rate_reviewer" + (i));
-				String Evaluation = request.getParameter("evaluation" + (i));
+				String evaluation = request.getParameter("evaluation" + (i));
 				String strQuarterlyFlag = request.getParameter("quarterly_flag" + (i));
 				
 				// int型で格納する変数をパースする
@@ -113,9 +118,9 @@ public class GoalUpdateServlet extends HttpServlet {
 				GoalQuarter.setSmallGoal(smallGoal);
 				GoalQuarter.setJudgeMaterial(judgeMaterial);
 				GoalQuarter.setAchieveRate(achieveRate);
-				GoalQuarter.setReport(Report);
+				GoalQuarter.setReport(report);
 				GoalQuarter.setAchieveRateReviewer(achieveRateReviewer);
-				GoalQuarter.setEvaluation(Evaluation);
+				GoalQuarter.setEvaluation(evaluation);
 				GoalQuarter.setQuarterlyFlag(quarterlyFlag);
 
 				//GoalQuarterを引数にupdateメソッドを呼び出す
@@ -127,9 +132,10 @@ public class GoalUpdateServlet extends HttpServlet {
 		} finally {
 			if (!error.isEmpty()) {
 				request.getRequestDispatcher("/view/error.jsp").forward(request, response);
+			} else {
+				//フォワードする
+				request.getRequestDispatcher("/goalConfirm?cmd=confirm").forward(request, response);
 			}
-			//フォワードする
-			request.getRequestDispatcher("/goalConfirm?cmd=confirm").forward(request, response);
 		}
 	}
 }
