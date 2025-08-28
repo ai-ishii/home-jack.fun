@@ -332,7 +332,7 @@ fill: #f9de95;
 				</tr>
 					<td class="textPadd">
 						<input type="text" name="employeeNumber" size="45" placeholder="001234" 
-							class="error-check-number error-check-digit onvert-full-to-half monthBox" data-exactlength="6" value="<%if(jack != null){%><%=jack.getEmployeeNumber()%><%} %>">
+							class="convert-full-to-half error-check-number error-check-digit monthBox" data-exactlength="6" value="<%if(jack != null){%><%=jack.getEmployeeNumber()%><%} %>">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -343,7 +343,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<input type="text" name="name" value="<%if(jack != null){%><%=jack.getName()%><%}%>" size="45" placeholder="山田太郎" class="error-check-default convert-full-to-half monthBox">
+						<input type="text" name="name" value="<%if(jack != null){%><%=jack.getName()%><%}%>" size="45" placeholder="山田太郎" class="convert-full-to-half error-check-default monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -355,7 +355,7 @@ fill: #f9de95;
 				</tr>
 					<td class="textPadd">
 						<input type="text" name="category" value="<%if(jack != null){%><%=jack.getCategory()%><%} %>" 
-							size="45" placeholder="チーム取組み" class="error-check-default convert-full-to-half monthBox">
+							size="45" placeholder="チーム取組み" class="convert-full-to-half error-check-default monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -367,7 +367,7 @@ fill: #f9de95;
 				</tr>
 					<td class="textPadd">
 						<input type="text" name="assessment" placeholder="チーム活動報告の投稿" 
-							class="error-check-default convert-full-to-half monthBox" value="<%if(jack != null){%><%=jack.getAssessment()%><%} %>">
+							class="convert-full-to-half error-check-default monthBox" value="<%if(jack != null){%><%=jack.getAssessment()%><%} %>">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -379,7 +379,7 @@ fill: #f9de95;
 				</tr>
 					<td class="textPadd">
 						<input type="text" name="point" value="<%if(jack != null){%><%=jack.getPoint()%><%} %>" 
-							size="45" placeholder="10" class="error-check-number convert-full-to-half monthBox">
+							size="45" placeholder="10" class="convert-full-to-half error-check-number monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -433,7 +433,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<input type="text" name="project" value="" size="45" class="error-check-default convert-full-to-half monthBox">
+						<input type="text" name="project" value="" size="45" class="convert-full-to-half error-check-default monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -444,7 +444,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<input type="text" name="workSeason" value="" size="45"  class="error-check-default convert-full-to-half monthBox">
+						<input type="text" name="workSeason" value="" size="45"  class="convert-full-to-half error-check-default monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -455,7 +455,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="error-check-number convert-full-to-half monthBox">
+						<input type="text" name="price" value="" size="45" placeholder="数字のみ入力" class="convert-full-to-half error-check-number monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -466,7 +466,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="error-check-number convert-full-to-half monthBox">
+						<input type="text" name="pay" value="" size="45" placeholder="数字のみ入力" class="convert-full-to-half error-check-number monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -477,7 +477,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<input type="text" name="workPlace" value="" size="45" class="error-check-default convert-full-to-half monthBox">
+						<input type="text" name="workPlace" value="" size="45" class="convert-full-to-half error-check-default monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -488,7 +488,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<textarea name="workContent" rows="" cols="" class="error-check-default convert-full-to-half"></textarea>
+						<textarea name="workContent" rows="" cols="" class="convert-full-to-half error-check-default"></textarea>
 					</td>
 				<tr>
 					<td class="tdMag">
@@ -537,7 +537,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<input type="text" name="seller" value="" size="45" class="error-check-default convert-full-to-half monthBox">
+						<input type="text" name="seller" value="" size="45" class="convert-full-to-half error-check-default monthBox">
 					</td>
 				<tr>
 					<td style="display: flex" class="tdMag">
@@ -548,7 +548,7 @@ fill: #f9de95;
 					</td>
 				</tr>
 					<td class="textPadd">
-						<textarea name="contact" rows="" cols="" class="error-check-default convert-full-to-half"></textarea>
+						<textarea name="contact" rows="" cols="" class="convert-full-to-half error-check-default"></textarea>
 					</td>
 				<tr>
 					<td class="tdMag">
