@@ -647,7 +647,23 @@ color: #6eddb3;
 	// 	arrayImgListB[i] = imgListByBelongElement;		// 代入された値を配列に入れていく
 	// }
 	// String imgListByBelong = Arrays.toString(arrayImgListB);	// 配列を文字列に変換して受け渡す
-
+	
+	//現在のインデックスを保持するための変数
+	int indexLeft_0 = 0;
+	int indexCenter_0 = 1;
+	int indexRight_0 = 2;
+	int indexLeft_1 = 0;
+	int indexCenter_1 = 1;
+	int indexRight_1 = 2;
+	
+	int userIdListElement = 0;
+	int[] userIdListByBelong = new int[userListBySameBelongSize];
+	for (int i = 0; i < userListBySameBelongSize; i++) {
+		userIdListElement = userListBySameBelong.get(i).getUserId();
+		userIdListByBelong[i] = userIdListElement;
+	}
+	String userIdListBySameBelong = Arrays.toString(userIdListByBelong);
+	
 	// -------------社員画像（同じ入社年月）---------------
 	// String imgListByJoinElement = "";	// リストを一つ一つ代入するための変数
 	// String[] arrayImgListJ = new String[userListBySameJoiningDateSize];	// リストの要素分の配列を宣言
@@ -656,7 +672,7 @@ color: #6eddb3;
 	// 	arrayImgListJ[i] = imgListByJoinElement;		// 代入された値を配列に入れていく
 	// }
 	// String imgListByJoin = Arrays.toString(arrayImgListJ);	// 配列を文字列に変換して受け渡す
-
+	
 	// -------------入社年月---------------
 	String joiningDateListElement = ""; // リストを一つ一つ代入するための変数
 	String[] arrayJoiningDateList = new String[userListBySameBelongSize]; // リストの要素分の配列を宣言
@@ -689,6 +705,13 @@ color: #6eddb3;
 	// 変数受け渡し
 	const userListBySameBelongSize = <%=userListBySameBelongSize%>;
 	const userListBySameJoiningDateSize = <%=userListBySameJoiningDateSize%>;
+	//現在のインデックスを保持するための変数
+	let indexLeft_0 = <%= indexLeft_0 %>;
+	let indexCenter_0 = <%= indexCenter_0 %>;
+	let indexRight_0 = <%= indexRight_0 %>;
+	let indexLeft_1 = <%= indexLeft_1 %>;
+	let indexCenter_1 = <%= indexCenter_1 %>;
+	let indexRight_1 = <%= indexRight_1 %>;
 
 	// -------------ユーザーID（同じ所属）---------------
 	let stringIdListByBelong = "<%=idListByBelong%>";
@@ -715,6 +738,10 @@ color: #6eddb3;
 	// stringImgListByBelong = stringImgListByBelong.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
 	// const sameBelong_imgList = stringImgListByBelong.split(", ");	// 要素の間にある「, 」で分ける（配列の完成）
 
+	let strUserIdListByBelong = "<%= userIdListBySameBelong %>";
+	strUserIdListByBelong = strUserIdListByBelong.replace("[", "").replace("]", "");
+	const userIdListByBelong = strUserIdListByBelong.split(", ");
+	
 	// -------------社員画像（同じ入社年月）---------------
 	// let stringImgListByJoin = "%= imgListByJoin %>";
 	// stringImgListByJoin = stringImgListByJoin.replace("[", "").replace("]", "");	// 文字列に[]が残っているので消す
@@ -753,19 +780,11 @@ color: #6eddb3;
 	const sameJoinTiming_names = document.getElementsByClassName("sameJoinTiming_employeeName");
 	const sameJoinTiming_belongs = document.getElementsByClassName("employee_belong");
 
-	//現在のインデックスを保持するための変数
-	let indexLeft_0 = 0;
-	let indexCenter_0 = 1;
-	let indexRight_0 = 2;
-	let indexLeft_1 = 0;
-	let indexCenter_1 = 1;
-	let indexRight_1 = 2;
-
 	// ページが読み込まれたときに最初の情報を表示
 	document.addEventListener('DOMContentLoaded', () => {
-		//sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
-		//sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
-		//sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
+		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
+		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
+		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -775,9 +794,9 @@ color: #6eddb3;
 		sameBelong_joinTimings[1].textContent = joinTimingList[indexCenter_0] + "入社";
 		sameBelong_joinTimings[2].textContent = joinTimingList[indexRight_0] + "入社";
 		
-		//sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
-		//sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
-		//sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
+	//	sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
+	//	sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
+	//	sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
@@ -806,13 +825,11 @@ color: #6eddb3;
 		sameBelong_id[0].href = "detailEmployee?userId=" + sameBelong_idList[indexLeft_0];
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
-		
-		//sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
-		//sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
-		//sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
 
-		console.log(sameBelong_nameList);
-		
+		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
+		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
+		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
+
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
 		sameBelong_names[2].textContent = sameBelong_nameList[indexRight_0];
@@ -841,9 +858,9 @@ color: #6eddb3;
 		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
 		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		//sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
-		//sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
-		//sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
+		//	sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
+	//	sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
+	//	sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
@@ -873,9 +890,9 @@ color: #6eddb3;
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		//sameBelong_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexLeft_0];
-		//sameBelong_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexCenter_0];
-		//sameBelong_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameBelong_imgList[indexRight_0];
+		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
+		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
+		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -905,9 +922,9 @@ color: #6eddb3;
 		sameJoinTiming_id[1].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexCenter_1];
 		sameJoinTiming_id[2].href = "detailEmployee?userId=" + sameJoinTiming_idList[indexRight_1];
 		
-		//sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
-		//sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
-		//sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
+		//	sameJoinTiming_imgs[0].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexLeft_1];
+	//	sameJoinTiming_imgs[1].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexCenter_1];
+	//	sameJoinTiming_imgs[2].src = "<%=request.getContextPath()%>/file/" + sameJoinTiming_imgList[indexRight_1];
 		
 		sameJoinTiming_names[0].textContent = sameJoinTiming_nameList[indexLeft_1];
 		sameJoinTiming_names[1].textContent = sameJoinTiming_nameList[indexCenter_1];
