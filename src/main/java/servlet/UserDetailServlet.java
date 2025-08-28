@@ -66,10 +66,25 @@ public class UserDetailServlet extends HttpServlet {
 
 		try {
 
+			//cmd受けとる
+			cmd = request.getParameter("cmd");
+			
+			//cmdがnullの場合のerror回避
+			if(cmd == null) {
+				cmd = "";
+			}
+			
 			//ユーザーIDをJSPから受け取る
 			String strUserId = request.getParameter("userId");
 			//セッションからユーザーIDを取得
 			myUserId = (Integer) session.getAttribute("user_id");
+			
+			if(cmd.equals("delete")) {
+				int intUserId = Integer.parseInt(strUserId);
+				userDAO.delete(intUserId);
+				path = "/userList";
+				return;
+			}
 
 			//ユーザーIDがなければ
 			if (strUserId == null) {
