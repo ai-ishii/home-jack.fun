@@ -34,8 +34,10 @@ public class AnnounceRegisterServlet extends HttpServlet {
 		// 受け取る文字のコードを指定
 		request.setCharacterEncoding("UTF-8");
 
-		// エラー用コマンド
-		String error = "";
+		// エラー用フラグ
+		boolean error = false;
+		// 画面遷移用コマンド
+		String cmd = "";
 		// エラー文格納用
 		String message = "";
 		// 遷移先のパス
@@ -80,26 +82,32 @@ public class AnnounceRegisterServlet extends HttpServlet {
 			announceDAO.regist(announce);
 
 		} catch (DateTimeParseException e) {
+			error = true;
+			//お知らせ登録画面へ遷移先を指定
+			cmd = "announce";
 			message = "時刻の読み取りに失敗しました。";
-			//お知らせ登録画面へ遷移
-			error = "announce";
-
+		} catch (NumberFormatException e) {
+			error = true;
+			cmd = "logout";
+			message = "不正な操作を検知しました。";
 		} catch (IllegalStateException e) {
+			error = true;
+			//ログイン画面へ遷移先を指定
+			cmd = "logout";
 			message = "システムの一時的な問題により、お知らせ情報の登録ができませんでした。";
-			//ログイン画面へ遷移
-			error = "logout";
-
 		} catch (Exception e) {
+			error = true;
+			//ログイン画面へ遷移先を指定
+			cmd = "logout";
 			message = "予期せぬエラーが発生しました。" + e;
-			error = "logout";
-
+			
 		} finally {
 
-			if (!("").equals(error)) {
+			if (error) {
 				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", message);
+				request.setAttribute("message", message);
 				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", error);
+				request.setAttribute("cmd", cmd);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}

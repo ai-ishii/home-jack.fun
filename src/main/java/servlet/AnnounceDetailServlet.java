@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/25
+ * 更新日 : 2025/08/27
  */
 package servlet;
 
@@ -26,12 +26,12 @@ public class AnnounceDetailServlet extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// エラー用コマンド
-		String error = "";
-		// エラー文格納用
-		String message = "";
+		// エラー用フラグ
+		boolean error = false;
 		// 画面遷移用コマンド
 		String cmd = "";
+		// エラー文格納用
+		String message = "";
 		// 遷移先のパス
 		String path = "";
 
@@ -40,63 +40,82 @@ public class AnnounceDetailServlet extends HttpServlet {
 		AnnounceDAO announceDAO = new AnnounceDAO();
 		ArrayList<Announce> announceList = new ArrayList<Announce>();
 
-		// jspファイルからパラメータ取得
-		int announceId = Integer.parseInt(request.getParameter("announceId"));
-		cmd = request.getParameter("cmd");
-
 		try {
+			// jspファイルからパラメータ取得
+			int announceId = Integer.parseInt(request.getParameter("announceId"));
+			cmd = request.getParameter("cmd");
+			
 			// メソッドからSQL実行
 			announce = announceDAO.selectByAnnounceId(announceId);
 
+			
 			if (announce.getAnnounceId() == 0) {
 				message = "このお知らせは、すでに削除されています。";
-				//お知らせ一覧画面へ遷移
+				//お知らせ一覧画面へ遷移先を指定
 				path = "/announce";
 				return;
 			}
 			
-			if (cmd.equals("detail")) {
+			if (("detail").equals(cmd)) {
 				// メソッドからSQL実行
 				announceList = announceDAO.selectAll();
+				//お知らせ詳細画面へ遷移先を指定
+				path = "/view/announceDetail.jsp";
+				return;
 			}
+			
+			if (("update").equals(cmd)) {
+				//お知らせ更新画面へ遷移先を指定
+				path = "/view/announceUpdate.jsp";
+				return;
+			}
+			//それ以外の場合
+			if (!error){
+				error = true;
+				//ログイン画面へ遷移先を指定
+				cmd = "logout";
+				message = "不正な操作を検知しました。";
+			}
+			
 
+		} catch (NumberFormatException e) {
+			error = true;
+			cmd = "announce";
+			message = "不正な操作を検知しました。";
 		} catch (IllegalStateException e) {
-			message = "システムの一時的な問題により、お知らせの読み込みができませんでした。";
-			//ログイン画面へ遷移
-			error = "logout";
-
+			error = true;
+			cmd = "logout";
+			message = "システムの一時的な問題により、お知らせ情報の読み込みができませんでした。";
+			
 		} catch (Exception e) {
+			error = true;
+			cmd = "logout";
 			message = "予期せぬエラーが発生しました。" + e;
-			error = "logout";
 
 		} finally {
 
-			if (!("").equals(error)) {
-				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", message);
+
+			if (error) {
+				
 				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", error);
+				request.setAttribute("cmd", cmd);
 				// error.jspにフォワード
 				path = "/view/error.jsp";
 			}
 			
-			//削除エラーの有無判定
-			if (!("").equals(path)) {
-				request.setAttribute("message", message);
-			} else {
-				// お知らせ詳細画面に遷移する条件式
-				if (cmd.equals("detail")) {
-					request.setAttribute("announce", announce);
+			if (!error) {
+				// お知らせ詳細画面遷移の場合
+				if (("detail").equals(cmd)) {
+					//お知らせ情報を格納
 					request.setAttribute("announceList", announceList);
-					path = "/view/announceDetail.jsp";
 				}
-				// お知らせ更新画面に遷移する条件式
-				if (cmd.equals("update")) {
-					request.setAttribute("announce", announce);
-					path = "/view/announceUpdate.jsp";
-				}
+				
+				request.setAttribute("announce", announce);
 			}
-
+			
+			// エラー文を格納する
+			request.setAttribute("message", message);
+				
 			request.getRequestDispatcher(path).forward(request, response);
 		}
 	}
