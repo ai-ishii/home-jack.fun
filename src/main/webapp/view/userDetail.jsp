@@ -367,7 +367,7 @@ padding: 9px 25px;
 						</tr>
 						<tr class="table-single">
 							<td class="table-double">資格</td>
-							<td colspan="2"><%=user.getQualification()%></td>
+							<td colspan="2"><%if(user.getQualification() != null){%><%=user.getQualification()%><%} %></td>
 
 
 						</tr>
