@@ -517,7 +517,7 @@ animation: rotate 3s forwards;
 							<span id="file-name" class="imageText">Select File</span>
 						</div>
 					</label>
-				<input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" name="image" value=""/>
+				<input id="file-upload" type="file" accept=".png, .jpg, .jpeg, .gif" class="error-check-file" name="image" value=""/>
 				</div>
 				</td>
 				</tr>
@@ -534,7 +534,7 @@ animation: rotate 3s forwards;
 					</td>
 				</tr>
 				<tr>
-				<td class="textPadd"><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="required monthBox formText"></td>
+				<td class="textPadd"><input type="text" name="theme" value="<%=monthJack.getTheme()%>" class="error-check-default monthBox formText"></td>
 				</tr>
 				<tr>
 					<td style="display: flex" class="tdMag">
