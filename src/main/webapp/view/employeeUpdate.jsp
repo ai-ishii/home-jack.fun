@@ -52,6 +52,9 @@ String hobby = employee.getHobby();
 String talent = employee.getTalent();
 String intro = employee.getIntro();
 String position = employee.getPosition();
+if (position == null) {
+	position = "";
+}
 %>
 
 <html>
