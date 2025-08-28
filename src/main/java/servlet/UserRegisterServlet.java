@@ -53,10 +53,18 @@ public class UserRegisterServlet extends HttpServlet {
 		try {
 			//セッションからユーザー情報を取得
 			User user = (User) session.getAttribute("user");
+			
+			//cmdの受け取り
+			cmd = (String) request.getAttribute("cmd");
 
 			//ユーザー情報がなければ
 			if (user == null) {
 				path = "/index.jsp";
+			}
+			
+			//ユーザー情報更新の場合のpathを設定
+			if("register".equals(cmd)) {
+				path="/userDetail";
 			}
 
 			//ユーザー情報の更新処理
