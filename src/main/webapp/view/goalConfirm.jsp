@@ -5,7 +5,7 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月27日
+ 最終更新日：8月28日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -455,22 +455,6 @@ color: #6eddb3;
 			<%
 			}
 			%>
-			<table class="btnList">
-				<tr>
-				<td>
-					<div class="yoruArrow">
-						<a
-							href="<%=request.getContextPath()%>/goal
-							?user_id=<%=user.getUserId()%>
-							&work=detail"
-							class="jackResetL"> 
-						<svg class="arrow" width="50" height="20">
-							<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
-							<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
-						</svg> <span class="beaf">CANCEL</span>
-						</a>
-				</div>
-			</td>
 			
 			<td>
 			<div class="editBox">
@@ -500,9 +484,7 @@ color: #6eddb3;
 			<span class="editText">編集</span>
 			</a>
 			</div>
-			</td>
-			</tr>
-			</table>
+			
 			
 			<div class="seal">
 				
@@ -594,31 +576,52 @@ color: #6eddb3;
 
 				<!-- 年間結果のボックス -->
 				<div class="seal">
-				<div class="yorushikaLine">年間結果</div>
-				<div class="yorushikaBox">
-					<span class="titleBox">報告内容</span>
+					<div class="yorushikaLine">年間結果</div>
+					<div class="yorushikaStripe">
+					<div class="yorushika">本人記入</div>
+					</div>
+					<div class="yorushikaBox">
+						<span class="titleBox">報告内容</span>
+					</div>
+					
+					<!-- 本人記入欄 -->
+					<div class="mainText mainFlex">
+					<div class="ratio"><%=result%>%</div>
+					<div class="leftLine"><%=resultComment%></div>
+					</div>
+					
+					<!-- 評価者記入欄 -->
+					<div class="yorushikaStripe">
+					<div class="yorushika">評価者</div>
+					</div>
+					
+					<div class="yorushikaBox">
+						<span class="titleBox">報告を受けての評価</span>
+					</div>
+					<div class="mainText mainFlex">
+					<div class="ratio"><%=resultReviewer%>%</div>
+					<div class="leftLine"><%=resultCommentReviewer%></div>
+					</div>
 				</div>
 				
-				<!-- 本人記入欄 -->
-				<div class="mainText mainFlex">
-				<div class="ratio"><%=result%>%</div>
-				<div class="leftLine"><%=resultComment%></div>
-				</div>
-				
-				<!-- 評価者記入欄 -->
-				<div class="yorushikaStripe">
-				<div class="yorushika">評価者</div>
-				</div>
-				
-				<div class="yorushikaBox">
-					<span class="titleBox">報告を受けての評価</span>
-				</div>
-				<div class="mainText mainFlex">
-				<div class="ratio"><%=resultReviewer%>%</div>
-				<div class="leftLine"><%=resultCommentReviewer%></div>
-				</div>
-
-				</div>
+				<table class="btnList">
+				<tr>
+				<td>
+					<div class="yoruArrow">
+						<a
+							href="<%=request.getContextPath()%>/goal
+							?user_id=<%=user.getUserId()%>
+							&work=detail"
+							class="jackResetL"> 
+						<svg class="arrow" width="50" height="20">
+							<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
+							<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
+						</svg> <span class="beaf">BACK</span>
+						</a>
+						</div>
+			</td>
+			</tr>
+			</table>
 		</div>
 		</div>
 	</div>

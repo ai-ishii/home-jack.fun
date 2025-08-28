@@ -4,7 +4,7 @@
  * 作成者 : 大北直弥
  * 
  * 作成日 : 2025/07/14
- * 更新日 : 2025/08/25
+ * 更新日 : 2025/08/27
  */
 package servlet;
 
@@ -41,8 +41,10 @@ public class AnnounceServlet extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// エラー用コマンド
-		String error = "";
+		// エラー用フラグ
+		boolean error = false;
+		// 画面遷移用コマンド
+		String cmd = "";
 		// エラー文格納用
 		String message = "";
 		// 遷移先のパス
@@ -62,28 +64,30 @@ public class AnnounceServlet extends HttpServlet {
 			categoryList = announceDAO.selectCategoryAll();
 
 		} catch (IllegalStateException e) {
+			error = true;
+			cmd = "logout";
 			message = "システムの一時的な問題により、お知らせの読み込みができませんでした。";
-			error = "logout";
+			
 		} catch (Exception e) {
+			error = true;
+			cmd = "logout";
 			message = "予期せぬエラーが発生しました。" + e;
-			error = "logout";
 			
 		} finally {
 			
-			if (!("").equals(error)) {
-				// 例外が発生する場合エラー文をリクエストスコープに"error"という名前で格納する
-				request.setAttribute("error", message);
-				// 例外が発生する場合エラー種類をリクエストスコープに"cmdという名前で格納する
-				request.setAttribute("cmd", error);
-				// error.jspにフォワード
+			if (error) {
+				// 画面遷移を制御するcmdを格納する
+				request.setAttribute("cmd", cmd);
+				// error.jspにフォワード先を指定
 				path = "/view/error.jsp";
 			}
 			
-			if (("").equals(error)) {
+			if (!error) {
 				request.setAttribute("announceList", announceList);
 				request.setAttribute("categoryList", categoryList);
-				request.setAttribute("message", message);
 			}
+			// エラー文を格納する
+			request.setAttribute("message", message);
 			
 			request.getRequestDispatcher(path).forward(request, response);
 		}
