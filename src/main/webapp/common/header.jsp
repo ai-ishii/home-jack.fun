@@ -76,6 +76,8 @@ String tabCmd = (String) request.getAttribute("cmd");
 								>Jackworks</p></a></li>
 					<li><a href="<%=request.getContextPath()%>/view/RequestMenu.jsp"><p
 								 class="lettuce" >申請一覧</p></a></li>
+					</li><li><a href="<%=request.getContextPath()%>/licenseList"><p
+								 class="lettuce" >資格取得者一覧</p></a></li>
 					</li>
 					<li>
 						<p class="egg">お役立ち</p>
