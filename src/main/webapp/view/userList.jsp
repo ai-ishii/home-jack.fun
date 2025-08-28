@@ -22,6 +22,10 @@ String cmd = (String)request.getAttribute("cmd");
 if(keyword == null){
 	keyword = "";
 }
+
+User user = new User();
+UserDAO userDAO = new UserDAO();
+CommonTable commonTable = new CommonTable();
 %>
 
 <html>
@@ -384,10 +388,13 @@ margin: 0 auto;
 	</thead>
 
 <%
-		if (list != null) {
-			for (int i = 0; i < list.size(); i++) {
-				User user = (User) list.get(i);
-				if(user.getDisplayFlag() != 1){
+if (list != null) {
+	for (int i = 0; i < list.size(); i++) {
+		user = userDAO.selectByUserId(list.get(i).getUserId());
+
+		String department = commonTable.selectDepartment(user.getDepartmentId());
+		String group = commonTable.selectGroup(user.getGroupId());
+		if(user.getDisplayFlag() != 1){
 %>
 
 		<tbody>
@@ -399,7 +406,7 @@ margin: 0 auto;
 			<%=user.getName() %>
 			</td>
 			<td class="box-user" data-label="所属">
-			第<%=user.getDepartmentId() %>部&emsp;第<%=user.getGroupId() %>グループ
+			<%=department%>&emsp;<%=group %>
 			</td>
 			<td>
 			<div style="text-align: center">
