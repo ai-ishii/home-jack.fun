@@ -5,7 +5,7 @@
  更新者：占部虎司郎
 
  作成日：7月8日
- 最終更新日：8月27日
+ 最終更新日：8月28日
  -->
 
 <%@page contentType="text/html; charset=UTF-8"%>
@@ -467,7 +467,7 @@ color: #6eddb3;
 						<svg class="arrow" width="50" height="20">
 							<path d="M 0 10 L 50 10" stroke="#000" stroke-width="2" fill="none" />
 							<path d="M 0 10 L 25 0" stroke="#000" stroke-width="2" fill="none" />
-						</svg> <span class="beaf">CANCEL</span>
+						</svg> <span class="beaf">BACK</span>
 						</a>
 				</div>
 			</td>
