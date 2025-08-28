@@ -132,6 +132,12 @@ input[type="number"] {
 	font-size: large;
 }
 
+input[readonly], textarea[readonly] {
+	background-color: transparent;
+	border: none;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 textarea {
 	width: 100%;
 	height: 200px;
@@ -359,9 +365,7 @@ button.btn-border:active:before {
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="developer">開発経験年数</label></td>
-							<td id="value"><input readonly id="readonlyInput"
-								type="number" name="developer" value="<%=developer%>"
-								style="margin-left: 0;" min="0">年</td>
+							<td id="value"><%=developer%>年</td>
 						</tr>
 						<tr id="inputRow">
 							<td id="item"><label for="langSkill">習得技術（言語）</label></td>
