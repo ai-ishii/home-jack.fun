@@ -782,9 +782,9 @@ color: #6eddb3;
 
 	// ページが読み込まれたときに最初の情報を表示
 	document.addEventListener('DOMContentLoaded', () => {
-		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
-		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
-		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
+	//	sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
+	//	sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
+	//	sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -826,9 +826,9 @@ color: #6eddb3;
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 
-		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
-		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
-		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
+		//	sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
+	//	sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
+	//	sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
 
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
@@ -890,9 +890,9 @@ color: #6eddb3;
 		sameBelong_id[1].href = "detailEmployee?userId=" + sameBelong_idList[indexCenter_0];
 		sameBelong_id[2].href = "detailEmployee?userId=" + sameBelong_idList[indexRight_0];
 		
-		sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
-		sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
-		sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
+		//	sameBelong_imgs[0].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexLeft_0).getUserId()%>&work=view";
+	//	sameBelong_imgs[1].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexCenter_0).getUserId()%>&work=view";
+	//	sameBelong_imgs[2].src = "<%=request.getContextPath()%>/employeePhoto?user_id=<%=userListBySameBelong.get(indexRight_0).getUserId()%>&work=view";
 		
 		sameBelong_names[0].textContent = sameBelong_nameList[indexLeft_0];
 		sameBelong_names[1].textContent = sameBelong_nameList[indexCenter_0];
