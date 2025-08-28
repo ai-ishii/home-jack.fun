@@ -5,7 +5,7 @@
  * 作成者：石田允彦
  * 
  * 作成日：2025/07/03
- * 最終更新日：2025/08/27
+ * 最終更新日：2025/08/28
  */
 --%>
 
@@ -93,6 +93,8 @@ String tabCmd = (String) request.getAttribute("cmd");
 					</li>
 					<li><a href="<%= request.getContextPath() %>/userDetail"><p
 								class="pickles">社員情報詳細</p></a></li>
+					<li><a href="<%= request.getContextPath() %>/userList"><p
+								class="pickles">社員情報一覧</p></a></li>
 					<li><a href="<%=request.getContextPath()%>/home"><p
 								class="pickles">ホームに戻る</p></a>
 						<ul class="pickles-detail">
