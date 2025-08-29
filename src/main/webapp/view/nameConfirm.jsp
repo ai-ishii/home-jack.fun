@@ -3,7 +3,7 @@
 
 作成者：桑原岳
 
-最終更新日：2025/08/07
+最終更新日：2025/08/29
  --%>
 
 
@@ -32,6 +32,9 @@
 	background-color: #f2f2f2;
 	width: 30%;
 	text-align: left;
+}
+.container h1 {
+	text-align: center;
 }
 
 .button-area {
