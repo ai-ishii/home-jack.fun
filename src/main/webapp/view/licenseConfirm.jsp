@@ -1,7 +1,7 @@
 <%--
 機能：資格申請フォームに入力された内容の確認画面
 作成者：桑原岳
-最終更新日：2025/08/22
+最終更新日：2025/08/29
  --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -28,6 +28,10 @@
 	background-color: #f2f2f2;
 	width: 30%;
 	text-align: left;
+}
+
+.container h1 {
+	text-align: center;
 }
 
 .button-area {
@@ -86,14 +90,17 @@
 			</table>
 			<form id="confirmDataForm" method="post">
 				<input type="hidden" name="name" value="${formValues.name}">
-				<input type="hidden" name="department" value="${formValues.department}"> 
-				<input type="hidden" name="group" value="${formValues.group}"> 
-				<input type="hidden" name="license" value="${formValues.license}">
+				<input type="hidden" name="department"
+					value="${formValues.department}"> <input type="hidden"
+					name="group" value="${formValues.group}"> <input
+					type="hidden" name="license" value="${formValues.license}">
 				<input type="hidden" name="examDate" value="${formValues.examDate}">
 				<input type="hidden" name="examTime" value="${formValues.examTime}">
-				<input type="hidden" name="receiptFileName" value="${formValues.receiptFileName}"> 
-				<input type="hidden" name="passingFileName" value="${formValues.passingFileName}">
-				<input type="hidden" name="requestId" value="${formValues.requestId}">
+				<input type="hidden" name="receiptFileName"
+					value="${formValues.receiptFileName}"> <input type="hidden"
+					name="passingFileName" value="${formValues.passingFileName}">
+				<input type="hidden" name="requestId"
+					value="${formValues.requestId}">
 				<div class="button-area">
 					<button type="submit"
 						formaction="<%=request.getContextPath()%>/licenseRetouching">
